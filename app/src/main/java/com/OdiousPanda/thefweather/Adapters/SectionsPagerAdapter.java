@@ -1,9 +1,8 @@
-package com.OdiousPanda.thefweather;
+package com.OdiousPanda.thefweather.Adapters;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.OdiousPanda.thefweather.MainFragments.ForecastFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
