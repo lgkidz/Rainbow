@@ -1,163 +1,173 @@
 package com.OdiousPanda.thefweather.Activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Looper;
-import androidx.annotation.NonNull;
+import android.net.Uri;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
-import com.OdiousPanda.thefweather.MainFragments.ForecastFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
-import com.OdiousPanda.thefweather.Model.SavedCoord;
+import com.OdiousPanda.thefweather.Model.CurrentWeather.CurrentWeather;
+import com.OdiousPanda.thefweather.Model.Forecast.ForecastWeather;
+import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.R;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
+import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import java.util.List;
 
-import java.lang.reflect.Type;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE = 2108;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    FusedLocationProviderClient fusedLocationProviderClient;
-    LocationRequest locationRequest;
-    LocationCallback locationCallback;
     SharedPreferences sharedPreferences;
     Gson gson;
     public static final String TAG = "location cord";
+    List<SavedCoordinate> savedCoordinates;
+
+    WeatherViewModel weatherViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         sharedPreferences = getSharedPreferences(getString(R.string.pref_key_string),MODE_PRIVATE);
 
+        initViews();
+
+        requestPermission();
+
+        startDataFetchingSequence();
+    }
+
+    private void startDataFetchingSequence(){
+        SmartLocation.with(this).location()
+                .oneFix()
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(Location location) {
+                        savedCoordinates.set(0,new SavedCoordinate(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()),null));
+                        updateViewsWithData(savedCoordinates);
+                    }
+                });
+    }
+
+    private void updateViewsWithData(List<SavedCoordinate> savedCoordinates){
+        weatherViewModel = ViewModelProviders.of(this)
+                .get(WeatherViewModel.class);
+        weatherViewModel.getCurrentWeatherData(savedCoordinates).observe(this, new Observer<List<CurrentWeather>>() {
+            @Override
+            public void onChanged(List<CurrentWeather> currentWeathers) {
+                //Update CurrentWeather Fragment
+            }
+        });
+
+        weatherViewModel.getForecastWeatherData(savedCoordinates).observe(this, new Observer<List<ForecastWeather>>() {
+            @Override
+            public void onChanged(List<ForecastWeather> forecastWeathers) {
+                //Update Forecast Fragment
+            }
+        });
+    }
+
+    private void initViews(){
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        gson = new Gson();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-        } else {
-
-            buildLocationRequest();
-            buildLocationCallback();
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-                return;
-            }
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-        }
-
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        buildLocationRequest();
-                        buildLocationCallback();
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-                            return;
+    private void requestPermission(){
+        Dexter.withActivity(MainActivity.this)
+                .withPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()){
+                            SmartLocation.with(MainActivity.this).location()
+                                    .start(new OnLocationUpdatedListener() {
+                                        @Override
+                                        public void onLocationUpdated(Location location) {
+                                            HomeScreenFragment.getInstance().makeQuery(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                                        }
+                                    });
+                        }else{
+                            showNeededPermissionDialog();
                         }
-                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                        if(report.isAnyPermissionPermanentlyDenied()){
+                            showSettingDialog();
+                        }
                     }
-                    else if (grantResults[0] == PackageManager.PERMISSION_DENIED){
 
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
                     }
-                }
-            }
-        }
+                }).onSameThread().check();
     }
 
-    @SuppressLint("RestrictedApi")
-    private void buildLocationRequest(){
-        locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setSmallestDisplacement(10);
-
-    }
-
-    private void updateLocation(Location location){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        SavedCoord savedCoord1Object = new SavedCoord(location.getLatitude(),location.getLongitude());
-        String savedCoordToString = gson.toJson(savedCoord1Object);
-        editor.putString(getString(R.string.saved_coord_pref_key),savedCoordToString);
-        editor.apply();
-        HomeScreenFragment.getInstance().updateLocation(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()));
-        ForecastFragment.getInstance().updateLocation(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()));
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-    }
-
-    private void buildLocationCallback() {
-        locationCallback = new LocationCallback(){
+    private void showNeededPermissionDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.message_need_permission));
+        builder.setMessage(getString(R.string.app_need_permissions_to_run));
+        builder.setPositiveButton(getString(R.string.exit), new DialogInterface.OnClickListener() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
-                for(Location location: locationResult.getLocations()){
-                    String savedCoordJson = sharedPreferences.getString(getString(R.string.saved_coord_pref_key), null);
-                    if(savedCoordJson == null){
-                        updateLocation(location);
-                    }
-                    else{
-                        Type type = new TypeToken<SavedCoord>(){}.getType();
-                        SavedCoord savedCoord = gson.fromJson(savedCoordJson,type);
-                        Log.d(TAG, "onLocationResult: saved Lat: " + savedCoord.getLat() + " , cur lat: " + location.getLatitude());
-                        Log.d(TAG, "onLocationResult: saved lon: " + savedCoord.getLon() + " , cur lon: " + location.getLongitude());
-                        if(savedCoord.getLat() != round(location.getLatitude(),2) || savedCoord.getLon() != round(location.getLongitude(),2)){
-                            updateLocation(location);
-                        }
-                        else{
-                            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-                            Log.d(TAG, "onLocationResult: Location unchanged.");
-                        }
-                    }
-                    Log.d(TAG, "onLocationResult: lat: " + location.getLatitude() + ", lon: " + location.getLongitude());
-                }
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
             }
-        };
-
+        });
+        builder.show();
     }
 
-    public  double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+    private void showSettingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.message_need_permission));
+        builder.setMessage(getString(R.string.message_grant_permission));
+        builder.setPositiveButton(getString(R.string.label_setting), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                MainActivity.this.openSettings();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
+    /**
+     * Go to App's details setting in default phone setting
+     */
+    private void openSettings() {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
+    }
 }
