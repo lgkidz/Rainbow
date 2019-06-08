@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,19 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainFragments.HomeScreenFragment">
-
-    <TextView
-        android:id="@+id/tv_url_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="your URL will show up here!"
-        android:textSize="22sp" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    tools:context=".MainFragments.HomeScreenFragment"
+    android:id="@+id/home_layout">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -34,21 +23,6 @@
                 android:textSize="18sp" />
         </ScrollView>
 
-        <TextView
-            android:id="@+id/tv_error_message_display"
-            android:textSize="22sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Something is wrong"
-            android:visibility="invisible" />
 
-        <ProgressBar
-            android:id="@+id/pb_loading_indicator"
-            android:layout_height="42dp"
-            android:layout_width="42dp"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
-    </FrameLayout>
 
-</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

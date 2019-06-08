@@ -1,58 +1,60 @@
 package com.OdiousPanda.thefweather.ViewModels;
 
+import android.app.Application;
+import android.util.Log;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import com.OdiousPanda.thefweather.Model.CurrentWeather.CurrentWeather;
 import com.OdiousPanda.thefweather.Model.Forecast.ForecastWeather;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherViewModel extends ViewModel {
-    private MutableLiveData<List<CurrentWeather>> currentWeatherData;
-    private MutableLiveData<List<ForecastWeather>> forecastWeatherData;
-
+public class WeatherViewModel extends AndroidViewModel {
+    private static final String TAG = "weatherA";
+    private MutableLiveData<List<CurrentWeather>> currentWeatherData = new MutableLiveData<>();
+    private MutableLiveData<List<ForecastWeather>> forecastWeatherData = new MutableLiveData<>();
     private WeatherRepository repository;
+    private LiveData<List<SavedCoordinate>> allSavedCoordinate;
 
-    public void fetchCurrentWeather(List<SavedCoordinate> currentWeatherList){
-        repository = WeatherRepository.getInstance();
-        List<CurrentWeather> tempList = new ArrayList<>();
-        for(SavedCoordinate c : currentWeatherList){
-            if(c.getName() == null || c.getName().trim().isEmpty()){
-                tempList.add(repository.getCurrentWeatherByCoordinate(c.getLat(),c.getLon()));
-            }
-            else{
-                tempList.add(repository.getCurrentWeatherByCityName(c.getName()));
-            }
-        }
-        currentWeatherData.setValue(tempList);
+    public WeatherViewModel(Application application){
+        super(application);
+        repository = WeatherRepository.getInstance(application);
+        Log.d(TAG, "WeatherViewModel: created and calling repo");
+        allSavedCoordinate = repository.getAllSavedCoordinates();
     }
 
-    public void fetchForecastWeather(List<SavedCoordinate> forecastWeatherList){
-        repository = WeatherRepository.getInstance();
-        List<ForecastWeather> tempList = new ArrayList<>();
-        for(SavedCoordinate c : forecastWeatherList){
-            if(c.getName() == null || c.getName().trim().isEmpty()){
-                tempList.add(repository.getForecastWeatherByCoordinate(c.getLat(),c.getLon()));
-            }
-            else{
-                tempList.add(repository.getForecastWeatherByCityName(c.getName()));
-            }
-        }
-        forecastWeatherData.setValue(tempList);
+    public void insert(SavedCoordinate savedCoordinate){
+        repository.insert(savedCoordinate);
     }
 
-    public LiveData<List<CurrentWeather>> getCurrentWeatherData(List<SavedCoordinate> currentWeatherList){
-        fetchCurrentWeather(currentWeatherList);
+    public void update(SavedCoordinate savedCoordinate){
+        repository.update(savedCoordinate);
+    }
+
+    public void delete(SavedCoordinate savedCoordinate){
+        repository.delete(savedCoordinate);
+    }
+
+    public void fetchCurrentWeather(){
+        currentWeatherData = repository.getCurrentWeather();
+    }
+
+    public void fetchForecastWeather(){
+        forecastWeatherData = repository.getForecastWeather();
+    }
+
+    public LiveData<List<SavedCoordinate>> getAllSavedCoordinate(){
+        return allSavedCoordinate;
+    }
+
+    public LiveData<List<CurrentWeather>> getCurrentWeatherData(){
         return currentWeatherData;
     }
 
-    public LiveData<List<ForecastWeather>> getForecastWeatherData(List<SavedCoordinate> forecastWeatherList){
-        fetchForecastWeather(forecastWeatherList);
+    public LiveData<List<ForecastWeather>> getForecastWeatherData(){
         return forecastWeatherData;
     }
 }

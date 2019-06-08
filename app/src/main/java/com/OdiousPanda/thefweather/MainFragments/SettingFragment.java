@@ -96,7 +96,7 @@ public class SettingFragment extends Fragment {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(getString(R.string.temp_unit_setting),getString(R.string.temp_unit_c));
             editor.apply();
-            HomeScreenFragment.getInstance().updateTempUnit(getString(R.string.temp_unit_c));
+            //HomeScreenFragment.getInstance().updateTempUnit(getString(R.string.temp_unit_c));
             ForecastFragment.getInstance().updateTempUnit(getString(R.string.temp_unit_c));
         }
         else if(v.getId() == R.id.btn_temp_f){
@@ -107,7 +107,7 @@ public class SettingFragment extends Fragment {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(getString(R.string.temp_unit_setting),getString(R.string.temp_unit_f));
             editor.apply();
-            HomeScreenFragment.getInstance().updateTempUnit(getString(R.string.temp_unit_f));
+            //HomeScreenFragment.getInstance().updateTempUnit(getString(R.string.temp_unit_f));
             ForecastFragment.getInstance().updateTempUnit(getString(R.string.temp_unit_f));
         }
     }

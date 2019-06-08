@@ -13,7 +13,7 @@ public class RetrofitService {
         return retrofit.create(CurrentWeatherCall.class);
     }
 
-    public static ForecaseWeatherCall createForecastWeatherCall(){
-        return retrofit.create(ForecaseWeatherCall.class);
+    public static ForecastWeatherCall createForecastWeatherCall(){
+        return retrofit.create(ForecastWeatherCall.class);
     }
 }

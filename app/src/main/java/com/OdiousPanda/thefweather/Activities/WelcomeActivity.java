@@ -1,15 +1,24 @@
 package com.OdiousPanda.thefweather.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +28,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.PrefManager;
+import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
+
+import mumayank.com.airlocationlibrary.AirLocation;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -29,8 +49,13 @@ public class WelcomeActivity extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button btnNext;
     private PrefManager prefManager;
+
+    WeatherViewModel weatherViewModel;
+    private AirLocation airLocation;
+    private static final String TAG = "weatherA";
+    private boolean locationUpdated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +74,16 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_welcome);
+        weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
+        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<SavedCoordinate>>() {
+            @Override
+            public void onChanged(List<SavedCoordinate> savedCoordinates) {
 
+            }
+        });
         viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
-        btnSkip = findViewById(R.id.btn_skip);
+        //btnSkip = findViewById(R.id.btn_skip);
         btnNext = findViewById(R.id.btn_next);
 
 
@@ -73,16 +104,16 @@ public class WelcomeActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchHomeScreen();
-            }
-        });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!locationUpdated){
+                    updateCurrentLocation();
+                    locationUpdated = true;
+                }
+
                 // checking for last page
                 // if last page home screen will be launched
                 int current = getItem(+1);
@@ -94,6 +125,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        requestPermission();
     }
 
     private void addBottomDots(int currentPage) {
@@ -120,6 +153,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
+
         prefManager.setFirstTimeLaunch(false);
         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
         finish();
@@ -130,17 +164,19 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
+            if(!locationUpdated){
+                updateCurrentLocation();
+                locationUpdated = true;
+            }
             addBottomDots(position);
 
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
                 btnNext.setText(getString(R.string.start));
-                btnSkip.setVisibility(View.GONE);
             } else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
-                btnSkip.setVisibility(View.VISIBLE);
             }
         }
 
@@ -201,5 +237,94 @@ public class WelcomeActivity extends AppCompatActivity {
             View view = (View) object;
             container.removeView(view);
         }
+    }
+
+    private void updateCurrentLocation(){
+        Log.d(TAG, "updateCurrentLocation: update Current Location");
+        airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
+            @Override
+            public void onSuccess(Location location) {
+                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()), null);
+                currentLocation.setId(1); // default ID for current Location
+                Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
+                weatherViewModel.update(currentLocation);
+            }
+
+            @Override
+            public void onFailed(AirLocation.LocationFailedEnum locationFailedEnum) {
+
+            }
+        });
+    }
+
+    private void requestPermission(){
+        Dexter.withActivity(WelcomeActivity.this)
+                //There might need more permissions in the future
+                .withPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()){
+
+                        }else{
+                            showNeededPermissionDialog();
+                        }
+                        if(report.isAnyPermissionPermanentlyDenied()){
+                            showSettingDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).onSameThread().check();
+    }
+
+    private void showNeededPermissionDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.message_need_permission));
+        builder.setMessage(getString(R.string.app_need_permissions_to_run));
+        builder.setPositiveButton(getString(R.string.exit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
+    }
+
+    private void showSettingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.message_need_permission));
+        builder.setMessage(getString(R.string.message_grant_permission));
+        builder.setPositiveButton(getString(R.string.label_setting), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                WelcomeActivity.this.openSettings();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * Go to App's details setting in default phone setting
+     */
+    private void openSettings() {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
+        finish();
     }
 }

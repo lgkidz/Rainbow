@@ -1,12 +1,16 @@
 package com.OdiousPanda.thefweather.Model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
+@Entity(tableName = "location_table")
 public class SavedCoordinate {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @SerializedName("lon")
     @Expose
     private String lon;
@@ -47,5 +51,13 @@ public class SavedCoordinate {
 
     public void setLat(String lat) {
         this.lat = lat;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
