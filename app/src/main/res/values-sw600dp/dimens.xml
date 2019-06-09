@@ -1,0 +1,29 @@
+<resources>
+  <dimen name="activity_horizontal_margin">
+    26.67dp
+  </dimen>
+  <dimen name="activity_vertical_margin">
+    26.67dp
+  </dimen>
+  <dimen name="fab_margin">
+    26.67dp
+  </dimen>
+  <dimen name="dots_height">
+    50.0dp
+  </dimen>
+  <dimen name="dots_margin_bottom">
+    33.33dp
+  </dimen>
+  <dimen name="img_width_height">
+    200.0dp
+  </dimen>
+  <dimen name="slide_title">
+    50.0dp
+  </dimen>
+  <dimen name="slide_desc">
+    26.67dp
+  </dimen>
+  <dimen name="desc_padding">
+    66.67dp
+  </dimen>
+</resources>

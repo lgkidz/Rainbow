@@ -4,16 +4,9 @@ import android.graphics.Color;
 
 import java.util.Random;
 
-public class ColorUtil {
+public class MyColorUtil {
 
     public static int[] randomColorCode(){
-        String letters = "0123456798ABCDEF";
-        String color = "#";
-
-        for(int i = 0;i < 6; i++){
-            color += letters.charAt((int)Math.floor(Math.random() * letters.length()));
-        }
-
         return new int[]{255,new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)};
     }
 
