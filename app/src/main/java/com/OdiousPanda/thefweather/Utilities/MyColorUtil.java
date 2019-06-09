@@ -10,7 +10,7 @@ public class MyColorUtil {
         return new int[]{255,new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)};
     }
 
-    public static int invertColor(int[] argb){
+    public static int blackOrWhiteOf(int[] argb){
         int r = argb[1];
         int g = argb[2];
         int b = argb[3];
@@ -20,6 +20,14 @@ public class MyColorUtil {
         }
 
         return Color.argb(255,255,255,255);
+    }
+
+    public static int invertColor(int[] argb){
+        int r = 255 - argb[1];
+        int g = 255 - argb[2];
+        int b = 255 - argb[3];
+
+        return Color.argb(255,r,g,b);
     }
 
 }

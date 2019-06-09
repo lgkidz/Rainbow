@@ -26,6 +26,9 @@
   <dimen name="desc_padding">
     66.67dp
   </dimen>
+  <dimen name="margin_4">
+    6.67dp
+  </dimen>
   <dimen name="margin_8">
     13.33dp
   </dimen>
@@ -35,11 +38,17 @@
   <dimen name="margin_24">
     40.0dp
   </dimen>
+  <dimen name="margin_32">
+    53.33dp
+  </dimen>
   <dimen name="big_icon_128dp">
     213.33dp
   </dimen>
   <dimen name="big_text">
     140.0sp
+  </dimen>
+  <dimen name="text_view_14sp">
+    23.33sp
   </dimen>
   <dimen name="text_view_18sp">
     30.0sp

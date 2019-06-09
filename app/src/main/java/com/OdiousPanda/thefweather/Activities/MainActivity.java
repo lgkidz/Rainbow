@@ -16,6 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
+import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
 import com.OdiousPanda.thefweather.Model.CurrentWeather.CurrentWeather;
 import com.OdiousPanda.thefweather.Model.Forecast.ForecastWeather;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateColor(){
         final int[] argb = MyColorUtil.randomColorCode();
-        int textColorCode = MyColorUtil.invertColor(argb);
+        int textColorCode = MyColorUtil.blackOrWhiteOf(argb);
         ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
                 ,"backgroundColor"
                 , new ArgbEvaluator()
@@ -163,5 +164,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         });
         colorFade.start();
         HomeScreenFragment.getInstance().setColorTheme(textColorCode);
+        SettingFragment.getInstance().updateColorTheme(argb);
     }
 }

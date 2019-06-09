@@ -2,9 +2,6 @@
     <string name="app_name">TheFWeather</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <string name="temp_unit_setting_title">Are you from the US or the rest of the world?</string>
-    <string name="temp_setting_degree_f">°F</string>
-    <string name="temp_setting_degree_c">°C</string>
 
     <string name="pref_key_string">whateverthefthisis_pref_key</string>
     <string name="saved_coord_pref_key">saved_coord_pref_key</string>
@@ -38,4 +35,34 @@
     <string name="app_need_permissions_to_run">This app cannot run without the permissions to use this feature</string>
     <string name="exit">Exit</string>
     <string name="icon_content_description">icon</string>
+
+    <string name="pref_temp">tempUnit</string>
+    <string name="pref_distance">distanceUnit</string>
+    <string name="pref_speed">speedUnit</string>
+    <string name="pref_pressure">pressureUnit</string>
+
+    <string name="setting">Setting</string>
+    <string name="temperature_setting_title">Select what you prefer</string>
+    <string name="distance_setting_title">Distance unit</string>
+    <string name="speed_setting_title">Speed Unit</string>
+    <string name="pressure_setting_title">Pressure Unit</string>
+    <string name="rate_setting_title">Rate this super useful app</string>
+    <string name="about_setting_title">About me</string>
+    <string name="help_setting_title">Help</string>
+    <string name="temp_setting_degree_f">°F</string>
+    <string name="temp_setting_degree_c">°C</string>
+    <string name="temp_setting_degree_k">°K</string>
+    <string name="help_me">Help me</string>
+    <string name="help_the_developer">Help the developer</string>
+    <string name="your_depression">your depression</string>
+    <string name="depression_unit">depressions</string>
+    <string name="mmhg">mmHg</string>
+    <string name="psi">psi</string>
+    <string name="banana_h">bananas per hour</string>
+    <string name="miph">mph</string>
+    <string name="kmph">kmph</string>
+    <string name="bananas">bananas</string>
+    <string name="mi">mile</string>
+    <string name="km">km</string>
+    <string name="scientist">I\'m a scientist</string>
 </resources>
