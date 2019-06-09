@@ -37,4 +37,5 @@
     <string name="play_again">Play Again</string>
     <string name="app_need_permissions_to_run">This app cannot run without the permissions to use this feature</string>
     <string name="exit">Exit</string>
+    <string name="icon_content_description">icon</string>
 </resources>

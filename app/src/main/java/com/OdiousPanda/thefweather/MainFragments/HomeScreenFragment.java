@@ -1,13 +1,15 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
 import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.OdiousPanda.thefweather.Model.CurrentWeather.CurrentWeather;
 import com.OdiousPanda.thefweather.R;
@@ -29,6 +31,11 @@ public class HomeScreenFragment extends Fragment {
     }
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvTemp;
+    private TextView tvDescription;
+    private TextView tvBigText;
+    private TextView tvSmallText;
+    private ImageView icon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +48,11 @@ public class HomeScreenFragment extends Fragment {
     }
 
     private void initViews(View v){
+        tvBigText = v.findViewById(R.id.big_text);
+        tvDescription = v.findViewById(R.id.tv_description);
+        tvSmallText = v.findViewById(R.id.small_text);
+        tvTemp = v.findViewById(R.id.tv_temp);
+        icon = v.findViewById(R.id.icon);
         swipeRefreshLayout = v.findViewById(R.id.home_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -51,14 +63,32 @@ public class HomeScreenFragment extends Fragment {
     }
 
     public void setColorTheme(int textColor){
-//        int currentTextColor = mSearchResultsTextView.getCurrentTextColor();
-//        ObjectAnimator textFade = ObjectAnimator.ofObject(mSearchResultsTextView
-//        ,"textColor"
-//        ,new ArgbEvaluator()
-//        ,currentTextColor
-//        ,textColor);
-//        textFade.setDuration(200);
-//        textFade.start();
+        int colorFrom = tvTemp.getCurrentTextColor();
+        int colorTo = textColor;
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(200); // milliseconds
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                tvTemp.setTextColor((int) animator.getAnimatedValue());
+                tvDescription.setTextColor((int) animator.getAnimatedValue());
+                tvBigText.setTextColor((int) animator.getAnimatedValue());
+                tvSmallText.setTextColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
+        if(textColor == Color.WHITE){
+            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_01d_w", null, getActivity().getPackageName());
+            icon.setImageResource(iconResourceId);
+        }
+        else{
+            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_01d_b", null, getActivity().getPackageName());
+            icon.setImageResource(iconResourceId);
+        }
+
+
     }
 
 

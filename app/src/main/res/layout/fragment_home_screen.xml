@@ -8,15 +8,66 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainFragments.HomeScreenFragment"
     android:id="@+id/home_layout">
-        <androidx.core.widget.NestedScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_height="match_parent">
 
-        </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/tv_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_24"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_marginLeft="@dimen/margin_8"
+                    app:fontFamily="@font/nunito"
+                    android:text="24°C"
+                    android:textSize="@dimen/text_view_48sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/icon" />
 
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_marginLeft="@dimen/margin_8"
+                    app:fontFamily="@font/nunito"
+                    android:text="clear"
+                    android:textSize="@dimen/text_view_24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_temp" />
 
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/big_icon_128dp"
+                    android:layout_height="@dimen/big_icon_128dp"
+                    android:contentDescription="@string/icon_content_description"
+                    android:translationX="@dimen/margin_8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/big_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:fontFamily="@font/nunito"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="I think you are fucking hot."
+                    android:textSize="@dimen/big_text"
+                    app:layout_constraintBottom_toTopOf="@+id/small_text"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/small_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:fontFamily="@font/nunito"
+                    android:text="Just kidding, but the fucking weather is!"
+                    android:textSize="@dimen/text_view_18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
