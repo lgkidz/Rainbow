@@ -8,39 +8,33 @@ public class TemperatureConverter {
 
     final static String DEGREE  = "\u00b0";
 
-    public static double toCelsius(Double temp){
+    private static double toCelsius(Double temp){
         return temp - 273;
     }
 
-    public static double toFahrenheit(Double temp){
+    private static double toFahrenheit(Double temp){
         return (((temp - 273) * 9/5) + 32);
     }
 
-    public static String toCelsiusPretty(Double temp){
-        return String.valueOf(Math.round(toCelsius(temp))) + DEGREE + "C";
+    private static String toCelsiusPretty(Double temp){
+        return Math.round(toCelsius(temp)) + DEGREE + "C";
     }
 
-    public static String toFahrenheitPretty(Double temp){
-        return String.valueOf(Math.round(toFahrenheit(temp))) + DEGREE + "F";
+    private static String toFahrenheitPretty(Double temp){
+        return Math.round(toFahrenheit(temp)) + DEGREE + "F";
     }
 
-    public static double convertToUnit(Context context,Double temp, String unit){
-        if(unit.equals(context.getString(R.string.temp_unit_c))){
-            return toCelsius(temp);
-        }
-        else if(unit.equals(context.getString(R.string.temp_unit_f))){
-            return toFahrenheit(temp);
-        }
-        return toCelsius(temp);
+    private static String toKelvinPretty(Double temp){
+        return Math.round(temp) + DEGREE + "K";
     }
 
-    public static String convertToUnitPretty(Context context,Double temp, String unit){
-        if(unit.equals(context.getString(R.string.temp_unit_c))){
+    public static String convertToUnit(Context context,Double temp, String unit){
+        if(unit.equals(context.getString(R.string.temp_setting_degree_c))){
             return toCelsiusPretty(temp);
         }
-        else if(unit.equals(context.getString(R.string.temp_unit_f))){
+        else if(unit.equals(context.getString(R.string.temp_setting_degree_f))){
             return toFahrenheitPretty(temp);
         }
-        return toCelsiusPretty(temp);
+        return toKelvinPretty(temp);
     }
 }

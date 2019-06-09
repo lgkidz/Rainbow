@@ -1,7 +1,5 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -46,7 +44,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private TextView tvDistance;
     private TextView tvSpeed;
     private TextView tvPressure;
-    private TextView tvhelp;
+    private TextView tvHelp;
     private TextView tvRate;
     private TextView tvAbout;
     private Button btnC;
@@ -76,10 +74,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
         sharedPreferences = getActivity().getSharedPreferences(getString(R.string.pref_key_string), Context.MODE_PRIVATE);
-        currentTempUnit = sharedPreferences.getString(getString(R.string.temp_unit_setting),null);
-        if(currentTempUnit == null){
-            currentTempUnit = getString(R.string.temp_unit_c);
-        }
+
         initViews(v);
         getSetting();
 
@@ -92,7 +87,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         tvDistance = v.findViewById(R.id.tv_distance_setting);
         tvSpeed = v.findViewById(R.id.tv_speed_setting);
         tvPressure = v.findViewById(R.id.tv_pressure_setting);
-        tvhelp = v.findViewById(R.id.tv_help_setting);
+        tvHelp = v.findViewById(R.id.tv_help_setting);
         tvRate = v.findViewById(R.id.tv_rate);
         tvAbout = v.findViewById(R.id.tv_about);
         btnC = v.findViewById(R.id.btn_c);
@@ -172,7 +167,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         tvSpeed.setTextColor(textColor);
         tvPressure.setTextColor(textColor);
         tvRate.setTextColor(textColor);
-        tvhelp.setTextColor(textColor);
+        tvHelp.setTextColor(textColor);
     }
 
     private void colorThoseButtons(){
@@ -314,6 +309,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         else{
             updateSharedPref(pref,getString(R.string.temp_setting_degree_k));
         }
+        HomeScreenFragment.getInstance().updateUnit();
         updateTempButtonColor(id);
     }
 

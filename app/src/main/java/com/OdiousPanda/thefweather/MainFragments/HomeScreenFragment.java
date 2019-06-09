@@ -2,6 +2,8 @@ package com.OdiousPanda.thefweather.MainFragments;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.OdiousPanda.thefweather.Model.CurrentWeather.CurrentWeather;
 import com.OdiousPanda.thefweather.R;
+import com.OdiousPanda.thefweather.Utilities.TemperatureConverter;
 
 public class HomeScreenFragment extends Fragment {
 
@@ -30,18 +33,23 @@ public class HomeScreenFragment extends Fragment {
         // Required empty public constructor
     }
 
+    SharedPreferences sharedPreferences;
+
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvTemp;
     private TextView tvDescription;
     private TextView tvBigText;
     private TextView tvSmallText;
     private ImageView icon;
+    private String iconName;
+
+    private CurrentWeather currentWeather;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home_screen, container, false);
-
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.pref_key_string), Context.MODE_PRIVATE);
         initViews(v);
 
         return v;
@@ -80,28 +88,27 @@ public class HomeScreenFragment extends Fragment {
         });
         colorAnimation.start();
         if(textColor == Color.WHITE){
-            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_01d_w", null, getActivity().getPackageName());
+            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_" + iconName + "_w", null, getActivity().getPackageName());
             icon.setImageResource(iconResourceId);
         }
         else{
-            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_01d_b", null, getActivity().getPackageName());
+            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_" + iconName + "_b", null, getActivity().getPackageName());
             icon.setImageResource(iconResourceId);
         }
-
-
     }
 
+    public void updateUnit(){
+        String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
+        tvTemp.setText(TemperatureConverter.convertToUnit(getActivity(),currentWeather.getMain().getTemp(),currentTempUnit));
+    }
 
-    public void updateData(CurrentWeather currentWeather){
-        String text = "";
-        text += "city: " + currentWeather.getName() + "\n";
-        text += "country code: " +currentWeather.getSys().getCountry() +"\n";
-        text += "lat: " + currentWeather.getCoord().getLat() + ", lon: " + currentWeather.getCoord().getLon() +"\n";
-        text += "weather: " + currentWeather.getWeather().get(0).getMain() +", " + currentWeather.getWeather().get(0).getDescription() +"\n";
-        //text += "temp min: " + TemperatureConverter.convertToUnitPretty(getActivity(),currentWeather.getMain().getTempMin(),unit) + ", temp max: " + TemperatureConverter.convertToUnitPretty(getActivity(),currentWeather.getMain().getTempMax(),unit) + " \n";
-        text += "humidity: " + currentWeather.getMain().getHumidity() +"% \n";
+    public void updateData(CurrentWeather weather){
+        currentWeather = weather;
+        String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
+        tvTemp.setText(TemperatureConverter.convertToUnit(getActivity(),currentWeather.getMain().getTemp(),currentTempUnit));
+        tvDescription.setText(currentWeather.getWeather().get(0).getDescription());
+        iconName = currentWeather.getWeather().get(0).getIcon();
         swipeRefreshLayout.setRefreshing(false);
-
     }
 
     OnLayoutRefreshListener callback;

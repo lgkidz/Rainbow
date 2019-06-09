@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.OdiousPanda.thefweather.MainFragments.ForecastFragment;
+import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
 
@@ -30,7 +30,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 break;
 
             case FORECAST_FRAGMENT_POSITION:
-                f = ForecastFragment.getInstance();
+                f = DetailsFragment.getInstance();
                 break;
 
             default:
