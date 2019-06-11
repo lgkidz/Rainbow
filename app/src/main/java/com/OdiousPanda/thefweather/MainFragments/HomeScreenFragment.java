@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.OdiousPanda.thefweather.Model.CurrentWeather.CurrentWeather;
+import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
-import com.OdiousPanda.thefweather.Utilities.TemperatureConverter;
+import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 
 public class HomeScreenFragment extends Fragment {
 
@@ -43,7 +43,7 @@ public class HomeScreenFragment extends Fragment {
     private ImageView icon;
     private String iconName;
 
-    private CurrentWeather currentWeather;
+    private Weather currentWeather;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +54,12 @@ public class HomeScreenFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
 
     private void initViews(View v){
         tvBigText = v.findViewById(R.id.big_text);
@@ -88,36 +94,38 @@ public class HomeScreenFragment extends Fragment {
         });
         colorAnimation.start();
         if(textColor == Color.WHITE){
-            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_" + iconName + "_w", null, getActivity().getPackageName());
+            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + iconName + "_w", null, getActivity().getPackageName());
             icon.setImageResource(iconResourceId);
         }
         else{
-            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + "ic_" + iconName + "_b", null, getActivity().getPackageName());
+            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + iconName + "_b", null, getActivity().getPackageName());
             icon.setImageResource(iconResourceId);
         }
     }
 
     public void updateUnit(){
         String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
-        tvTemp.setText(TemperatureConverter.convertToUnit(getActivity(),currentWeather.getMain().getTemp(),currentTempUnit));
+        tvTemp.setText(UnitConverter.convertToUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
     }
 
-    public void updateData(CurrentWeather weather){
+    public void updateData(Weather weather){
         currentWeather = weather;
         String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
-        tvTemp.setText(TemperatureConverter.convertToUnit(getActivity(),currentWeather.getMain().getTemp(),currentTempUnit));
-        tvDescription.setText(currentWeather.getWeather().get(0).getDescription());
-        iconName = currentWeather.getWeather().get(0).getIcon();
+        tvTemp.setText(UnitConverter.convertToUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
+        tvDescription.setText(currentWeather.getCurrently().getSummary());
+        String iconNameRaw = currentWeather.getCurrently().getIcon();
+        iconName = iconNameRaw.replace("-", "_");
         swipeRefreshLayout.setRefreshing(false);
     }
 
     OnLayoutRefreshListener callback;
 
-    public void setOnTextClickListener(OnLayoutRefreshListener callback){
+    public void setOnRefreshListener(OnLayoutRefreshListener callback){
         this.callback = callback;
     }
 
     public interface OnLayoutRefreshListener{
         void updateData();
     }
+
 }

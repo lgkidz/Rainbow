@@ -65,4 +65,12 @@
     <string name="mi">mile</string>
     <string name="km">km</string>
     <string name="scientist">I\'m a scientist</string>
+    <string name="details_heading">All things you need to know</string>
+    <string name="real_feel_title">is what it fucking feels like</string>
+    <string name="uv_index_title">UV Index</string>
+    <string name="humidity_title">Humidity</string>
+    <string name="visibility_title">Visibility</string>
+    <string name="pressure_title">Pressure</string>
+    <string name="forecast_title">The next 5 days</string>
+    <string name="air_quality_index_title">Air Quality Index</string>
 </resources>

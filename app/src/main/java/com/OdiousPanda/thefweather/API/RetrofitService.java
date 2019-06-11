@@ -9,11 +9,7 @@ public class RetrofitService {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public static CurrentWeatherCall createCurrentWeatherCall(){
-        return retrofit.create(CurrentWeatherCall.class);
-    }
-
-    public static ForecastWeatherCall createForecastWeatherCall(){
-        return retrofit.create(ForecastWeatherCall.class);
+    public static WeatherCall createWeatherCall(){
+        return retrofit.create(WeatherCall.class);
     }
 }

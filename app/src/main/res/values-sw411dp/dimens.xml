@@ -53,8 +53,14 @@
   <dimen name="text_view_18sp">
     20.55sp
   </dimen>
+  <dimen name="text_view_20sp">
+    22.83sp
+  </dimen>
   <dimen name="text_view_24sp">
     27.4sp
+  </dimen>
+  <dimen name="text_view_36sp">
+    41.1sp
   </dimen>
   <dimen name="text_view_48sp">
     54.8sp

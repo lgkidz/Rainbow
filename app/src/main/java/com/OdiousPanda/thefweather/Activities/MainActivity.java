@@ -8,18 +8,17 @@ import android.graphics.Color;
 import android.location.Location;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
-import com.OdiousPanda.thefweather.Model.CurrentWeather.CurrentWeather;
-import com.OdiousPanda.thefweather.Model.Forecast.ForecastWeather;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
+import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
@@ -52,7 +51,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         initViews();
         setupLocationObservers();
         updateCurrentLocation();
+        HomeScreenFragment.getInstance().setOnRefreshListener(this);
 
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
     }
 
     private void initViews(){
@@ -62,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         coordinatorLayout = findViewById(R.id.main_content);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
-        HomeScreenFragment.getInstance().setOnTextClickListener(this);
-
     }
 
     private void setupLocationObservers(){
@@ -71,8 +74,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             @Override
             public void onChanged(List<SavedCoordinate> savedCoordinates) {
                 if(firstTimeObserve){
-                    weatherViewModel.fetchCurrentWeather();
-                    weatherViewModel.fetchForecastWeather();
+                    weatherViewModel.fetchWeather();
                     firstTimeObserve = false;
                 }
                 setupDataObserver();
@@ -81,26 +83,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void setupDataObserver(){
-        weatherViewModel.getCurrentWeatherData().observe(this, new Observer<List<CurrentWeather>>() {
+        weatherViewModel.getWeatherData().observe(this, new Observer<List<Weather>>() {
             @Override
-            public void onChanged(List<CurrentWeather> currentWeathers) {
-                //Update CurrentWeather Fragment
-                if(currentWeathers.size() == 0){
-                    Toast.makeText(MainActivity.this, "Hold on!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    HomeScreenFragment.getInstance().updateData(currentWeathers.get(0));
-                    updateColor();
-                }
+            public void onChanged(List<Weather> weathers) {
+                HomeScreenFragment.getInstance().updateData(weathers.get(0));
+                updateColor();
             }
         });
 
-        weatherViewModel.getForecastWeatherData().observe(this, new Observer<List<ForecastWeather>>() {
-            @Override
-            public void onChanged(List<ForecastWeather> forecastWeathers) {
-                //Update Forecast Fragment
-            }
-        });
     }
 
     private void updateCurrentLocation(){
@@ -123,8 +113,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateViewsWithData(){
         Log.d(TAG, "updateViewsWithData: now updating");
-        WeatherRepository.getInstance(getApplication()).getCurrentWeather();
-        WeatherRepository.getInstance(getApplication()).getForecastWeather();
+        WeatherRepository.getInstance(getApplication()).getWeather();
     }
 
     @Override

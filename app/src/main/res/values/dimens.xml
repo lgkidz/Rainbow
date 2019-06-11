@@ -19,6 +19,8 @@
     <dimen name="big_text">84sp</dimen>
     <dimen name="text_view_14sp">14sp</dimen>
     <dimen name="text_view_18sp">18sp</dimen>
+    <dimen name="text_view_20sp">20sp</dimen>
     <dimen name="text_view_24sp">24sp</dimen>
+    <dimen name="text_view_36sp">36sp</dimen>
     <dimen name="text_view_48sp">48sp</dimen>
 </resources>
