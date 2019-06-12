@@ -6,10 +6,13 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.OdiousPanda.thefweather.API.AQICall;
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.DAOs.SavedCoordinateDAO;
 import com.OdiousPanda.thefweather.Database.WeatherDatabase;
+import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 
@@ -28,11 +31,15 @@ public class WeatherRepository {
     private LiveData<List<SavedCoordinate>> allSavedCoordinates;
 
     private WeatherCall weatherCall;
+    private AQICall aqiCall;
 
     private List<SavedCoordinate> savedCoordinates;
 
     private List<Weather> weathers = new ArrayList<>();
     private MutableLiveData<List<Weather>> weatherList = new MutableLiveData<>();
+
+    private List<AirQuality> airQualities = new ArrayList<>();
+    private MutableLiveData<List<AirQuality>> airQualitiesList = new MutableLiveData<>();
 
     public WeatherRepository(Application application){
         Log.d(TAG, "WeatherRepository: created");
@@ -40,6 +47,8 @@ public class WeatherRepository {
         savedCoordinateDAO = database.savedCoordinateDAO();
         getAllCoordinates();
         weatherCall = RetrofitService.createWeatherCall();
+        aqiCall = RetrofitService.createAQICall();
+
     }
 
     public static synchronized WeatherRepository getInstance(Application application){
@@ -96,6 +105,32 @@ public class WeatherRepository {
 
         }
         return weatherList;
+    }
+
+    public MutableLiveData<List<AirQuality>> getAirQuality(){
+        savedCoordinates = allSavedCoordinates.getValue();
+        Log.d(TAG, "getCurrentAQI: getting data from api" + savedCoordinates.size());
+        for(SavedCoordinate c : savedCoordinates){
+            Log.d(TAG, "getCurrentAQI: getting current weather");
+            aqiCall.getAirQuality(c.getLat(),c.getLon()).enqueue(new Callback<AirQuality>() {
+                @Override
+                public void onResponse(Call<AirQuality> call, Response<AirQuality> response) {
+                    if(response.isSuccessful()){
+                        airQualities.add(response.body());
+                        airQualitiesList.postValue(airQualities);
+                        Log.d(TAG, "onResponse: " + response.body().getData().aqi);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AirQuality> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+
+        }
+
+        return airQualitiesList;
     }
 
     private static class InsertCoordinateTask extends AsyncTask<SavedCoordinate,Void,Void>{

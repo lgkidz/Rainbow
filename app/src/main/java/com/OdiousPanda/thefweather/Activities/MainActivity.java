@@ -18,6 +18,7 @@ import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
+import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
@@ -88,6 +89,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 updateColor();
             }
         });
+        weatherViewModel.getAqiData().observe(this, new Observer<List<AirQuality>>() {
+            @Override
+            public void onChanged(List<AirQuality> airQualities) {
+                DetailsFragment.getInstance().updateAqi(airQualities.get(0));
+            }
+        });
 
     }
 
@@ -112,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private void updateViewsWithData(){
         Log.d(TAG, "updateViewsWithData: now updating");
         WeatherRepository.getInstance(getApplication()).getWeather();
+        WeatherRepository.getInstance(getApplication()).getAirQuality();
     }
 
     @Override

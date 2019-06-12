@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.OdiousPanda.thefweather.Adapters.ForecastAdapter;
+import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
@@ -33,6 +34,7 @@ public class DetailsFragment extends Fragment {
     private SharedPreferences sharedPreferences;
 
     private Weather currentWeather;
+    private AirQuality airQuality;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -237,5 +239,28 @@ public class DetailsFragment extends Fragment {
         tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(),currentDistanceUnit));
         ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),textColor);
         rvForecast.setAdapter(adapter);
+    }
+
+    public void updateAqi(AirQuality air){
+        airQuality = air;
+        int aqi = Math.round(airQuality.getData().aqi);
+        tvAqi.setText( aqi+ "");
+        String aqiSummary = "";
+        if(aqi < 51){
+            aqiSummary = "Hmmmm, fresh air!";
+        }
+        else if(aqi < 151){
+            aqiSummary = "A bit unhealthy. If you're weak, stay home.";
+        }
+        else if(aqi < 201){
+            aqiSummary = "Unhealthy! Inhale more for diseases.";
+        }
+        else if(aqi < 301){
+            aqiSummary = "Unhealthy as fuck! Lung cancer awaits you outside.";
+        }
+        else{
+            aqiSummary = "Sniffing your dog's butthole would be more healthy.";
+        }
+        tvAqiSummary.setText(aqiSummary);
     }
 }
