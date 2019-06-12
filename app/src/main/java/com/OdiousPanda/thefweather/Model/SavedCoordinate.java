@@ -1,6 +1,7 @@
 package com.OdiousPanda.thefweather.Model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -23,6 +24,7 @@ public class SavedCoordinate {
 
     public SavedCoordinate(){}
 
+    @Ignore
     public SavedCoordinate(String lat, String lon,String name){
         this.lat = lat;
         this.lon = lon;

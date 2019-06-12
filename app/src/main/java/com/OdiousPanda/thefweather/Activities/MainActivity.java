@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         coordinatorLayout = findViewById(R.id.main_content);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
-        mViewPager.setCurrentItem(2);
+        mViewPager.setCurrentItem(1);
     }
 
     private void setupLocationObservers(){

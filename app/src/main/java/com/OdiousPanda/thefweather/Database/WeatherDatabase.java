@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.OdiousPanda.thefweather.DAOs.SavedCoordinateDAO;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 
-@Database(entities = {SavedCoordinate.class}, version = 1)
+@Database(entities = {SavedCoordinate.class}, version = 1,exportSchema = false)
 public abstract class WeatherDatabase extends RoomDatabase {
     private static final String TAG = "weatherA";
     private static WeatherDatabase instance;

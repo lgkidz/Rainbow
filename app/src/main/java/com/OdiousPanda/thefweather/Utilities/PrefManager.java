@@ -14,7 +14,7 @@ public class PrefManager {
     // Shared preferences file name
     private static final String PREF_NAME = "welcome_pref";
 
-    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    private static final String IS_FIRST_TIME_LAUNCH = "IsAppFirstTimeLaunch";
 
     public PrefManager(Context context) {
         this._context = context;

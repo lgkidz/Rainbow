@@ -2,6 +2,7 @@ package com.OdiousPanda.thefweather.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
@@ -10,19 +11,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,11 +60,6 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
 
-        // Making notification bar transparent
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-
         setContentView(R.layout.activity_welcome);
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<SavedCoordinate>>() {
@@ -92,9 +83,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // adding bottom dots
         addBottomDots(0);
-
-        // making notification bar transparent
-        changeStatusBarColor();
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
@@ -134,7 +122,7 @@ public class WelcomeActivity extends AppCompatActivity {
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
             dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setText(HtmlCompat.fromHtml("&#8226;", HtmlCompat.FROM_HTML_MODE_LEGACY));
             dots[i].setTextSize(35);
             dots[i].setTextColor(colorsInactive[currentPage]);
             dotsLayout.addView(dots[i]);
@@ -187,16 +175,6 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     };
 
-    /**
-     * Making notification bar transparent
-     */
-    private void changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-    }
 
     /**
      * View pager adapter
