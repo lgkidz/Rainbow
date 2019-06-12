@@ -1,5 +1,7 @@
 package com.OdiousPanda.thefweather.Utilities;
 
+import java.util.Random;
+
 public class UnitConverter {
 
     final static String DEGREE  = "\u00b0";
@@ -27,7 +29,7 @@ public class UnitConverter {
         return Math.round(toKelvin(temp)) + DEGREE + "K";
     }
 
-    public static String convertToUnit(float temp, String unit){
+    public static String convertToTemperatureUnit(float temp, String unit){
         if(unit.equals(DEGREE + "C")){
             return toCelsiusPretty(temp);
         }
@@ -35,5 +37,38 @@ public class UnitConverter {
             return toFahrenheitPretty(temp);
         }
         return toKelvinPretty(temp);
+    }
+
+    public static String convertToDistanceUnit(float distance, String unit){
+        if(unit.equals("km")){
+            return Math.round(distance * 1.609) + " km";
+        }
+        else if(unit.equals("bananas")){
+            return Math.round(distance * 9041.254) + " bananas";
+        }
+        return Math.round(distance) + " mile";
+    }
+
+    public static String convertToSpeedUnit(float speed, String unit){
+        if(unit.equals("kmph")){
+            return Math.round(speed * 1.609) + " km/h";
+        }
+        else if(unit.equals("bananas per hour")){
+            return Math.round(speed * 9041.254) + " banana/h";
+        }
+        return String.valueOf(Math.round(speed)) + " mph";
+    }
+
+    public static String convertToPressureUnit(float pressure, String unit){
+        if(unit.equals("psi")){
+            return Math.round(pressure / 68.948) + " psi";
+        }
+        else if(unit.equals("mmHg")){
+            return Math.round(pressure / 1.333) + " mmHg";
+        }
+        else{
+            String[] depressLevels = {"Mild","Depressed","Crippling","A little","Let's die","Oof","Happy af!","Not at all","Over 9000"};
+            return depressLevels[new Random().nextInt(depressLevels.length)];
+        }
     }
 }

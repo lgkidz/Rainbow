@@ -1,7 +1,5 @@
 package com.OdiousPanda.thefweather.Adapters;
 
-import android.content.Context;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -17,7 +15,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private final int SETTING_FRAGMENT_POSITION = 0;
     private final int HOME_FRAGMENT_POSITION = 1;
-    private final int FORECAST_FRAGMENT_POSITION = 2;
+    private final int DETAILS_FRAGMENT_POSITION = 2;
 
     @Override
     public Fragment getItem(int position) {
@@ -31,7 +29,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 f = HomeScreenFragment.getInstance();
                 break;
 
-            case FORECAST_FRAGMENT_POSITION:
+            case DETAILS_FRAGMENT_POSITION:
                 f = DetailsFragment.getInstance();
                 break;
 

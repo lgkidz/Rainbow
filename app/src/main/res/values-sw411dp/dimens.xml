@@ -44,6 +44,12 @@
   <dimen name="big_icon_128dp">
     146.13dp
   </dimen>
+  <dimen name="forecast_item_height">
+    251.17dp
+  </dimen>
+  <dimen name="icon_90dp">
+    102.75dp
+  </dimen>
   <dimen name="big_text">
     95.9sp
   </dimen>

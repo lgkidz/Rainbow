@@ -310,6 +310,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updateSharedPref(pref,getString(R.string.temp_setting_degree_k));
         }
         HomeScreenFragment.getInstance().updateUnit();
+
         updateTempButtonColor(id);
     }
 
@@ -475,6 +476,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(pref,value);
         editor.apply();
+        DetailsFragment.getInstance().updateUnit();
     }
 
 }

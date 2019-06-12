@@ -71,6 +71,7 @@
     <string name="humidity_title">Humidity</string>
     <string name="visibility_title">Visibility</string>
     <string name="pressure_title">Pressure</string>
-    <string name="forecast_title">The next 5 days</string>
+    <string name="forecast_title">The next 7 days</string>
     <string name="air_quality_index_title">Air Quality Index</string>
+    <string name="pressure_title_alt">Depression level</string>
 </resources>

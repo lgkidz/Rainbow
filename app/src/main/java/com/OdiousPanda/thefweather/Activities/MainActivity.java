@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
+import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
@@ -55,18 +56,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     }
 
-    @Override
-    public void onAttachFragment(Fragment fragment) {
-        super.onAttachFragment(fragment);
-    }
-
     private void initViews(){
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
         coordinatorLayout = findViewById(R.id.main_content);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setCurrentItem(1);
+        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setCurrentItem(2);
     }
 
     private void setupLocationObservers(){
@@ -86,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         weatherViewModel.getWeatherData().observe(this, new Observer<List<Weather>>() {
             @Override
             public void onChanged(List<Weather> weathers) {
+                DetailsFragment.getInstance().updateData(weathers.get(0));
                 HomeScreenFragment.getInstance().updateData(weathers.get(0));
                 updateColor();
             }
@@ -152,7 +150,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             }
         });
         colorFade.start();
-        HomeScreenFragment.getInstance().setColorTheme(textColorCode);
+        DetailsFragment.getInstance().updateColorTheme(argb);
         SettingFragment.getInstance().updateColorTheme(argb);
+        HomeScreenFragment.getInstance().setColorTheme(textColorCode);
+
+
     }
 }

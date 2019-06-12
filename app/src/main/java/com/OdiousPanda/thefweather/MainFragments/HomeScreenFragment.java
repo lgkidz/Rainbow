@@ -101,17 +101,18 @@ public class HomeScreenFragment extends Fragment {
             int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + iconName + "_b", null, getActivity().getPackageName());
             icon.setImageResource(iconResourceId);
         }
+
     }
 
     public void updateUnit(){
         String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
-        tvTemp.setText(UnitConverter.convertToUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
+        tvTemp.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
     }
 
     public void updateData(Weather weather){
         currentWeather = weather;
         String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
-        tvTemp.setText(UnitConverter.convertToUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
+        tvTemp.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
         tvDescription.setText(currentWeather.getCurrently().getSummary());
         String iconNameRaw = currentWeather.getCurrently().getIcon();
         iconName = iconNameRaw.replace("-", "_");
