@@ -13,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
+import com.OdiousPanda.thefweather.Utilities.QuoteGenerator;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 
 public class HomeScreenFragment extends Fragment {
@@ -111,6 +114,7 @@ public class HomeScreenFragment extends Fragment {
 
     public void updateData(Weather weather){
         currentWeather = weather;
+        QuoteGenerator.getInstance().getQuote(weather);
         String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
         tvTemp.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
         tvDescription.setText(currentWeather.getCurrently().getSummary());
@@ -129,4 +133,9 @@ public class HomeScreenFragment extends Fragment {
         void updateData();
     }
 
+
+    public void updateQuote(Quote quote){
+        tvBigText.setText(quote.getMain());
+        tvSmallText.setText(quote.getSub());
+    }
 }

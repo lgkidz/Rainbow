@@ -53,7 +53,6 @@
                     android:layout_height="wrap_content"
                     app:fontFamily="@font/nunito"
                     android:lineSpacingMultiplier="0.8"
-                    android:text="I think you are fucking hot."
                     android:textSize="@dimen/big_text"
                     app:layout_constraintBottom_toTopOf="@+id/small_text"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -63,7 +62,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:fontFamily="@font/nunito"
-                    android:text="Just kidding, but the fucking weather is!"
                     android:textSize="@dimen/text_view_18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

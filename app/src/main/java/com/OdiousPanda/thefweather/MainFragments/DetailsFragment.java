@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.OdiousPanda.thefweather.Adapters.ForecastAdapter;
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
@@ -25,9 +23,6 @@ import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DetailsFragment extends Fragment {
     public static DetailsFragment instance;
@@ -182,16 +177,16 @@ public class DetailsFragment extends Fragment {
         }else if(currentWeather.getCurrently().getUvIndex() < 6){
             uvSummary = " (Moderate)";
         }
-        else if(currentWeather.getCurrently().getUvIndex() < 6){
+        else if(currentWeather.getCurrently().getUvIndex() < 8){
             uvSummary = " (High)";
         }
-        else if(currentWeather.getCurrently().getUvIndex() < 6){
+        else if(currentWeather.getCurrently().getUvIndex() < 11){
             uvSummary = " (High af)";
         }
         else {
             uvSummary = " (Extreme)";
         }
-        tvUV.setText(Math.round(currentWeather.getCurrently().getUvIndex())==0?"":Math.round(currentWeather.getCurrently().getUvIndex()) + uvSummary);
+        tvUV.setText((Math.round(currentWeather.getCurrently().getUvIndex())==0?"":Math.round(currentWeather.getCurrently().getUvIndex())) + uvSummary);
         tvHumidity.setText(Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%");
         tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(),currentPressureUnit));
         if(currentPressureUnit.equals(getString(R.string.depression_unit))){
@@ -221,16 +216,16 @@ public class DetailsFragment extends Fragment {
         }else if(currentWeather.getCurrently().getUvIndex() < 6){
             uvSummary = " (Moderate)";
         }
-        else if(currentWeather.getCurrently().getUvIndex() < 6){
+        else if(currentWeather.getCurrently().getUvIndex() < 8){
             uvSummary = " (High)";
         }
-        else if(currentWeather.getCurrently().getUvIndex() < 6){
+        else if(currentWeather.getCurrently().getUvIndex() < 11){
             uvSummary = " (High af)";
         }
         else {
             uvSummary = " (Extreme)";
         }
-        tvUV.setText(Math.round(currentWeather.getCurrently().getUvIndex())==0?"":Math.round(currentWeather.getCurrently().getUvIndex()) + uvSummary);
+        tvUV.setText((Math.round(currentWeather.getCurrently().getUvIndex())==0?"":Math.round(currentWeather.getCurrently().getUvIndex())) + uvSummary);
         tvHumidity.setText(Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%");
         tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(),currentPressureUnit));
         if(currentPressureUnit.equals(getString(R.string.depression_unit))){

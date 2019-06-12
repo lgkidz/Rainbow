@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "248215632496",
+    "firebase_url": "https://rainbow-a5269.firebaseio.com",
+    "project_id": "rainbow-a5269",
+    "storage_bucket": "rainbow-a5269.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248215632496:android:04381fc35a7ab01d",
+        "android_client_info": {
+          "package_name": "com.OdiousPanda.thefweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248215632496-68tpu5de7s43rep45lkm35lpb54bkd9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.OdiousPanda.thefweather",
+            "certificate_hash": "7cf0e33d4f18c9c6ddeac0c13dd0c52a1b3c8b4c"
+          }
+        },
+        {
+          "client_id": "248215632496-tqaiv68sm10iasi5uq1ffsop4n67rhgi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA96PE6fE5dnKX3HZGcH5v2LNCzE8n1wsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248215632496-tqaiv68sm10iasi5uq1ffsop4n67rhgi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
