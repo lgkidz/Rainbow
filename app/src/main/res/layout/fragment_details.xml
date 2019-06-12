@@ -65,7 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:baselineAligned="false">
             <LinearLayout
                 android:id="@+id/layoutUV"
                 android:layout_width="0dp"
@@ -125,7 +126,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:baselineAligned="false">
             <LinearLayout
                 android:id="@+id/layoutVisibility"
                 android:layout_width="0dp"
@@ -201,12 +203,13 @@
                 android:id="@+id/tv_aqi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
                 android:textSize="@dimen/text_view_36sp"
                 app:fontFamily="@font/nunito"
+                android:layout_marginRight="@dimen/margin_8"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="@dimen/margin_8" />
 
             <TextView
                 android:id="@+id/tv_aqi_summary"
@@ -215,7 +218,6 @@
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginEnd="@dimen/margin_8"
                 android:layout_marginRight="@dimen/margin_8"
-                android:text="Unhealthy as fuck"
                 android:textSize="@dimen/text_view_18sp"
                 app:fontFamily="@font/nunito"
                 app:layout_constraintEnd_toStartOf="@+id/tv_aqi"
@@ -228,7 +230,8 @@
             android:layout_marginTop="@dimen/margin_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/margin_16">
             <TextView
                 android:id="@+id/tv_forecast_title"
                 android:layout_width="wrap_content"
