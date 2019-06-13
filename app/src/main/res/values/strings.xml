@@ -19,16 +19,16 @@
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Hello!</string>
-    <string name="slide_1_desc">This should be something more useful but I haven\'t worded on it yet!</string>
+    <string name="slide_1_desc">This should be something more useful but the developer haven\'t worked on it yet!</string>
 
     <string name="slide_2_title">Hi! Again.</string>
-    <string name="slide_2_desc">Let\'s just write Lorem ipsum here</string>
+    <string name="slide_2_desc">Let\'s just put Lorem ipsum here</string>
 
-    <string name="slide_3_title">Again!</string>
+    <string name="slide_3_title">Um..</string>
     <string name="slide_3_desc">Lorem ipsum dolor sit amet</string>
 
     <string name="slide_4_title">Oh god!</string>
-    <string name="slide_4_desc">Lorem ipsum dolor sit amet! If you see this, pls tell the developer to do something.</string>
+    <string name="slide_4_desc">Lorem ipsum dolor sit amet! If you see this, please tell the developer to do something.</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
