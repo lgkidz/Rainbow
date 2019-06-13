@@ -35,6 +35,9 @@
   <dimen name="margin_16">
     26.67dp
   </dimen>
+  <dimen name="margin_n_16">
+    -26.67dp
+  </dimen>
   <dimen name="margin_24">
     40.0dp
   </dimen>
@@ -70,5 +73,17 @@
   </dimen>
   <dimen name="text_view_48sp">
     80.0sp
+  </dimen>
+  <dimen name="text_view_54sp">
+    90.0sp
+  </dimen>
+  <dimen name="widget_height">
+    300.0dp
+  </dimen>
+  <dimen name="widget_width">
+    533.33dp
+  </dimen>
+  <dimen name="widget_margin">
+    13.33dp
   </dimen>
 </resources>

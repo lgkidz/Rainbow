@@ -1,6 +1,8 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.OdiousPanda.thefweather.Model.AQI.P;
+import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 
@@ -310,7 +314,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updateSharedPref(pref,getString(R.string.temp_setting_degree_k));
         }
         HomeScreenFragment.getInstance().updateUnit();
-
+        Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
+        getActivity().sendBroadcast(updateWidgetIntent);
         updateTempButtonColor(id);
     }
 
