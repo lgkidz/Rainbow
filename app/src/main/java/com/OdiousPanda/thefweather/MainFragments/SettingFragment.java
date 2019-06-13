@@ -18,7 +18,9 @@ import androidx.fragment.app.Fragment;
 import com.OdiousPanda.thefweather.Model.AQI.P;
 import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
+import com.OdiousPanda.thefweather.Utilities.AboutDialog;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
@@ -132,9 +134,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     btnHelpDev.setBackgroundColor(buttonColor);
+
                 } else if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     btnHelpDev.setBackgroundColor(activeButtonColor);
                     btnHelpMe.setBackgroundColor(buttonColor);
+                    Snackbar.make(v,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -148,8 +152,24 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 } else if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     btnHelpMe.setBackgroundColor(activeButtonColor);
                     btnHelpDev.setBackgroundColor(buttonColor);
+                    Snackbar.make(v,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
                 }
                 return false;
+            }
+        });
+
+        tvRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        tvAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AboutDialog aboutDialog = new AboutDialog();
+                aboutDialog.showDialog(getActivity());
             }
         });
     }

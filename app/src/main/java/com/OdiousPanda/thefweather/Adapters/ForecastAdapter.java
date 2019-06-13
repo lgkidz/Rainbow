@@ -50,7 +50,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         String textTemp = UnitConverter.convertToTemperatureUnit(dailyData.getData().get(position).getTemperatureHigh(),currentTempUnit)
                 + " - "
                 + UnitConverter.convertToTemperatureUnit(dailyData.getData().get(position).getTemperatureLow(),currentTempUnit);
-        String iconName = dailyData.getData().get(position).getIcon();
+        String iconName = dailyData.getData().get(position).getIcon().replace("-","_");
         if(textColor == Color.WHITE){
             int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_w", null, context.getPackageName());
             holder.setData(weekday,textTemp,iconResourceId,textColor);

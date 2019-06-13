@@ -80,7 +80,7 @@ public class NormalWidget extends AppWidgetProvider {
         aWm = appWidgetManager;
         Intent mainActivityIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.widget_layout,pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
 
         long lastUpdate = Long.parseLong(sharedPreferences.getString(context.getString(R.string.widget_update_time_pref), "0"));
         long currentTime = System.currentTimeMillis();

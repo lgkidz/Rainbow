@@ -78,4 +78,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
+    <string name="about_dialog_heading">Hi!</string>
+    <string name="about_dialog_intro">I\'m Rainbow, the most friendly weather app you can ever find. I was born with a mission of bringing smiles and useful weather information to your daily life, definitely not because someone has too much free time on his hands.</string>
+    <string name="about_dialog_outro">If you find me interesting, go ahead an give me a 5-star on PlayStore. Love ya!</string>
+    <string name="about_dialog_close_text">Nice!</string>
 </resources>
