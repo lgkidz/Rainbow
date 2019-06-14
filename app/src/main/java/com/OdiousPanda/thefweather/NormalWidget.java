@@ -17,11 +17,7 @@ import android.location.Location;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.widget.RemoteViews;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -39,11 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import retrofit2.Call;
