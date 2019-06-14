@@ -62,7 +62,7 @@ public class QuoteGenerator {
             return;
         }
 
-        float temp = weather.getCurrently().getApparentTemperature();
+        float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         List<String> criteria = new ArrayList<>();
         if(temp > 30){

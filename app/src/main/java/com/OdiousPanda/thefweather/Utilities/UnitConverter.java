@@ -6,7 +6,7 @@ public class UnitConverter {
 
     final static String DEGREE  = "\u00b0";
 
-    private static float toCelsius(float temp){
+    public static float toCelsius(float temp){
         return (temp - 32)* 5/9;
     }
 
