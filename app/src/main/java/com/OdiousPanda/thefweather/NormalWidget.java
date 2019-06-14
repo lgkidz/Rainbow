@@ -17,10 +17,10 @@ import android.location.Location;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.util.Log;
 import android.widget.RemoteViews;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
-
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
@@ -35,9 +35,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,10 +65,15 @@ public class NormalWidget extends AppWidgetProvider {
     private static RemoteViews remoteViews;
     private static AppWidgetManager aWm;
     public static final String ACTION_UPDATE = "actionUpdate";
+    public static final String ACTION_UPDATE_TIME = "actionTimeWidget";
+
     private static final String TEMP_BITMAP = "tempBitmap";
     private static final String RF_BITMAP = "RFBitmap";
     private static final String MAIN_BITMAP = "mainBitmap";
     private static final String SUB_BITMAP = "subBitmap";
+    private static final String TIME_BITMAP = "timeBitmap";
+    private static final String DAYNIGHT_BITMAP = "dnBitmap";
+    private static final String DATE_BITMAP = "dateBitmap";
 
     static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
                                 final int appWidgetId) {
@@ -70,9 +82,21 @@ public class NormalWidget extends AppWidgetProvider {
         widgetId = appWidgetId;
         remoteViews = views;
         aWm = appWidgetManager;
+
+        Intent timeUpdateService = new Intent(NormalWidget.ACTION_UPDATE_TIME);
+        context.sendBroadcast(timeUpdateService);
+
         Intent mainActivityIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
+
+        Date date = new Date();
+        String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
+
+        remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
+        remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
+        remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
 
         long lastUpdate = Long.parseLong(sharedPreferences.getString(context.getString(R.string.widget_update_time_pref), "0"));
         long currentTime = System.currentTimeMillis();
@@ -88,11 +112,11 @@ public class NormalWidget extends AppWidgetProvider {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         switch (bitmapType){
             case TEMP_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36sp));
                 break;
             }
             case RF_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_20sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
                 break;
             }
             case MAIN_BITMAP:{
@@ -101,6 +125,18 @@ public class NormalWidget extends AppWidgetProvider {
             }
             case SUB_BITMAP:{
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_24sp));
+                break;
+            }
+            case TIME_BITMAP:{
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48sp));
+                break;
+            }
+            case DAYNIGHT_BITMAP:{
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
+                break;
+            }
+            case DATE_BITMAP:{
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_20sp));
                 break;
             }
         }
@@ -148,7 +184,7 @@ public class NormalWidget extends AppWidgetProvider {
                         if(response.isSuccessful()){
                             weather = response.body();
                             String temp = UnitConverter.convertToTemperatureUnit(weather.getCurrently().getTemperature(),currentTempUnit);
-                            String realFeelTemp = "Feels like: " +  UnitConverter.convertToTemperatureUnit(weather.getCurrently().getApparentTemperature(),currentTempUnit);
+                            String realFeelTemp = "Feels more like: " +  UnitConverter.convertToTemperatureUnit(weather.getCurrently().getApparentTemperature(),currentTempUnit);
                             remoteViews.setImageViewBitmap(R.id.tv_temp_widget,textAsBitmap(context,temp,TEMP_BITMAP));
                             remoteViews.setImageViewBitmap(R.id.tv_reaFeel_widget,textAsBitmap(context,realFeelTemp,RF_BITMAP));
                             String iconName = weather.getCurrently().getIcon().replace("-","_");
@@ -257,17 +293,36 @@ public class NormalWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
+        Log.d("widgetTime", "onReceive: " + intent.getAction());
+        remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
         String currentTempUnit = sharedPreferences.getString(context.getString(R.string.pref_temp), context.getString(R.string.temp_setting_degree_c));
         super.onReceive(context, intent);
         if(ACTION_UPDATE.equals(intent.getAction())){
             String temp = UnitConverter.convertToTemperatureUnit(weather.getCurrently().getTemperature(),currentTempUnit);
-            String realFeelTemp = "Feels like: " +  UnitConverter.convertToTemperatureUnit(weather.getCurrently().getApparentTemperature(),currentTempUnit);
-            //remoteViews.setTextViewText(R.id.tv_temp_widget,temp);
+            String realFeelTemp = "Feels more like: " +  UnitConverter.convertToTemperatureUnit(weather.getCurrently().getApparentTemperature(),currentTempUnit);
             remoteViews.setImageViewBitmap(R.id.tv_temp_widget,textAsBitmap(context,temp,TEMP_BITMAP));
             remoteViews.setImageViewBitmap(R.id.tv_reaFeel_widget,textAsBitmap(context,realFeelTemp,RF_BITMAP));
             aWm.updateAppWidget(widgetId, remoteViews);
+        }
+        if(ACTION_UPDATE_TIME.equals(intent.getAction())){
+            Date date = new Date();
+            String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
+            String dateString = dateFormat.format(date);
+            remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
+            remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
+            remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateString,DATE_BITMAP));
+            aWm.updateAppWidget(widgetId, remoteViews);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Intent intentUpdate = new Intent(NormalWidget.ACTION_UPDATE_TIME);
+                    context.sendBroadcast(intentUpdate);
+                }
+            },1000*5);
         }
     }
 }

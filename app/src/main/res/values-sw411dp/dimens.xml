@@ -32,6 +32,9 @@
   <dimen name="margin_8">
     9.13dp
   </dimen>
+  <dimen name="margin_n_8">
+    -9.13dp
+  </dimen>
   <dimen name="margin_16">
     18.27dp
   </dimen>
