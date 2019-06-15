@@ -264,6 +264,18 @@ public class NormalWidget extends AppWidgetProvider {
         else if(summary.contains("fog")){
             criteria.add("fog");
         }
+        else if(summary.contains("snow") || summary.contains("sleet")){
+            criteria.add("snow");
+        }
+        else if(summary.contains("hail")){
+            criteria.add("hail");
+        }
+        else if(summary.contains("thunderstorm")){
+            criteria.add("thunderstorm");
+        }
+        else if(summary.contains("tornado")){
+            criteria.add("tornado");
+        }
         else if(summary.contains("clear")){
             if(!criteria.contains("clear")){
                 criteria.add("clear");
@@ -364,4 +376,3 @@ public class NormalWidget extends AppWidgetProvider {
         }
     }
 }
-
