@@ -245,10 +245,10 @@ public class NormalWidget extends AppWidgetProvider {
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         List<String> criteria = new ArrayList<>();
-        if(temp > 30){
+        if(temp > 27){
             criteria.add("hot");
         }
-        else if(temp < 10){
+        else if(temp < 15){
             criteria.add("cold");
         }
         else{
@@ -272,6 +272,10 @@ public class NormalWidget extends AppWidgetProvider {
 
         for(Quote q : quotes){
             for(String s: criteria){
+                if(q.getAtt().contains("*")){
+                    weatherQuotes.add(q);
+                    break;
+                }
                 if (q.getAtt().contains(s)){
                     weatherQuotes.add(q);
                     break;
