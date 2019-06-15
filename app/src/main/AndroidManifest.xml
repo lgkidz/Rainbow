@@ -43,6 +43,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <service android:name=".Service.WidgetTimeUpdater"/>
     </application>
 
 </manifest>
