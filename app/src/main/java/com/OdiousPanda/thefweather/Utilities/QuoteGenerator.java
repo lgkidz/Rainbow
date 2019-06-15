@@ -103,11 +103,14 @@ public class QuoteGenerator {
         }
 
         for(Quote q : quotes){
-            for(String s: criteria){
-                if(q.getAtt().contains("*")){
+            if(q.getAtt().contains("*")){
+                if(!q.getAtt().contains("widget")){
                     weatherQuotes.add(q);
-                    break;
                 }
+                continue;
+            }
+            for(String s: criteria){
+
                 if (q.getAtt().contains(s)){
                     weatherQuotes.add(q);
                     break;
