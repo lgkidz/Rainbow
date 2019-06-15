@@ -15,11 +15,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import com.OdiousPanda.thefweather.API.RetrofitService;
@@ -66,6 +70,7 @@ public class NormalWidget extends AppWidgetProvider {
     private static AppWidgetManager aWm;
     public static final String ACTION_UPDATE = "actionUpdate";
     public static final String ACTION_UPDATE_TIME = "actionTimeWidget";
+    public static final String ACTION_TAP = "widgetTap";
 
     private static final String TEMP_BITMAP = "tempBitmap";
     private static final String RF_BITMAP = "RFBitmap";
@@ -75,11 +80,12 @@ public class NormalWidget extends AppWidgetProvider {
     private static final String DAYNIGHT_BITMAP = "dnBitmap";
     private static final String DATE_BITMAP = "dateBitmap";
 
-    private boolean cloclStarted = false;
+    private static final int DOUBLE_CLICK_DELAY = 500;
 
     public static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
                                 final int appWidgetId) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
         widgetId = appWidgetId;
         remoteViews = views;
@@ -97,9 +103,14 @@ public class NormalWidget extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
 
-
+        Intent tapIntent = new Intent(context,NormalWidget.class);
+        tapIntent.setAction(ACTION_TAP);
+        PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
+        remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout,tapPending);
+        editor.putInt(ACTION_TAP,0).commit();
+        aWm.updateAppWidget(widgetId, remoteViews);
         long currentTime = System.currentTimeMillis();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         updateData(context,sharedPreferences);
         editor.putString(context.getString(R.string.widget_update_time_pref),String.valueOf(currentTime));
         Intent timeUpdateService = new Intent(context, WidgetTimeUpdater.class);
@@ -202,6 +213,8 @@ public class NormalWidget extends AppWidgetProvider {
 
     }
 
+
+
     private static void queryQuotes(final Context context){
         db.collection("quotes")
                 .get()
@@ -298,11 +311,13 @@ public class NormalWidget extends AppWidgetProvider {
         widgetId = ids[ids.length -1];
         Log.d("widgetTime", "onReceive: " + intent.getAction());
         remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
         super.onReceive(context, intent);
+
         if(ACTION_UPDATE.equals(intent.getAction())){
             updateData(context,sharedPreferences);
         }
+
         if(ACTION_UPDATE_TIME.equals(intent.getAction())){
             Date date = new Date();
             String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
@@ -314,6 +329,35 @@ public class NormalWidget extends AppWidgetProvider {
             aWm.updateAppWidget(widgetId, remoteViews);
         }
 
+        if(ACTION_TAP.equals(intent.getAction())){
+            int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
+            sharedPreferences.edit().putInt(ACTION_TAP, ++clickCount).commit();
+
+            final Handler handler = new Handler() {
+
+                public void handleMessage(Message msg){
+                    int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
+                    if(clickCount > 1) {
+                        updateData(context,sharedPreferences);
+                    }
+
+                    sharedPreferences.edit().putInt(ACTION_TAP,0).commit();
+                }
+
+            };
+
+            if(clickCount == 1){
+                new Thread() {
+                    @Override
+                    public void run(){
+                        try {
+                            synchronized(this) { wait(DOUBLE_CLICK_DELAY); }
+                            handler.sendEmptyMessage(0);
+                        } catch(InterruptedException ex) {}
+                    }
+                }.start();
+            }
+        }
     }
 }
 
