@@ -1,6 +1,7 @@
 package com.OdiousPanda.thefweather.Repositories;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -41,9 +42,9 @@ public class WeatherRepository {
     private List<AirQuality> airQualities = new ArrayList<>();
     private MutableLiveData<List<AirQuality>> airQualitiesList = new MutableLiveData<>();
 
-    public WeatherRepository(Application application){
+    public WeatherRepository(Context context){
         Log.d(TAG, "WeatherRepository: created");
-        WeatherDatabase database = WeatherDatabase.getInstance(application);
+        WeatherDatabase database = WeatherDatabase.getInstance(context);
         savedCoordinateDAO = database.savedCoordinateDAO();
         getAllCoordinates();
         weatherCall = RetrofitService.createWeatherCall();
@@ -51,9 +52,9 @@ public class WeatherRepository {
 
     }
 
-    public static synchronized WeatherRepository getInstance(Application application){
+    public static synchronized WeatherRepository getInstance(Context context){
         if(instance == null){
-            instance = new WeatherRepository(application);
+            instance = new WeatherRepository(context);
         }
         return instance;
     }

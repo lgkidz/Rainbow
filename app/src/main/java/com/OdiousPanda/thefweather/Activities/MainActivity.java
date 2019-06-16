@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         else{
             showNoConnection();
         }
+        Log.d(TAG, "onCreate: ");
     }
 
     private void showNoConnection(){
@@ -230,11 +231,40 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     protected void onResume() {
         super.onResume();
         registerReceiver(connectionChangeReceiver,new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        Log.d(TAG, "onResume: ");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(connectionChangeReceiver);
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //moveTaskToBack(true);
+        Log.d(TAG, "onBackPressed: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+        int pid = android.os.Process.myPid();
+        android.os.Process.killProcess(pid);
     }
 }

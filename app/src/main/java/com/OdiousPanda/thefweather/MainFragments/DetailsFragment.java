@@ -201,6 +201,7 @@ public class DetailsFragment extends Fragment {
     }
 
     public void updateData(Weather weather){
+        
         currentWeather = weather;
         String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
         String currentDistanceUnit = sharedPreferences.getString(getString(R.string.pref_distance),getString(R.string.km));
