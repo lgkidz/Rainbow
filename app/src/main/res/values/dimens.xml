@@ -15,9 +15,10 @@
     <dimen name="margin_n_8">-8dp</dimen>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="margin_n_16">-16dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_32">32dp</dimen>
-
+    <dimen name="dp360">360dp</dimen>
     <dimen name="wind_detail_ground_view_height">0.5dp</dimen>
     <dimen name="windmill_base_width">162dp</dimen>
     <dimen name="windmill_base_height">106dp</dimen>

@@ -44,11 +44,17 @@
   <dimen name="margin_n_16">
     -18.67dp
   </dimen>
+  <dimen name="margin_20">
+    23.33dp
+  </dimen>
   <dimen name="margin_24">
     28.0dp
   </dimen>
   <dimen name="margin_32">
     37.33dp
+  </dimen>
+  <dimen name="dp360">
+    420.0dp
   </dimen>
   <dimen name="wind_detail_ground_view_height">
     0.58dp
