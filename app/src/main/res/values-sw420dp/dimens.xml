@@ -1,0 +1,104 @@
+<resources>
+  <dimen name="activity_horizontal_margin">
+    18.67dp
+  </dimen>
+  <dimen name="activity_vertical_margin">
+    18.67dp
+  </dimen>
+  <dimen name="fab_margin">
+    18.67dp
+  </dimen>
+  <dimen name="dots_height">
+    35.0dp
+  </dimen>
+  <dimen name="dots_margin_bottom">
+    23.33dp
+  </dimen>
+  <dimen name="img_width_height">
+    140.0dp
+  </dimen>
+  <dimen name="slide_title">
+    35.0dp
+  </dimen>
+  <dimen name="slide_desc">
+    18.67dp
+  </dimen>
+  <dimen name="desc_padding">
+    46.67dp
+  </dimen>
+  <dimen name="aqi_scale_height">
+    3.5dp
+  </dimen>
+  <dimen name="margin_4">
+    4.67dp
+  </dimen>
+  <dimen name="margin_8">
+    9.33dp
+  </dimen>
+  <dimen name="margin_n_8">
+    -9.33dp
+  </dimen>
+  <dimen name="margin_16">
+    18.67dp
+  </dimen>
+  <dimen name="margin_n_16">
+    -18.67dp
+  </dimen>
+  <dimen name="margin_24">
+    28.0dp
+  </dimen>
+  <dimen name="margin_32">
+    37.33dp
+  </dimen>
+  <dimen name="big_icon_128dp">
+    149.33dp
+  </dimen>
+  <dimen name="forecast_item_height">
+    256.67dp
+  </dimen>
+  <dimen name="icon_90dp">
+    105.0dp
+  </dimen>
+  <dimen name="icon_24dp">
+    28.0dp
+  </dimen>
+  <dimen name="icon_36dp">
+    42.0dp
+  </dimen>
+  <dimen name="big_text">
+    98.0sp
+  </dimen>
+  <dimen name="text_view_12sp">
+    14.0sp
+  </dimen>
+  <dimen name="text_view_14sp">
+    16.33sp
+  </dimen>
+  <dimen name="text_view_18sp">
+    21.0sp
+  </dimen>
+  <dimen name="text_view_20sp">
+    23.33sp
+  </dimen>
+  <dimen name="text_view_24sp">
+    28.0sp
+  </dimen>
+  <dimen name="text_view_36sp">
+    42.0sp
+  </dimen>
+  <dimen name="text_view_48sp">
+    56.0sp
+  </dimen>
+  <dimen name="text_view_54sp">
+    63.0sp
+  </dimen>
+  <dimen name="widget_height">
+    210.0dp
+  </dimen>
+  <dimen name="widget_width">
+    373.33dp
+  </dimen>
+  <dimen name="widget_margin">
+    9.33dp
+  </dimen>
+</resources>

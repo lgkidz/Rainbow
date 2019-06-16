@@ -31,19 +31,38 @@ task clean(type: Delete) {
 
 task convertDimens() {
     def xmlFileOriginal = "${project.rootDir}/app/src/main/res/values/dimens.xml"
+    def xmlFile320 = "${project.rootDir}/app/src/main/res/values-sw320dp/dimens.xml"
     def xmlFile360 = "${project.rootDir}/app/src/main/res/values-sw360dp/dimens.xml"
     def xmlFile411 = "${project.rootDir}/app/src/main/res/values-sw411dp/dimens.xml"
+    def xmlFile420 = "${project.rootDir}/app/src/main/res/values-sw420dp/dimens.xml"
     def xmlFile480 = "${project.rootDir}/app/src/main/res/values-sw480dp/dimens.xml"
     def xmlFile540 = "${project.rootDir}/app/src/main/res/values-sw540dp/dimens.xml"
     def xmlFile600 = "${project.rootDir}/app/src/main/res/values-sw600dp/dimens.xml"
 
     def xmlOriginal = new XmlParser().parse(xmlFileOriginal)
-
+    def xml320 = xmlOriginal.clone()
     def xml411 = xmlOriginal.clone()
+    def xml420 = xmlOriginal.clone()
     def xml480 = xmlOriginal.clone()
     def xml540 = xmlOriginal.clone()
     def xml600 = xmlOriginal.clone()
 
+    xml320.dimen.each { dimen ->
+        def value = dimen.text();
+        if (value.contains("sp")) {
+            def newValue = value.replace("sp", "").toFloat()
+            newValue = round((320 / 360 * newValue).toFloat(), 2);
+            dimen.value = newValue + "sp"
+        } else if (value.contains("px")) {
+            def newValue = value.replace("px", "").toFloat()
+            newValue = round((320 / 360 * newValue).toFloat(), 2);
+            dimen.value = newValue + "px"
+        } else {
+            def newValue = value.replace("dp", "").toFloat()
+            newValue = round((320 / 360 * newValue).toFloat(), 2);
+            dimen.value = newValue + "dp"
+        }
+    }
     xml411.dimen.each { dimen ->
         def value = dimen.text();
         if (value.contains("sp")) {
@@ -57,6 +76,22 @@ task convertDimens() {
         } else {
             def newValue = value.replace("dp", "").toFloat()
             newValue = round((411 / 360 * newValue).toFloat(), 2);
+            dimen.value = newValue + "dp"
+        }
+    }
+    xml420.dimen.each { dimen ->
+        def value = dimen.text();
+        if (value.contains("sp")) {
+            def newValue = value.replace("sp", "").toFloat()
+            newValue = round((420 / 360 * newValue).toFloat(), 2);
+            dimen.value = newValue + "sp"
+        } else if (value.contains("px")) {
+            def newValue = value.replace("px", "").toFloat()
+            newValue = round((420 / 360 * newValue).toFloat(), 2);
+            dimen.value = newValue + "px"
+        } else {
+            def newValue = value.replace("dp", "").toFloat()
+            newValue = round((420 / 360 * newValue).toFloat(), 2);
             dimen.value = newValue + "dp"
         }
     }
@@ -110,7 +145,9 @@ task convertDimens() {
     }
 
     new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile360))).print(xmlOriginal)
+    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile320))).print(xml320)
     new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile411))).print(xml411)
+    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile420))).print(xml420)
     new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile480))).print(xml480)
     new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile540))).print(xml540)
     new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile600))).print(xml600)
