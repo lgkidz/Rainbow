@@ -114,13 +114,17 @@ public class HomeScreenFragment extends Fragment {
 
     public void updateData(Weather weather){
         currentWeather = weather;
-        QuoteGenerator.getInstance().getQuote(weather);
+        QuoteGenerator.getInstance(getActivity()).getQuote(weather);
         String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
         tvTemp.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
         tvDescription.setText(currentWeather.getCurrently().getSummary());
         String iconNameRaw = currentWeather.getCurrently().getIcon();
         iconName = iconNameRaw.replace("-", "_");
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void updateExplicitSetting(){
+        QuoteGenerator.getInstance(getActivity()).getQuote(currentWeather);
     }
 
     OnLayoutRefreshListener callback;

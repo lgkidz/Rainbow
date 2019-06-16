@@ -118,6 +118,14 @@ public class DetailsFragment extends Fragment {
         layoutAqi = v.findViewById(R.id.layoutAqi);
         layoutForecast = v.findViewById(R.id.layout_forecast);
 
+        String currentExplicitSetting = sharedPreferences.getString(getString(R.string.pref_explicit),getString(R.string.im_not));
+        if(currentExplicitSetting.equals(getString(R.string.im_not))){
+            tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
+        }
+        else{
+            tvRealFeelTitle.setText(getText(R.string.real_feel_title));
+        }
+
         aqiInfo = v.findViewById(R.id.icon_aqi_info);
         aqiInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +191,17 @@ public class DetailsFragment extends Fragment {
         String currentDistanceUnit = sharedPreferences.getString(getString(R.string.pref_distance),getString(R.string.km));
         String currentSpeedUnit = sharedPreferences.getString(getString(R.string.pref_speed),getString(R.string.kmph));
         String currentPressureUnit = sharedPreferences.getString(getString(R.string.pref_pressure),getString(R.string.psi));
+        String currentExplicitSetting = sharedPreferences.getString(getString(R.string.pref_explicit),getString(R.string.im_not));
+
         tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(),currentTempUnit));
+
+        if(currentExplicitSetting.equals(getString(R.string.im_not))){
+            tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
+        }
+        else{
+            tvRealFeelTitle.setText(getText(R.string.real_feel_title));
+        }
+
         String uvSummary = "";
         if(currentWeather.getCurrently().getUvIndex() == 0){
             uvSummary = "Where's the sun?";

@@ -30,6 +30,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private String currentDistanceUnit;
     private String currentSpeedUnit;
     private String currentPressureUnit;
+    private String currentExplicitSetting;
 
     private SharedPreferences sharedPreferences;
 
@@ -52,6 +53,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private TextView tvHelp;
     private TextView tvRate;
     private TextView tvAbout;
+    private TextView tvExplicit;
     private Button btnC;
     private Button btnF;
     private Button btnKm;
@@ -64,6 +66,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnMmhg;
     private Button btnDepress;
     private Button btnScientist;
+    private Button btnImNot;
+    private Button btnHellYeah;
     private Button btnHelpDev;
     private Button btnHelpMe;
 
@@ -96,6 +100,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         tvHelp = v.findViewById(R.id.tv_help_setting);
         tvRate = v.findViewById(R.id.tv_rate);
         tvAbout = v.findViewById(R.id.tv_about);
+        tvExplicit = v.findViewById(R.id.tv_explicit_setting);
         btnC = v.findViewById(R.id.btn_c);
         btnF = v.findViewById(R.id.btn_f);
         btnKm = v.findViewById(R.id.btn_km);
@@ -110,6 +115,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnScientist = v.findViewById(R.id.btn_scientist);
         btnHelpDev = v.findViewById(R.id.btn_help_dev);
         btnHelpMe = v.findViewById(R.id.btn_help_me);
+        btnImNot = v.findViewById(R.id.btn_im_not);
+        btnHellYeah = v.findViewById(R.id.btn_hell_yeah);
 
 
         tvRate.setOnClickListener(this);
@@ -129,6 +136,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnHelpDev.setOnClickListener(this);
         btnMi.setOnClickListener(this);
         btnHelpMe.setOnClickListener(this);
+        btnImNot.setOnClickListener(this);
+        btnHellYeah.setOnClickListener(this);
 
         btnHelpDev.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -181,6 +190,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         currentDistanceUnit = sharedPreferences.getString(getString(R.string.pref_distance),getString(R.string.km));
         currentSpeedUnit = sharedPreferences.getString(getString(R.string.pref_speed),getString(R.string.kmph));
         currentPressureUnit = sharedPreferences.getString(getString(R.string.pref_pressure),getString(R.string.psi));
+        currentExplicitSetting = sharedPreferences.getString(getString(R.string.pref_explicit),getString(R.string.im_not));
+
         colorThoseButtons();
         colorThoseTextView();
     }
@@ -194,6 +205,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         tvPressure.setTextColor(textColor);
         tvRate.setTextColor(textColor);
         tvHelp.setTextColor(textColor);
+        tvExplicit.setTextColor(textColor);
     }
 
     private void colorThoseButtons(){
@@ -237,8 +249,17 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updatePressureButtonColor(btnDepress.getId());
         }
 
+        if(currentExplicitSetting.equals(getString(R.string.im_not))){
+            updateExplicitButtonColor(btnImNot.getId());
+        }
+        else {
+            updateExplicitButtonColor(btnHellYeah.getId());
+        }
+
         updateHelpButtonColor();
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -292,6 +313,14 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 changePressureUnit(id);
                 break;
             }
+            case R.id.btn_im_not:{
+                changeExplicitSetting(id);
+                break;
+            }
+            case R.id.btn_hell_yeah:{
+                changeExplicitSetting(id);
+                break;
+            }
             case R.id.btn_help_dev:{
 
                 break;
@@ -311,6 +340,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             default: break;
         }
     }
+
+
 
     public void updateColorTheme(int[] argb){
         activeButtonColor = MyColorUtil.invertColor(argb);
@@ -497,6 +528,33 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             btnPsi.setTextColor(buttonTextColor);
             btnMmhg.setTextColor(buttonTextColor);
             btnDepress.setTextColor(activeButtonTextColor);
+        }
+    }
+
+    private void changeExplicitSetting(int id) {
+        String pref = getString(R.string.pref_explicit);
+        if(id == R.id.btn_im_not){
+            updateSharedPref(pref,getString(R.string.im_not));
+        }
+        else{
+            updateSharedPref(pref,getString(R.string.hell_yeah));
+        }
+        updateExplicitButtonColor(id);
+        HomeScreenFragment.getInstance().updateExplicitSetting();
+    }
+
+    private void updateExplicitButtonColor(int id) {
+        if(id == R.id.btn_im_not){
+            btnImNot.setBackgroundColor(activeButtonColor);
+            btnHellYeah.setBackgroundColor(buttonColor);
+            btnImNot.setTextColor(activeButtonTextColor);
+            btnHellYeah.setTextColor(buttonTextColor);
+        }
+        else{
+            btnImNot.setBackgroundColor(buttonColor);
+            btnHellYeah.setBackgroundColor(activeButtonColor);
+            btnImNot.setTextColor(buttonTextColor);
+            btnHellYeah.setTextColor(activeButtonTextColor);
         }
     }
 

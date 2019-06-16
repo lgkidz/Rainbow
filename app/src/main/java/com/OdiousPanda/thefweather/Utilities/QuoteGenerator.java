@@ -1,12 +1,15 @@
 package com.OdiousPanda.thefweather.Utilities;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
+import com.OdiousPanda.thefweather.Model.AQI.Co;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
+import com.OdiousPanda.thefweather.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,16 +25,21 @@ public class QuoteGenerator {
     List<Quote> quotes = new ArrayList<>();
     private static final String TAG = "WeatherA";
     private Weather weather;
+    private Context mContext;
 
     List<Quote> weatherQuotes = new ArrayList<>();
 
     private static QuoteGenerator instance;
 
-    public static synchronized QuoteGenerator getInstance() {
+    public static synchronized QuoteGenerator getInstance(Context context) {
         if(instance == null){
-            instance = new QuoteGenerator();
+            instance = new QuoteGenerator(context);
         }
         return instance;
+    }
+
+    public QuoteGenerator(Context context){
+        this.mContext = context;
     }
 
     private void doQuery(){
@@ -102,16 +110,26 @@ public class QuoteGenerator {
             }
         }
 
+        String explicit = mContext.getSharedPreferences(mContext.getString(R.string.pref_key_string),Context.MODE_PRIVATE).getString(mContext.getString(R.string.pref_explicit),mContext.getString(R.string.im_not));
         for(Quote q : quotes){
             if(q.getAtt().contains("*")){
                 if(!q.getAtt().contains("widget")){
+                    if(explicit.equals(mContext.getString(R.string.im_not))){
+                        Quote explicitQuote = q;
+                        explicitQuote.setMain(censorStrongWords(q.getMain()));
+                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                    }
                     weatherQuotes.add(q);
                 }
                 continue;
             }
             for(String s: criteria){
-
                 if (q.getAtt().contains(s)){
+                    if(explicit.equals(mContext.getString(R.string.im_not))){
+                        Quote explicitQuote = q;
+                        explicitQuote.setMain(censorStrongWords(q.getMain()));
+                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                    }
                     weatherQuotes.add(q);
                     break;
                 }
@@ -120,5 +138,14 @@ public class QuoteGenerator {
 
         Quote randomQuote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
         HomeScreenFragment.getInstance().updateQuote(randomQuote);
+    }
+
+    private String censorStrongWords(String text){
+        String textNoStrongWords = text.toLowerCase().replace("fucking ","").trim();
+        if(textNoStrongWords.length() > 0){
+            return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
+        }
+
+        return textNoStrongWords;
     }
 }

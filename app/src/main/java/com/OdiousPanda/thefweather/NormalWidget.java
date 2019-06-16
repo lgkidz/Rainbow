@@ -304,14 +304,24 @@ public class NormalWidget extends AppWidgetProvider {
                 criteria.add("clear");
             }
         }
-
+        String explicit = context.getSharedPreferences(context.getString(R.string.pref_key_string),Context.MODE_PRIVATE).getString(context.getString(R.string.pref_explicit),context.getString(R.string.im_not));
         for(Quote q : quotes){
             for(String s: criteria){
                 if(q.getAtt().contains("*")){
+                    if(explicit.equals(context.getString(R.string.im_not))){
+                        Quote explicitQuote = q;
+                        explicitQuote.setMain(censorStrongWords(q.getMain()));
+                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                    }
                     weatherQuotes.add(q);
                     break;
                 }
                 if (q.getAtt().contains(s)){
+                    if(explicit.equals(context.getString(R.string.im_not))){
+                        Quote explicitQuote = q;
+                        explicitQuote.setMain(censorStrongWords(q.getMain()));
+                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                    }
                     weatherQuotes.add(q);
                     break;
                 }
@@ -323,6 +333,15 @@ public class NormalWidget extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.quote_sub,textAsBitmap(context,quote.getSub(),SUB_BITMAP));
         remoteViews.setViewVisibility(R.id.widget_loading_layout,View.INVISIBLE);
         aWm.updateAppWidget(widgetId, remoteViews);
+    }
+
+    private static String censorStrongWords(String text){
+        String textNoStrongWords = text.toLowerCase().replace("fucking ","").trim();
+        if(textNoStrongWords.length() > 0){
+            return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
+        }
+
+        return textNoStrongWords;
     }
 
     @Override

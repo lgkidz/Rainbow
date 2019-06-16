@@ -39,7 +39,9 @@
     <string name="pref_distance">distanceUnit</string>
     <string name="pref_speed">speedUnit</string>
     <string name="pref_pressure">pressureUnit</string>
-
+    <string name="pref_explicit">explicitOrNot</string>
+    <string name="im_not">I\'m not</string>
+    <string name="hell_yeah">Hell yeah!</string>
     <string name="setting">Setting</string>
     <string name="temperature_setting_title">Select what you prefer</string>
     <string name="distance_setting_title">Distance unit</string>
@@ -66,6 +68,7 @@
     <string name="scientist">I\'m a scientist</string>
     <string name="details_heading">All things you need to know</string>
     <string name="real_feel_title">is what it fucking feels like</string>
+    <string name="real_feel_title_explicit">is what it feels like</string>
     <string name="uv_index_title">UV Index</string>
     <string name="humidity_title">Humidity</string>
     <string name="visibility_title">Visibility</string>
