@@ -33,6 +33,7 @@ import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
+import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
@@ -42,6 +43,8 @@ import mumayank.com.airlocationlibrary.AirLocation;
 
 
 public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener{
+
+
 
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
@@ -90,6 +93,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             showNoConnection();
         }
         Log.d(TAG, "onCreate: ");
+
+        Intent intent = getIntent();
+        if(intent != null && intent.getAction()!= null){
+            if(intent.getAction().equals(NormalWidget.ACTION_TO_DETAILS)){
+                mViewPager.setCurrentItem(2);
+            }
+        }
+
     }
 
     private void showNoConnection(){

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <dist:module dist:instant="true" />
 
@@ -17,24 +17,30 @@
         android:roundIcon="@drawable/logo_rainbow"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.HelpMeActivity"
+            android:screenOrientation="portrait"></activity>
+
         <receiver android:name=".NormalWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="actionUpdate"/>
-                <action android:name="actionTimeWidget"/>
+                <action android:name="actionUpdate" />
+                <action android:name="actionTimeWidget" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/normal_widget_info" />
         </receiver>
+
         <activity
             android:name=".Activities.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,7 +50,8 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <service android:name=".Service.WidgetTimeUpdater"/>
+
+        <service android:name=".Service.WidgetTimeUpdater" />
     </application>
 
 </manifest>

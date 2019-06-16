@@ -71,6 +71,8 @@ public class NormalWidget extends AppWidgetProvider {
     public static final String ACTION_UPDATE = "actionUpdate";
     public static final String ACTION_UPDATE_TIME = "actionTimeWidget";
     public static final String ACTION_TAP = "widgetTap";
+    public static final String ACTION_TO_DETAILS = "toDetailsScreen";
+
 
     private static final String TEMP_BITMAP = "tempBitmap";
     private static final String RF_BITMAP = "RFBitmap";
@@ -92,6 +94,7 @@ public class NormalWidget extends AppWidgetProvider {
         aWm = appWidgetManager;
 
         Intent mainActivityIntent = new Intent(context, MainActivity.class);
+        mainActivityIntent.setAction(ACTION_TO_DETAILS);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
 

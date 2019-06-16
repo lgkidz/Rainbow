@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
 import com.OdiousPanda.thefweather.Model.AQI.P;
 import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
@@ -150,9 +151,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     btnHelpMe.setBackgroundColor(buttonColor);
                 } else if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    btnHelpMe.setBackgroundColor(activeButtonColor);
-                    btnHelpDev.setBackgroundColor(buttonColor);
-                    Snackbar.make(v,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
+//                    btnHelpMe.setBackgroundColor(activeButtonColor);
+//                    btnHelpDev.setBackgroundColor(buttonColor);
+//                    Snackbar.make(v,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), HelpMeActivity.class));
                 }
                 return false;
             }
