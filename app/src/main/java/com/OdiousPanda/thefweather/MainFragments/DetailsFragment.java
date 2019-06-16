@@ -167,6 +167,11 @@ public class DetailsFragment extends Fragment {
         else{
             aqiInfo.setImageResource(R.drawable.ic_info_b);
         }
+
+        if(currentWeather != null){
+            ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),headingColor);
+            rvForecast.setAdapter(adapter);
+        }
     }
 
     private void colorThoseTextView(){
@@ -184,7 +189,7 @@ public class DetailsFragment extends Fragment {
         tvAqi.setTextColor(textColor);
         tvAqiSummary.setTextColor(textColor);
         tvAqiTitle.setTextColor(textColor);
-        tvForecast.setTextColor(textColor);
+        tvForecast.setTextColor(headingColor);
         tvWindTitle.setTextColor(headingColor);
         tvWindSpeed.setTextColor(headingColor);
         tvWindDirection.setTextColor(headingColor);
@@ -197,7 +202,7 @@ public class DetailsFragment extends Fragment {
         layoutVisibility.setBackgroundColor(layoutColor);
         layoutPressure.setBackgroundColor(layoutColor);
         layoutAqi.setBackgroundColor(layoutColor);
-        layoutForecast.setBackgroundColor(layoutColor);
+        //layoutForecast.setBackgroundColor(layoutColor);
     }
 
     public void updateUnit(){
@@ -333,7 +338,7 @@ public class DetailsFragment extends Fragment {
         rotate.setDuration(duration);
         rotate.setRepeatCount(Animation.INFINITE);
         windmillWings.startAnimation(rotate);
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),textColor);
+        ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),headingColor);
         rvForecast.setAdapter(adapter);
     }
 
