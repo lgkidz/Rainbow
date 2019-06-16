@@ -20,12 +20,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.PrefManager;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
+import com.bumptech.glide.Glide;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -190,8 +192,15 @@ public class WelcomeActivity extends AppCompatActivity {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater.inflate(layouts[position], container, false);
+            if(position != 0){
+                ImageView ins = view.findViewById(R.id.instruction_pic);
+                int resourceId = getResources().getIdentifier("drawable/instruction" + position, null, getPackageName());
+                Glide.with(WelcomeActivity.this)
+                        .load(resourceId)
+                        .centerCrop()
+                        .into(ins);
+            }
             container.addView(view);
-
             return view;
         }
 
