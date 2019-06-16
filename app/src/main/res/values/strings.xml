@@ -100,4 +100,15 @@
     <string name="aqi_unhealthy_des" translatable="true">Everyone may begin to experience health effects</string>
     <string name="aqi_very_unhealthy_des" translatable="true">Everyone may experience serious health effects</string>
     <string name="aqi_hazardous_des" translatable="true">Health warning of emergency conditions</string>
+
+    <string name="sun" translatable="true">Sun</string>
+    <string name="wind_title" translatable="true">Wind</string>
+    <string name="wind_north" translatable="true">North</string>
+    <string name="wind_north_east" translatable="true">Northeast</string>
+    <string name="wind_north_west" translatable="true">Northwest</string>
+    <string name="wind_east" translatable="true">East</string>
+    <string name="wind_south" translatable="true">South</string>
+    <string name="wind_south_east" translatable="true">Southeast</string>
+    <string name="wind_south_west" translatable="true">Southwest</string>
+    <string name="wind_west" translatable="true">West</string>
 </resources>

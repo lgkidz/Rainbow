@@ -204,6 +204,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_view_36sp"
                 app:fontFamily="@font/nunito"
+                android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginRight="@dimen/margin_8"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -230,6 +231,78 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin_16"
+            android:padding="@dimen/margin_8">
+            <TextView
+                android:id="@+id/wind_title"
+                android:text="@string/wind_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_view_24sp"
+                app:fontFamily="@font/nunito" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp">
+                <ImageView
+                    android:id="@+id/ground"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/wind_detail_ground_view_height"
+                    android:src="#333333"
+                    android:padding="@dimen/margin_16"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintLeft_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                <ImageView
+                    android:id="@+id/windmill_base"
+                    android:layout_width="@dimen/windmill_base_width"
+                    android:layout_height="@dimen/windmill_base_height"
+                    android:src="@drawable/windmill_base"
+                    android:layout_marginLeft="@dimen/margin_16"
+                    app:layout_constraintBottom_toTopOf="@+id/ground"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+                <ImageView
+                    android:id="@+id/windmill_wings"
+                    android:layout_width="@dimen/windmill_wings_width"
+                    android:layout_height="@dimen/windmill_wings_width"
+                    android:src="@drawable/windmill_wings"
+                    app:layout_constraintLeft_toLeftOf="@id/windmill_base"
+                    app:layout_constraintRight_toRightOf="@id/windmill_base"
+                    app:layout_constraintTop_toTopOf="@id/windmill_base"
+                    app:layout_constraintBottom_toBottomOf="@id/windmill_base"/>
+
+                <TextView
+                    android:id="@+id/wind_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginRight="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_8"
+                    app:fontFamily="@font/nunito"
+                    android:text="26 km/h"
+                    android:textSize="@dimen/text_view_20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/wind_direction"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/wind_direction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginRight="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_8"
+                    app:fontFamily="@font/nunito"
+                    android:text="South"
+                    android:textSize="@dimen/text_view_18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_forecast"

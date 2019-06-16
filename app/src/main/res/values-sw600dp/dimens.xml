@@ -50,6 +50,18 @@
   <dimen name="margin_32">
     53.33dp
   </dimen>
+  <dimen name="wind_detail_ground_view_height">
+    0.83dp
+  </dimen>
+  <dimen name="windmill_base_width">
+    270.0dp
+  </dimen>
+  <dimen name="windmill_base_height">
+    176.67dp
+  </dimen>
+  <dimen name="windmill_wings_width">
+    116.67dp
+  </dimen>
   <dimen name="big_icon_128dp">
     213.33dp
   </dimen>

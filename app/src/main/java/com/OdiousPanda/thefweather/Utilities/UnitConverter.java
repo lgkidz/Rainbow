@@ -56,7 +56,11 @@ public class UnitConverter {
         else if(unit.equals("bananas per hour")){
             return Math.round(speed * 9041.254) + " banana/h";
         }
-        return String.valueOf(Math.round(speed)) + " mph";
+        return Math.round(speed) + " mph";
+    }
+
+    public static float toMeterPerSecond(float speed){
+        return (float)(speed * 0.447);
     }
 
     public static String convertToPressureUnit(float pressure, String unit){

@@ -18,6 +18,10 @@
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_32">32dp</dimen>
 
+    <dimen name="wind_detail_ground_view_height">0.5dp</dimen>
+    <dimen name="windmill_base_width">162dp</dimen>
+    <dimen name="windmill_base_height">106dp</dimen>
+    <dimen name="windmill_wings_width">70dp</dimen>
     <dimen name="big_icon_128dp">128dp</dimen>
     <dimen name="forecast_item_height">220dp</dimen>
     <dimen name="icon_90dp">90dp</dimen>

@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,6 +62,9 @@ public class DetailsFragment extends Fragment {
     private TextView tvAqi;
     private TextView tvAqiSummary;
     private TextView tvForecast;
+    private TextView tvWindTitle;
+    private TextView tvWindSpeed;
+    private TextView tvWindDirection;
     private ConstraintLayout layoutRealFeel;
     private LinearLayout layoutHumidity;
     private LinearLayout layoutUV;
@@ -68,6 +74,7 @@ public class DetailsFragment extends Fragment {
     private LinearLayout layoutForecast;
     private ImageView aqiInfo;
     private RecyclerView rvForecast;
+    private ImageView windmillWings;
 
     private int headingColor = Color.argb(255,0,0,0);
     private int textColor = Color.argb(255,0,0,0);
@@ -109,6 +116,10 @@ public class DetailsFragment extends Fragment {
         tvAqiSummary = v.findViewById(R.id.tv_aqi_summary);
         tvAqiTitle = v.findViewById(R.id.tv_aqi_title);
         tvForecast = v.findViewById(R.id.tv_forecast_title);
+        tvWindTitle = v.findViewById(R.id.wind_title);
+        tvWindSpeed = v.findViewById(R.id.wind_speed);
+        tvWindDirection = v.findViewById(R.id.wind_direction);
+        windmillWings = v.findViewById(R.id.windmill_wings);
 
         layoutRealFeel = v.findViewById(R.id.layoutRealFeel);
         layoutUV = v.findViewById(R.id.layoutUV);
@@ -174,6 +185,9 @@ public class DetailsFragment extends Fragment {
         tvAqiSummary.setTextColor(textColor);
         tvAqiTitle.setTextColor(textColor);
         tvForecast.setTextColor(textColor);
+        tvWindTitle.setTextColor(headingColor);
+        tvWindSpeed.setTextColor(headingColor);
+        tvWindDirection.setTextColor(headingColor);
     }
 
     private void colorThoseLayout(){
@@ -202,26 +216,6 @@ public class DetailsFragment extends Fragment {
             tvRealFeelTitle.setText(getText(R.string.real_feel_title));
         }
 
-        String uvSummary = "";
-        if(currentWeather.getCurrently().getUvIndex() == 0){
-            uvSummary = "Where's the sun?";
-        }
-        else if(currentWeather.getCurrently().getUvIndex() < 3){
-            uvSummary = " (Low)";
-        }else if(currentWeather.getCurrently().getUvIndex() < 6){
-            uvSummary = " (Moderate)";
-        }
-        else if(currentWeather.getCurrently().getUvIndex() < 8){
-            uvSummary = " (High)";
-        }
-        else if(currentWeather.getCurrently().getUvIndex() < 11){
-            uvSummary = " (High af)";
-        }
-        else {
-            uvSummary = " (Extreme)";
-        }
-        tvUV.setText((Math.round(currentWeather.getCurrently().getUvIndex())==0?"":Math.round(currentWeather.getCurrently().getUvIndex())) + uvSummary);
-        tvHumidity.setText(Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%");
         tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(),currentPressureUnit));
         if(currentPressureUnit.equals(getString(R.string.depression_unit))){
             tvPressureTitle.setText(getString(R.string.pressure_title_alt));
@@ -230,6 +224,8 @@ public class DetailsFragment extends Fragment {
             tvPressureTitle.setText(getString(R.string.pressure_title));
         }
         tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(),currentDistanceUnit));
+
+        tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(),currentSpeedUnit));
         ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),textColor);
         rvForecast.setAdapter(adapter);
     }
@@ -267,6 +263,76 @@ public class DetailsFragment extends Fragment {
             tvPressureTitle.setText("Depression level");
         }
         tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(),currentDistanceUnit));
+
+        tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(),currentSpeedUnit));
+        float windSpeedMps = UnitConverter.toMeterPerSecond(currentWeather.getCurrently().getWindSpeed());
+        String windDirectionText = "";
+        if(windSpeedMps > 0){
+            float windBearing = currentWeather.getCurrently().getWindBearing();
+            if((windBearing >= 0 && windBearing < 11.25) || (windBearing >= 348.75 && windBearing <= 360)){
+                windDirectionText = getString(R.string.wind_north);
+            }
+            else if(windBearing >= 11.25 && windBearing < 33.75){
+                windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_east);
+            }
+            else if(windBearing >= 33.75 && windBearing < 56.25){
+                windDirectionText = getString(R.string.wind_north_east);
+            }
+            else if(windBearing >= 56.25 && windBearing < 78.75){
+                windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_north_east);
+            }
+            else if(windBearing >= 78.75 && windBearing < 101.25){
+                windDirectionText = getString(R.string.wind_east);
+            }
+            else if(windBearing >= 101.25 && windBearing < 123.75){
+                windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_south_east);
+            }
+            else if(windBearing >= 123.75 && windBearing < 146.25){
+                windDirectionText = getString(R.string.wind_south_east);
+            }
+            else if(windBearing >= 146.25 && windBearing < 168.75){
+                windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_east);
+            }
+            else if(windBearing >= 168.75 && windBearing < 191.25){
+                windDirectionText = getString(R.string.wind_south);
+            }
+            else if(windBearing >= 191.25 && windBearing < 213.75){
+                windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_west);
+            }
+            else if(windBearing >= 213.75 && windBearing < 236.25){
+                windDirectionText = getString(R.string.wind_south_west);
+            }
+            else if(windBearing >= 236.25 && windBearing < 258.75){
+                windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_south_west);
+            }
+            else if(windBearing >= 258.75 && windBearing < 281.25){
+                windDirectionText = getString(R.string.wind_west);
+            }
+            else if(windBearing >= 281.25 && windBearing < 303.75){
+                windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_north_west);
+            }
+            else if(windBearing >= 303.75 && windBearing <= 326.25){
+                windDirectionText = getString(R.string.wind_north_west);
+            }
+            else if(windBearing >= 326.25 && windBearing < 348.75){
+                windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_west);
+            }
+        }
+        tvWindDirection.setText(windDirectionText);
+        //set Windmill rotating animation
+        windmillWings.clearAnimation();
+        double windmillWingsDiameter = 10; //diameter in meter
+
+        double roundPerSec = windSpeedMps/(Math.PI * windmillWingsDiameter);
+        int duration = (int) (1000/(roundPerSec));
+        RotateAnimation rotate = new RotateAnimation(0, -360,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        rotate.setInterpolator(new LinearInterpolator());
+        rotate.setDuration(duration);
+        rotate.setRepeatCount(Animation.INFINITE);
+        windmillWings.startAnimation(rotate);
         ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),textColor);
         rvForecast.setAdapter(adapter);
     }

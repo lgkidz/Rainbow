@@ -133,9 +133,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnMmhg.setOnClickListener(this);
         btnDepress.setOnClickListener(this);
         btnScientist.setOnClickListener(this);
-        btnHelpDev.setOnClickListener(this);
         btnMi.setOnClickListener(this);
-        btnHelpMe.setOnClickListener(this);
         btnImNot.setOnClickListener(this);
         btnHellYeah.setOnClickListener(this);
 
@@ -169,20 +167,15 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        tvRate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
-            }
-        });
+    }
 
-        tvAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AboutDialog aboutDialog = new AboutDialog();
-                aboutDialog.showDialog(getActivity());
-            }
-        });
+    private void rateThisApp(){
+        Snackbar.make(tvRate,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void showAboutMeDialog(){
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.showDialog(getActivity());
     }
 
     private void getSetting(){
@@ -259,8 +252,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         updateHelpButtonColor();
     }
 
-
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -321,20 +312,12 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 changeExplicitSetting(id);
                 break;
             }
-            case R.id.btn_help_dev:{
-
-                break;
-            }
-            case R.id.btn_help_me:{
-
-                break;
-            }
             case R.id.tv_rate:{
-
+                rateThisApp();
                 break;
             }
             case R.id.tv_about:{
-
+                showAboutMeDialog();
                 break;
             }
             default: break;
