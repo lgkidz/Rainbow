@@ -83,4 +83,18 @@
     <string name="no_connection_tv1">I can\'t connect to the internet</string>
     <string name="no_connection_tv2">I can\'t call my buddy on the cloud...</string>
     <string name="no_connection_tv3">Do you really want me to cry?</string>
+    <string name="air_quality_dialog_heading">Air Quality</string>
+
+    <string name="aqi_good" translatable="true">Good</string>
+    <string name="aqi_moderate" translatable="true">Moderate</string>
+    <string name="aqi_unhealthy_sensitive" translatable="true">Unhealthy for Sensitive Group</string>
+    <string name="aqi_unhealthy" translatable="true">Unhealthy</string>
+    <string name="aqi_very_unhealthy" translatable="true">Very Unhealthy</string>
+    <string name="aqi_hazardous" translatable="true">Hazardous</string>
+    <string name="aqi_good_des" translatable="true">Air quality is considered satisfactory</string>
+    <string name="aqi_moderate_des" translatable="true">Air quality is acceptable</string>
+    <string name="aqi_unhealthy_sensitive_des" translatable="true">Members of sensitive groups may experience health effects</string>
+    <string name="aqi_unhealthy_des" translatable="true">Everyone may begin to experience health effects</string>
+    <string name="aqi_very_unhealthy_des" translatable="true">Everyone may experience serious health effects</string>
+    <string name="aqi_hazardous_des" translatable="true">Health warning of emergency conditions</string>
 </resources>

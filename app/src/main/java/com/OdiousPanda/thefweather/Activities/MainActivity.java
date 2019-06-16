@@ -15,7 +15,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
@@ -41,10 +39,7 @@ import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
 import java.util.List;
 import mumayank.com.airlocationlibrary.AirLocation;
 
-
 public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener{
-
-
 
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
@@ -59,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             }
         }
     };
-
 
     private static final String TAG = "weatherA";
 

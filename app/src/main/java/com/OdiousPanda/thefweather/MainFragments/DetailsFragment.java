@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.OdiousPanda.thefweather.Adapters.ForecastAdapter;
+import com.OdiousPanda.thefweather.CustomDialogs.AirQualityDialog;
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
@@ -64,7 +66,7 @@ public class DetailsFragment extends Fragment {
     private LinearLayout layoutPressure;
     private ConstraintLayout layoutAqi;
     private LinearLayout layoutForecast;
-
+    private ImageView aqiInfo;
     private RecyclerView rvForecast;
 
     private int headingColor = Color.argb(255,0,0,0);
@@ -116,6 +118,14 @@ public class DetailsFragment extends Fragment {
         layoutAqi = v.findViewById(R.id.layoutAqi);
         layoutForecast = v.findViewById(R.id.layout_forecast);
 
+        aqiInfo = v.findViewById(R.id.icon_aqi_info);
+        aqiInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AirQualityDialog airQualityDialog = new AirQualityDialog(getActivity(),airQuality);
+                airQualityDialog.showDialog();
+            }
+        });
 
         if(currentWeather != null){
             updateUnit();
@@ -132,6 +142,12 @@ public class DetailsFragment extends Fragment {
         layoutColor = Color.argb(255,r,g,b);
         colorThoseLayout();
         colorThoseTextView();
+        if(textColor == Color.WHITE){
+            aqiInfo.setImageResource(R.drawable.ic_info_w);
+        }
+        else{
+            aqiInfo.setImageResource(R.drawable.ic_info_b);
+        }
     }
 
     private void colorThoseTextView(){
@@ -245,8 +261,11 @@ public class DetailsFragment extends Fragment {
         if(aqi < 51){
             aqiSummary = "Hmmmm, fresh air!";
         }
+        else if(aqi < 101){
+            aqiSummary = "The air is quite okay.";
+        }
         else if(aqi < 151){
-            aqiSummary = "A bit unhealthy. If you're weak, stay home.";
+            aqiSummary = "A bit unhealthy for those special snowflakes.";
         }
         else if(aqi < 201){
             aqiSummary = "Unhealthy! Inhale more for diseases.";
@@ -255,8 +274,9 @@ public class DetailsFragment extends Fragment {
             aqiSummary = "Unhealthy as fuck! Lung cancer awaits you outside.";
         }
         else{
-            aqiSummary = "Sniffing your dog's butthole would be more healthy.";
+            aqiSummary = "Living in chernobyl would be more healthy.";
         }
         tvAqiSummary.setText(aqiSummary);
+
     }
 }

@@ -1,4 +1,4 @@
-package com.OdiousPanda.thefweather.Utilities;
+package com.OdiousPanda.thefweather.CustomDialogs;
 
 import android.app.Dialog;
 import android.content.Context;

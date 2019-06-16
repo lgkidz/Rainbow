@@ -35,4 +35,11 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+
+    <color name="aqi_good">#009866</color>
+    <color name="aqi_moderate">#fedd39</color>
+    <color name="aqi_unhealthy_sensitive">#fe9835</color>
+    <color name="aqi_unhealthy">#cb0232</color>
+    <color name="aqi_very_unhealthy">#660697</color>
+    <color name="aqi_hazardous">#7d0121</color>
 </resources>

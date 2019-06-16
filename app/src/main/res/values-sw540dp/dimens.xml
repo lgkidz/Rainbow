@@ -26,6 +26,9 @@
   <dimen name="desc_padding">
     60.0dp
   </dimen>
+  <dimen name="aqi_scale_height">
+    4.5dp
+  </dimen>
   <dimen name="margin_4">
     6.0dp
   </dimen>
@@ -58,6 +61,9 @@
   </dimen>
   <dimen name="big_text">
     126.0sp
+  </dimen>
+  <dimen name="text_view_12sp">
+    18.0sp
   </dimen>
   <dimen name="text_view_14sp">
     21.0sp

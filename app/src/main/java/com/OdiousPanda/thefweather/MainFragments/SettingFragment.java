@@ -1,6 +1,5 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +15,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
-import com.OdiousPanda.thefweather.Model.AQI.P;
 import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
-import com.OdiousPanda.thefweather.Utilities.AboutDialog;
+import com.OdiousPanda.thefweather.CustomDialogs.AboutDialog;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -69,6 +67,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnHelpDev;
     private Button btnHelpMe;
 
+
     private int activeButtonColor = Color.argb(255,255,255,255);
     private int buttonColor = Color.argb(255,255,255,255);
     private int textColor = Color.argb(255,0,0,0);
@@ -111,6 +110,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnScientist = v.findViewById(R.id.btn_scientist);
         btnHelpDev = v.findViewById(R.id.btn_help_dev);
         btnHelpMe = v.findViewById(R.id.btn_help_me);
+
 
         tvRate.setOnClickListener(this);
         tvAbout.setOnClickListener(this);
@@ -322,6 +322,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         buttonColor = Color.argb(255,r,g,b);
         buttonTextColor = MyColorUtil.blackOrWhiteOf(new int[]{255,r,g,b});
         getSetting();
+
     }
 
     private void changeTempUnit(int id){

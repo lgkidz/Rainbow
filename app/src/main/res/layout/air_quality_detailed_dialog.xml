@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DA5F6A"
+        app:fontFamily="@font/nunito"
+        android:text="@string/air_quality_dialog_heading"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:textSize="@dimen/text_view_24sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fontFamily="@font/nunito"
+        android:text="Here are some scientific information"
+        android:textColor="#000"
+        android:gravity="center"
+        android:padding="@dimen/margin_16"
+        android:textSize="@dimen/text_view_20sp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_16"
+        android:paddingRight="@dimen/margin_16"
+
+        android:layout_marginTop="8dp">
+        <LinearLayout
+            android:id="@+id/index_number_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:fontFamily="@font/nunito"
+                android:textColor="#000"
+                android:textSize="@dimen/text_view_12sp"
+                android:text="0" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:fontFamily="@font/nunito"
+                android:textColor="#000"
+                android:textSize="@dimen/text_view_12sp"
+                android:text="50" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:fontFamily="@font/nunito"
+                android:textColor="#000"
+                android:textSize="@dimen/text_view_12sp"
+                android:text="100" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:fontFamily="@font/nunito"
+                android:textColor="#000"
+                android:textSize="@dimen/text_view_12sp"
+                android:text="150" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                app:fontFamily="@font/nunito"
+                android:textColor="#000"
+                android:textSize="@dimen/text_view_12sp"
+                android:text="200" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                app:fontFamily="@font/nunito"
+                android:textColor="#000"
+                android:textSize="@dimen/text_view_12sp"
+                android:text="300" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                app:fontFamily="@font/nunito"
+                android:textColor="#000"
+                android:textSize="@dimen/text_view_12sp"
+                android:text="500" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/index_scale"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/aqi_scale_height"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_marginTop="@dimen/margin_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/index_number_layout">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_good" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_moderate" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_unhealthy_sensitive" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_unhealthy" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/aqi_very_unhealthy" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@color/aqi_hazardous" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/aqi_index_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/circle_indicator"
+            app:layout_constraintTop_toTopOf="@id/index_scale"
+            app:layout_constraintBottom_toBottomOf="@id/index_scale"
+            app:layout_constraintStart_toStartOf="@id/index_scale"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="@dimen/margin_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/index_scale">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/aqi_good"
+                android:textColor="#000"
+                app:fontFamily="@font/nunito"
+                android:textSize="@dimen/text_view_12sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/aqi_hazardous"
+                android:textColor="#000"
+                app:fontFamily="@font/nunito"
+                android:textSize="@dimen/text_view_12sp"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/relative_layout_aqi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_8">
+        <TextView
+            android:id="@+id/tv_aqi_index"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_view_48sp"
+            android:textColor="#000"
+            app:fontFamily="@font/nunito"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/tv_aqi_index"
+            android:paddingLeft="@dimen/margin_8"
+            android:paddingRight="@dimen/margin_8"
+            android:weightSum="2">
+            <TextView
+                android:id="@+id/tv_aqi_level"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_view_18sp"
+                android:textColor="#000"
+                app:fontFamily="@font/nunito"/>
+            <TextView
+                android:id="@+id/tv_aqi_des"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_view_14sp"
+                android:textColor="#000"
+                app:fontFamily="@font/nunito" />
+        </LinearLayout>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:textSize="@dimen/text_view_12sp"
+        android:paddingEnd="@dimen/margin_16"
+        android:textColor="#000"
+        android:gravity="end"
+        android:text="providede by aqicn.org"/>
+    <Button
+        android:id="@+id/btn_close_about"
+        android:textColor="#ffffff"
+        android:layout_marginTop="@dimen/margin_16"
+        android:textSize="@dimen/text_view_20sp"
+        app:fontFamily="@font/nunito"
+        android:text="@string/about_dialog_close_text"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:background="#DA5F6A"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

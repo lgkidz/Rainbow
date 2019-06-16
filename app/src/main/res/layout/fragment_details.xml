@@ -223,6 +223,13 @@
                 app:layout_constraintEnd_toStartOf="@+id/tv_aqi"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_aqi_title" />
+
+            <ImageView
+                android:id="@+id/icon_aqi_info"
+                android:layout_width="@dimen/margin_16"
+                android:layout_height="@dimen/margin_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
