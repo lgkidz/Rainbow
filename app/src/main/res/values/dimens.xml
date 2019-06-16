@@ -21,6 +21,8 @@
     <dimen name="big_icon_128dp">128dp</dimen>
     <dimen name="forecast_item_height">220dp</dimen>
     <dimen name="icon_90dp">90dp</dimen>
+    <dimen name="icon_24dp">24dp</dimen>
+    <dimen name="icon_36dp">36dp</dimen>
     <dimen name="big_text">84sp</dimen>
     <dimen name="text_view_12sp">12sp</dimen>
     <dimen name="text_view_14sp">14sp</dimen>

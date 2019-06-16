@@ -59,6 +59,12 @@
   <dimen name="icon_90dp">
     120.0dp
   </dimen>
+  <dimen name="icon_24dp">
+    32.0dp
+  </dimen>
+  <dimen name="icon_36dp">
+    48.0dp
+  </dimen>
   <dimen name="big_text">
     112.0sp
   </dimen>
