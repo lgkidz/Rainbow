@@ -13,9 +13,7 @@
     <string name="label_setting">OPEN SETTINGS</string>
     <string name="cancel">Cancel</string>
 
-
     <string name="next">NEXT</string>
-    <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Hello!</string>
@@ -75,14 +73,13 @@
     <string name="forecast_title">The next 7 days</string>
     <string name="air_quality_index_title">Air Quality Index</string>
     <string name="pressure_title_alt">Depression level</string>
-    <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
     <string name="about_dialog_heading">Hi!</string>
     <string name="about_dialog_intro">I\'m Rainbow, the most friendly weather app you can ever find. I was born with a mission of bringing smiles and useful weather information to your daily life, definitely not because someone has too much free time on his hands.</string>
     <string name="about_dialog_outro">If you find me interesting, go ahead and give me a 5-star on PlayStore. Love ya!</string>
     <string name="about_dialog_close_text">Nice!</string>
-    <string name="loading_text">Contacting my cloud friend...</string>
+    <string name="loading_text">Contacting my cloud buddy...</string>
     <string name="no_connection_tv1">I can\'t connect to the internet</string>
     <string name="no_connection_tv2">I can\'t call my buddy on the cloud...</string>
     <string name="no_connection_tv3">Do you really want me to cry?</string>

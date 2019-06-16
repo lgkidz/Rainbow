@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.location.Location;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -21,7 +20,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
@@ -43,8 +46,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(isConnected(context)) Toast.makeText(context, "Connected.", Toast.LENGTH_LONG).show();
-            else Toast.makeText(context, "Lost connect.", Toast.LENGTH_LONG).show();
+            if(isConnected(context)){
+                if(screenInitialized){
+                    startGettingData();
+                }
+            }
+            else{
+                showNoConnection();
+            }
         }
     };
 
@@ -59,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private CoordinatorLayout coordinatorLayout;
+    private RelativeLayout loadingLayout;
+    private RelativeLayout noConnectionLayout;
+    private ImageView loadingIcon;
+    private boolean screenInitialized = false;
 
     private int currentBackgroundColor = Color.argb(255,255,255,255);
 
@@ -69,10 +82,25 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         sharedPreferences = getSharedPreferences(getString(R.string.pref_key_string),MODE_PRIVATE);
         initViews();
+        HomeScreenFragment.getInstance().setOnRefreshListener(this);
+        if(isConnected(this)){
+            startGettingData();
+        }
+        else{
+            showNoConnection();
+        }
+    }
+
+    private void showNoConnection(){
+        loadingLayout.setVisibility(View.VISIBLE);
+        noConnectionLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void startGettingData(){
+        loadingLayout.setVisibility(View.VISIBLE);
+        noConnectionLayout.setVisibility(View.INVISIBLE);
         setupLocationObservers();
         updateCurrentLocation();
-        HomeScreenFragment.getInstance().setOnRefreshListener(this);
-
     }
 
     private void initViews(){
@@ -80,9 +108,15 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
         coordinatorLayout = findViewById(R.id.main_content);
+        loadingIcon = findViewById(R.id.loading_icon);
+        Animation spin = AnimationUtils.loadAnimation(MainActivity.this, R.anim.spin);
+        loadingIcon.startAnimation(spin);
+        loadingLayout = findViewById(R.id.loading_layout);
+        noConnectionLayout = findViewById(R.id.no_connection_layout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setCurrentItem(1);
+        screenInitialized = true;
     }
 
     private void setupLocationObservers(){
@@ -105,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 DetailsFragment.getInstance().updateData(weathers.get(0));
                 HomeScreenFragment.getInstance().updateData(weathers.get(0));
                 updateColor();
+                loadingLayout.setVisibility(View.INVISIBLE);
             }
         });
         weatherViewModel.getAqiData().observe(this, new Observer<List<AirQuality>>() {
