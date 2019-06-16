@@ -3,7 +3,10 @@ package com.OdiousPanda.thefweather.Activities;
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
@@ -13,8 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
+
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
@@ -31,6 +39,15 @@ import mumayank.com.airlocationlibrary.AirLocation;
 
 
 public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener{
+
+    BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(isConnected(context)) Toast.makeText(context, "Connected.", Toast.LENGTH_LONG).show();
+            else Toast.makeText(context, "Lost connect.", Toast.LENGTH_LONG).show();
+        }
+    };
+
 
     private static final String TAG = "weatherA";
 
@@ -162,7 +179,27 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         DetailsFragment.getInstance().updateColorTheme(argb);
         SettingFragment.getInstance().updateColorTheme(argb);
         HomeScreenFragment.getInstance().setColorTheme(textColorCode);
+    }
 
+    private boolean isConnected(Context context){
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnected();
+        return isConnected;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(connectionChangeReceiver,new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(connectionChangeReceiver);
     }
 }
