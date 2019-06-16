@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/widget_layout"
     android:orientation="vertical">
-
     <LinearLayout
         android:id="@+id/layout_data"
         android:layout_width="match_parent"
@@ -93,7 +92,8 @@
         android:id="@+id/widget_quote_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@id/layout_data">
         <ImageView
             android:id="@+id/quote_main"
             android:layout_width="wrap_content"
@@ -111,4 +111,19 @@
             android:layout_marginLeft="8dp"
             android:layout_below="@id/quote_main" />
     </LinearLayout>
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/widget_loading_layout"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="@dimen/icon_90dp"
+            android:layout_height="@dimen/icon_90dp"
+            android:indeterminate="true"
+            android:layout_centerInParent="true"
+            style="?android:attr/progressBarStyleLarge"
+            android:indeterminateDrawable="@drawable/progressbar_circular"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

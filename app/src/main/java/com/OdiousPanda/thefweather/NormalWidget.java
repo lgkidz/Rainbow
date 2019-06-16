@@ -14,6 +14,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +23,9 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -32,6 +37,7 @@ import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.Service.WidgetTimeUpdater;
+import com.OdiousPanda.thefweather.Utilities.BlurDrawable;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -301,6 +307,7 @@ public class NormalWidget extends AppWidgetProvider {
         quote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
         remoteViews.setImageViewBitmap(R.id.quote_main,textAsBitmap(context,quote.getMain(),MAIN_BITMAP));
         remoteViews.setImageViewBitmap(R.id.quote_sub,textAsBitmap(context,quote.getSub(),SUB_BITMAP));
+        remoteViews.setViewVisibility(R.id.widget_loading_layout,View.INVISIBLE);
         aWm.updateAppWidget(widgetId, remoteViews);
     }
 
@@ -357,7 +364,10 @@ public class NormalWidget extends AppWidgetProvider {
                 public void handleMessage(Message msg){
                     int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
                     if(clickCount > 1) {
+                        remoteViews.setViewVisibility(R.id.widget_loading_layout,View.VISIBLE);
+                        aWm.updateAppWidget(widgetId, remoteViews);
                         updateData(context,sharedPreferences);
+
                     }
 
                     sharedPreferences.edit().putInt(ACTION_TAP,0).commit();
