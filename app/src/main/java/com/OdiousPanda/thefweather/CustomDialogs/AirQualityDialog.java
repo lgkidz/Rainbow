@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.R;
@@ -39,27 +40,27 @@ public class AirQualityDialog {
         tvAqiIndex.setText(String.valueOf((int)aqiIndex));
 
         if (aqiIndex <= 50) {
-            tvAqiIndex.setTextColor(context.getResources().getColor(R.color.aqi_good));
+            tvAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_good));
             tvAqiLevel.setText(context.getString(R.string.aqi_good));
             tvAqiDes.setText(context.getString(R.string.aqi_good_des));
         } else if (aqiIndex > 50 && aqiIndex <= 100) {
-            tvAqiIndex.setTextColor(context.getResources().getColor(R.color.aqi_moderate));
+            tvAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_moderate));
             tvAqiLevel.setText(context.getString(R.string.aqi_moderate));
             tvAqiDes.setText(context.getString(R.string.aqi_moderate_des));
         } else if (aqiIndex > 100 && aqiIndex <= 150) {
-            tvAqiIndex.setTextColor(context.getResources().getColor(R.color.aqi_unhealthy_sensitive));
+            tvAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive));
             tvAqiLevel.setText(context.getString(R.string.aqi_unhealthy_sensitive));
             tvAqiDes.setText(context.getString(R.string.aqi_unhealthy_sensitive_des));
         } else if (aqiIndex > 150 && aqiIndex <= 200) {
-            tvAqiIndex.setTextColor(context.getResources().getColor(R.color.aqi_unhealthy));
+            tvAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy));
             tvAqiLevel.setText(context.getString(R.string.aqi_unhealthy));
             tvAqiDes.setText(context.getString(R.string.aqi_unhealthy_des));
         } else if (aqiIndex > 200 && aqiIndex <= 300) {
-            tvAqiIndex.setTextColor(context.getResources().getColor(R.color.aqi_very_unhealthy));
+            tvAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_very_unhealthy));
             tvAqiLevel.setText(context.getString(R.string.aqi_very_unhealthy));
             tvAqiDes.setText(context.getString(R.string.aqi_very_unhealthy_des));
         } else if (aqiIndex > 300 && aqiIndex <= 500) {
-            tvAqiIndex.setTextColor(context.getResources().getColor(R.color.aqi_hazardous));
+            tvAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_hazardous));
             tvAqiLevel.setText(context.getString(R.string.aqi_hazardous));
             tvAqiDes.setText(context.getString(R.string.aqi_hazardous_des));
         }
