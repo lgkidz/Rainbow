@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Layout;
@@ -35,6 +36,7 @@ import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -161,7 +163,19 @@ public class NormalWidget extends AppWidgetProvider {
             textPaint.setColor(Color.WHITE);
             textPaint.setTypeface(nunito);
             int width = (int) (context.getResources().getDimension(R.dimen.widget_width) *5/4);
-            StaticLayout staticLayout = new StaticLayout(text,textPaint,width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+
+            StaticLayout staticLayout;
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                StaticLayout.Builder builder = StaticLayout.Builder.obtain(text,0,text.length(),textPaint,width)
+                        .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+                        .setLineSpacing(0.0f,1.0f)
+                        .setIncludePad(false);
+                staticLayout = builder.build();
+            }
+            else{
+                staticLayout = new StaticLayout(text,textPaint,width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            }
+
             int height = staticLayout.getHeight();
             Bitmap bitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
@@ -207,7 +221,8 @@ public class NormalWidget extends AppWidgetProvider {
 
                     @Override
                     public void onFailure(Call<Weather> call, Throwable t) {
-
+                        remoteViews.setViewVisibility(R.id.widget_loading_layout,View.INVISIBLE);
+                        aWm.updateAppWidget(widgetId, remoteViews);
                     }
                 });
             }
@@ -234,7 +249,13 @@ public class NormalWidget extends AppWidgetProvider {
                         }
                         getQuote(context,weather);
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                remoteViews.setViewVisibility(R.id.widget_loading_layout,View.INVISIBLE);
+                aWm.updateAppWidget(widgetId, remoteViews);
+            }
+        });
     }
 
     private static void getQuote(Context context,Weather w){

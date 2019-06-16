@@ -226,10 +226,11 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
         android:textSize="@dimen/text_view_12sp"
-        android:paddingEnd="@dimen/margin_16"
+        android:paddingRight="@dimen/margin_16"
         android:textColor="#000"
         android:gravity="end"
-        android:text="providede by aqicn.org"/>
+        android:text="provided by aqicn.org"
+        android:paddingEnd="@dimen/margin_16" />
     <Button
         android:id="@+id/btn_close_about"
         android:textColor="#ffffff"
