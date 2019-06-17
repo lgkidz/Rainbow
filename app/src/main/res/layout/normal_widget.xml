@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="end"
-                android:layout_marginBottom="@dimen/margin_n_8"                >
+                android:layout_marginBottom="@dimen/margin_n_8">
 
                 <ImageView
                     android:id="@+id/widget_icon"
@@ -93,12 +93,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/margin_16"
         android:layout_below="@id/layout_data">
         <ImageView
             android:id="@+id/quote_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_below="@id/layout_data"/>

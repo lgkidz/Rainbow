@@ -38,8 +38,8 @@
     <dimen name="text_view_48sp">48sp</dimen>
     <dimen name="text_view_54sp">54sp</dimen>
 
-    <dimen name="widget_height">180dp</dimen>
-    <dimen name="widget_width">320dp</dimen>
+    <dimen name="widget_height">107dp</dimen>
+    <dimen name="widget_width">360dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

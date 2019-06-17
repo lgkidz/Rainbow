@@ -111,10 +111,10 @@
     63.0sp
   </dimen>
   <dimen name="widget_height">
-    210.0dp
+    124.83dp
   </dimen>
   <dimen name="widget_width">
-    373.33dp
+    420.0dp
   </dimen>
   <dimen name="widget_margin">
     9.33dp

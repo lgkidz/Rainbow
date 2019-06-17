@@ -6,6 +6,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,14 +19,18 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import com.OdiousPanda.thefweather.API.RetrofitService;
@@ -164,23 +169,34 @@ public class NormalWidget extends AppWidgetProvider {
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.LEFT);
         if (bitmapType.equals(MAIN_BITMAP)) {
+
+            Bundle mAppWidgetOptions  = AppWidgetManager.getInstance(
+                    context).getAppWidgetOptions(widgetId);
+            int mWidgetPortHeight = mAppWidgetOptions
+                    .getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+
+            int mWidgetPortWidth = mAppWidgetOptions
+                    .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
             TextPaint textPaint = new TextPaint();
             textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_54sp));
+            if(mWidgetPortHeight * context.getResources().getDisplayMetrics().density + 0.5f < context.getResources().getDimension(R.dimen.widget_height) * 3){
+                textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36sp));
+            }
             textPaint.setColor(Color.WHITE);
             textPaint.setTypeface(nunito);
-            int width = (int) (context.getResources().getDimension(R.dimen.widget_width) *5/4);
+            int width = (int) (mWidgetPortWidth * context.getResources().getDisplayMetrics().density + 0.5f);
 
             StaticLayout staticLayout;
-//            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-//                StaticLayout.Builder builder = StaticLayout.Builder.obtain(text,0,text.length(),textPaint,width)
-//                        .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-//                        .setLineSpacing(0.0f,1.0f)
-//                        .setIncludePad(false);
-//                staticLayout = builder.build();
-//            }
-//            else{
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                StaticLayout.Builder builder = StaticLayout.Builder.obtain(text,0,text.length(),textPaint,width)
+                        .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+                        .setLineSpacing(0.0f,1.0f)
+                        .setIncludePad(false);
+                staticLayout = builder.build();
+            }
+            else{
                 staticLayout = new StaticLayout(text,textPaint,width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-//            }
+            }
 
             int height = staticLayout.getHeight();
             Bitmap bitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
@@ -382,6 +398,13 @@ public class NormalWidget extends AppWidgetProvider {
 
             if(ACTION_UPDATE.equals(intent.getAction())){
                 updateData(context,sharedPreferences);
+            }
+
+            if("com.sec.android.widgetapp.APPWIDGET_RESIZE".equals(intent.getAction())){
+                if(quote != null){
+                    remoteViews.setImageViewBitmap(R.id.quote_main,textAsBitmap(context,quote.getMain(),MAIN_BITMAP));
+                    aWm.updateAppWidget(widgetId, remoteViews);
+                }
             }
 
             if(ACTION_UPDATE_TIME.equals(intent.getAction())){
