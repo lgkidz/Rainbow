@@ -2,6 +2,8 @@ package com.OdiousPanda.thefweather;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -32,6 +34,7 @@ import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.Service.WidgetTimeUpdater;
+import com.OdiousPanda.thefweather.Utilities.JobUtils;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -117,9 +120,12 @@ public class NormalWidget extends AppWidgetProvider {
 
         updateData(context,sharedPreferences);
         editor.putString(context.getString(R.string.widget_update_time_pref),String.valueOf(currentTime));
-        Intent timeUpdateService = new Intent(context, WidgetTimeUpdater.class);
-        context.startService(timeUpdateService);
+//        Intent timeUpdateService = new Intent(context, WidgetTimeUpdater.class);
+//        context.startService(timeUpdateService);
+        JobUtils.scheduleJob(context);
     }
+
+
 
     private static Bitmap textAsBitmap(Context context,String text,String bitmapType){
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -165,16 +171,16 @@ public class NormalWidget extends AppWidgetProvider {
             int width = (int) (context.getResources().getDimension(R.dimen.widget_width) *5/4);
 
             StaticLayout staticLayout;
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-                StaticLayout.Builder builder = StaticLayout.Builder.obtain(text,0,text.length(),textPaint,width)
-                        .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-                        .setLineSpacing(0.0f,1.0f)
-                        .setIncludePad(false);
-                staticLayout = builder.build();
-            }
-            else{
+//            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+//                StaticLayout.Builder builder = StaticLayout.Builder.obtain(text,0,text.length(),textPaint,width)
+//                        .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+//                        .setLineSpacing(0.0f,1.0f)
+//                        .setIncludePad(false);
+//                staticLayout = builder.build();
+//            }
+//            else{
                 staticLayout = new StaticLayout(text,textPaint,width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-            }
+//            }
 
             int height = staticLayout.getHeight();
             Bitmap bitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
@@ -367,57 +373,59 @@ public class NormalWidget extends AppWidgetProvider {
 
         aWm = AppWidgetManager.getInstance(context);
         int[] ids = aWm.getAppWidgetIds(new ComponentName(context,NormalWidget.class));
-        widgetId = ids[ids.length -1];
-        Log.d("widgetTime", "onReceive: " + intent.getAction());
-        remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
-        final SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
-        super.onReceive(context, intent);
+        if(ids.length > 0){
+            widgetId = ids[ids.length -1];
+            Log.d("widgetTime", "onReceive: " + intent.getAction());
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
+            final SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
+            super.onReceive(context, intent);
 
-        if(ACTION_UPDATE.equals(intent.getAction())){
-            updateData(context,sharedPreferences);
-        }
+            if(ACTION_UPDATE.equals(intent.getAction())){
+                updateData(context,sharedPreferences);
+            }
 
-        if(ACTION_UPDATE_TIME.equals(intent.getAction())){
-            Date date = new Date();
-            String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
-            String dateString = dateFormat.format(date);
-            remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
-            remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
-            remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateString,DATE_BITMAP));
-            aWm.updateAppWidget(widgetId, remoteViews);
-        }
+            if(ACTION_UPDATE_TIME.equals(intent.getAction())){
+                Date date = new Date();
+                String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
+                String dateString = dateFormat.format(date);
+                remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
+                remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
+                remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateString,DATE_BITMAP));
+                aWm.updateAppWidget(widgetId, remoteViews);
+            }
 
-        if(ACTION_TAP.equals(intent.getAction())){
-            int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
-            sharedPreferences.edit().putInt(ACTION_TAP, ++clickCount).commit();
+            if(ACTION_TAP.equals(intent.getAction())){
+                int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
+                sharedPreferences.edit().putInt(ACTION_TAP, ++clickCount).commit();
 
-            final Handler handler = new Handler() {
+                final Handler handler = new Handler() {
 
-                public void handleMessage(Message msg){
-                    int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
-                    if(clickCount > 1) {
-                        remoteViews.setViewVisibility(R.id.widget_loading_layout,View.VISIBLE);
-                        aWm.updateAppWidget(widgetId, remoteViews);
-                        updateData(context,sharedPreferences);
+                    public void handleMessage(Message msg){
+                        int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
+                        if(clickCount > 1) {
+                            remoteViews.setViewVisibility(R.id.widget_loading_layout,View.VISIBLE);
+                            aWm.updateAppWidget(widgetId, remoteViews);
+                            updateData(context,sharedPreferences);
 
+                        }
+
+                        sharedPreferences.edit().putInt(ACTION_TAP,0).commit();
                     }
 
-                    sharedPreferences.edit().putInt(ACTION_TAP,0).commit();
+                };
+
+                if(clickCount == 1){
+                    new Thread() {
+                        @Override
+                        public void run(){
+                            try {
+                                synchronized(this) { wait(DOUBLE_CLICK_DELAY); }
+                                handler.sendEmptyMessage(0);
+                            } catch(InterruptedException ex) {}
+                        }
+                    }.start();
                 }
-
-            };
-
-            if(clickCount == 1){
-                new Thread() {
-                    @Override
-                    public void run(){
-                        try {
-                            synchronized(this) { wait(DOUBLE_CLICK_DELAY); }
-                            handler.sendEmptyMessage(0);
-                        } catch(InterruptedException ex) {}
-                    }
-                }.start();
             }
         }
     }

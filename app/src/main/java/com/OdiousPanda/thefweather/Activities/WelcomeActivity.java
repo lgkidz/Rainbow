@@ -197,7 +197,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 int resourceId = getResources().getIdentifier("drawable/instruction" + position, null, getPackageName());
                 Glide.with(WelcomeActivity.this)
                         .load(resourceId)
-                        .centerCrop()
                         .into(ins);
             }
             container.addView(view);
