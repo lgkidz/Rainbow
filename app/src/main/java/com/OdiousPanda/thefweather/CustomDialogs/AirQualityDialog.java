@@ -8,11 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.R;
 

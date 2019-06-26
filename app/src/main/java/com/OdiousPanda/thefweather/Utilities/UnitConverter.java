@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class UnitConverter {
 
-    final static String DEGREE  = "\u00b0";
+    private final static String DEGREE  = "\u00b0";
 
     public static float toCelsius(float temp){
         return (temp - 32)* 5/9;

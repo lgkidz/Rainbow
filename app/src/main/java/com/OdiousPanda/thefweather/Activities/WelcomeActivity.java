@@ -72,7 +72,6 @@ public class WelcomeActivity extends AppCompatActivity {
         });
         viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
-        //btnSkip = findViewById(R.id.btn_skip);
         btnNext = findViewById(R.id.btn_next);
 
 

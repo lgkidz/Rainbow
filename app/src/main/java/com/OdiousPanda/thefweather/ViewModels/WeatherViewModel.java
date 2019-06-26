@@ -2,11 +2,9 @@ package com.OdiousPanda.thefweather.ViewModels;
 
 import android.app.Application;
 import android.util.Log;
-
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;

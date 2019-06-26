@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,9 +58,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private WeatherViewModel weatherViewModel;
     private boolean firstTimeObserve = true;
-    private AirLocation airLocation;
-    SharedPreferences sharedPreferences;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private CoordinatorLayout coordinatorLayout;
@@ -69,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private RelativeLayout noConnectionLayout;
     private ImageView loadingIcon;
     private boolean screenInitialized = false;
-
     private int currentBackgroundColor = Color.argb(255,255,255,255);
 
     @Override
@@ -77,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
-        sharedPreferences = getSharedPreferences(getString(R.string.pref_key_string),MODE_PRIVATE);
         initViews();
         HomeScreenFragment.getInstance().setOnRefreshListener(this);
         if(isConnected(this)){
@@ -159,10 +153,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateCurrentLocation(){
         Log.d(TAG, "updateCurrentLocation: update Current Location");
-        airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
+        // default ID for current Location
+        new AirLocation(this, false, false, new AirLocation.Callbacks() {
             @Override
             public void onSuccess(Location location) {
-                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()), null);
+                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), null);
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
                 weatherViewModel.update(currentLocation);

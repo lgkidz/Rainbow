@@ -2,7 +2,6 @@ package com.OdiousPanda.thefweather.Utilities;
 
 import android.content.Context;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.Model.Quote;
@@ -13,7 +12,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -107,6 +105,8 @@ public class QuoteGenerator {
                 criteria.add("clear");
             }
         }
+
+        weatherQuotes.clear();
 
         String explicit = mContext.getSharedPreferences(mContext.getString(R.string.pref_key_string),Context.MODE_PRIVATE).getString(mContext.getString(R.string.pref_explicit),mContext.getString(R.string.im_not));
         for(Quote q : quotes){

@@ -6,13 +6,13 @@ import android.content.Intent;
 
 
 import com.OdiousPanda.thefweather.NormalWidget;
-import com.OdiousPanda.thefweather.Utilities.JobUtils;
+import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 
 public class WidgetTimeUpdater extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         sendBroadcast(new Intent(NormalWidget.ACTION_UPDATE_TIME));
-        JobUtils.scheduleJob(getApplicationContext());
+        WidgetTimeUpdaterJob.scheduleJob(getApplicationContext());
         return true;
     }
 

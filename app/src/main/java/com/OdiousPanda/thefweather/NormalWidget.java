@@ -2,11 +2,8 @@ package com.OdiousPanda.thefweather;
 
 import android.Manifest;
 import android.app.PendingIntent;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -25,12 +22,9 @@ import android.os.Message;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import com.OdiousPanda.thefweather.API.RetrofitService;
@@ -38,8 +32,7 @@ import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
-import com.OdiousPanda.thefweather.Service.WidgetTimeUpdater;
-import com.OdiousPanda.thefweather.Utilities.JobUtils;
+import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -50,7 +43,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -125,9 +117,7 @@ public class NormalWidget extends AppWidgetProvider {
 
         updateData(context,sharedPreferences);
         editor.putString(context.getString(R.string.widget_update_time_pref),String.valueOf(currentTime));
-//        Intent timeUpdateService = new Intent(context, WidgetTimeUpdater.class);
-//        context.startService(timeUpdateService);
-        JobUtils.scheduleJob(context);
+        WidgetTimeUpdaterJob.scheduleJob(context);
     }
 
 
@@ -326,6 +316,7 @@ public class NormalWidget extends AppWidgetProvider {
                 criteria.add("clear");
             }
         }
+        weatherQuotes.clear();
         String explicit = context.getSharedPreferences(context.getString(R.string.pref_key_string),Context.MODE_PRIVATE).getString(context.getString(R.string.pref_explicit),context.getString(R.string.im_not));
         for(Quote q : quotes){
             for(String s: criteria){

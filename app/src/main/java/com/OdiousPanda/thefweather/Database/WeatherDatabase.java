@@ -3,13 +3,11 @@ package com.OdiousPanda.thefweather.Database;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import com.OdiousPanda.thefweather.DAOs.SavedCoordinateDAO;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 

@@ -8,9 +8,6 @@ public class PrefManager {
     SharedPreferences.Editor editor;
     Context _context;
 
-    // shared pref mode
-    int PRIVATE_MODE = 0;
-
     // Shared preferences file name
     private static final String PREF_NAME = "newWelcomePref";
 
@@ -18,7 +15,7 @@ public class PrefManager {
 
     public PrefManager(Context context) {
         this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        pref = _context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
     }
 

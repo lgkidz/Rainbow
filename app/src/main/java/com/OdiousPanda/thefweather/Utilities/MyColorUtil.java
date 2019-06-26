@@ -1,7 +1,6 @@
 package com.OdiousPanda.thefweather.Utilities;
 
 import android.graphics.Color;
-
 import java.util.Random;
 
 public class MyColorUtil {

@@ -1,13 +1,10 @@
 package com.OdiousPanda.thefweather.Repositories;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.OdiousPanda.thefweather.API.AQICall;
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
@@ -16,7 +13,6 @@ import com.OdiousPanda.thefweather.Database.WeatherDatabase;
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
 import com.OdiousPanda.thefweather.Model.SavedCoordinate;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
-
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
