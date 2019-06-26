@@ -363,7 +363,7 @@ public class NormalWidget extends AppWidgetProvider {
             return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
         }
 
-        return textNoStrongWords;
+        return text;
     }
 
     @Override

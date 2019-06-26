@@ -4,9 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
-import com.OdiousPanda.thefweather.Model.AQI.Co;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
@@ -73,7 +71,7 @@ public class QuoteGenerator {
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         List<String> criteria = new ArrayList<>();
-        if(temp > 27){
+        if(temp > 30){
             criteria.add("hot");
         }
         else if(temp < 15){
@@ -146,6 +144,6 @@ public class QuoteGenerator {
             return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
         }
 
-        return textNoStrongWords;
+        return text;
     }
 }
