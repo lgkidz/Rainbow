@@ -10,6 +10,8 @@
     <dimen name="slide_desc">16dp</dimen>
     <dimen name="desc_padding">40dp</dimen>
     <dimen name="aqi_scale_height">3dp</dimen>
+    <dimen name="indicator_stroke_width">1dp</dimen>
+    <dimen name="indicator_size">8dp</dimen>
     <dimen name="margin_4">4dp</dimen>
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_n_8">-8dp</dimen>

@@ -111,4 +111,5 @@
     <string name="wind_south_east" translatable="true">Southeast</string>
     <string name="wind_south_west" translatable="true">Southwest</string>
     <string name="wind_west" translatable="true">West</string>
+    <string name="the_next_hours_title">The next hours</string>
 </resources>

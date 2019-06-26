@@ -29,6 +29,12 @@
   <dimen name="aqi_scale_height">
     2.67dp
   </dimen>
+  <dimen name="indicator_stroke_width">
+    0.89dp
+  </dimen>
+  <dimen name="indicator_size">
+    7.11dp
+  </dimen>
   <dimen name="margin_4">
     3.56dp
   </dimen>

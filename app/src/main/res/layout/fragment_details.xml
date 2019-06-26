@@ -315,6 +315,26 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
+        <!--<LinearLayout-->
+            <!--android:id="@+id/layout_next_hours"-->
+            <!--android:layout_marginTop="@dimen/margin_16"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_marginBottom="@dimen/margin_16">-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_next_hours_title"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/the_next_hours_title"-->
+                <!--android:textSize="@dimen/text_view_24sp"-->
+                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingStart="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingEnd="@dimen/activity_horizontal_margin"-->
+                <!--app:fontFamily="@font/nunito" />-->
+
+        <!--</LinearLayout>-->
+
         <LinearLayout
             android:id="@+id/layout_forecast"
             android:layout_marginTop="@dimen/margin_16"
@@ -335,6 +355,7 @@
                 />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_forecast"
+                android:orientation="horizontal"
                 tools:listitem="@layout/forecast_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

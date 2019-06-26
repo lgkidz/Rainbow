@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.OdiousPanda.thefweather.Adapters.ForecastAdapter;
 import com.OdiousPanda.thefweather.CustomDialogs.AirQualityDialog;
 import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
+import com.OdiousPanda.thefweather.Model.Weather.Hourly;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
@@ -62,13 +63,13 @@ public class DetailsFragment extends Fragment {
     private TextView tvWindTitle;
     private TextView tvWindSpeed;
     private TextView tvWindDirection;
+//    private TextView tvNextHoursTitle;
     private ConstraintLayout layoutRealFeel;
     private LinearLayout layoutHumidity;
     private LinearLayout layoutUV;
     private LinearLayout layoutVisibility;
     private LinearLayout layoutPressure;
     private ConstraintLayout layoutAqi;
-    private LinearLayout layoutForecast;
     private ImageView aqiInfo;
     private RecyclerView rvForecast;
     private ImageView windmillWings;
@@ -117,6 +118,7 @@ public class DetailsFragment extends Fragment {
         tvWindSpeed = v.findViewById(R.id.wind_speed);
         tvWindDirection = v.findViewById(R.id.wind_direction);
         windmillWings = v.findViewById(R.id.windmill_wings);
+//        tvNextHoursTitle = v.findViewById(R.id.tv_next_hours_title);
 
         layoutRealFeel = v.findViewById(R.id.layoutRealFeel);
         layoutUV = v.findViewById(R.id.layoutUV);
@@ -124,7 +126,7 @@ public class DetailsFragment extends Fragment {
         layoutVisibility = v.findViewById(R.id.layoutVisibility);
         layoutPressure = v.findViewById(R.id.layoutPressure);
         layoutAqi = v.findViewById(R.id.layoutAqi);
-        layoutForecast = v.findViewById(R.id.layout_forecast);
+
 
         String currentExplicitSetting = sharedPreferences.getString(getString(R.string.pref_explicit),getString(R.string.im_not));
         if(currentExplicitSetting.equals(getString(R.string.im_not))){
@@ -190,6 +192,7 @@ public class DetailsFragment extends Fragment {
         tvWindTitle.setTextColor(headingColor);
         tvWindSpeed.setTextColor(headingColor);
         tvWindDirection.setTextColor(headingColor);
+//        tvNextHoursTitle.setTextColor(headingColor);
     }
 
     private void colorThoseLayout(){
@@ -199,7 +202,6 @@ public class DetailsFragment extends Fragment {
         layoutVisibility.setBackgroundColor(layoutColor);
         layoutPressure.setBackgroundColor(layoutColor);
         layoutAqi.setBackgroundColor(layoutColor);
-        //layoutForecast.setBackgroundColor(layoutColor);
     }
 
     public void updateUnit(){
@@ -339,6 +341,12 @@ public class DetailsFragment extends Fragment {
         rvForecast.setAdapter(adapter);
     }
 
+    private void updateHourlyWeatherChart(Hourly hourlyData,String currentTempUnit){
+
+    }
+
+
+
     public void updateAqi(AirQuality air){
         airQuality = air;
         int aqi = Math.round(airQuality.getData().aqi);
@@ -357,7 +365,7 @@ public class DetailsFragment extends Fragment {
             aqiSummary = "Unhealthy! Inhale more for diseases.";
         }
         else if(aqi < 301){
-            aqiSummary = "Unhealthy as fuck! Lung cancer awaits you outside.";
+            aqiSummary = "Unhealthy as heck! Lung cancer awaits you outside.";
         }
         else{
             aqiSummary = "Living in chernobyl would be more healthy.";
