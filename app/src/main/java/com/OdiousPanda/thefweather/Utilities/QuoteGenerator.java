@@ -112,23 +112,23 @@ public class QuoteGenerator {
         for(Quote q : quotes){
             if(q.getAtt().contains("*")){
                 if(!q.getAtt().contains("widget")){
+                    Quote tempQuote = q;
                     if(explicit.equals(mContext.getString(R.string.im_not))){
-                        Quote explicitQuote = q;
-                        explicitQuote.setMain(censorStrongWords(q.getMain()));
-                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                        tempQuote.setMain(censorStrongWords(q.getMain()));
+                        tempQuote.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(q);
+                    weatherQuotes.add(tempQuote);
                 }
                 continue;
             }
             for(String s: criteria){
                 if (q.getAtt().contains(s)){
+                    Quote tempQuote = q;
                     if(explicit.equals(mContext.getString(R.string.im_not))){
-                        Quote explicitQuote = q;
-                        explicitQuote.setMain(censorStrongWords(q.getMain()));
-                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                        tempQuote.setMain(censorStrongWords(q.getMain()));
+                        tempQuote.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(q);
+                    weatherQuotes.add(tempQuote);
                     break;
                 }
             }

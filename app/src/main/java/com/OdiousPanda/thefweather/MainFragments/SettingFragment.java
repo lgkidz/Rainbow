@@ -517,6 +517,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
         updateExplicitButtonColor(id);
         HomeScreenFragment.getInstance().updateExplicitSetting();
+        Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
+        getActivity().sendBroadcast(updateWidgetIntent);
     }
 
     private void updateExplicitButtonColor(int id) {

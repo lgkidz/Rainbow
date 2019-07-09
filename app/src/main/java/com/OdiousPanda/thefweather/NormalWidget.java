@@ -31,6 +31,7 @@ import androidx.core.content.res.ResourcesCompat;
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
+import com.OdiousPanda.thefweather.Activities.WelcomeActivity;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.Utilities.PrefManager;
@@ -94,21 +95,17 @@ public class NormalWidget extends AppWidgetProvider {
         remoteViews = views;
         aWm = appWidgetManager;
 
-        Intent mainActivityIntent = new Intent(context, MainActivity.class);
-        mainActivityIntent.setAction(ACTION_TO_DETAILS);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
-
         Date date = new Date();
         String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
-
         remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
         WidgetTimeUpdaterJob.scheduleJob(context);
+        Intent mainActivityIntent = new Intent(context, MainActivity.class);
         PrefManager prefManager = new PrefManager(context);
         if (!prefManager.isFirstTimeLaunch()) {
+            mainActivityIntent = new Intent(context, WelcomeActivity.class);
             Intent tapIntent = new Intent(context,NormalWidget.class);
             tapIntent.setAction(ACTION_TAP);
             PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
@@ -117,6 +114,9 @@ public class NormalWidget extends AppWidgetProvider {
             aWm.updateAppWidget(widgetId, remoteViews);
             updateData(context,sharedPreferences);
         }
+        mainActivityIntent.setAction(ACTION_TO_DETAILS);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
     }
 
     private static Bitmap textAsBitmap(Context context,String text,String bitmapType){
@@ -320,21 +320,21 @@ public class NormalWidget extends AppWidgetProvider {
         for(Quote q : quotes){
             for(String s: criteria){
                 if(q.getAtt().contains("*")){
+                    Quote tempQuote = q;
                     if(explicit.equals(context.getString(R.string.im_not))){
-                        Quote explicitQuote = q;
-                        explicitQuote.setMain(censorStrongWords(q.getMain()));
-                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                        tempQuote.setMain(censorStrongWords(q.getMain()));
+                        tempQuote.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(q);
+                    weatherQuotes.add(tempQuote);
                     break;
                 }
                 if (q.getAtt().contains(s)){
+                    Quote tempQuote = q;
                     if(explicit.equals(context.getString(R.string.im_not))){
-                        Quote explicitQuote = q;
-                        explicitQuote.setMain(censorStrongWords(q.getMain()));
-                        explicitQuote.setSub(censorStrongWords(q.getSub()));
+                        tempQuote.setMain(censorStrongWords(q.getMain()));
+                        tempQuote.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(q);
+                    weatherQuotes.add(tempQuote);
                     break;
                 }
             }
