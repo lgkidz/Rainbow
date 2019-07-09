@@ -1,6 +1,7 @@
 package com.OdiousPanda.thefweather;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -32,6 +33,7 @@ import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
+import com.OdiousPanda.thefweather.Utilities.PrefManager;
 import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -73,8 +75,6 @@ public class NormalWidget extends AppWidgetProvider {
     public static final String ACTION_UPDATE_TIME = "actionTimeWidget";
     public static final String ACTION_TAP = "widgetTap";
     public static final String ACTION_TO_DETAILS = "toDetailsScreen";
-
-
     private static final String TEMP_BITMAP = "tempBitmap";
     private static final String RF_BITMAP = "RFBitmap";
     private static final String MAIN_BITMAP = "mainBitmap";
@@ -106,21 +106,18 @@ public class NormalWidget extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
-
-        Intent tapIntent = new Intent(context,NormalWidget.class);
-        tapIntent.setAction(ACTION_TAP);
-        PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
-        remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout,tapPending);
-        editor.putInt(ACTION_TAP,0).commit();
-        aWm.updateAppWidget(widgetId, remoteViews);
-        long currentTime = System.currentTimeMillis();
-
-        updateData(context,sharedPreferences);
-        editor.putString(context.getString(R.string.widget_update_time_pref),String.valueOf(currentTime));
         WidgetTimeUpdaterJob.scheduleJob(context);
+        PrefManager prefManager = new PrefManager(context);
+        if (!prefManager.isFirstTimeLaunch()) {
+            Intent tapIntent = new Intent(context,NormalWidget.class);
+            tapIntent.setAction(ACTION_TAP);
+            PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
+            remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout,tapPending);
+            editor.putInt(ACTION_TAP,0).apply();
+            aWm.updateAppWidget(widgetId, remoteViews);
+            updateData(context,sharedPreferences);
+        }
     }
-
-
 
     private static Bitmap textAsBitmap(Context context,String text,String bitmapType){
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -175,6 +172,9 @@ public class NormalWidget extends AppWidgetProvider {
             textPaint.setColor(Color.WHITE);
             textPaint.setTypeface(nunito);
             int width = (int) (mWidgetPortWidth * context.getResources().getDisplayMetrics().density + 0.5f);
+            if(width <= 0){
+                width = (int) context.getResources().getDimension(R.dimen.widget_width);
+            }
 
             StaticLayout staticLayout;
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
@@ -195,8 +195,8 @@ public class NormalWidget extends AppWidgetProvider {
             return bitmap;
         }
         float baseline = -paint.ascent(); // ascent() is negative
-        int width = (int) (paint.measureText(text) + 0.5f); // round
-        int height = (int) (baseline + paint.descent() + 0.5f);
+        int width = (int) (paint.measureText(text) + 1f); // round
+        int height = (int) (baseline + paint.descent() + 1f);
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
         canvas.drawText(text, 0, baseline, paint);
@@ -242,8 +242,6 @@ public class NormalWidget extends AppWidgetProvider {
 
     }
 
-
-
     private static void queryQuotes(final Context context){
         db.collection("quotes")
                 .get()
@@ -257,7 +255,8 @@ public class NormalWidget extends AppWidgetProvider {
                             }
                         }
                         else {
-
+                            remoteViews.setViewVisibility(R.id.widget_loading_layout,View.INVISIBLE);
+                            aWm.updateAppWidget(widgetId, remoteViews);
                         }
                         getQuote(context,weather);
                     }
@@ -377,7 +376,6 @@ public class NormalWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-
         aWm = AppWidgetManager.getInstance(context);
         int[] ids = aWm.getAppWidgetIds(new ComponentName(context,NormalWidget.class));
         if(ids.length > 0){
@@ -401,7 +399,9 @@ public class NormalWidget extends AppWidgetProvider {
             if(ACTION_UPDATE_TIME.equals(intent.getAction())){
                 Date date = new Date();
                 String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                @SuppressLint("SimpleDateFormat")
                 SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
+
                 String dateString = dateFormat.format(date);
                 remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
                 remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
@@ -411,8 +411,9 @@ public class NormalWidget extends AppWidgetProvider {
 
             if(ACTION_TAP.equals(intent.getAction())){
                 int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
-                sharedPreferences.edit().putInt(ACTION_TAP, ++clickCount).commit();
+                sharedPreferences.edit().putInt(ACTION_TAP, ++clickCount).apply();
 
+                @SuppressLint("HandlerLeak")
                 final Handler handler = new Handler() {
 
                     public void handleMessage(Message msg){
@@ -424,7 +425,7 @@ public class NormalWidget extends AppWidgetProvider {
 
                         }
 
-                        sharedPreferences.edit().putInt(ACTION_TAP,0).commit();
+                        sharedPreferences.edit().putInt(ACTION_TAP,0).apply();
                     }
 
                 };
@@ -436,7 +437,9 @@ public class NormalWidget extends AppWidgetProvider {
                             try {
                                 synchronized(this) { wait(DOUBLE_CLICK_DELAY); }
                                 handler.sendEmptyMessage(0);
-                            } catch(InterruptedException ex) {}
+                            } catch(InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     }.start();
                 }
