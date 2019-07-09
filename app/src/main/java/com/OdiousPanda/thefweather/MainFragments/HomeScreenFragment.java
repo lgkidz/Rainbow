@@ -21,7 +21,7 @@ import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 
 public class HomeScreenFragment extends Fragment {
 
-    public static HomeScreenFragment instance;
+    private static HomeScreenFragment instance;
 
     public static HomeScreenFragment getInstance(){
         if (instance == null){
@@ -35,7 +35,7 @@ public class HomeScreenFragment extends Fragment {
         // Required empty public constructor
     }
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvTemp;

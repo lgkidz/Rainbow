@@ -28,7 +28,7 @@ import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 
 public class DetailsFragment extends Fragment {
-    public static DetailsFragment instance;
+    private static DetailsFragment instance;
     private SharedPreferences sharedPreferences;
 
     private Weather currentWeather;
@@ -46,6 +46,8 @@ public class DetailsFragment extends Fragment {
     }
 
     private TextView tvHeading;
+    private TextView tvLocation;
+    private ImageView icLocation;
     private TextView tvRealFeel;
     private TextView tvRealFeelTitle;
     private TextView tvUV;
@@ -64,6 +66,7 @@ public class DetailsFragment extends Fragment {
     private TextView tvWindSpeed;
     private TextView tvWindDirection;
 //    private TextView tvNextHoursTitle;
+    private ConstraintLayout layoutLocation;
     private ConstraintLayout layoutRealFeel;
     private LinearLayout layoutHumidity;
     private LinearLayout layoutUV;
@@ -100,6 +103,8 @@ public class DetailsFragment extends Fragment {
         rvForecast.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
         tvHeading = v.findViewById(R.id.tv_heading);
+        tvLocation = v.findViewById(R.id.tv_location);
+        icLocation = v.findViewById(R.id.ic_location);
         tvRealFeel = v.findViewById(R.id.tv_tempRealFeel);
         tvRealFeelTitle = v.findViewById(R.id.tv_tempRealFeelTitle);
         tvUV = v.findViewById(R.id.tv_Uv);
@@ -120,6 +125,7 @@ public class DetailsFragment extends Fragment {
         windmillWings = v.findViewById(R.id.windmill_wings);
 //        tvNextHoursTitle = v.findViewById(R.id.tv_next_hours_title);
 
+        layoutLocation = v.findViewById(R.id.layoutLocation);
         layoutRealFeel = v.findViewById(R.id.layoutRealFeel);
         layoutUV = v.findViewById(R.id.layoutUV);
         layoutHumidity = v.findViewById(R.id.layoutHumidity);
@@ -175,6 +181,13 @@ public class DetailsFragment extends Fragment {
 
     private void colorThoseTextView(){
         tvHeading.setTextColor(headingColor);
+        tvLocation.setTextColor(textColor);
+        if(textColor == Color.WHITE){
+            icLocation.setImageResource(R.drawable.ic_location_w);
+        }
+        else{
+            icLocation.setImageResource(R.drawable.ic_location_b);
+        }
         tvRealFeel.setTextColor(textColor);
         tvRealFeelTitle.setTextColor(textColor);
         tvUV.setTextColor(textColor);
@@ -196,6 +209,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void colorThoseLayout(){
+        layoutLocation.setBackgroundColor(layoutColor);
         layoutRealFeel.setBackgroundColor(layoutColor);
         layoutUV.setBackgroundColor(layoutColor);
         layoutHumidity.setBackgroundColor(layoutColor);
@@ -341,11 +355,9 @@ public class DetailsFragment extends Fragment {
         rvForecast.setAdapter(adapter);
     }
 
-    private void updateHourlyWeatherChart(Hourly hourlyData,String currentTempUnit){
-
+    public void updateCurrentLocationName(String locationName){
+        this.tvLocation.setText(locationName);
     }
-
-
 
     public void updateAqi(AirQuality air){
         airQuality = air;

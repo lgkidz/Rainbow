@@ -15,6 +15,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.Activities.WelcomeActivity;
+import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.Model.Quote;
 import com.OdiousPanda.thefweather.Model.Weather.Weather;
 import com.OdiousPanda.thefweather.Utilities.PrefManager;
@@ -51,6 +54,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -83,6 +87,7 @@ public class NormalWidget extends AppWidgetProvider {
     private static final String TIME_BITMAP = "timeBitmap";
     private static final String DAYNIGHT_BITMAP = "dnBitmap";
     private static final String DATE_BITMAP = "dateBitmap";
+    private static final String LOCATION_BITMAP = "locationBitmap";
 
     private static final int DOUBLE_CLICK_DELAY = 500;
 
@@ -147,6 +152,10 @@ public class NormalWidget extends AppWidgetProvider {
                 break;
             }
             case DATE_BITMAP:{
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_20sp));
+                break;
+            }
+            case LOCATION_BITMAP:{
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_20sp));
                 break;
             }
@@ -215,6 +224,17 @@ public class NormalWidget extends AppWidgetProvider {
         fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+                try {
+                    Geocoder geo = new Geocoder(context, Locale.getDefault());
+                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if (!addresses.isEmpty()) {
+                        String locationName = addresses.get(0).getFeatureName();
+                        remoteViews.setImageViewBitmap(R.id.widget_location,textAsBitmap(context,locationName,LOCATION_BITMAP));
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 call.getWeather(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude())).enqueue(new Callback<Weather>() {
                     @Override
                     public void onResponse(Call<Weather> call, Response<Weather> response) {

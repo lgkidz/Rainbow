@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -36,6 +38,8 @@ import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
 import java.util.List;
+import java.util.Locale;
+
 import mumayank.com.airlocationlibrary.AirLocation;
 
 public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener{
@@ -160,6 +164,15 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), null);
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
+                try {
+                    Geocoder geo = new Geocoder(MainActivity.this, Locale.getDefault());
+                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if (!addresses.isEmpty()) {
+                        DetailsFragment.getInstance().updateCurrentLocationName(addresses.get(0).getFeatureName());
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 weatherViewModel.update(currentLocation);
             }
 

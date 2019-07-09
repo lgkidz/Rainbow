@@ -22,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
-    public static SettingFragment instance;
+    private static SettingFragment instance;
 
     private String currentTempUnit;
     private String currentDistanceUnit;
