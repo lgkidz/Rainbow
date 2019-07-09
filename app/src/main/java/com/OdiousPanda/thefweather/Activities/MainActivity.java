@@ -14,6 +14,7 @@ import android.location.Location;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -44,6 +45,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
+import com.tooltip.Tooltip;
 
 import java.util.List;
 import java.util.Locale;
@@ -185,7 +187,21 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 Snackbar.make(v,"Thanks for touching me!",Snackbar.LENGTH_SHORT).show();
             }
         });
+
         screenInitialized = true;
+    }
+    private void showFabToolTips(){
+        Tooltip tooltip = new Tooltip.Builder(fab)
+                .setText("Drag me to heart's content")
+                .setTextColor(Color.WHITE)
+                .setBackgroundColor(getResources().getColor(R.color.bg_screen1))
+                .setCornerRadius(10f)
+                .setTextSize(R.dimen.text_view_14sp)
+                .setGravity(Gravity.TOP)
+                .setDismissOnClick(true)
+                .setCancelable(true)
+                .setTypeface(ResourcesCompat.getFont(this,R.font.nunito))
+                .show();
     }
 
     private void setupLocationObservers(){
@@ -210,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 updateColor();
                 loadingLayout.setVisibility(View.INVISIBLE);
                 fab.show();
+                showFabToolTips();
             }
         });
         weatherViewModel.getAqiData().observe(this, new Observer<List<AirQuality>>() {
