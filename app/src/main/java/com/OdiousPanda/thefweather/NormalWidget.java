@@ -34,9 +34,8 @@ import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.Activities.WelcomeActivity;
-import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
-import com.OdiousPanda.thefweather.Model.Quote;
-import com.OdiousPanda.thefweather.Model.Weather.Weather;
+import com.OdiousPanda.thefweather.DataModel.Quote;
+import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.Utilities.PrefManager;
 import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
@@ -228,7 +227,15 @@ public class NormalWidget extends AppWidgetProvider {
                     Geocoder geo = new Geocoder(context, Locale.getDefault());
                     List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                     if (!addresses.isEmpty()) {
-                        String locationName = addresses.get(0).getFeatureName();
+                        String address = addresses.get(0).getAddressLine(0);
+                        String[] addressPieces = address.split(",");
+                        String locationName = "";
+                        if(addressPieces.length >= 3){
+                            locationName = addressPieces[addressPieces.length - 3].trim();
+                        }
+                        else{
+                            locationName = addressPieces[addressPieces.length - 2].trim();
+                        }
                         remoteViews.setImageViewBitmap(R.id.widget_location,textAsBitmap(context,locationName,LOCATION_BITMAP));
                     }
                 } catch (Exception e){

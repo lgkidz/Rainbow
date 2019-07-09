@@ -1,6 +1,6 @@
 package com.OdiousPanda.thefweather.API;
 
-import com.OdiousPanda.thefweather.Model.Weather.Weather;
+import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

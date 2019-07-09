@@ -6,7 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import com.OdiousPanda.thefweather.Model.SavedCoordinate;
+import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
 import java.util.List;
 
 @Dao

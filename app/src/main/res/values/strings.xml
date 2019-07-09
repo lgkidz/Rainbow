@@ -113,4 +113,6 @@
     <string name="wind_west" translatable="true">West</string>
     <string name="the_next_hours_title">The next hours</string>
     <string name="default_location">I have no idea where are you</string>
+    <string name="location_list_title">Locations</string>
+    <string name="quote_placeholder">...</string>
 </resources>

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
 import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
-import com.OdiousPanda.thefweather.CustomDialogs.AboutDialog;
+import com.OdiousPanda.thefweather.CustomUI.AboutDialog;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -134,38 +133,21 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnMi.setOnClickListener(this);
         btnImNot.setOnClickListener(this);
         btnHellYeah.setOnClickListener(this);
-
-        btnHelpDev.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    btnHelpDev.setBackgroundColor(buttonColor);
-
-                } else if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    btnHelpDev.setBackgroundColor(activeButtonColor);
-                    btnHelpMe.setBackgroundColor(buttonColor);
-                    Snackbar.make(v,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
-                }
-                return false;
-            }
-        });
-
-        btnHelpMe.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    btnHelpMe.setBackgroundColor(buttonColor);
-                } else if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    startActivity(new Intent(getActivity(), HelpMeActivity.class));
-                }
-                return false;
-            }
-        });
+        btnHelpDev.setOnClickListener(this);
+        btnHelpMe.setOnClickListener(this);
 
     }
 
+    private void showHelpDevDialog(){
+        Snackbar.make(btnHelpDev,"The developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void startHelpMeActivity(){
+        startActivity(new Intent(getActivity(), HelpMeActivity.class));
+    }
+
     private void rateThisApp(){
-        Snackbar.make(tvRate,"The fucking developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(tvRate,"The developer is still working on this feature",Snackbar.LENGTH_SHORT).show();
     }
 
     private void showAboutMeDialog(){
@@ -305,6 +287,14 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             }
             case R.id.btn_hell_yeah:{
                 changeExplicitSetting(id);
+                break;
+            }
+            case R.id.btn_help_dev:{
+                showHelpDevDialog();
+                break;
+            }
+            case R.id.btn_help_me:{
+                startHelpMeActivity();
                 break;
             }
             case R.id.tv_rate:{

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.OdiousPanda.thefweather.Model.Weather.Daily;
+import com.OdiousPanda.thefweather.DataModel.Weather.Daily;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import java.text.SimpleDateFormat;

@@ -1,6 +1,6 @@
 package com.OdiousPanda.thefweather.API;
 
-import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
+import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

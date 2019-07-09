@@ -23,7 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.OdiousPanda.thefweather.Model.SavedCoordinate;
+import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.PrefManager;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;

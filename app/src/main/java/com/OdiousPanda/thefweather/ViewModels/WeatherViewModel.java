@@ -5,9 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
-import com.OdiousPanda.thefweather.Model.SavedCoordinate;
-import com.OdiousPanda.thefweather.Model.Weather.Weather;
+import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
+import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
+import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import java.util.List;
 

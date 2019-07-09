@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.OdiousPanda.thefweather.DAOs.SavedCoordinateDAO;
-import com.OdiousPanda.thefweather.Model.SavedCoordinate;
+import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
 
 @Database(entities = {SavedCoordinate.class}, version = 1,exportSchema = false)
 public abstract class WeatherDatabase extends RoomDatabase {

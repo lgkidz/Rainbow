@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"
                     app:fontFamily="@font/nunito"
                     android:lineSpacingMultiplier="0.8"
+                    android:text="@string/quote_placeholder"
                     android:textSize="@dimen/big_text"
                     app:layout_constraintBottom_toTopOf="@+id/small_text"
                     app:layout_constraintStart_toStartOf="parent" />

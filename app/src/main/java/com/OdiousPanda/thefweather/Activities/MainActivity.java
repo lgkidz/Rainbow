@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,23 +21,30 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
+import com.OdiousPanda.thefweather.CustomUI.MovableFAB;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
-import com.OdiousPanda.thefweather.Model.AQI.AirQuality;
-import com.OdiousPanda.thefweather.Model.SavedCoordinate;
-import com.OdiousPanda.thefweather.Model.Weather.Weather;
+import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
+import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
+import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.mancj.slideup.SlideUp;
+import com.mancj.slideup.SlideUpBuilder;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -67,7 +75,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private CoordinatorLayout coordinatorLayout;
     private RelativeLayout loadingLayout;
     private RelativeLayout noConnectionLayout;
+    private ConstraintLayout locationListLayout;
+    private MovableFAB fab;
+    private ImageView locationListBackButton;
     private ImageView loadingIcon;
+    private ImageView addLocation;
+    private SlideUp slideUp;
+    private boolean locationListShowing = false;
     private boolean screenInitialized = false;
     private int currentBackgroundColor = Color.argb(255,255,255,255);
 
@@ -98,11 +112,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private void showNoConnection(){
         loadingLayout.setVisibility(View.VISIBLE);
         noConnectionLayout.setVisibility(View.VISIBLE);
+        fab.hide();
     }
 
     private void startGettingData(){
         loadingLayout.setVisibility(View.VISIBLE);
         noConnectionLayout.setVisibility(View.INVISIBLE);
+        fab.hide();
         setupLocationObservers();
         updateCurrentLocation();
     }
@@ -116,10 +132,59 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         Animation spin = AnimationUtils.loadAnimation(MainActivity.this, R.anim.spin);
         loadingIcon.startAnimation(spin);
         loadingLayout = findViewById(R.id.loading_layout);
+        fab = findViewById(R.id.fab);
+        fab.hide();
+        addLocation = findViewById(R.id.btn_add_location);
+        locationListBackButton = findViewById(R.id.btn_go_back);
         noConnectionLayout = findViewById(R.id.no_connection_layout);
+        locationListLayout = findViewById(R.id.location_list_layout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setCurrentItem(1);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 1){
+                    fab.show();
+                }
+                else{
+                    fab.hide();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        slideUp = new SlideUpBuilder(locationListLayout)
+                .withStartState(SlideUp.State.HIDDEN)
+                .withStartGravity(Gravity.BOTTOM)
+                .withSlideFromOtherView(coordinatorLayout)
+                .build();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLocationList();
+            }
+        });
+        locationListBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideLocationList();
+            }
+        });
+        addLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"Thanks for touching me!",Snackbar.LENGTH_SHORT).show();
+            }
+        });
         screenInitialized = true;
     }
 
@@ -144,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 HomeScreenFragment.getInstance().updateData(weathers.get(0));
                 updateColor();
                 loadingLayout.setVisibility(View.INVISIBLE);
+                fab.show();
             }
         });
         weatherViewModel.getAqiData().observe(this, new Observer<List<AirQuality>>() {
@@ -168,7 +234,16 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     Geocoder geo = new Geocoder(MainActivity.this, Locale.getDefault());
                     List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                     if (!addresses.isEmpty()) {
-                        DetailsFragment.getInstance().updateCurrentLocationName(addresses.get(0).getFeatureName());
+                        String address = addresses.get(0).getAddressLine(0);
+                        String[] addressPieces = address.split(",");
+                        String locationName = "";
+                        if(addressPieces.length >= 3){
+                            locationName = addressPieces[addressPieces.length - 3].trim();
+                        }
+                        else{
+                            locationName = addressPieces[addressPieces.length - 2].trim();
+                        }
+                        DetailsFragment.getInstance().updateCurrentLocationName(locationName);
                     }
                 } catch (Exception e){
                     e.printStackTrace();
@@ -230,6 +305,19 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         HomeScreenFragment.getInstance().setColorTheme(textColorCode);
     }
 
+    private void hideLocationList(){
+        slideUp.hide();
+        if(mViewPager.getCurrentItem() == 1){
+            fab.show();
+        }
+        locationListShowing = false;
+    }
+    private void showLocationList(){
+        slideUp.show();
+        fab.hide();
+        locationListShowing = true;
+    }
+
     private boolean isConnected(Context context){
         ConnectivityManager cm =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -256,8 +344,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     public void onBackPressed() {
+        if(locationListShowing){
+            hideLocationList();
+            return;
+        }
         super.onBackPressed();
-        //moveTaskToBack(true);
         Log.d(TAG, "onBackPressed: ");
     }
 
