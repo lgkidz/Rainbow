@@ -14,6 +14,7 @@ import android.location.Location;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private ImageView loadingIcon;
     private ImageView addLocation;
     private SlideUp slideUp;
+    Tooltip fabTooltip;
     private boolean locationListShowing = false;
     private boolean screenInitialized = false;
     private int currentBackgroundColor = Color.argb(255,255,255,255);
@@ -187,21 +189,21 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 Snackbar.make(v,"Thanks for touching me!",Snackbar.LENGTH_SHORT).show();
             }
         });
-
-        screenInitialized = true;
-    }
-    private void showFabToolTips(){
-        Tooltip tooltip = new Tooltip.Builder(fab)
+        fabTooltip = new Tooltip.Builder(fab)
                 .setText("Drag me to heart's content")
                 .setTextColor(Color.WHITE)
-                .setBackgroundColor(getResources().getColor(R.color.bg_screen1))
+                .setBackgroundColor(ContextCompat.getColor(this,R.color.bg_screen1))
                 .setCornerRadius(10f)
                 .setTextSize(R.dimen.text_view_14sp)
                 .setGravity(Gravity.TOP)
                 .setDismissOnClick(true)
                 .setCancelable(true)
-                .setTypeface(ResourcesCompat.getFont(this,R.font.nunito))
-                .show();
+                .setTypeface(ResourcesCompat.getFont(this,R.font.nunito)).build();
+        screenInitialized = true;
+    }
+
+    private void showFabToolTips(){
+       fabTooltip.show();
     }
 
     private void setupLocationObservers(){
@@ -225,8 +227,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 HomeScreenFragment.getInstance().updateData(weathers.get(0));
                 updateColor();
                 loadingLayout.setVisibility(View.INVISIBLE);
-                fab.show();
-                showFabToolTips();
+                if(mViewPager.getCurrentItem() == 1){
+                    fab.show();
+                    showFabToolTips();
+                }
             }
         });
         weatherViewModel.getAqiData().observe(this, new Observer<List<AirQuality>>() {
