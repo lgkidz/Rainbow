@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">Rainbow</string>
     <string name="title_activity_main">MainActivity</string>
-
-
-    <string name="pref_key_string">whateverthefthisis_pref_key</string>
-    <string name="saved_coord_pref_key">saved_coord_pref_key</string>
     <string name="temp_unit_setting">temp_unit_setting</string>
     <string name="temp_unit_f">F</string>
     <string name="temp_unit_c">C</string>
@@ -117,6 +113,6 @@
     <string name="quote_placeholder">…</string>
     <string name="depression_level_title">Depression level</string>
     <string name="air_quality_dialog_description">Here are some scientific information</string>
-    <string name="provided_by_aqicn_org">provided by aqicn.org</string>
-    <string name="expicit_setting_title">Are you okay with swearing?</string>
+    <string name="provided_by_aqi_cn_org">provided by aqicn.org</string>
+    <string name="explicit_setting_title">Are you okay with swearing?</string>
 </resources>

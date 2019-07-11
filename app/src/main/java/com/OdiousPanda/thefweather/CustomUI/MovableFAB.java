@@ -89,7 +89,7 @@ public class MovableFAB extends FloatingActionButton implements View.OnTouchList
             view.animate()
                     .x(restX)
                     .setInterpolator(new OvershootInterpolator())
-                    .setDuration(150)
+                    .setDuration(300)
                     .start();
 
             if (Math.abs(upDX) < CLICK_DRAG_TOLERANCE && Math.abs(upDY) < CLICK_DRAG_TOLERANCE) { // A click

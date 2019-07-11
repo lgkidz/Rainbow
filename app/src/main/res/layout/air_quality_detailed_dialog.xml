@@ -247,7 +247,7 @@
         android:paddingRight="@dimen/margin_16"
         android:textColor="#000"
         android:gravity="end"
-        android:text="@string/provided_by_aqicn_org"
+        android:text="@string/provided_by_aqi_cn_org"
         android:paddingEnd="@dimen/margin_16"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
     <Button

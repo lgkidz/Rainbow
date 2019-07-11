@@ -31,7 +31,7 @@ allprojects {
 
     }
     tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
 }
 
@@ -58,98 +58,98 @@ task convertDimens() {
     def xml600 = xmlOriginal.clone()
 
     xml320.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp", "").toFloat()
-            newValue = round((320 / 360 * newValue).toFloat(), 2);
+            newValue = round((320 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "sp"
         } else if (value.contains("px")) {
             def newValue = value.replace("px", "").toFloat()
-            newValue = round((320 / 360 * newValue).toFloat(), 2);
+            newValue = round((320 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "px"
         } else {
             def newValue = value.replace("dp", "").toFloat()
-            newValue = round((320 / 360 * newValue).toFloat(), 2);
+            newValue = round((320 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "dp"
         }
     }
     xml411.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp", "").toFloat()
-            newValue = round((411 / 360 * newValue).toFloat(), 2);
+            newValue = round((411 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "sp"
         } else if (value.contains("px")) {
             def newValue = value.replace("px", "").toFloat()
-            newValue = round((411 / 360 * newValue).toFloat(), 2);
+            newValue = round((411 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "px"
         } else {
             def newValue = value.replace("dp", "").toFloat()
-            newValue = round((411 / 360 * newValue).toFloat(), 2);
+            newValue = round((411 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "dp"
         }
     }
     xml420.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp", "").toFloat()
-            newValue = round((420 / 360 * newValue).toFloat(), 2);
+            newValue = round((420 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "sp"
         } else if (value.contains("px")) {
             def newValue = value.replace("px", "").toFloat()
-            newValue = round((420 / 360 * newValue).toFloat(), 2);
+            newValue = round((420 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "px"
         } else {
             def newValue = value.replace("dp", "").toFloat()
-            newValue = round((420 / 360 * newValue).toFloat(), 2);
+            newValue = round((420 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "dp"
         }
     }
     xml480.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp", "").toFloat()
-            newValue = round((480 / 360 * newValue).toFloat(), 2);
+            newValue = round((480 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "sp"
         } else if (value.contains("px")) {
             def newValue = value.replace("px", "").toFloat()
-            newValue = round((480 / 360 * newValue).toFloat(), 2);
+            newValue = round((480 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "px"
         } else {
             def newValue = value.replace("dp", "").toFloat()
-            newValue = round((480 / 360 * newValue).toFloat(), 2);
+            newValue = round((480 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "dp"
         }
     }
     xml540.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp", "").toFloat()
-            newValue = round((540 / 360 * newValue).toFloat(), 2);
+            newValue = round((540 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "sp"
         } else if (value.contains("px")) {
             def newValue = value.replace("px", "").toFloat()
-            newValue = round((540 / 360 * newValue).toFloat(), 2);
+            newValue = round((540 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "px"
         } else {
             def newValue = value.replace("dp", "").toFloat()
-            newValue = round((540 / 360 * newValue).toFloat(), 2);
+            newValue = round((540 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "dp"
         }
     }
     xml600.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp", "").toFloat()
-            newValue = round((600 / 360 * newValue).toFloat(), 2);
+            newValue = round((600 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "sp"
         } else if (value.contains("px")) {
             def newValue = value.replace("px", "").toFloat()
-            newValue = round((600 / 360 * newValue).toFloat(), 2);
+            newValue = round((600 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "px"
         } else {
             def newValue = value.replace("dp", "").toFloat()
-            newValue = round((600 / 360 * newValue).toFloat(), 2);
+            newValue = round((600 / 360 * newValue).toFloat(), 2)
             dimen.value = newValue + "dp"
         }
     }
@@ -165,9 +165,9 @@ task convertDimens() {
 }
 
 static float round(float d, int decimalPlace) {
-    BigDecimal bd = new BigDecimal(Float.toString(d));
-    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-    return bd.floatValue();
+    BigDecimal bd = new BigDecimal(Float.toString(d))
+    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP)
+    return bd.floatValue()
 }
 
 clean.dependsOn convertDimens

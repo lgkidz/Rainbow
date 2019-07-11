@@ -237,7 +237,7 @@
                 app:fontFamily="@font/nunito"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_view_18sp"
-                android:text="@string/expicit_setting_title"/>
+                android:text="@string/explicit_setting_title"/>
             <LinearLayout
                 android:layout_marginTop="@dimen/margin_4"
                 android:layout_width="match_parent"

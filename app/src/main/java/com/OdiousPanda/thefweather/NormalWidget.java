@@ -35,7 +35,6 @@ import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
-import com.OdiousPanda.thefweather.Utilities.QuoteGenerator;
 import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -83,7 +82,7 @@ public class NormalWidget extends AppWidgetProvider {
     private static final String MAIN_BITMAP = "mainBitmap";
     private static final String SUB_BITMAP = "subBitmap";
     private static final String TIME_BITMAP = "timeBitmap";
-    private static final String DAYNIGHT_BITMAP = "dnBitmap";
+    private static final String DN_BITMAP = "dnBitmap";
     private static final String DATE_BITMAP = "dateBitmap";
     private static final String LOCATION_BITMAP = "locationBitmap";
 
@@ -100,7 +99,7 @@ public class NormalWidget extends AppWidgetProvider {
         String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM",Locale.getDefault());
         remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
-        remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
+        remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5), DN_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
         WidgetTimeUpdaterJob.scheduleJob(context);
         if (PreferencesUtil.isNotFirstTimeLaunch(context)) {
@@ -142,7 +141,7 @@ public class NormalWidget extends AppWidgetProvider {
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48sp));
                 break;
             }
-            case DAYNIGHT_BITMAP:{
+            case DN_BITMAP:{
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
                 break;
             }
@@ -428,7 +427,7 @@ public class NormalWidget extends AppWidgetProvider {
 
                 String dateString = dateFormat.format(date);
                 remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
-                remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
+                remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5), DN_BITMAP));
                 remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateString,DATE_BITMAP));
                 aWm.updateAppWidget(widgetId, remoteViews);
             }
