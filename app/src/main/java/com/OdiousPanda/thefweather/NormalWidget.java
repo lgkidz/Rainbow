@@ -8,7 +8,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -36,7 +35,7 @@ import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.Activities.WelcomeActivity;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
-import com.OdiousPanda.thefweather.Utilities.PrefManager;
+import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -92,8 +92,6 @@ public class NormalWidget extends AppWidgetProvider {
 
     public static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
                                 final int appWidgetId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
         widgetId = appWidgetId;
         remoteViews = views;
@@ -107,16 +105,15 @@ public class NormalWidget extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
         WidgetTimeUpdaterJob.scheduleJob(context);
         Intent mainActivityIntent = new Intent(context, MainActivity.class);
-        PrefManager prefManager = new PrefManager(context);
-        if (!prefManager.isFirstTimeLaunch()) {
+        if (!PreferencesUtil.isFirstTimeLaunch(context)) {
             mainActivityIntent = new Intent(context, WelcomeActivity.class);
             Intent tapIntent = new Intent(context,NormalWidget.class);
             tapIntent.setAction(ACTION_TAP);
             PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
             remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout,tapPending);
-            editor.putInt(ACTION_TAP,0).apply();
+            PreferencesUtil.setWidgetTapCount(context,0);
             aWm.updateAppWidget(widgetId, remoteViews);
-            updateData(context,sharedPreferences);
+            updateData(context);
         }
         mainActivityIntent.setAction(ACTION_TO_DETAILS);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -211,8 +208,8 @@ public class NormalWidget extends AppWidgetProvider {
         return image;
     }
 
-    private static void updateData(final Context context, SharedPreferences sharedPreferences){
-        final String currentTempUnit = sharedPreferences.getString(context.getString(R.string.pref_temp), context.getString(R.string.temp_setting_degree_c));
+    private static void updateData(final Context context){
+        final String currentTempUnit = PreferencesUtil.getTemperatureUnit(context);
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         if (checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(context,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -223,13 +220,16 @@ public class NormalWidget extends AppWidgetProvider {
         fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+                if (location == null){
+                    return;
+                }
                 try {
                     Geocoder geo = new Geocoder(context, Locale.getDefault());
                     List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                     if (!addresses.isEmpty()) {
                         String address = addresses.get(0).getAddressLine(0);
                         String[] addressPieces = address.split(",");
-                        String locationName = "";
+                        String locationName;
                         if(addressPieces.length >= 3){
                             locationName = addressPieces[addressPieces.length - 3].trim();
                         }
@@ -244,9 +244,10 @@ public class NormalWidget extends AppWidgetProvider {
 
                 call.getWeather(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude())).enqueue(new Callback<Weather>() {
                     @Override
-                    public void onResponse(Call<Weather> call, Response<Weather> response) {
+                    public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                         if(response.isSuccessful()){
                             weather = response.body();
+                            assert weather != null;
                             String temp = UnitConverter.convertToTemperatureUnit(weather.getCurrently().getTemperature(),currentTempUnit);
                             String realFeelTemp = "Feels more like: " +  UnitConverter.convertToTemperatureUnit(weather.getCurrently().getApparentTemperature(),currentTempUnit);
                             remoteViews.setImageViewBitmap(R.id.tv_temp_widget,textAsBitmap(context,temp,TEMP_BITMAP));
@@ -259,7 +260,7 @@ public class NormalWidget extends AppWidgetProvider {
                     }
 
                     @Override
-                    public void onFailure(Call<Weather> call, Throwable t) {
+                    public void onFailure(@NonNull Call<Weather> call, @NonNull Throwable t) {
                         remoteViews.setViewVisibility(R.id.widget_loading_layout,View.INVISIBLE);
                         aWm.updateAppWidget(widgetId, remoteViews);
                     }
@@ -276,7 +277,7 @@ public class NormalWidget extends AppWidgetProvider {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Quote q = document.toObject(Quote.class);
                                 quotes.add(q);
                             }
@@ -343,25 +344,23 @@ public class NormalWidget extends AppWidgetProvider {
             }
         }
         weatherQuotes.clear();
-        String explicit = context.getSharedPreferences(context.getString(R.string.pref_key_string),Context.MODE_PRIVATE).getString(context.getString(R.string.pref_explicit),context.getString(R.string.im_not));
+        boolean isExplicit = PreferencesUtil.isExplicit(context);
         for(Quote q : quotes){
             for(String s: criteria){
                 if(q.getAtt().contains("*")){
-                    Quote tempQuote = q;
-                    if(explicit.equals(context.getString(R.string.im_not))){
-                        tempQuote.setMain(censorStrongWords(q.getMain()));
-                        tempQuote.setSub(censorStrongWords(q.getSub()));
+                    if(isExplicit){
+                        q.setMain(censorStrongWords(q.getMain()));
+                        q.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(tempQuote);
+                    weatherQuotes.add(q);
                     break;
                 }
                 if (q.getAtt().contains(s)){
-                    Quote tempQuote = q;
-                    if(explicit.equals(context.getString(R.string.im_not))){
-                        tempQuote.setMain(censorStrongWords(q.getMain()));
-                        tempQuote.setSub(censorStrongWords(q.getSub()));
+                    if(isExplicit){
+                        q.setMain(censorStrongWords(q.getMain()));
+                        q.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(tempQuote);
+                    weatherQuotes.add(q);
                     break;
                 }
             }
@@ -409,11 +408,10 @@ public class NormalWidget extends AppWidgetProvider {
             widgetId = ids[ids.length -1];
             Log.d("widgetTime", "onReceive: " + intent.getAction());
             remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
-            final SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key_string), Context.MODE_PRIVATE);
             super.onReceive(context, intent);
 
             if(ACTION_UPDATE.equals(intent.getAction())){
-                updateData(context,sharedPreferences);
+                updateData(context);
             }
 
             if("com.sec.android.widgetapp.APPWIDGET_RESIZE".equals(intent.getAction())){
@@ -437,22 +435,21 @@ public class NormalWidget extends AppWidgetProvider {
             }
 
             if(ACTION_TAP.equals(intent.getAction())){
-                int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
-                sharedPreferences.edit().putInt(ACTION_TAP, ++clickCount).apply();
+                int clickCount = PreferencesUtil.getWidgetTapCount(context);
+                PreferencesUtil.setWidgetTapCount(context,++clickCount);
 
                 @SuppressLint("HandlerLeak")
                 final Handler handler = new Handler() {
 
                     public void handleMessage(Message msg){
-                        int clickCount = sharedPreferences.getInt(ACTION_TAP,0);
+                        int clickCount = PreferencesUtil.getWidgetTapCount(context);
                         if(clickCount > 1) {
                             remoteViews.setViewVisibility(R.id.widget_loading_layout,View.VISIBLE);
                             aWm.updateAppWidget(widgetId, remoteViews);
-                            updateData(context,sharedPreferences);
+                            updateData(context);
 
                         }
-
-                        sharedPreferences.edit().putInt(ACTION_TAP,0).apply();
+                        PreferencesUtil.setWidgetTapCount(context,0);
                     }
 
                 };

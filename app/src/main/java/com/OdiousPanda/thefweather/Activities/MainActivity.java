@@ -42,7 +42,6 @@ import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     Tooltip fabTooltip;
     private boolean locationListShowing = false;
     private boolean screenInitialized = false;
+    private boolean toolTipShown = false;
     private int currentBackgroundColor = Color.argb(255,255,255,255);
 
     @Override
@@ -203,7 +203,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void showFabToolTips(){
-       fabTooltip.show();
+        if(!toolTipShown){
+            fabTooltip.show();
+            toolTipShown = true;
+        }
     }
 
     private void setupLocationObservers(){
@@ -281,8 +284,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateViewsWithData(){
         Log.d(TAG, "updateViewsWithData: now updating");
-        WeatherRepository.getInstance(getApplication()).getWeather();
-        WeatherRepository.getInstance(getApplication()).getAirQuality();
+        WeatherRepository.getInstance(this).getWeather();
+        WeatherRepository.getInstance(this).getAirQuality();
     }
 
     @Override

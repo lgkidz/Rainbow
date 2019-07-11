@@ -1,12 +1,5 @@
 package com.OdiousPanda.thefweather.Activities;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.text.HtmlCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,9 +16,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
 import com.OdiousPanda.thefweather.R;
-import com.OdiousPanda.thefweather.Utilities.PrefManager;
+import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
 import com.bumptech.glide.Glide;
 import com.karumi.dexter.Dexter;
@@ -33,31 +36,58 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
 import java.util.List;
+
 import mumayank.com.airlocationlibrary.AirLocation;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    private static final String TAG = "weatherA";
+    WeatherViewModel weatherViewModel;
     private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
-    private TextView[] dots;
     private int[] layouts;
     private Button btnNext;
-    private PrefManager prefManager;
-
-    WeatherViewModel weatherViewModel;
-    private AirLocation airLocation;
-    private static final String TAG = "weatherA";
     private boolean locationUpdated = false;
+    //  viewpager change listener
+    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        @Override
+        public void onPageSelected(int position) {
+            if (!locationUpdated) {
+                updateCurrentLocation();
+                locationUpdated = true;
+            }
+            addBottomDots(position);
+
+            // changing the next button text 'NEXT' / 'GOT IT'
+            if (position == layouts.length - 1) {
+                // last page. make button text to GOT IT
+                btnNext.setText(getString(R.string.start));
+            } else {
+                // still pages are left
+                btnNext.setText(getString(R.string.next));
+            }
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Checking for first time launch - before calling setContentView()
-        prefManager = new PrefManager(this);
-        if (!prefManager.isFirstTimeLaunch()) {
+        if (!PreferencesUtil.isFirstTimeLaunch(this)) {
             launchHomeScreen();
             finish();
         }
@@ -85,16 +115,15 @@ public class WelcomeActivity extends AppCompatActivity {
         // adding bottom dots
         addBottomDots(0);
 
-        myViewPagerAdapter = new MyViewPagerAdapter();
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(!locationUpdated){
+                if (!locationUpdated) {
                     updateCurrentLocation();
                     locationUpdated = true;
                 }
@@ -115,7 +144,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void addBottomDots(int currentPage) {
-        dots = new TextView[layouts.length];
+        TextView[] dots = new TextView[layouts.length];
 
         int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
         int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
@@ -139,106 +168,30 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
 
-        prefManager.setFirstTimeLaunch(false);
+        PreferencesUtil.setFirstTimeLaunch(this, false);
         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
         finish();
     }
 
-    //  viewpager change listener
-    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-            if(!locationUpdated){
-                updateCurrentLocation();
-                locationUpdated = true;
-            }
-            addBottomDots(position);
-
-            // changing the next button text 'NEXT' / 'GOT IT'
-            if (position == layouts.length - 1) {
-                // last page. make button text to GOT IT
-                btnNext.setText(getString(R.string.start));
-            } else {
-                // still pages are left
-                btnNext.setText(getString(R.string.next));
-            }
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-    };
-
-
-    /**
-     * View pager adapter
-     */
-    public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater layoutInflater;
-
-        public MyViewPagerAdapter() {
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View view = layoutInflater.inflate(layouts[position], container, false);
-            if(position != 0){
-                ImageView ins = view.findViewById(R.id.instruction_pic);
-                int resourceId = getResources().getIdentifier("drawable/instruction" + position, null, getPackageName());
-                Glide.with(WelcomeActivity.this)
-                        .load(resourceId)
-                        .into(ins);
-            }
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return layouts.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object obj) {
-            return view == obj;
-        }
-
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            View view = (View) object;
-            container.removeView(view);
-        }
-    }
-
-    private void updateCurrentLocation(){
+    private void updateCurrentLocation() {
         Log.d(TAG, "updateCurrentLocation: update Current Location");
-        airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
+        AirLocation airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
             @Override
-            public void onSuccess(Location location) {
-                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()), null);
+            public void onSuccess(@NonNull Location location) {
+                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), null);
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
                 weatherViewModel.update(currentLocation);
             }
 
             @Override
-            public void onFailed(AirLocation.LocationFailedEnum locationFailedEnum) {
+            public void onFailed(@NonNull AirLocation.LocationFailedEnum locationFailedEnum) {
 
             }
         });
     }
 
-    private void requestPermission(){
+    private void requestPermission() {
         Dexter.withActivity(WelcomeActivity.this)
                 //There might need more permissions in the future
                 .withPermissions(
@@ -247,12 +200,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()){
+                        if (report.areAllPermissionsGranted()) {
 
-                        }else{
+                        } else {
                             showNeededPermissionDialog();
                         }
-                        if(report.isAnyPermissionPermanentlyDenied()){
+                        if (report.isAnyPermissionPermanentlyDenied()) {
                             showSettingDialog();
                         }
                     }
@@ -264,7 +217,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 }).onSameThread().check();
     }
 
-    private void showNeededPermissionDialog(){
+    private void showNeededPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.message_need_permission));
         builder.setMessage(getString(R.string.app_need_permissions_to_run));
@@ -307,5 +260,46 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.setData(uri);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * View pager adapter
+     */
+    public class MyViewPagerAdapter extends PagerAdapter {
+        private LayoutInflater layoutInflater;
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View view = layoutInflater.inflate(layouts[position], container, false);
+            if (position != 0) {
+                ImageView ins = view.findViewById(R.id.instruction_pic);
+                int resourceId = getResources().getIdentifier("drawable/instruction" + position, null, getPackageName());
+                Glide.with(WelcomeActivity.this)
+                        .load(resourceId)
+                        .into(ins);
+            }
+            container.addView(view);
+            return view;
+        }
+
+        @Override
+        public int getCount() {
+            return layouts.length;
+        }
+
+        @Override
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object obj) {
+            return view == obj;
+        }
+
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            View view = (View) object;
+            container.removeView(view);
+        }
     }
 }

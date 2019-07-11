@@ -1,7 +1,6 @@
 package com.OdiousPanda.thefweather.Adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.OdiousPanda.thefweather.DataModel.Weather.Daily;
 import com.OdiousPanda.thefweather.R;
+import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,24 +20,23 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     private Context context;
     private Daily dailyData;
     private int textColor;
-    private SharedPreferences sharedPreferences;
 
-    public ForecastAdapter(Context context,SharedPreferences sharedPreferences, Daily daily,int color){
+    public ForecastAdapter(Context context, Daily daily,int color){
         this.context = context;
         this.dailyData = daily;
         this.textColor = color;
-        this.sharedPreferences = sharedPreferences;
     }
 
+    @NonNull
     @Override
-    public ForecastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ForecastViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.forecast_item,parent,false);
         return new ForecastViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ForecastViewHolder holder, int position) {
-        String currentTempUnit = sharedPreferences.getString(context.getString(R.string.pref_temp),context.getString(R.string.temp_setting_degree_c));
+        String currentTempUnit = PreferencesUtil.getTemperatureUnit(context);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date date = new Date((long) dailyData.getData().get(position).getTime() * 1000);
         String weekday = sdf.format(date);
@@ -75,7 +74,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             temp = itemView.findViewById(R.id.temp_forecast);
         }
 
-        public void setData(String date, String temp, int iconResource,int textColor){
+        void setData(String date, String temp, int iconResource,int textColor){
             this.date.setText(date);
             this.temp.setText(temp);
             this.icon.setImageResource(iconResource);

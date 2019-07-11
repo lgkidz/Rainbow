@@ -1,9 +1,9 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -24,11 +24,13 @@ import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
+import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
+
+import java.util.Objects;
 
 public class DetailsFragment extends Fragment {
     private static DetailsFragment instance;
-    private SharedPreferences sharedPreferences;
 
     private Weather currentWeather;
     private AirQuality airQuality;
@@ -87,11 +89,9 @@ public class DetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
-        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.pref_key_string), Context.MODE_PRIVATE);
-
         initViews(v);
 
         return v;
@@ -133,8 +133,8 @@ public class DetailsFragment extends Fragment {
         layoutAqi = v.findViewById(R.id.layoutAqi);
 
 
-        String currentExplicitSetting = sharedPreferences.getString(getString(R.string.pref_explicit),getString(R.string.im_not));
-        if(currentExplicitSetting.equals(getString(R.string.im_not))){
+        boolean isExplicit = PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()));
+        if(isExplicit){
             tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
         }
         else{
@@ -173,7 +173,7 @@ public class DetailsFragment extends Fragment {
         }
 
         if(currentWeather != null){
-            ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),headingColor);
+            ForecastAdapter adapter = new ForecastAdapter(getActivity(),currentWeather.getDaily(),headingColor);
             rvForecast.setAdapter(adapter);
         }
     }
@@ -217,16 +217,16 @@ public class DetailsFragment extends Fragment {
         layoutAqi.setBackgroundColor(layoutColor);
     }
 
-    public void updateUnit(){
-        String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
-        String currentDistanceUnit = sharedPreferences.getString(getString(R.string.pref_distance),getString(R.string.km));
-        String currentSpeedUnit = sharedPreferences.getString(getString(R.string.pref_speed),getString(R.string.kmph));
-        String currentPressureUnit = sharedPreferences.getString(getString(R.string.pref_pressure),getString(R.string.psi));
-        String currentExplicitSetting = sharedPreferences.getString(getString(R.string.pref_explicit),getString(R.string.im_not));
+    void updateUnit(){
+        String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
+        String currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
+        String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
+        String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
+        boolean isExplicit = PreferencesUtil.isExplicit(getActivity());
 
         tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(),currentTempUnit));
 
-        if(currentExplicitSetting.equals(getString(R.string.im_not))){
+        if(isExplicit){
             tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
         }
         else{
@@ -243,17 +243,16 @@ public class DetailsFragment extends Fragment {
         tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(),currentDistanceUnit));
 
         tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(),currentSpeedUnit));
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),textColor);
+        ForecastAdapter adapter = new ForecastAdapter(getActivity(),currentWeather.getDaily(),textColor);
         rvForecast.setAdapter(adapter);
     }
 
     public void updateData(Weather weather){
-        
         currentWeather = weather;
-        String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
-        String currentDistanceUnit = sharedPreferences.getString(getString(R.string.pref_distance),getString(R.string.km));
-        String currentSpeedUnit = sharedPreferences.getString(getString(R.string.pref_speed),getString(R.string.kmph));
-        String currentPressureUnit = sharedPreferences.getString(getString(R.string.pref_pressure),getString(R.string.psi));
+        String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
+        String currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
+        String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
+        String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
         tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(),currentTempUnit));
         String uvSummary = "";
         if(currentWeather.getCurrently().getUvIndex() == 0){
@@ -277,7 +276,7 @@ public class DetailsFragment extends Fragment {
         tvHumidity.setText(Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%");
         tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(),currentPressureUnit));
         if(currentPressureUnit.equals(getString(R.string.depression_unit))){
-            tvPressureTitle.setText("Depression level");
+            tvPressureTitle.setText(getString(R.string.depression_level_title));
         }
         tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(),currentDistanceUnit));
 
@@ -350,7 +349,7 @@ public class DetailsFragment extends Fragment {
         rotate.setDuration(duration);
         rotate.setRepeatCount(Animation.INFINITE);
         windmillWings.startAnimation(rotate);
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(),sharedPreferences,currentWeather.getDaily(),headingColor);
+        ForecastAdapter adapter = new ForecastAdapter(getActivity(),currentWeather.getDaily(),headingColor);
         rvForecast.setAdapter(adapter);
     }
 

@@ -3,9 +3,10 @@ package com.OdiousPanda.thefweather.MainFragments;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -16,8 +17,11 @@ import android.widget.TextView;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
+import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.QuoteGenerator;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
+
+import java.util.Objects;
 
 public class HomeScreenFragment extends Fragment {
 
@@ -35,8 +39,6 @@ public class HomeScreenFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private SharedPreferences sharedPreferences;
-
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvTemp;
     private TextView tvDescription;
@@ -48,10 +50,9 @@ public class HomeScreenFragment extends Fragment {
     private Weather currentWeather;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home_screen, container, false);
-        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.pref_key_string), Context.MODE_PRIVATE);
         initViews(v);
 
         return v;
@@ -61,7 +62,6 @@ public class HomeScreenFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
-
 
     private void initViews(View v){
         tvBigText = v.findViewById(R.id.big_text);
@@ -80,8 +80,7 @@ public class HomeScreenFragment extends Fragment {
 
     public void setColorTheme(int textColor){
         int colorFrom = tvTemp.getCurrentTextColor();
-        int colorTo = textColor;
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, textColor);
         colorAnimation.setDuration(200); // milliseconds
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
@@ -96,25 +95,24 @@ public class HomeScreenFragment extends Fragment {
         });
         colorAnimation.start();
         if(textColor == Color.WHITE){
-            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + iconName + "_w", null, getActivity().getPackageName());
+            int iconResourceId = Objects.requireNonNull(getActivity()).getResources().getIdentifier("drawable/" + iconName + "_w", null, getActivity().getPackageName());
             icon.setImageResource(iconResourceId);
         }
         else{
-            int iconResourceId = getActivity().getResources().getIdentifier("drawable/" + iconName + "_b", null, getActivity().getPackageName());
+            int iconResourceId = Objects.requireNonNull(getActivity()).getResources().getIdentifier("drawable/" + iconName + "_b", null, getActivity().getPackageName());
             icon.setImageResource(iconResourceId);
         }
-
     }
 
-    public void updateUnit(){
-        String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
+    void updateUnit(){
+        String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         tvTemp.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
     }
 
     public void updateData(Weather weather){
         currentWeather = weather;
         QuoteGenerator.getInstance(getActivity()).getQuote(weather);
-        String currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
+        String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         tvTemp.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getTemperature(),currentTempUnit));
         tvDescription.setText(currentWeather.getCurrently().getSummary());
         String iconNameRaw = currentWeather.getCurrently().getIcon();
@@ -122,11 +120,11 @@ public class HomeScreenFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    public void updateExplicitSetting(){
+    void updateExplicitSetting(){
         QuoteGenerator.getInstance(getActivity()).getQuote(currentWeather);
     }
 
-    OnLayoutRefreshListener callback;
+    private OnLayoutRefreshListener callback;
 
     public void setOnRefreshListener(OnLayoutRefreshListener callback){
         this.callback = callback;
@@ -135,7 +133,6 @@ public class HomeScreenFragment extends Fragment {
     public interface OnLayoutRefreshListener{
         void updateData();
     }
-
 
     public void updateQuote(Quote quote){
         tvBigText.setText(quote.getMain());

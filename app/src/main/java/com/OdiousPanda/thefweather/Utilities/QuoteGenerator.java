@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
-import com.OdiousPanda.thefweather.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -14,16 +13,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class QuoteGenerator {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    List<Quote> quotes = new ArrayList<>();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private List<Quote> quotes = new ArrayList<>();
     private static final String TAG = "WeatherA";
     private Weather weather;
     private Context mContext;
 
-    List<Quote> weatherQuotes = new ArrayList<>();
+    private List<Quote> weatherQuotes = new ArrayList<>();
 
     private static QuoteGenerator instance;
 
@@ -34,7 +34,7 @@ public class QuoteGenerator {
         return instance;
     }
 
-    public QuoteGenerator(Context context){
+    private QuoteGenerator(Context context){
         this.mContext = context;
     }
 
@@ -45,7 +45,7 @@ public class QuoteGenerator {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Quote q = document.toObject(Quote.class);
                                 quotes.add(q);
                             }
@@ -108,27 +108,25 @@ public class QuoteGenerator {
 
         weatherQuotes.clear();
 
-        String explicit = mContext.getSharedPreferences(mContext.getString(R.string.pref_key_string),Context.MODE_PRIVATE).getString(mContext.getString(R.string.pref_explicit),mContext.getString(R.string.im_not));
+        boolean isExplicit =PreferencesUtil.isExplicit(mContext);
         for(Quote q : quotes){
             if(q.getAtt().contains("*")){
                 if(!q.getAtt().contains("widget")){
-                    Quote tempQuote = q;
-                    if(explicit.equals(mContext.getString(R.string.im_not))){
-                        tempQuote.setMain(censorStrongWords(q.getMain()));
-                        tempQuote.setSub(censorStrongWords(q.getSub()));
+                    if(isExplicit){
+                        q.setMain(censorStrongWords(q.getMain()));
+                        q.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(tempQuote);
+                    weatherQuotes.add(q);
                 }
                 continue;
             }
             for(String s: criteria){
                 if (q.getAtt().contains(s)){
-                    Quote tempQuote = q;
-                    if(explicit.equals(mContext.getString(R.string.im_not))){
-                        tempQuote.setMain(censorStrongWords(q.getMain()));
-                        tempQuote.setSub(censorStrongWords(q.getSub()));
+                    if(isExplicit){
+                        q.setMain(censorStrongWords(q.getMain()));
+                        q.setSub(censorStrongWords(q.getSub()));
                     }
-                    weatherQuotes.add(tempQuote);
+                    weatherQuotes.add(q);
                     break;
                 }
             }

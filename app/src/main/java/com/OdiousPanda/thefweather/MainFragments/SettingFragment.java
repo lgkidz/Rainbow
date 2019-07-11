@@ -1,8 +1,6 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,13 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
 import com.OdiousPanda.thefweather.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.CustomUI.AboutDialog;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
+import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
@@ -27,9 +30,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private String currentDistanceUnit;
     private String currentSpeedUnit;
     private String currentPressureUnit;
-    private String currentExplicitSetting;
-
-    private SharedPreferences sharedPreferences;
+    private boolean isExplicit;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -77,14 +78,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
-        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.pref_key_string), Context.MODE_PRIVATE);
-
         initViews(v);
         getSetting();
-
         return v;
     }
 
@@ -156,11 +154,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getSetting(){
-        currentTempUnit = sharedPreferences.getString(getString(R.string.pref_temp),getString(R.string.temp_setting_degree_c));
-        currentDistanceUnit = sharedPreferences.getString(getString(R.string.pref_distance),getString(R.string.km));
-        currentSpeedUnit = sharedPreferences.getString(getString(R.string.pref_speed),getString(R.string.kmph));
-        currentPressureUnit = sharedPreferences.getString(getString(R.string.pref_pressure),getString(R.string.psi));
-        currentExplicitSetting = sharedPreferences.getString(getString(R.string.pref_explicit),getString(R.string.im_not));
+        currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
+        currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
+        currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
+        currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
+        isExplicit = PreferencesUtil.isExplicit(getActivity());
 
         colorThoseButtons();
         colorThoseTextView();
@@ -219,7 +217,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updatePressureButtonColor(btnDepress.getId());
         }
 
-        if(currentExplicitSetting.equals(getString(R.string.im_not))){
+        if(isExplicit){
             updateExplicitButtonColor(btnImNot.getId());
         }
         else {
@@ -323,7 +321,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void changeTempUnit(int id){
-        String pref = getString(R.string.pref_temp);
+        String pref = PreferencesUtil.TEMPERATURE_UNIT;
         if(id == R.id.btn_c){
             updateSharedPref(pref,getString(R.string.temp_setting_degree_c));
         }
@@ -335,7 +333,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
         HomeScreenFragment.getInstance().updateUnit();
         Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
-        getActivity().sendBroadcast(updateWidgetIntent);
+        Objects.requireNonNull(getActivity()).sendBroadcast(updateWidgetIntent);
         updateTempButtonColor(id);
     }
 
@@ -367,7 +365,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void changeDistanceUnit(int id){
-        String pref = getString(R.string.pref_distance);
+        String pref = PreferencesUtil.DISTANCE_UNIT;
         if(id == R.id.btn_km){
             updateSharedPref(pref,getString(R.string.km));
         }
@@ -409,7 +407,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void changeSpeedUnit(int id){
-        String pref = getString(R.string.pref_speed);
+        String pref = PreferencesUtil.SPEED_UNIT;
         if(id == R.id.btn_kmph){
             updateSharedPref(pref,getString(R.string.kmph));
         }
@@ -457,7 +455,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void changePressureUnit(int id){
-        String pref = getString(R.string.pref_pressure);
+        String pref = PreferencesUtil.PRESSURE_UNIT;
         if(id == R.id.btn_psi){
             updateSharedPref(pref,getString(R.string.psi));
         }
@@ -498,7 +496,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void changeExplicitSetting(int id) {
-        String pref = getString(R.string.pref_explicit);
+        String pref = PreferencesUtil.EXPLICIT_SETTING;
         if(id == R.id.btn_im_not){
             updateSharedPref(pref,getString(R.string.im_not));
         }
@@ -508,7 +506,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         updateExplicitButtonColor(id);
         HomeScreenFragment.getInstance().updateExplicitSetting();
         Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
-        getActivity().sendBroadcast(updateWidgetIntent);
+        Objects.requireNonNull(getActivity()).sendBroadcast(updateWidgetIntent);
     }
 
     private void updateExplicitButtonColor(int id) {
@@ -527,9 +525,15 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateSharedPref(String pref, String value){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(pref,value);
-        editor.apply();
+        if(pref.equals(PreferencesUtil.EXPLICIT_SETTING)){
+            if(value.equals(getString(R.string.im_not))){
+                PreferencesUtil.setExplicitSetting(Objects.requireNonNull(getActivity()),true);
+            }
+            else{
+                PreferencesUtil.setExplicitSetting(Objects.requireNonNull(getActivity()),false);
+            }
+        }
+        PreferencesUtil.setUnitSetting(Objects.requireNonNull(getActivity()),pref,value);
         DetailsFragment.getInstance().updateUnit();
     }
 
