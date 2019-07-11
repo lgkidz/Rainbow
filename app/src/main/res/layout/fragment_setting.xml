@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingStart="@dimen/activity_horizontal_margin"
     android:paddingEnd="@dimen/activity_horizontal_margin"
     tools:context=".MainFragments.SettingFragment">
@@ -238,7 +237,7 @@
                 app:fontFamily="@font/nunito"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_view_18sp"
-                android:text="Are you okay with swearing?"/>
+                android:text="@string/expicit_setting_title"/>
             <LinearLayout
                 android:layout_marginTop="@dimen/margin_4"
                 android:layout_width="match_parent"
@@ -292,7 +291,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     app:fontFamily="@font/nunito"
-                    android:layout_marginRight="@dimen/margin_4"
+                    android:layout_marginEnd="@dimen/margin_4"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_view_14sp"
                     android:textAllCaps="false"
@@ -302,7 +301,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/margin_4"
+                    android:layout_marginStart="@dimen/margin_4"
                     app:fontFamily="@font/nunito"
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"

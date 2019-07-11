@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:fontFamily="@font/nunito"
-        android:text="Here are some scientific information"
+        android:text="@string/air_quality_dialog_description"
         android:textColor="#000"
         android:gravity="center"
         android:padding="@dimen/margin_16"
@@ -46,7 +47,8 @@
                 app:fontFamily="@font/nunito"
                 android:textColor="#000"
                 android:textSize="@dimen/text_view_12sp"
-                android:text="0" />
+                android:text="0"
+                tools:ignore="HardcodedText" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -54,7 +56,8 @@
                 app:fontFamily="@font/nunito"
                 android:textColor="#000"
                 android:textSize="@dimen/text_view_12sp"
-                android:text="50" />
+                android:text="50"
+                tools:ignore="HardcodedText"  />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -62,7 +65,8 @@
                 app:fontFamily="@font/nunito"
                 android:textColor="#000"
                 android:textSize="@dimen/text_view_12sp"
-                android:text="100" />
+                android:text="100"
+                tools:ignore="HardcodedText"  />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -70,7 +74,8 @@
                 app:fontFamily="@font/nunito"
                 android:textColor="#000"
                 android:textSize="@dimen/text_view_12sp"
-                android:text="150" />
+                android:text="150"
+                tools:ignore="HardcodedText"  />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -78,7 +83,8 @@
                 app:fontFamily="@font/nunito"
                 android:textColor="#000"
                 android:textSize="@dimen/text_view_12sp"
-                android:text="200" />
+                android:text="200"
+                tools:ignore="HardcodedText"  />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -86,7 +92,8 @@
                 app:fontFamily="@font/nunito"
                 android:textColor="#000"
                 android:textSize="@dimen/text_view_12sp"
-                android:text="300" />
+                android:text="300"
+                tools:ignore="HardcodedText"  />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -95,7 +102,8 @@
                 app:fontFamily="@font/nunito"
                 android:textColor="#000"
                 android:textSize="@dimen/text_view_12sp"
-                android:text="500" />
+                android:text="500"
+                tools:ignore="RtlHardcoded,HardcodedText" />
         </LinearLayout>
 
         <LinearLayout
@@ -113,37 +121,43 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/aqi_good" />
+                android:background="@color/aqi_good"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/aqi_moderate" />
+                android:background="@color/aqi_moderate"
+                tools:ignore="ContentDescription"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/aqi_unhealthy_sensitive" />
+                android:background="@color/aqi_unhealthy_sensitive"
+                tools:ignore="ContentDescription"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/aqi_unhealthy" />
+                android:background="@color/aqi_unhealthy"
+                tools:ignore="ContentDescription"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/aqi_very_unhealthy" />
+                android:background="@color/aqi_very_unhealthy"
+                tools:ignore="ContentDescription"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:background="@color/aqi_hazardous" />
+                android:background="@color/aqi_hazardous"
+                tools:ignore="ContentDescription"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/aqi_index_indicator"
@@ -152,7 +166,8 @@
             android:src="@drawable/circle_indicator"
             app:layout_constraintTop_toTopOf="@id/index_scale"
             app:layout_constraintBottom_toBottomOf="@id/index_scale"
-            app:layout_constraintStart_toStartOf="@id/index_scale"/>
+            app:layout_constraintStart_toStartOf="@id/index_scale"
+            tools:ignore="ContentDescription"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,7 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="@string/aqi_hazardous"
                 android:textColor="#000"
                 app:fontFamily="@font/nunito"
@@ -187,10 +202,11 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/margin_8"
         android:paddingStart="@dimen/margin_8"
-        android:paddingEnd="@dimen/margin_8">
+        android:paddingEnd="@dimen/margin_8"
+        tools:ignore="RtlHardcoded">
         <TextView
             android:id="@+id/tv_aqi_index"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_view_48sp"
@@ -231,8 +247,9 @@
         android:paddingRight="@dimen/margin_16"
         android:textColor="#000"
         android:gravity="end"
-        android:text="provided by aqicn.org"
-        android:paddingEnd="@dimen/margin_16" />
+        android:text="@string/provided_by_aqicn_org"
+        android:paddingEnd="@dimen/margin_16"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
     <Button
         android:id="@+id/btn_close_about"
         android:textColor="#ffffff"
