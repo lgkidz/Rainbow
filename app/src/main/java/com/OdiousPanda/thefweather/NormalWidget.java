@@ -254,7 +254,7 @@ public class NormalWidget extends AppWidgetProvider {
                             String iconName = weather.getCurrently().getIcon().replace("-","_");
                             int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_w", null, context.getPackageName());
                             remoteViews.setImageViewResource(R.id.widget_icon,iconResourceId);
-                            new QuoteGenerator(context).updateHomeScreenQuote(weather);
+                            queryQuotes(context);
                         }
                     }
 
