@@ -32,10 +32,10 @@ import androidx.core.content.res.ResourcesCompat;
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
-import com.OdiousPanda.thefweather.Activities.WelcomeActivity;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
+import com.OdiousPanda.thefweather.Utilities.QuoteGenerator;
 import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -68,7 +68,6 @@ import static androidx.core.content.PermissionChecker.checkSelfPermission;
 public class NormalWidget extends AppWidgetProvider {
 
     private static Weather weather;
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static List<Quote> weatherQuotes = new ArrayList<>();
     private static List<Quote> quotes = new ArrayList<>();
     private static Quote quote;
@@ -99,25 +98,25 @@ public class NormalWidget extends AppWidgetProvider {
 
         Date date = new Date();
         String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM",Locale.getDefault());
         remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5),DAYNIGHT_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
         WidgetTimeUpdaterJob.scheduleJob(context);
-        Intent mainActivityIntent = new Intent(context, MainActivity.class);
-        if (!PreferencesUtil.isFirstTimeLaunch(context)) {
-            mainActivityIntent = new Intent(context, WelcomeActivity.class);
+        if (PreferencesUtil.isNotFirstTimeLaunch(context)) {
             Intent tapIntent = new Intent(context,NormalWidget.class);
             tapIntent.setAction(ACTION_TAP);
             PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
             remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout,tapPending);
+            Intent mainActivityIntent = new Intent(context, MainActivity.class);
+            mainActivityIntent.setAction(ACTION_TO_DETAILS);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
             PreferencesUtil.setWidgetTapCount(context,0);
             aWm.updateAppWidget(widgetId, remoteViews);
             updateData(context);
         }
-        mainActivityIntent.setAction(ACTION_TO_DETAILS);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId,mainActivityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
+
     }
 
     private static Bitmap textAsBitmap(Context context,String text,String bitmapType){
@@ -255,7 +254,7 @@ public class NormalWidget extends AppWidgetProvider {
                             String iconName = weather.getCurrently().getIcon().replace("-","_");
                             int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_w", null, context.getPackageName());
                             remoteViews.setImageViewResource(R.id.widget_icon,iconResourceId);
-                            queryQuotes(context);
+                            new QuoteGenerator(context).updateHomeScreenQuote(weather);
                         }
                     }
 
@@ -271,7 +270,7 @@ public class NormalWidget extends AppWidgetProvider {
     }
 
     private static void queryQuotes(final Context context){
-        db.collection("quotes")
+        FirebaseFirestore.getInstance().collection("quotes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

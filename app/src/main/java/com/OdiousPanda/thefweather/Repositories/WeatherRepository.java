@@ -3,6 +3,8 @@ package com.OdiousPanda.thefweather.Repositories;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.OdiousPanda.thefweather.API.AQICall;
@@ -38,7 +40,7 @@ public class WeatherRepository {
     private List<AirQuality> airQualities = new ArrayList<>();
     private MutableLiveData<List<AirQuality>> airQualitiesList = new MutableLiveData<>();
 
-    public WeatherRepository(Context context){
+    private WeatherRepository(Context context){
         Log.d(TAG, "WeatherRepository: created");
         WeatherDatabase database = WeatherDatabase.getInstance(context);
         savedCoordinateDAO = database.savedCoordinateDAO();
@@ -80,22 +82,24 @@ public class WeatherRepository {
 
     public MutableLiveData<List<Weather>> getWeather(){
         savedCoordinates = allSavedCoordinates.getValue();
+        assert savedCoordinates != null;
         Log.d(TAG, "getCurrentWeather: getting data from api" + savedCoordinates.size());
 
         for(SavedCoordinate c : savedCoordinates){
             Log.d(TAG, "getCurrentWeather: getting current weather");
             weatherCall.getWeather(c.getLat(),c.getLon()).enqueue(new Callback<Weather>() {
                 @Override
-                public void onResponse(Call<Weather> call, Response<Weather> response) {
+                public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                     if(response.isSuccessful()){
                         weathers.add(response.body());
                         weatherList.postValue(weathers);
+                        assert response.body() != null;
                         Log.d(TAG, "onResponse: " + response.body().getCurrently().getSummary());
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Weather> call, Throwable t) {
+                public void onFailure(@NonNull Call<Weather> call, @NonNull Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
@@ -106,21 +110,23 @@ public class WeatherRepository {
 
     public MutableLiveData<List<AirQuality>> getAirQuality(){
         savedCoordinates = allSavedCoordinates.getValue();
+        assert savedCoordinates != null;
         Log.d(TAG, "getCurrentAQI: getting data from api" + savedCoordinates.size());
         for(SavedCoordinate c : savedCoordinates){
             Log.d(TAG, "getCurrentAQI: getting current weather");
             aqiCall.getAirQuality(c.getLat(),c.getLon()).enqueue(new Callback<AirQuality>() {
                 @Override
-                public void onResponse(Call<AirQuality> call, Response<AirQuality> response) {
+                public void onResponse(@NonNull Call<AirQuality> call, @NonNull Response<AirQuality> response) {
                     if(response.isSuccessful()){
                         airQualities.add(response.body());
                         airQualitiesList.postValue(airQualities);
+                        assert response.body() != null;
                         Log.d(TAG, "onResponse: " + response.body().getData().aqi);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<AirQuality> call, Throwable t) {
+                public void onFailure(@NonNull Call<AirQuality> call, @NonNull Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });

@@ -87,7 +87,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Checking for first time launch - before calling setContentView()
-        if (!PreferencesUtil.isFirstTimeLaunch(this)) {
+        if (PreferencesUtil.isNotFirstTimeLaunch(this)) {
             launchHomeScreen();
             finish();
         }
@@ -200,9 +200,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-
-                        } else {
+                        if (!report.areAllPermissionsGranted()) {
                             showNeededPermissionDialog();
                         }
                         if (report.isAnyPermissionPermanentlyDenied()) {

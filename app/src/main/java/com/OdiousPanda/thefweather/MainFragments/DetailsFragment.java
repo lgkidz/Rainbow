@@ -1,14 +1,8 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +12,14 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.OdiousPanda.thefweather.Adapters.ForecastAdapter;
 import com.OdiousPanda.thefweather.CustomUI.AirQualityDialog;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
@@ -30,22 +32,11 @@ import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import java.util.Objects;
 
 public class DetailsFragment extends Fragment {
+    @SuppressLint("StaticFieldLeak")
     private static DetailsFragment instance;
 
     private Weather currentWeather;
     private AirQuality airQuality;
-
-    public DetailsFragment() {
-        // Required empty public constructor
-    }
-
-    public static DetailsFragment getInstance() {
-        if (instance == null){
-            instance = new DetailsFragment();
-        }
-        return instance;
-    }
-
     private TextView tvHeading;
     private TextView tvLocation;
     private ImageView icLocation;
@@ -66,7 +57,7 @@ public class DetailsFragment extends Fragment {
     private TextView tvWindTitle;
     private TextView tvWindSpeed;
     private TextView tvWindDirection;
-//    private TextView tvNextHoursTitle;
+    //    private TextView tvNextHoursTitle;
     private ConstraintLayout layoutLocation;
     private ConstraintLayout layoutRealFeel;
     private LinearLayout layoutHumidity;
@@ -77,10 +68,19 @@ public class DetailsFragment extends Fragment {
     private ImageView aqiInfo;
     private RecyclerView rvForecast;
     private ImageView windmillWings;
+    private int headingColor = Color.argb(255, 0, 0, 0);
+    private int textColor = Color.argb(255, 0, 0, 0);
+    private int layoutColor = Color.argb(0, 0, 0, 0);
+    public DetailsFragment() {
+        // Required empty public constructor
+    }
 
-    private int headingColor = Color.argb(255,0,0,0);
-    private int textColor = Color.argb(255,0,0,0);
-    private int layoutColor = Color.argb(0,0,0,0);
+    public static DetailsFragment getInstance() {
+        if (instance == null) {
+            instance = new DetailsFragment();
+        }
+        return instance;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,9 +97,9 @@ public class DetailsFragment extends Fragment {
         return v;
     }
 
-    private void initViews(View v){
+    private void initViews(View v) {
         rvForecast = v.findViewById(R.id.rv_forecast);
-        rvForecast.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        rvForecast.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         tvHeading = v.findViewById(R.id.tv_heading);
         tvLocation = v.findViewById(R.id.tv_location);
@@ -134,10 +134,9 @@ public class DetailsFragment extends Fragment {
 
 
         boolean isExplicit = PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()));
-        if(isExplicit){
+        if (isExplicit) {
             tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
-        }
-        else{
+        } else {
             tvRealFeelTitle.setText(getText(R.string.real_feel_title));
         }
 
@@ -145,46 +144,44 @@ public class DetailsFragment extends Fragment {
         aqiInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AirQualityDialog airQualityDialog = new AirQualityDialog(getActivity(),airQuality);
+                AirQualityDialog airQualityDialog = new AirQualityDialog(getActivity(), airQuality);
                 airQualityDialog.showDialog();
             }
         });
 
-        if(currentWeather != null){
+        if (currentWeather != null) {
             updateUnit();
         }
     }
 
-    public void updateColorTheme(int[] argb){
+    public void updateColorTheme(int[] argb) {
         headingColor = MyColorUtil.blackOrWhiteOf(argb);
         tvHeading.setTextColor(headingColor);
         int r = (int) (argb[1] * 0.8);
         int g = (int) (argb[2] * 0.8);
         int b = (int) (argb[3] * 0.75);
-        textColor = MyColorUtil.blackOrWhiteOf(new int[]{255,r,g,b});
-        layoutColor = Color.argb(255,r,g,b);
+        textColor = MyColorUtil.blackOrWhiteOf(new int[]{255, r, g, b});
+        layoutColor = Color.argb(255, r, g, b);
         colorThoseLayout();
         colorThoseTextView();
-        if(textColor == Color.WHITE){
+        if (textColor == Color.WHITE) {
             aqiInfo.setImageResource(R.drawable.ic_info_w);
-        }
-        else{
+        } else {
             aqiInfo.setImageResource(R.drawable.ic_info_b);
         }
 
-        if(currentWeather != null){
-            ForecastAdapter adapter = new ForecastAdapter(getActivity(),currentWeather.getDaily(),headingColor);
+        if (currentWeather != null) {
+            ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), headingColor);
             rvForecast.setAdapter(adapter);
         }
     }
 
-    private void colorThoseTextView(){
+    private void colorThoseTextView() {
         tvHeading.setTextColor(headingColor);
         tvLocation.setTextColor(textColor);
-        if(textColor == Color.WHITE){
+        if (textColor == Color.WHITE) {
             icLocation.setImageResource(R.drawable.ic_location_w);
-        }
-        else{
+        } else {
             icLocation.setImageResource(R.drawable.ic_location_b);
         }
         tvRealFeel.setTextColor(textColor);
@@ -207,7 +204,7 @@ public class DetailsFragment extends Fragment {
 //        tvNextHoursTitle.setTextColor(headingColor);
     }
 
-    private void colorThoseLayout(){
+    private void colorThoseLayout() {
         layoutLocation.setBackgroundColor(layoutColor);
         layoutRealFeel.setBackgroundColor(layoutColor);
         layoutUV.setBackgroundColor(layoutColor);
@@ -217,120 +214,101 @@ public class DetailsFragment extends Fragment {
         layoutAqi.setBackgroundColor(layoutColor);
     }
 
-    void updateUnit(){
+    void updateUnit() {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         String currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
         String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
         String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
         boolean isExplicit = PreferencesUtil.isExplicit(getActivity());
 
-        tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(),currentTempUnit));
+        tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit));
 
-        if(isExplicit){
+        if (isExplicit) {
             tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
-        }
-        else{
+        } else {
             tvRealFeelTitle.setText(getText(R.string.real_feel_title));
         }
 
-        tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(),currentPressureUnit));
-        if(currentPressureUnit.equals(getString(R.string.depression_unit))){
+        tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(), currentPressureUnit));
+        if (currentPressureUnit.equals(getString(R.string.depression_unit))) {
             tvPressureTitle.setText(getString(R.string.pressure_title_alt));
-        }
-        else {
+        } else {
             tvPressureTitle.setText(getString(R.string.pressure_title));
         }
-        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(),currentDistanceUnit));
+        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
 
-        tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(),currentSpeedUnit));
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(),currentWeather.getDaily(),textColor);
+        tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(), currentSpeedUnit));
+        ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), textColor);
         rvForecast.setAdapter(adapter);
     }
 
-    public void updateData(Weather weather){
+    public void updateData(Weather weather) {
         currentWeather = weather;
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         String currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
         String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
         String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
-        tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(),currentTempUnit));
-        String uvSummary = "";
-        if(currentWeather.getCurrently().getUvIndex() == 0){
+        tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit));
+        String uvSummary;
+        if (currentWeather.getCurrently().getUvIndex() == 0) {
             uvSummary = "Where's the sun?";
-        }
-        else if(currentWeather.getCurrently().getUvIndex() < 3){
+        } else if (currentWeather.getCurrently().getUvIndex() < 3) {
             uvSummary = " (Low)";
-        }else if(currentWeather.getCurrently().getUvIndex() < 6){
+        } else if (currentWeather.getCurrently().getUvIndex() < 6) {
             uvSummary = " (Moderate)";
-        }
-        else if(currentWeather.getCurrently().getUvIndex() < 8){
+        } else if (currentWeather.getCurrently().getUvIndex() < 8) {
             uvSummary = " (High)";
-        }
-        else if(currentWeather.getCurrently().getUvIndex() < 11){
+        } else if (currentWeather.getCurrently().getUvIndex() < 11) {
             uvSummary = " (High af)";
-        }
-        else {
+        } else {
             uvSummary = " (Extreme)";
         }
-        tvUV.setText((Math.round(currentWeather.getCurrently().getUvIndex())==0?"":Math.round(currentWeather.getCurrently().getUvIndex())) + uvSummary);
-        tvHumidity.setText(Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%");
-        tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(),currentPressureUnit));
-        if(currentPressureUnit.equals(getString(R.string.depression_unit))){
+        String uvValueText = (Math.round(currentWeather.getCurrently().getUvIndex()) == 0 ? "" : Math.round(currentWeather.getCurrently().getUvIndex())) + uvSummary;
+        tvUV.setText(uvValueText);
+        String humidityText = Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%";
+        tvHumidity.setText(humidityText);
+        tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(), currentPressureUnit));
+        if (currentPressureUnit.equals(getString(R.string.depression_unit))) {
             tvPressureTitle.setText(getString(R.string.depression_level_title));
         }
-        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(),currentDistanceUnit));
+        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
 
-        tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(),currentSpeedUnit));
+        tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(), currentSpeedUnit));
         float windSpeedMps = UnitConverter.toMeterPerSecond(currentWeather.getCurrently().getWindSpeed());
         String windDirectionText = "";
-        if(windSpeedMps > 0){
+        if (windSpeedMps > 0) {
             float windBearing = currentWeather.getCurrently().getWindBearing();
-            if((windBearing >= 0 && windBearing < 11.25) || (windBearing >= 348.75 && windBearing <= 360)){
+            if ((windBearing >= 0 && windBearing < 11.25) || (windBearing >= 348.75 && windBearing <= 360)) {
                 windDirectionText = getString(R.string.wind_north);
-            }
-            else if(windBearing >= 11.25 && windBearing < 33.75){
+            } else if (windBearing >= 11.25 && windBearing < 33.75) {
                 windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_east);
-            }
-            else if(windBearing >= 33.75 && windBearing < 56.25){
+            } else if (windBearing >= 33.75 && windBearing < 56.25) {
                 windDirectionText = getString(R.string.wind_north_east);
-            }
-            else if(windBearing >= 56.25 && windBearing < 78.75){
+            } else if (windBearing >= 56.25 && windBearing < 78.75) {
                 windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_north_east);
-            }
-            else if(windBearing >= 78.75 && windBearing < 101.25){
+            } else if (windBearing >= 78.75 && windBearing < 101.25) {
                 windDirectionText = getString(R.string.wind_east);
-            }
-            else if(windBearing >= 101.25 && windBearing < 123.75){
+            } else if (windBearing >= 101.25 && windBearing < 123.75) {
                 windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_south_east);
-            }
-            else if(windBearing >= 123.75 && windBearing < 146.25){
+            } else if (windBearing >= 123.75 && windBearing < 146.25) {
                 windDirectionText = getString(R.string.wind_south_east);
-            }
-            else if(windBearing >= 146.25 && windBearing < 168.75){
+            } else if (windBearing >= 146.25 && windBearing < 168.75) {
                 windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_east);
-            }
-            else if(windBearing >= 168.75 && windBearing < 191.25){
+            } else if (windBearing >= 168.75 && windBearing < 191.25) {
                 windDirectionText = getString(R.string.wind_south);
-            }
-            else if(windBearing >= 191.25 && windBearing < 213.75){
+            } else if (windBearing >= 191.25 && windBearing < 213.75) {
                 windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_west);
-            }
-            else if(windBearing >= 213.75 && windBearing < 236.25){
+            } else if (windBearing >= 213.75 && windBearing < 236.25) {
                 windDirectionText = getString(R.string.wind_south_west);
-            }
-            else if(windBearing >= 236.25 && windBearing < 258.75){
+            } else if (windBearing >= 236.25 && windBearing < 258.75) {
                 windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_south_west);
-            }
-            else if(windBearing >= 258.75 && windBearing < 281.25){
+            } else if (windBearing >= 258.75 && windBearing < 281.25) {
                 windDirectionText = getString(R.string.wind_west);
-            }
-            else if(windBearing >= 281.25 && windBearing < 303.75){
+            } else if (windBearing >= 281.25 && windBearing < 303.75) {
                 windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_north_west);
-            }
-            else if(windBearing >= 303.75 && windBearing <= 326.25){
+            } else if (windBearing >= 303.75 && windBearing <= 326.25) {
                 windDirectionText = getString(R.string.wind_north_west);
-            }
-            else if(windBearing >= 326.25 && windBearing < 348.75){
+            } else if (windBearing >= 326.25 && windBearing < 348.75) {
                 windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_west);
             }
         }
@@ -339,8 +317,8 @@ public class DetailsFragment extends Fragment {
         windmillWings.clearAnimation();
         double windmillWingsDiameter = 10; //diameter in meter
 
-        double roundPerSec = windSpeedMps/(Math.PI * windmillWingsDiameter);
-        int duration = (int) (1000/(roundPerSec));
+        double roundPerSec = windSpeedMps / (Math.PI * windmillWingsDiameter);
+        int duration = (int) (1000 / (roundPerSec));
         RotateAnimation rotate = new RotateAnimation(0, -360,
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f
@@ -349,35 +327,30 @@ public class DetailsFragment extends Fragment {
         rotate.setDuration(duration);
         rotate.setRepeatCount(Animation.INFINITE);
         windmillWings.startAnimation(rotate);
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(),currentWeather.getDaily(),headingColor);
+        ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), headingColor);
         rvForecast.setAdapter(adapter);
     }
 
-    public void updateCurrentLocationName(String locationName){
+    public void updateCurrentLocationName(String locationName) {
         this.tvLocation.setText(locationName);
     }
 
-    public void updateAqi(AirQuality air){
+    public void updateAqi(AirQuality air) {
         airQuality = air;
         int aqi = Math.round(airQuality.getData().aqi);
-        tvAqi.setText( aqi+ "");
-        String aqiSummary = "";
-        if(aqi < 51){
+        tvAqi.setText(String.valueOf(aqi));
+        String aqiSummary;
+        if (aqi < 51) {
             aqiSummary = "Hmmmm, fresh air!";
-        }
-        else if(aqi < 101){
+        } else if (aqi < 101) {
             aqiSummary = "The air is quite okay.";
-        }
-        else if(aqi < 151){
+        } else if (aqi < 151) {
             aqiSummary = "A bit unhealthy for those special snowflakes.";
-        }
-        else if(aqi < 201){
+        } else if (aqi < 201) {
             aqiSummary = "Unhealthy! Inhale more for diseases.";
-        }
-        else if(aqi < 301){
+        } else if (aqi < 301) {
             aqiSummary = "Unhealthy as heck! Lung cancer awaits you outside.";
-        }
-        else{
+        } else {
             aqiSummary = "Living in chernobyl would be more healthy.";
         }
         tvAqiSummary.setText(aqiSummary);

@@ -14,13 +14,11 @@ import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
 import com.OdiousPanda.thefweather.R;
 
 public class AirQualityDialog {
-    private AirQuality airQuality;
     private LinearLayout airQualityIndexScale;
     private ImageView aqiIndexIndicator;
-    Dialog dialog;
+    private Dialog dialog;
 
     public AirQualityDialog(final Context context, AirQuality airQuality){
-        this.airQuality = airQuality;
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);

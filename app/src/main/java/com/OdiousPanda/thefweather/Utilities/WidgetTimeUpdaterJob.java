@@ -11,9 +11,9 @@ import com.OdiousPanda.thefweather.Service.WidgetTimeUpdater;
 
 public class WidgetTimeUpdaterJob {
     @TargetApi(Build.VERSION_CODES.M)
-    public static void scheduleJob(Context context){
+    public static void scheduleJob(Context context) {
         ComponentName serviceComponent = new ComponentName(context, WidgetTimeUpdater.class);
-        JobInfo.Builder builder = new JobInfo.Builder(0,serviceComponent);
+        JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
         builder.setMinimumLatency(3000);
         builder.setOverrideDeadline(5000);
         JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);

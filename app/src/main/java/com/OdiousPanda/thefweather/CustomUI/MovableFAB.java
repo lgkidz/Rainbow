@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 public class MovableFAB extends FloatingActionButton implements View.OnTouchListener {
