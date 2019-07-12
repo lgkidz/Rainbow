@@ -238,7 +238,7 @@ public class DetailsFragment extends Fragment {
         tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
 
         tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(), currentSpeedUnit));
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), textColor);
+        ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), headingColor);
         rvForecast.setAdapter(adapter);
     }
 
@@ -251,7 +251,7 @@ public class DetailsFragment extends Fragment {
         tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit));
         String uvSummary;
         if (currentWeather.getCurrently().getUvIndex() == 0) {
-            uvSummary = "Where's the sun?";
+            uvSummary = "It's night!";
         } else if (currentWeather.getCurrently().getUvIndex() < 3) {
             uvSummary = " (Low)";
         } else if (currentWeather.getCurrently().getUvIndex() < 6) {

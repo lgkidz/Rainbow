@@ -504,7 +504,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 PreferencesUtil.setExplicitSetting(Objects.requireNonNull(getActivity()), false);
             }
         }
-        PreferencesUtil.setUnitSetting(Objects.requireNonNull(getActivity()), pref, value);
+        else{
+            PreferencesUtil.setUnitSetting(Objects.requireNonNull(getActivity()), pref, value);
+        }
         DetailsFragment.getInstance().updateUnit();
     }
 

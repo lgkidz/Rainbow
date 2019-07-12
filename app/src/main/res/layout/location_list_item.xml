@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="2"
+    android:baselineAligned="false">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="@dimen/margin_4"
+            android:layout_height="match_parent"
+            android:background="#ff0000"
+            android:layout_marginEnd="@dimen/margin_16"/>
+        <ImageView
+            android:id="@+id/current_location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_location_b"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/location_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/margin_16"
+            android:paddingTop="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_16"
+            android:fontFamily="@font/nunito"
+            android:textSize="@dimen/text_view_24sp"
+            android:textColor="#000"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:id="@+id/details_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            tools:ignore="UseCompoundDrawables">
+            <ImageView
+                android:id="@+id/location_weather_icon"
+                android:layout_width="@dimen/icon_48dp"
+                android:layout_gravity="center"
+                android:layout_height="@dimen/icon_48dp"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/location_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nunito"
+                android:textSize="@dimen/text_view_18sp"
+                android:textColor="#000"/>
+        </LinearLayout>
+    <TextView
+        android:id="@+id/location_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="@dimen/text_view_14sp"
+        android:fontFamily="@font/nunito"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/details_layout"/>
+</RelativeLayout>
+
+</LinearLayout>

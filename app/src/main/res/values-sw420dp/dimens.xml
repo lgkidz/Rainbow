@@ -89,8 +89,11 @@
   <dimen name="icon_36dp">
     42.0dp
   </dimen>
+  <dimen name="icon_48dp">
+    56.0dp
+  </dimen>
   <dimen name="big_text">
-    98.0sp
+    84.0sp
   </dimen>
   <dimen name="text_view_12sp">
     14.0sp

@@ -146,11 +146,11 @@ public class NormalWidget extends AppWidgetProvider {
                 break;
             }
             case DATE_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_20sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_14sp));
                 break;
             }
             case LOCATION_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_20sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_14sp));
                 break;
             }
         }
@@ -163,7 +163,7 @@ public class NormalWidget extends AppWidgetProvider {
             Bundle mAppWidgetOptions  = AppWidgetManager.getInstance(
                     context).getAppWidgetOptions(widgetId);
             int mWidgetPortHeight = mAppWidgetOptions
-                    .getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+                    .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
 
             int mWidgetPortWidth = mAppWidgetOptions
                     .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
@@ -365,6 +365,9 @@ public class NormalWidget extends AppWidgetProvider {
         }
 
         quote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
+        if(quote.getMain() == null && quote.getSub() == null){
+            quote.setDefaultQuote();
+        }
         remoteViews.setImageViewBitmap(R.id.quote_main,textAsBitmap(context,quote.getMain(),MAIN_BITMAP));
         remoteViews.setImageViewBitmap(R.id.quote_sub,textAsBitmap(context,quote.getSub(),SUB_BITMAP));
         remoteViews.setViewVisibility(R.id.widget_loading_layout,View.INVISIBLE);

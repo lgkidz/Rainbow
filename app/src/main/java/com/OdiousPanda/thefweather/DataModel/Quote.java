@@ -1,7 +1,6 @@
 package com.OdiousPanda.thefweather.DataModel;
 
 public class Quote {
-
     private String main;
     private String sub;
     private String att;
@@ -28,5 +27,10 @@ public class Quote {
 
     public void setSub(String sub) {
         this.sub = sub;
+    }
+
+    public void setDefaultQuote(){
+        this.main = "If you see these lines.";
+        this.sub = "Something went wrong... :|";
     }
 }

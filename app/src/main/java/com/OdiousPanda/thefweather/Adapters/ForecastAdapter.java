@@ -47,9 +47,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         if (position == 0) {
             weekday = "Today";
         }
-        String textTemp = UnitConverter.convertToTemperatureUnit(dailyData.getData().get(position).getTemperatureHigh(), currentTempUnit)
+        String textTemp = UnitConverter.convertToTemperatureUnit(dailyData.getData().get(position).getTemperatureLow(), currentTempUnit)
                 + " - "
-                + UnitConverter.convertToTemperatureUnit(dailyData.getData().get(position).getTemperatureLow(), currentTempUnit);
+                + UnitConverter.convertToTemperatureUnit(dailyData.getData().get(position).getTemperatureHigh(), currentTempUnit);
         String iconName = dailyData.getData().get(position).getIcon().replace("-", "_");
         if (textColor == Color.WHITE) {
             int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_w", null, context.getPackageName());

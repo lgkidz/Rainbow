@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             }
         });
         fabTooltip = new Tooltip.Builder(fab)
-                .setText("Drag me to heart's content")
+                .setText("Drag me to your heart's content")
                 .setTextColor(Color.WHITE)
                 .setBackgroundColor(ContextCompat.getColor(this, R.color.bg_screen1))
                 .setCornerRadius(10f)
@@ -238,6 +238,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             @Override
             public void onChanged(List<AirQuality> airQualities) {
                 DetailsFragment.getInstance().updateAqi(airQualities.get(0));
+            }
+        });
+        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<SavedCoordinate>>() {
+            @Override
+            public void onChanged(List<SavedCoordinate> savedCoordinates) {
+
             }
         });
 
