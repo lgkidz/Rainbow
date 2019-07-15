@@ -23,9 +23,6 @@ public class PreferencesUtil {
     public static boolean isNotFirstTimeLaunch(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         boolean firstTime = pref.getBoolean(IS_FIRST_TIME_LAUNCH, DEFAULT_FIRST_TIME_LAUNCH_VALUE);
-        if(firstTime){
-            pref.edit().clear().apply();
-        }
         return !firstTime;
     }
 

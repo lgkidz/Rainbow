@@ -29,13 +29,16 @@ import android.view.View;
 import android.widget.RemoteViews;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
+import com.OdiousPanda.thefweather.Service.WidgetTimeWorker;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
-import com.OdiousPanda.thefweather.Utilities.WidgetTimeUpdaterJob;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -74,16 +77,15 @@ public class NormalWidget extends AppWidgetProvider {
     private static RemoteViews remoteViews;
     private static AppWidgetManager aWm;
     public static final String ACTION_UPDATE = "actionUpdate";
-    public static final String ACTION_UPDATE_TIME = "actionTimeWidget";
     public static final String ACTION_TAP = "widgetTap";
     public static final String ACTION_TO_DETAILS = "toDetailsScreen";
     private static final String TEMP_BITMAP = "tempBitmap";
     private static final String RF_BITMAP = "RFBitmap";
     private static final String MAIN_BITMAP = "mainBitmap";
     private static final String SUB_BITMAP = "subBitmap";
-    private static final String TIME_BITMAP = "timeBitmap";
-    private static final String DN_BITMAP = "dnBitmap";
-    private static final String DATE_BITMAP = "dateBitmap";
+    public static final String TIME_BITMAP = "timeBitmap";
+    public static final String DN_BITMAP = "dnBitmap";
+    public static final String DATE_BITMAP = "dateBitmap";
     private static final String LOCATION_BITMAP = "locationBitmap";
 
     private static final int DOUBLE_CLICK_DELAY = 500;
@@ -101,7 +103,9 @@ public class NormalWidget extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5), DN_BITMAP));
         remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
-        WidgetTimeUpdaterJob.scheduleJob(context);
+        OneTimeWorkRequest mRequest = new OneTimeWorkRequest.Builder(WidgetTimeWorker.class).build();
+        WorkManager.getInstance(context).enqueue(mRequest);
+
         if (PreferencesUtil.isNotFirstTimeLaunch(context)) {
             Intent tapIntent = new Intent(context,NormalWidget.class);
             tapIntent.setAction(ACTION_TAP);
@@ -118,7 +122,7 @@ public class NormalWidget extends AppWidgetProvider {
 
     }
 
-    private static Bitmap textAsBitmap(Context context,String text,String bitmapType){
+    public static Bitmap textAsBitmap(Context context,String text,String bitmapType){
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         switch (bitmapType){
             case TEMP_BITMAP:{
@@ -420,19 +424,6 @@ public class NormalWidget extends AppWidgetProvider {
                     remoteViews.setImageViewBitmap(R.id.quote_main,textAsBitmap(context,quote.getMain(),MAIN_BITMAP));
                     aWm.updateAppWidget(widgetId, remoteViews);
                 }
-            }
-
-            if(ACTION_UPDATE_TIME.equals(intent.getAction())){
-                Date date = new Date();
-                String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-                @SuppressLint("SimpleDateFormat")
-                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
-
-                String dateString = dateFormat.format(date);
-                remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
-                remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5), DN_BITMAP));
-                remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateString,DATE_BITMAP));
-                aWm.updateAppWidget(widgetId, remoteViews);
             }
 
             if(ACTION_TAP.equals(intent.getAction())){
