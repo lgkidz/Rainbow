@@ -39,6 +39,7 @@ public class WeatherRepository {
 
     private List<AirQuality> airQualities = new ArrayList<>();
     private MutableLiveData<List<AirQuality>> airQualitiesList = new MutableLiveData<>();
+    private int dataPosition = 0;
 
     private WeatherRepository(Context context){
         Log.d(TAG, "WeatherRepository: created");
@@ -56,7 +57,6 @@ public class WeatherRepository {
         }
         return instance;
     }
-
 
     private void getAllCoordinates(){
         allSavedCoordinates = savedCoordinateDAO.selectAll();
@@ -81,13 +81,20 @@ public class WeatherRepository {
     }
 
     public MutableLiveData<List<Weather>> getWeather(){
+        dataPosition = 0;
         savedCoordinates = allSavedCoordinates.getValue();
         assert savedCoordinates != null;
-        Log.d(TAG, "getCurrentWeather: getting data from api" + savedCoordinates.size());
+        Log.d(TAG, "getCurrentWeather: getting data from api: " + savedCoordinates.size());
 
-        for(SavedCoordinate c : savedCoordinates){
-            Log.d(TAG, "getCurrentWeather: getting current weather");
-            weatherCall.getWeather(c.getLat(),c.getLon()).enqueue(new Callback<Weather>() {
+        Log.d(TAG, "getCurrentWeather: getting current weather");
+        getDataInSequence();
+        return weatherList;
+    }
+
+    private void getDataInSequence(){
+        Log.d(TAG, "getDataInSequence: current position: " + dataPosition);
+        if(dataPosition < savedCoordinates.size()){
+            weatherCall.getWeather(savedCoordinates.get(dataPosition).getLat(),savedCoordinates.get(dataPosition).getLon()).enqueue(new Callback<Weather>() {
                 @Override
                 public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                     if(response.isSuccessful()){
@@ -95,6 +102,8 @@ public class WeatherRepository {
                         weatherList.postValue(weathers);
                         assert response.body() != null;
                         Log.d(TAG, "onResponse: " + response.body().getCurrently().getSummary());
+                        dataPosition++;
+                        getDataInSequence();
                     }
                 }
 
@@ -103,15 +112,13 @@ public class WeatherRepository {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
-
         }
-        return weatherList;
     }
 
     public MutableLiveData<List<AirQuality>> getAirQuality(){
         savedCoordinates = allSavedCoordinates.getValue();
         assert savedCoordinates != null;
-        Log.d(TAG, "getCurrentAQI: getting data from api" + savedCoordinates.size());
+        Log.d(TAG, "getCurrentAQI: getting data from api: " + savedCoordinates.size());
         for(SavedCoordinate c : savedCoordinates){
             Log.d(TAG, "getCurrentAQI: getting current weather");
             aqiCall.getAirQuality(c.getLat(),c.getLon()).enqueue(new Callback<AirQuality>() {

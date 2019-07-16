@@ -29,7 +29,7 @@ public abstract class WeatherDatabase extends RoomDatabase {
         if (instance == null) {
             Log.d(TAG, "getInstance: new Database instance");
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    WeatherDatabase.class, "weather_database")
+                    WeatherDatabase.class, "rainbow_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(initCallback)
                     .build();
@@ -49,7 +49,10 @@ public abstract class WeatherDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground: inserting default location");
-            savedCoordinateDAO.insert(new SavedCoordinate("0", "0", null));
+            savedCoordinateDAO.insert(new SavedCoordinate("0", "0"));
+            savedCoordinateDAO.insert(new SavedCoordinate("64.67895", "108.84549"));
+            savedCoordinateDAO.insert(new SavedCoordinate("78.19304", "-53.67113"));
+            savedCoordinateDAO.insert(new SavedCoordinate(" -13.67774", "-51.79446"));
             return null;
         }
     }

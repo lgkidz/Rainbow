@@ -45,20 +45,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-            " />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/margin_16"
-            android:text="This feature is currently under development"
-            android:textColor="#000"
-            android:textSize="@dimen/text_view_18sp"
-            app:fontFamily="@font/nunito"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/btn_go_back"
@@ -68,7 +54,8 @@
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/location_title"
-            app:layout_constraintBottom_toBottomOf="@id/location_title"/>
+            app:layout_constraintBottom_toBottomOf="@id/location_title"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/btn_add_location"
@@ -78,7 +65,19 @@
             android:src="@drawable/ic_add_b"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/location_title"
-            app:layout_constraintBottom_toBottomOf="@id/location_title" />
+            app:layout_constraintBottom_toBottomOf="@id/location_title"
+            tools:ignore="ContentDescription" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/locations_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_title">
+
+        </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <RelativeLayout
         android:id="@+id/loading_layout"
@@ -92,7 +91,8 @@
             android:src="@drawable/ic_loading"
             android:layout_width="@dimen/big_icon_128dp"
             android:layout_height="@dimen/big_icon_128dp"
-            android:layout_marginBottom="@dimen/margin_n_16"/>
+            android:layout_marginBottom="@dimen/margin_n_16"
+            tools:ignore="ContentDescription" />
         <TextView
             android:id="@+id/loading_text"
             android:layout_width="wrap_content"

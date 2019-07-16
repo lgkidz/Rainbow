@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
+import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
@@ -38,6 +41,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
+import java.util.Locale;
 
 import mumayank.com.airlocationlibrary.AirLocation;
 
@@ -178,9 +182,26 @@ public class WelcomeActivity extends AppCompatActivity {
         AirLocation airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
             @Override
             public void onSuccess(@NonNull Location location) {
-                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), null);
+                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
+                try {
+                    Geocoder geo = new Geocoder(WelcomeActivity.this, Locale.getDefault());
+                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if (!addresses.isEmpty()) {
+                        String address = addresses.get(0).getAddressLine(0);
+                        String[] addressPieces = address.split(",");
+                        String locationName;
+                        if (addressPieces.length >= 3) {
+                            locationName = addressPieces[addressPieces.length - 3].trim();
+                        } else {
+                            locationName = addressPieces[addressPieces.length - 2].trim();
+                        }
+                        currentLocation.setName(locationName);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 weatherViewModel.update(currentLocation);
             }
 

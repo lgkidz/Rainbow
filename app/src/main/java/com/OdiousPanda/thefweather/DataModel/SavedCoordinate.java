@@ -25,10 +25,9 @@ public class SavedCoordinate {
     public SavedCoordinate(){}
 
     @Ignore
-    public SavedCoordinate(String lat, String lon,String name){
+    public SavedCoordinate(String lat, String lon){
         this.lat = lat;
         this.lon = lon;
-        this.name = name;
     }
 
     public String getName() {

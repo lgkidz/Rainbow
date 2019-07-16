@@ -19,8 +19,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,11 +32,16 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.OdiousPanda.thefweather.Adapters.LocationListAdapter;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.CustomUI.MovableFAB;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
+import com.OdiousPanda.thefweather.DataModel.LocationItemModel;
 import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
@@ -50,6 +57,7 @@ import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
 import com.tooltip.Tooltip;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -71,9 +79,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private ImageView locationListBackButton;
     private ImageView loadingIcon;
     private ImageView addLocation;
+    private RecyclerView rvLocations;
     private SlideUp slideUp;
     private boolean locationListShowing = false;
     private boolean screenInitialized = false;
+    private LocationListAdapter locationListAdapter;
+    private List<SavedCoordinate> locations = new ArrayList<>();
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -125,10 +136,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         setupLocationObservers();
         updateCurrentLocation();
     }
-
     private void initViews() {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // Set up the ViewPager with the sections adapter.
+        // Set up the ViewPager with the sections locationListAdapter.
         mViewPager = findViewById(R.id.container);
         coordinatorLayout = findViewById(R.id.main_content);
         loadingIcon = findViewById(R.id.loading_icon);
@@ -139,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         fab.hide();
         addLocation = findViewById(R.id.btn_add_location);
         locationListBackButton = findViewById(R.id.btn_go_back);
+        rvLocations = findViewById(R.id.locations_rv);
+
         noConnectionLayout = findViewById(R.id.no_connection_layout);
         locationListLayout = findViewById(R.id.location_list_layout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -168,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .withStartState(SlideUp.State.HIDDEN)
                 .withStartGravity(Gravity.BOTTOM)
                 .withSlideFromOtherView(coordinatorLayout)
+                .withGesturesEnabled(false)
                 .build();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         addLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Thanks for touching me!", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(v, "This feature is still under development.", Snackbar.LENGTH_SHORT).show();
             }
         });
         fabTooltip = new Tooltip.Builder(fab)
@@ -196,7 +209,43 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .setGravity(Gravity.TOP)
                 .setDismissOnClick(true)
                 .setCancelable(true)
-                .setTypeface(ResourcesCompat.getFont(this, R.font.nunito)).build();
+                .setTypeface(ResourcesCompat.getFont(this, R.font.nunito))
+                .build();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL, false);
+        locationListAdapter = new LocationListAdapter(MainActivity.this);
+        rvLocations.setLayoutManager(layoutManager);
+        rvLocations.setAdapter(locationListAdapter);
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                weatherViewModel.delete(locations.get(position));
+
+
+            }
+
+            @Override
+            public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                if(viewHolder.getAdapterPosition() == 0){
+                    return 0;
+                }
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+
+        }).attachToRecyclerView(rvLocations);
+        locationListAdapter.setOnItemClickListener(new LocationListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(MainActivity.this, "location:" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
         screenInitialized = true;
     }
 
@@ -232,6 +281,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     fab.show();
                     showFabToolTips();
                 }
+                int numberOfLocations = Math.min(locations.size(),weathers.size());
+                List<LocationItemModel> itemModels = new ArrayList<>();
+                for(int i = 0;i<numberOfLocations;i++){
+                    itemModels.add(new LocationItemModel(locations.get(i).getId(),locations.get(i).getName(), weathers.get(i)));
+                }
+                locationListAdapter.submitList(itemModels);
+
             }
         });
         weatherViewModel.getAqiData().observe(this, new Observer<List<AirQuality>>() {
@@ -243,7 +299,28 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<SavedCoordinate>>() {
             @Override
             public void onChanged(List<SavedCoordinate> savedCoordinates) {
+                for(SavedCoordinate c : savedCoordinates){
+                    try {
+                        Geocoder geo = new Geocoder(MainActivity.this, Locale.getDefault());
+                        List<Address> addresses = geo.getFromLocation(Double.parseDouble(c.getLat()), Double.parseDouble(c.getLon()), 1);
+                        if (!addresses.isEmpty()) {
+                            String address = addresses.get(0).getAddressLine(0);
+                            String[] addressPieces = address.split(",");
+                            String locationName;
+                            if (addressPieces.length >= 3) {
+                                locationName = addressPieces[addressPieces.length - 3].trim();
+                            } else {
+                                locationName = addressPieces[addressPieces.length - 2].trim();
+                            }
+                            c.setName(locationName);
+                            DetailsFragment.getInstance().updateCurrentLocationName(locationName);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
+                locations = savedCoordinates;
             }
         });
 
@@ -255,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         new AirLocation(this, false, false, new AirLocation.Callbacks() {
             @Override
             public void onSuccess(@NonNull Location location) {
-                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), null);
+                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
                 try {
@@ -270,6 +347,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         } else {
                             locationName = addressPieces[addressPieces.length - 2].trim();
                         }
+                        currentLocation.setName(locationName);
                         DetailsFragment.getInstance().updateCurrentLocationName(locationName);
                     }
                 } catch (Exception e) {

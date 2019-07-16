@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content">
         <View
+            android:id="@+id/current_item_indicator"
             android:layout_width="@dimen/margin_4"
             android:layout_height="match_parent"
             android:background="#ff0000"
@@ -40,14 +41,16 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:paddingEnd="@dimen/margin_32"
+        tools:ignore="RtlSymmetry">
         <LinearLayout
             android:id="@+id/details_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
-            tools:ignore="UseCompoundDrawables">
+            android:layout_alignParentEnd="true"
+            tools:ignore="UseCompoundDrawables,UselessParent">
             <ImageView
                 android:id="@+id/location_weather_icon"
                 android:layout_width="@dimen/icon_48dp"
@@ -63,15 +66,6 @@
                 android:textSize="@dimen/text_view_18sp"
                 android:textColor="#000"/>
         </LinearLayout>
-    <TextView
-        android:id="@+id/location_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:textSize="@dimen/text_view_14sp"
-        android:fontFamily="@font/nunito"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/details_layout"/>
 </RelativeLayout>
 
 </LinearLayout>
