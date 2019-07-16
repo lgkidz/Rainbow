@@ -10,10 +10,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.OdiousPanda.thefweather.DAOs.SavedCoordinateDAO;
-import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
+import com.OdiousPanda.thefweather.DAOs.CoordinateDAO;
+import com.OdiousPanda.thefweather.DataModel.Coordinate;
 
-@Database(entities = {SavedCoordinate.class}, version = 1, exportSchema = false)
+@Database(entities = {Coordinate.class}, version = 1, exportSchema = false)
 public abstract class WeatherDatabase extends RoomDatabase {
     private static final String TAG = "weatherA";
     private static WeatherDatabase instance;
@@ -37,22 +37,22 @@ public abstract class WeatherDatabase extends RoomDatabase {
         return instance;
     }
 
-    public abstract SavedCoordinateDAO savedCoordinateDAO();
+    public abstract CoordinateDAO savedCoordinateDAO();
 
     private static class InitDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private SavedCoordinateDAO savedCoordinateDAO;
+        private CoordinateDAO coordinateDAO;
 
         private InitDbAsyncTask(WeatherDatabase db) {
-            savedCoordinateDAO = db.savedCoordinateDAO();
+            coordinateDAO = db.savedCoordinateDAO();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground: inserting default location");
-            savedCoordinateDAO.insert(new SavedCoordinate("0", "0"));
-            savedCoordinateDAO.insert(new SavedCoordinate("64.67895", "108.84549"));
-            savedCoordinateDAO.insert(new SavedCoordinate("78.19304", "-53.67113"));
-            savedCoordinateDAO.insert(new SavedCoordinate(" -13.67774", "-51.79446"));
+            coordinateDAO.insert(new Coordinate("0", "0"));
+            coordinateDAO.insert(new Coordinate("64.67895", "108.84549"));
+            coordinateDAO.insert(new Coordinate("78.19304", "-53.67113"));
+            coordinateDAO.insert(new Coordinate(" -13.67774", "-51.79446"));
             return null;
         }
     }

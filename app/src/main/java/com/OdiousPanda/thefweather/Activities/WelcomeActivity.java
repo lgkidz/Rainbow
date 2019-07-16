@@ -28,8 +28,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
-import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
+import com.OdiousPanda.thefweather.DataModel.Coordinate;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
@@ -98,9 +97,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome);
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
-        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<SavedCoordinate>>() {
+        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<Coordinate>>() {
             @Override
-            public void onChanged(List<SavedCoordinate> savedCoordinates) {
+            public void onChanged(List<Coordinate> coordinates) {
 
             }
         });
@@ -182,7 +181,7 @@ public class WelcomeActivity extends AppCompatActivity {
         AirLocation airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
             @Override
             public void onSuccess(@NonNull Location location) {
-                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                Coordinate currentLocation = new Coordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
                 try {

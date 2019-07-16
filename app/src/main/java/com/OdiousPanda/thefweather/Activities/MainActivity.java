@@ -19,7 +19,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -41,8 +40,8 @@ import com.OdiousPanda.thefweather.Adapters.LocationListAdapter;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.CustomUI.MovableFAB;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
-import com.OdiousPanda.thefweather.DataModel.LocationItemModel;
-import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
+import com.OdiousPanda.thefweather.DataModel.Coordinate;
+import com.OdiousPanda.thefweather.DataModel.LocationData;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
@@ -69,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     Tooltip fabTooltip;
     private WeatherViewModel weatherViewModel;
     private boolean firstTimeObserve = true;
+    private boolean firstTimeFetchViewModel = true;
+    private boolean dataRefreshing = false;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private CoordinatorLayout coordinatorLayout;
@@ -84,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private boolean locationListShowing = false;
     private boolean screenInitialized = false;
     private LocationListAdapter locationListAdapter;
-    private List<SavedCoordinate> locations = new ArrayList<>();
+    private List<LocationData> locations = new ArrayList<>();
+    private int currentLocationPosition = 0;
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -226,9 +228,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                weatherViewModel.delete(locations.get(position));
-
-
+                weatherViewModel.delete(locations.get(position).getCoordinate());
+                if(position == currentLocationPosition){
+                    currentLocationPosition--;
+                }
             }
 
             @Override
@@ -243,7 +246,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         locationListAdapter.setOnItemClickListener(new LocationListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this, "location:" + position, Toast.LENGTH_SHORT).show();
+                currentLocationPosition = position;
+                WeatherRepository.getInstance(MainActivity.this)
+                        .getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
+                HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+                updateColor();
             }
         });
         screenInitialized = true;
@@ -257,73 +266,58 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void setupLocationObservers() {
-        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<SavedCoordinate>>() {
+        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<Coordinate>>() {
             @Override
-            public void onChanged(List<SavedCoordinate> savedCoordinates) {
+            public void onChanged(List<Coordinate> coordinates) {
                 if (firstTimeObserve) {
                     weatherViewModel.fetchWeather();
+
                     firstTimeObserve = false;
                 }
                 setupDataObserver();
+
             }
         });
     }
 
     private void setupDataObserver() {
-        weatherViewModel.getWeatherData().observe(this, new Observer<List<Weather>>() {
+        weatherViewModel.getAirQualityByCoordinate().observe(this, new Observer<AirQuality>() {
             @Override
-            public void onChanged(List<Weather> weathers) {
-                DetailsFragment.getInstance().updateData(weathers.get(0));
-                HomeScreenFragment.getInstance().updateData(weathers.get(0));
-                updateColor();
+            public void onChanged(AirQuality airQuality) {
+                DetailsFragment.getInstance().updateAqi(airQuality);
+            }
+        });
+        weatherViewModel.getLocationData().observe(this, new Observer<List<LocationData>>() {
+            @Override
+            public void onChanged(List<LocationData> data) {
+                locations = data;
+                for(LocationData l: locations){
+                    l.setCoordinate(updateCoordinateName(l.getCoordinate()));
+                }
+                if(firstTimeFetchViewModel){
+                    DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                    HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                    WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
+                    updateColor();
+                    firstTimeFetchViewModel = false;
+                }
+                if(dataRefreshing){
+                    if(data.size() > currentLocationPosition){
+                        DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                        HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                        WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
+                        updateColor();
+                        dataRefreshing = false;
+                    }
+                }
                 loadingLayout.setVisibility(View.INVISIBLE);
                 if (mViewPager.getCurrentItem() == 1) {
                     fab.show();
                     showFabToolTips();
                 }
-                int numberOfLocations = Math.min(locations.size(),weathers.size());
-                List<LocationItemModel> itemModels = new ArrayList<>();
-                for(int i = 0;i<numberOfLocations;i++){
-                    itemModels.add(new LocationItemModel(locations.get(i).getId(),locations.get(i).getName(), weathers.get(i)));
-                }
-                locationListAdapter.submitList(itemModels);
-
+                locationListAdapter.submitList(locations);
             }
         });
-        weatherViewModel.getAqiData().observe(this, new Observer<List<AirQuality>>() {
-            @Override
-            public void onChanged(List<AirQuality> airQualities) {
-                DetailsFragment.getInstance().updateAqi(airQualities.get(0));
-            }
-        });
-        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<SavedCoordinate>>() {
-            @Override
-            public void onChanged(List<SavedCoordinate> savedCoordinates) {
-                for(SavedCoordinate c : savedCoordinates){
-                    try {
-                        Geocoder geo = new Geocoder(MainActivity.this, Locale.getDefault());
-                        List<Address> addresses = geo.getFromLocation(Double.parseDouble(c.getLat()), Double.parseDouble(c.getLon()), 1);
-                        if (!addresses.isEmpty()) {
-                            String address = addresses.get(0).getAddressLine(0);
-                            String[] addressPieces = address.split(",");
-                            String locationName;
-                            if (addressPieces.length >= 3) {
-                                locationName = addressPieces[addressPieces.length - 3].trim();
-                            } else {
-                                locationName = addressPieces[addressPieces.length - 2].trim();
-                            }
-                            c.setName(locationName);
-                            DetailsFragment.getInstance().updateCurrentLocationName(locationName);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                locations = savedCoordinates;
-            }
-        });
-
     }
 
     private void updateCurrentLocation() {
@@ -332,27 +326,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         new AirLocation(this, false, false, new AirLocation.Callbacks() {
             @Override
             public void onSuccess(@NonNull Location location) {
-                SavedCoordinate currentLocation = new SavedCoordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                Coordinate currentLocation = updateCoordinateName(new Coordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude())));
+                weatherViewModel.fetchAirQualityByCoordinate(currentLocation);
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
-                try {
-                    Geocoder geo = new Geocoder(MainActivity.this, Locale.getDefault());
-                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    if (!addresses.isEmpty()) {
-                        String address = addresses.get(0).getAddressLine(0);
-                        String[] addressPieces = address.split(",");
-                        String locationName;
-                        if (addressPieces.length >= 3) {
-                            locationName = addressPieces[addressPieces.length - 3].trim();
-                        } else {
-                            locationName = addressPieces[addressPieces.length - 2].trim();
-                        }
-                        currentLocation.setName(locationName);
-                        DetailsFragment.getInstance().updateCurrentLocationName(locationName);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                DetailsFragment.getInstance().updateCurrentLocationName(currentLocation.getName());
                 weatherViewModel.update(currentLocation);
             }
 
@@ -363,9 +341,31 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         });
     }
 
+    private Coordinate updateCoordinateName(Coordinate coordinate){
+        try {
+            Geocoder geo = new Geocoder(MainActivity.this, Locale.getDefault());
+            List<Address> addresses = geo.getFromLocation(Double.parseDouble(coordinate.getLat()), Double.parseDouble(coordinate.getLon()), 1);
+            if (!addresses.isEmpty()) {
+                String address = addresses.get(0).getAddressLine(0);
+                String[] addressPieces = address.split(",");
+                String locationName;
+                if (addressPieces.length >= 3) {
+                    locationName = addressPieces[addressPieces.length - 3].trim();
+                } else {
+                    locationName = addressPieces[addressPieces.length - 2].trim();
+                }
+                coordinate.setName(locationName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return coordinate;
+    }
+
     private void updateViewsWithData() {
         Log.d(TAG, "updateViewsWithData: now updating");
-        WeatherRepository.getInstance(this).getWeather();
+        dataRefreshing = true;
+        WeatherRepository.getInstance(this).getLocationWeathers();
         WeatherRepository.getInstance(this).getAirQuality();
     }
 

@@ -7,21 +7,21 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
+import com.OdiousPanda.thefweather.DataModel.Coordinate;
 
 import java.util.List;
 
 @Dao
-public interface SavedCoordinateDAO {
+public interface CoordinateDAO {
     @Insert
-    void insert(SavedCoordinate savedCoordinate);
+    void insert(Coordinate coordinate);
 
     @Update
-    void update(SavedCoordinate savedCoordinate);
+    void update(Coordinate coordinate);
 
     @Delete
-    void delete(SavedCoordinate savedCoordinate);
+    void delete(Coordinate coordinate);
 
     @Query("Select * from location_table")
-    LiveData<List<SavedCoordinate>> selectAll();
+    LiveData<List<Coordinate>> selectAll();
 }

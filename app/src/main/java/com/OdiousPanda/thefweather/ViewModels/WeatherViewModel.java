@@ -8,18 +8,18 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
-import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
-import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
+import com.OdiousPanda.thefweather.DataModel.Coordinate;
+import com.OdiousPanda.thefweather.DataModel.LocationData;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 
 import java.util.List;
 
 public class WeatherViewModel extends AndroidViewModel {
     private static final String TAG = "weatherA";
-    private MutableLiveData<List<Weather>> weatherData = new MutableLiveData<>();
-    private MutableLiveData<List<AirQuality>> aqiData = new MutableLiveData<>();
+    private MutableLiveData<List<LocationData>> locationData = new MutableLiveData<>();
+    private MutableLiveData<AirQuality> airQualityByCoordinate = new MutableLiveData<>();
     private WeatherRepository repository;
-    private LiveData<List<SavedCoordinate>> allSavedCoordinate;
+    private LiveData<List<Coordinate>> allSavedCoordinate;
 
     public WeatherViewModel(Application application) {
         super(application);
@@ -28,32 +28,35 @@ public class WeatherViewModel extends AndroidViewModel {
         allSavedCoordinate = repository.getAllSavedCoordinates();
     }
 
-    public void insert(SavedCoordinate savedCoordinate) {
-        repository.insert(savedCoordinate);
+    public void insert(Coordinate coordinate) {
+        repository.insert(coordinate);
     }
 
-    public void update(SavedCoordinate savedCoordinate) {
-        repository.update(savedCoordinate);
+    public void update(Coordinate coordinate) {
+        repository.update(coordinate);
     }
 
-    public void delete(SavedCoordinate savedCoordinate) {
-        repository.delete(savedCoordinate);
+    public void delete(Coordinate coordinate) {
+        repository.delete(coordinate);
     }
 
     public void fetchWeather() {
-        weatherData = repository.getWeather();
-        aqiData = repository.getAirQuality();
+        locationData = repository.getLocationWeathers();
     }
 
-    public LiveData<List<SavedCoordinate>> getAllSavedCoordinate() {
+    public void fetchAirQualityByCoordinate(Coordinate coordinate){
+        airQualityByCoordinate = repository.getAirQualityByCoordinate(coordinate);
+    }
+
+    public LiveData<List<Coordinate>> getAllSavedCoordinate() {
         return allSavedCoordinate;
     }
 
-    public LiveData<List<Weather>> getWeatherData() {
-        return weatherData;
+    public LiveData<List<LocationData>> getLocationData(){
+        return locationData;
     }
 
-    public LiveData<List<AirQuality>> getAqiData() {
-        return aqiData;
+    public LiveData<AirQuality> getAirQualityByCoordinate(){
+        return airQualityByCoordinate;
     }
 }

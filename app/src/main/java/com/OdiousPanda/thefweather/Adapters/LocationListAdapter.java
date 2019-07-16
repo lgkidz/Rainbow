@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.OdiousPanda.thefweather.DataModel.LocationItemModel;
+import com.OdiousPanda.thefweather.DataModel.LocationData;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 
-public class LocationListAdapter extends ListAdapter<LocationItemModel,LocationListAdapter.LocationItemViewHolder> {
+public class LocationListAdapter extends ListAdapter<LocationData,LocationListAdapter.LocationItemViewHolder> {
     private Context mContext;
     private int currentItem = 0;
     private OnItemClickListener listener;
@@ -27,21 +27,15 @@ public class LocationListAdapter extends ListAdapter<LocationItemModel,LocationL
         this.mContext = context;
     }
 
-    private static final DiffUtil.ItemCallback<LocationItemModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<LocationItemModel>() {
+    private static final DiffUtil.ItemCallback<LocationData> DIFF_CALLBACK = new DiffUtil.ItemCallback<LocationData>() {
         @Override
-        public boolean areItemsTheSame(@NonNull LocationItemModel oldItem, @NonNull LocationItemModel newItem) {
-            if(oldItem.getLocationName() == null || newItem.getLocationName() == null){
-                return false;
-            }
-            return oldItem.getLocationName().equalsIgnoreCase(newItem.getLocationName());
+        public boolean areItemsTheSame(@NonNull LocationData oldItem, @NonNull LocationData newItem) {
+            return oldItem.getCoordinate().getId() == newItem.getCoordinate().getId();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull LocationItemModel oldItem, @NonNull LocationItemModel newItem) {
-            if(oldItem.getLocationName() == null || newItem.getLocationName() == null){
-                return false;
-            }
-            return oldItem.getLocationName().equalsIgnoreCase(newItem.getLocationName());
+        public boolean areContentsTheSame(@NonNull LocationData oldItem, @NonNull LocationData newItem) {
+            return oldItem.getCoordinate().getId() == newItem.getCoordinate().getId();
         }
     };
 
@@ -54,12 +48,12 @@ public class LocationListAdapter extends ListAdapter<LocationItemModel,LocationL
 
     @Override
     public void onBindViewHolder(@NonNull LocationItemViewHolder holder, int position) {
-        LocationItemModel model = getItem(position);
+        LocationData model = getItem(position);
         boolean firstItem = true;
         if(position > 0){
             firstItem = false;
         }
-        String name = model.getLocationName();
+        String name = model.getCoordinate().getName();
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(mContext);
         String temp = UnitConverter.convertToTemperatureUnit(model.getWeather().getCurrently().getTemperature(),currentTempUnit);
         String iconName = model.getWeather().getCurrently().getIcon().replace("-", "_");

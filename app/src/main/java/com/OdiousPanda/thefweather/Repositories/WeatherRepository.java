@@ -10,12 +10,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.OdiousPanda.thefweather.API.AQICall;
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
-import com.OdiousPanda.thefweather.DAOs.SavedCoordinateDAO;
+import com.OdiousPanda.thefweather.DAOs.CoordinateDAO;
+import com.OdiousPanda.thefweather.DataModel.Coordinate;
+import com.OdiousPanda.thefweather.DataModel.LocationData;
 import com.OdiousPanda.thefweather.Database.WeatherDatabase;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
-import com.OdiousPanda.thefweather.DataModel.SavedCoordinate;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,25 +29,23 @@ public class WeatherRepository {
 
     private static WeatherRepository instance;
 
-    private SavedCoordinateDAO savedCoordinateDAO;
-    private LiveData<List<SavedCoordinate>> allSavedCoordinates;
+    private CoordinateDAO coordinateDAO;
+    private LiveData<List<Coordinate>> allSavedCoordinates;
 
     private WeatherCall weatherCall;
     private AQICall aqiCall;
 
-    private List<SavedCoordinate> savedCoordinates;
-
-    private List<Weather> weathers = new ArrayList<>();
-    private MutableLiveData<List<Weather>> weatherList = new MutableLiveData<>();
-
+    private List<Coordinate> coordinates = new ArrayList<>();
+    private List<LocationData> locations = new ArrayList<>();
+    private MutableLiveData<List<LocationData>> locationDataList = new MutableLiveData<>();
+    private MutableLiveData<AirQuality> airQualityByCoordinate = new MutableLiveData<>();
     private List<AirQuality> airQualities = new ArrayList<>();
     private MutableLiveData<List<AirQuality>> airQualitiesList = new MutableLiveData<>();
-    private int dataPosition = 0;
 
     private WeatherRepository(Context context){
         Log.d(TAG, "WeatherRepository: created");
         WeatherDatabase database = WeatherDatabase.getInstance(context);
-        savedCoordinateDAO = database.savedCoordinateDAO();
+        coordinateDAO = database.savedCoordinateDAO();
         getAllCoordinates();
         weatherCall = RetrofitService.createWeatherCall();
         aqiCall = RetrofitService.createAQICall();
@@ -59,67 +60,67 @@ public class WeatherRepository {
     }
 
     private void getAllCoordinates(){
-        allSavedCoordinates = savedCoordinateDAO.selectAll();
+        allSavedCoordinates = coordinateDAO.selectAll();
     }
 
-    public LiveData<List<SavedCoordinate>> getAllSavedCoordinates(){
-        savedCoordinates = allSavedCoordinates.getValue();
-        Log.d(TAG, "getAllSavedCoordinates: returning liveData of savedCoordinates");
+    public LiveData<List<Coordinate>> getAllSavedCoordinates(){
+        coordinates = allSavedCoordinates.getValue();
+        Log.d(TAG, "getAllSavedCoordinates: returning liveData of coordinates");
         return allSavedCoordinates;
     }
 
-    public void insert(SavedCoordinate savedCoordinate){
-        new InsertCoordinateTask(savedCoordinateDAO).execute(savedCoordinate);
+    public void insert(Coordinate coordinate){
+        new InsertCoordinateTask(coordinateDAO).execute(coordinate);
     }
 
-    public void update(SavedCoordinate savedCoordinate){
-        new UpdateCoordinateTask(savedCoordinateDAO).execute(savedCoordinate);
+    public void update(Coordinate coordinate){
+        new UpdateCoordinateTask(coordinateDAO).execute(coordinate);
     }
 
-    public void delete(SavedCoordinate savedCoordinate){
-        new DeleteCoordinateTask(savedCoordinateDAO).execute(savedCoordinate);
+    public void delete(Coordinate coordinate){
+        new DeleteCoordinateTask(coordinateDAO).execute(coordinate);
     }
 
-    public MutableLiveData<List<Weather>> getWeather(){
-        dataPosition = 0;
-        savedCoordinates = allSavedCoordinates.getValue();
-        assert savedCoordinates != null;
-        Log.d(TAG, "getCurrentWeather: getting data from api: " + savedCoordinates.size());
+    public MutableLiveData<List<LocationData>> getLocationWeathers(){
+        locations.clear();
+        coordinates = allSavedCoordinates.getValue();
+        assert coordinates != null;
+        Log.d(TAG, "getCurrentWeather: getting data from api: " + coordinates.size());
 
         Log.d(TAG, "getCurrentWeather: getting current weather");
-        getDataInSequence();
-        return weatherList;
-    }
-
-    private void getDataInSequence(){
-        Log.d(TAG, "getDataInSequence: current position: " + dataPosition);
-        if(dataPosition < savedCoordinates.size()){
-            weatherCall.getWeather(savedCoordinates.get(dataPosition).getLat(),savedCoordinates.get(dataPosition).getLon()).enqueue(new Callback<Weather>() {
+        for (final Coordinate coordinate : coordinates){
+            weatherCall.getWeather(coordinate.getLat(), coordinate.getLon()).enqueue(new Callback<Weather>() {
                 @Override
                 public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                     if(response.isSuccessful()){
-                        weathers.add(response.body());
-                        weatherList.postValue(weathers);
+                        LocationData currentLocation = new LocationData(coordinate);
+                        currentLocation.setWeather(response.body());
+                        locations.add(currentLocation);
+                        Collections.sort(locations, new Comparator<LocationData>() {
+                            @Override
+                            public int compare(LocationData o1, LocationData o2) {
+                                return o1.getCoordinate().getId() - o2.getCoordinate().getId();
+                            }
+                        });
+                        locationDataList.postValue(locations);
                         assert response.body() != null;
                         Log.d(TAG, "onResponse: " + response.body().getCurrently().getSummary());
-                        dataPosition++;
-                        getDataInSequence();
                     }
                 }
-
                 @Override
                 public void onFailure(@NonNull Call<Weather> call, @NonNull Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
         }
+        return locationDataList;
     }
 
     public MutableLiveData<List<AirQuality>> getAirQuality(){
-        savedCoordinates = allSavedCoordinates.getValue();
-        assert savedCoordinates != null;
-        Log.d(TAG, "getCurrentAQI: getting data from api: " + savedCoordinates.size());
-        for(SavedCoordinate c : savedCoordinates){
+        coordinates = allSavedCoordinates.getValue();
+        assert coordinates != null;
+        Log.d(TAG, "getCurrentAQI: getting data from api: " + coordinates.size());
+        for(Coordinate c : coordinates){
             Log.d(TAG, "getCurrentAQI: getting current weather");
             aqiCall.getAirQuality(c.getLat(),c.getLon()).enqueue(new Callback<AirQuality>() {
                 @Override
@@ -143,48 +144,67 @@ public class WeatherRepository {
         return airQualitiesList;
     }
 
-    private static class InsertCoordinateTask extends AsyncTask<SavedCoordinate,Void,Void>{
+    public MutableLiveData<AirQuality> getAirQualityByCoordinate(Coordinate coordinate){
+        Log.d(TAG, "getCurrentAQI: getting current AQI " + coordinate.getLat() + ", " + coordinate.getLon());
+        aqiCall.getAirQuality(coordinate.getLat(),coordinate.getLon()).enqueue(new Callback<AirQuality>() {
+            @Override
+            public void onResponse(@NonNull Call<AirQuality> call, @NonNull Response<AirQuality> response) {
+                if(response.isSuccessful()){
+                    airQualityByCoordinate.postValue(response.body());
+                    assert response.body() != null;
+                    Log.d(TAG, "onResponse: " + response.body().getData().aqi);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<AirQuality> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+        return airQualityByCoordinate;
+    }
 
-        private SavedCoordinateDAO savedCoordinateDAO;
+    private static class InsertCoordinateTask extends AsyncTask<Coordinate,Void,Void>{
 
-        private InsertCoordinateTask(SavedCoordinateDAO savedCoordinateDAO){
-            this.savedCoordinateDAO = savedCoordinateDAO;
+        private CoordinateDAO coordinateDAO;
+
+        private InsertCoordinateTask(CoordinateDAO coordinateDAO){
+            this.coordinateDAO = coordinateDAO;
         }
 
         @Override
-        protected Void doInBackground(SavedCoordinate... savedCoordinates) {
-            savedCoordinateDAO.insert(savedCoordinates[0]);
+        protected Void doInBackground(Coordinate... coordinates) {
+            coordinateDAO.insert(coordinates[0]);
             return null;
         }
     }
 
-    private static class UpdateCoordinateTask extends AsyncTask<SavedCoordinate,Void,Void>{
+    private static class UpdateCoordinateTask extends AsyncTask<Coordinate,Void,Void>{
 
-        private SavedCoordinateDAO savedCoordinateDAO;
+        private CoordinateDAO coordinateDAO;
 
-        private UpdateCoordinateTask(SavedCoordinateDAO savedCoordinateDAO){
-            this.savedCoordinateDAO = savedCoordinateDAO;
+        private UpdateCoordinateTask(CoordinateDAO coordinateDAO){
+            this.coordinateDAO = coordinateDAO;
         }
 
         @Override
-        protected Void doInBackground(SavedCoordinate... savedCoordinates) {
-            savedCoordinateDAO.update(savedCoordinates[0]);
+        protected Void doInBackground(Coordinate... coordinates) {
+            coordinateDAO.update(coordinates[0]);
             Log.d(TAG, "doInBackground: updating db");
             return null;
         }
     }
 
-    private static class DeleteCoordinateTask extends AsyncTask<SavedCoordinate,Void,Void>{
+    private static class DeleteCoordinateTask extends AsyncTask<Coordinate,Void,Void>{
 
-        private SavedCoordinateDAO savedCoordinateDAO;
+        private CoordinateDAO coordinateDAO;
 
-        private DeleteCoordinateTask(SavedCoordinateDAO savedCoordinateDAO){
-            this.savedCoordinateDAO = savedCoordinateDAO;
+        private DeleteCoordinateTask(CoordinateDAO coordinateDAO){
+            this.coordinateDAO = coordinateDAO;
         }
 
         @Override
-        protected Void doInBackground(SavedCoordinate... savedCoordinates) {
-            savedCoordinateDAO.delete(savedCoordinates[0]);
+        protected Void doInBackground(Coordinate... coordinates) {
+            coordinateDAO.delete(coordinates[0]);
             return null;
         }
     }

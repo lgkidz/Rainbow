@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "location_table")
-public class SavedCoordinate {
+public class Coordinate {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -22,10 +22,10 @@ public class SavedCoordinate {
     @Expose
     private String name;
 
-    public SavedCoordinate(){}
+    public Coordinate(){}
 
     @Ignore
-    public SavedCoordinate(String lat, String lon){
+    public Coordinate(String lat, String lon){
         this.lat = lat;
         this.lon = lon;
     }
