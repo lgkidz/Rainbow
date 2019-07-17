@@ -8,25 +8,25 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.OdiousPanda.thefweather.DataModel.Coordinate;
 import com.OdiousPanda.thefweather.DataModel.LocationData;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.LocationItemViewHolder> {
     private Activity mActivity;
-    private int currentItem = 0;
+    private int activeItem = 0;
     private OnItemClickListener listener;
     private List<LocationData> mData;
-    private LocationData mRecentlyDeletedItem;
 
     public LocationListAdapter(Activity context, List<LocationData> data, OnItemClickListener onItemClickListener) {
         this.mActivity = context;
@@ -44,17 +44,16 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     @Override
     public void onBindViewHolder(@NonNull LocationItemViewHolder holder, int position) {
         LocationData model = mData.get(position);
-        boolean firstItem = true;
-        if(position > 0){
-            firstItem = false;
-        }
+
+        boolean firstItem = position == 0;
+
         String name = model.getCoordinate().getName();
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(mActivity);
         String temp = UnitConverter.convertToTemperatureUnit(model.getWeather().getCurrently().getTemperature(),currentTempUnit);
         String iconName = model.getWeather().getCurrently().getIcon().replace("-", "_");
         int iconResourceId = mActivity.getResources().getIdentifier("drawable/" + iconName + "_b", null, mActivity.getPackageName());
         holder.setData(firstItem,name,temp,iconResourceId);
-        if(position == currentItem){
+        if(position == activeItem){
             holder.setCurrentItemIndicator(true);
         }
         else{
@@ -77,34 +76,21 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     }
 
     public void deleteItem(int position){
-        mRecentlyDeletedItem = mData.get(position);
-        if(position <= currentItem){
-            currentItem--;
-            listener.onItemClick(currentItem);
-        }
+        deleteItemFromDb(mData.get(position).getCoordinate());
         mData.remove(position);
+        updateCurrentItem(position);
         notifyItemRemoved(position);
-        showUndoSnackBar();
-        WeatherRepository.getInstance(mActivity).delete(mRecentlyDeletedItem.getCoordinate());
     }
 
-    private void showUndoSnackBar() {
-        View view = mActivity.findViewById(R.id.location_list_layout);
-        Snackbar snackbar = Snackbar.make(view, R.string.snack_bar_text,
-                Snackbar.LENGTH_LONG);
-        snackbar.setAction(R.string.snack_bar_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                undoDelete();
-            }
-        });
-        snackbar.show();
+    private void deleteItemFromDb(Coordinate coordinate){
+        WeatherRepository.getInstance(mActivity).delete(coordinate);
     }
 
-    private void undoDelete() {
-        mData.add(mRecentlyDeletedItem);
-        notifyItemInserted(mData.size() - 1);
-        WeatherRepository.getInstance(mActivity).insert(mRecentlyDeletedItem.getCoordinate());
+    private void updateCurrentItem(int position){
+        if(position <= activeItem){
+            activeItem--;
+            listener.onItemClick(activeItem);
+        }
     }
 
     class LocationItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -126,27 +112,21 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         }
 
         void setData(boolean firstItem, String name, String temperature, int iconResource){
-            if(!firstItem){
-                locationIcon.setVisibility(View.GONE);
-            }
+            locationIcon.setVisibility(firstItem ? View.VISIBLE : View.GONE);
             locationName.setText(name);
             locationTemperature.setText(temperature);
             weatherIcon.setImageResource(iconResource);
         }
         void setCurrentItemIndicator(boolean isCurrentItem){
-            if(isCurrentItem){
-                currentItemIndicator.setVisibility(View.VISIBLE);
-            }
-            else{
-                currentItemIndicator.setVisibility(View.INVISIBLE);
-            }
+            currentItemIndicator.setVisibility(isCurrentItem ? View.VISIBLE : View.INVISIBLE);
         }
 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            currentItem = position;
-            notifyDataSetChanged();
+            notifyItemChanged(activeItem);
+            activeItem = position;
+            notifyItemChanged(activeItem);
             onItemClickListener.onItemClick(position);
         }
     }

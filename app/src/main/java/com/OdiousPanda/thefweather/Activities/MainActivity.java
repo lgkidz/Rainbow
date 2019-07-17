@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         addLocation = findViewById(R.id.btn_add_location);
         locationListBackButton = findViewById(R.id.btn_go_back);
         rvLocations = findViewById(R.id.locations_rv);
+        rvLocations.setHasFixedSize(true);
         noConnectionLayout = findViewById(R.id.no_connection_layout);
         locationListLayout = findViewById(R.id.location_list_layout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -217,6 +219,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL, false);
         rvLocations.setLayoutManager(layoutManager);
         locationListAdapter = new LocationListAdapter(MainActivity.this,locations,MainActivity.this);
+        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(this,R.anim.layout_slide_from_right);
+        rvLocations.setLayoutAnimation(controller);
         rvLocations.setAdapter(locationListAdapter);
         new ItemTouchHelper(new SwipeToDeleteCallback(locationListAdapter)).attachToRecyclerView(rvLocations);
         screenInitialized = true;
@@ -225,14 +229,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     @Override
     public void onItemClick(int position) {
         Log.d("locationListListener", "onItemClick: " + position);
-                currentLocationPosition = position;
-                currentLocationID = locations.get(currentLocationPosition).getCoordinate().getId();
-                WeatherRepository.getInstance(MainActivity.this)
-                        .getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
-                HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
-                updateColor();
+        currentLocationPosition = position;
+        currentLocationID = locations.get(currentLocationPosition).getCoordinate().getId();
+        WeatherRepository.getInstance(MainActivity.this)
+                .getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
+        HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+        DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+        DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+        updateColor();
     }
 
     private void showFabToolTips() {
@@ -288,15 +292,20 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                             WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
                             updateColor();
                             dataRefreshing = false;
+
                         }
                     }
                 }
+//                locationListAdapter = new LocationListAdapter(MainActivity.this,locations,MainActivity.this);
+//                rvLocations.setAdapter(locationListAdapter);
+                locationListAdapter.updateLocationsData(locations);
+                rvLocations.scheduleLayoutAnimation();
                 loadingLayout.setVisibility(View.INVISIBLE);
                 if (mViewPager.getCurrentItem() == 1 && !locationListShowing) {
                     fab.show();
                     showFabToolTips();
                 }
-                locationListAdapter.updateLocationsData(locations);
+
             }
         });
     }
@@ -311,7 +320,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 weatherViewModel.fetchAirQualityByCoordinate(currentLocation);
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
-                DetailsFragment.getInstance().updateCurrentLocationName(currentLocation.getName());
                 weatherViewModel.update(currentLocation);
             }
 
