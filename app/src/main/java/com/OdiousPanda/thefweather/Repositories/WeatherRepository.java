@@ -41,6 +41,7 @@ public class WeatherRepository {
     private MutableLiveData<AirQuality> airQualityByCoordinate = new MutableLiveData<>();
     private List<AirQuality> airQualities = new ArrayList<>();
     private MutableLiveData<List<AirQuality>> airQualitiesList = new MutableLiveData<>();
+    private int apiCallCounter = 0;
 
     private WeatherRepository(Context context){
         Log.d(TAG, "WeatherRepository: created");
@@ -83,12 +84,11 @@ public class WeatherRepository {
 
     public MutableLiveData<List<LocationData>> getLocationWeathers(){
         locations.clear();
+        apiCallCounter = 0;
         coordinates = allSavedCoordinates.getValue();
         assert coordinates != null;
-        Log.d(TAG, "getCurrentWeather: getting data from api: " + coordinates.size());
-
-        Log.d(TAG, "getCurrentWeather: getting current weather");
-        for (final Coordinate coordinate : coordinates){
+        Log.d(TAG, "getCurrentWeather: getting data from api: total: " + coordinates.size());
+        for(final Coordinate coordinate : coordinates){
             weatherCall.getWeather(coordinate.getLat(), coordinate.getLon()).enqueue(new Callback<Weather>() {
                 @Override
                 public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
@@ -103,8 +103,6 @@ public class WeatherRepository {
                             }
                         });
                         locationDataList.postValue(locations);
-                        assert response.body() != null;
-                        Log.d(TAG, "onResponse: " + response.body().getCurrently().getSummary());
                     }
                 }
                 @Override
@@ -116,34 +114,6 @@ public class WeatherRepository {
         return locationDataList;
     }
 
-    public MutableLiveData<List<AirQuality>> getAirQuality(){
-        coordinates = allSavedCoordinates.getValue();
-        assert coordinates != null;
-        Log.d(TAG, "getCurrentAQI: getting data from api: " + coordinates.size());
-        for(Coordinate c : coordinates){
-            Log.d(TAG, "getCurrentAQI: getting current weather");
-            aqiCall.getAirQuality(c.getLat(),c.getLon()).enqueue(new Callback<AirQuality>() {
-                @Override
-                public void onResponse(@NonNull Call<AirQuality> call, @NonNull Response<AirQuality> response) {
-                    if(response.isSuccessful()){
-                        airQualities.add(response.body());
-                        airQualitiesList.postValue(airQualities);
-                        assert response.body() != null;
-                        Log.d(TAG, "onResponse: " + response.body().getData().aqi);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<AirQuality> call, @NonNull Throwable t) {
-                    Log.d(TAG, "onFailure: " + t.getMessage());
-                }
-            });
-
-        }
-
-        return airQualitiesList;
-    }
-
     public MutableLiveData<AirQuality> getAirQualityByCoordinate(Coordinate coordinate){
         Log.d(TAG, "getCurrentAQI: getting current AQI " + coordinate.getLat() + ", " + coordinate.getLon());
         aqiCall.getAirQuality(coordinate.getLat(),coordinate.getLon()).enqueue(new Callback<AirQuality>() {
@@ -151,8 +121,6 @@ public class WeatherRepository {
             public void onResponse(@NonNull Call<AirQuality> call, @NonNull Response<AirQuality> response) {
                 if(response.isSuccessful()){
                     airQualityByCoordinate.postValue(response.body());
-                    assert response.body() != null;
-                    Log.d(TAG, "onResponse: " + response.body().getData().aqi);
                 }
             }
             @Override

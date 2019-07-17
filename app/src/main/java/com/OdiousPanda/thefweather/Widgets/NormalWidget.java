@@ -1,4 +1,4 @@
-package com.OdiousPanda.thefweather;
+package com.OdiousPanda.thefweather.Widgets;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -37,6 +37,7 @@ import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
+import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Service.WidgetTimeWorker;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;

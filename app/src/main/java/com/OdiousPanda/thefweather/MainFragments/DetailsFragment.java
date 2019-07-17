@@ -144,8 +144,10 @@ public class DetailsFragment extends Fragment {
         aqiInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AirQualityDialog airQualityDialog = new AirQualityDialog(getActivity(), airQuality);
-                airQualityDialog.showDialog();
+                if(airQuality != null){
+                    AirQualityDialog airQualityDialog = new AirQualityDialog(getActivity(), airQuality);
+                    airQualityDialog.showDialog();
+                }
             }
         });
 
@@ -332,7 +334,9 @@ public class DetailsFragment extends Fragment {
     }
 
     public void updateCurrentLocationName(String locationName) {
-        this.tvLocation.setText(locationName);
+        if(this.tvLocation != null){
+            this.tvLocation.setText(locationName);
+        }
     }
 
     public void updateAqi(AirQuality air) {

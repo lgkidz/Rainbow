@@ -21,7 +21,7 @@
         <activity android:name=".Activities.HelpMeActivity"
             android:screenOrientation="portrait"/>
 
-        <receiver android:name=".NormalWidget">
+        <receiver android:name=".Widgets.NormalWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="actionUpdate" />

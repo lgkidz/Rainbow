@@ -115,4 +115,6 @@
     <string name="air_quality_dialog_description">Here are some scientific information</string>
     <string name="provided_by_aqi_cn_org">provided by aqicn.org</string>
     <string name="explicit_setting_title">Are you okay with swearing?</string>
+    <string name="snack_bar_undo">Undo</string>
+    <string name="snack_bar_text">Location deleted.</string>
 </resources>

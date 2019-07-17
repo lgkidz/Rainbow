@@ -11,25 +11,24 @@ public class PreferencesUtil {
     public static final String EXPLICIT_SETTING = "explicitOrNot";
     // Shared preferences file name
     private static final String PREF_NAME = "RainbowPreferencesName";
-    private static final String IS_FIRST_TIME_LAUNCH = "IsAppFirstTimeLaunch";
+    private static final String IS_NOT_FIRST_TIME_LAUNCH = "IsAppFirstTimeLaunch";
     private static final String WIDGET_ACTION_TAP = "widgetTap";
     private static final String DEFAULT_TEMPERATURE_UNIT = "°C";
     private static final String DEFAULT_DISTANCE_UNIT = "km";
     private static final String DEFAULT_SPEED_UNIT = "kmph";
     private static final String DEFAULT_PRESSURE_UNIT = "psi";
     private static final boolean DEFAULT_EXPLICIT_SETTING = true;
-    private static final boolean DEFAULT_FIRST_TIME_LAUNCH_VALUE = true;
+    private static final boolean DEFAULT_NOT_FIRST_TIME_LAUNCH_VALUE = false;
 
     public static boolean isNotFirstTimeLaunch(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        boolean firstTime = pref.getBoolean(IS_FIRST_TIME_LAUNCH, DEFAULT_FIRST_TIME_LAUNCH_VALUE);
-        return !firstTime;
+        return pref.getBoolean(IS_NOT_FIRST_TIME_LAUNCH, DEFAULT_NOT_FIRST_TIME_LAUNCH_VALUE);
     }
 
-    public static void setFirstTimeLaunch(Context context, boolean isFirstTime) {
+    public static void setNotFirstTimeLaunch(Context context, boolean notFirstTime) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
+        editor.putBoolean(IS_NOT_FIRST_TIME_LAUNCH, notFirstTime);
         editor.apply();
     }
 

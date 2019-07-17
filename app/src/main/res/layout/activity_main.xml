@@ -22,7 +22,7 @@
         android:backgroundTint="#fff"
         app:rippleColor="@color/bg_screen1"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_location_b"/>
+        android:src="@drawable/ic_location_b"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/location_list_layout"
         android:layout_width="match_parent"

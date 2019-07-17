@@ -12,7 +12,7 @@ import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.OdiousPanda.thefweather.NormalWidget;
+import com.OdiousPanda.thefweather.Widgets.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 
 import java.text.DateFormat;

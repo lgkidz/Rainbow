@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
 import com.OdiousPanda.thefweather.CustomUI.AboutDialog;
-import com.OdiousPanda.thefweather.NormalWidget;
+import com.OdiousPanda.thefweather.Widgets.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;

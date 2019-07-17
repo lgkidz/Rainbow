@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,7 +23,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,11 +43,11 @@ import com.OdiousPanda.thefweather.CustomUI.MovableFAB;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
 import com.OdiousPanda.thefweather.DataModel.Coordinate;
 import com.OdiousPanda.thefweather.DataModel.LocationData;
-import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
+import com.OdiousPanda.thefweather.Helpers.SwipeToDeleteCallback;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.thefweather.MainFragments.SettingFragment;
-import com.OdiousPanda.thefweather.NormalWidget;
+import com.OdiousPanda.thefweather.Widgets.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
@@ -62,7 +63,7 @@ import java.util.Locale;
 
 import mumayank.com.airlocationlibrary.AirLocation;
 
-public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener {
+public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener,LocationListAdapter.OnItemClickListener {
 
     private static final String TAG = "weatherA";
     Tooltip fabTooltip;
@@ -86,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private boolean screenInitialized = false;
     private LocationListAdapter locationListAdapter;
     private List<LocationData> locations = new ArrayList<>();
-    private int currentLocationPosition = 0;
+    private int currentLocationPosition = 0; // first position of the location list
+    private int currentLocationID = 1; // default ID for current location
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -108,6 +110,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         setContentView(R.layout.activity_main);
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         initViews();
+        Intent intent = getIntent();
+        if (intent != null && intent.getAction() != null) {
+            if (intent.getAction().equals(NormalWidget.ACTION_TO_DETAILS)) {
+                mViewPager.setCurrentItem(2);
+            }
+        }
         HomeScreenFragment.getInstance().setOnRefreshListener(this);
         if (isConnected(this)) {
             startGettingData();
@@ -115,13 +123,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             showNoConnection();
         }
         Log.d(TAG, "onCreate: ");
-
-        Intent intent = getIntent();
-        if (intent != null && intent.getAction() != null) {
-            if (intent.getAction().equals(NormalWidget.ACTION_TO_DETAILS)) {
-                mViewPager.setCurrentItem(2);
-            }
-        }
 
     }
 
@@ -152,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         addLocation = findViewById(R.id.btn_add_location);
         locationListBackButton = findViewById(R.id.btn_go_back);
         rvLocations = findViewById(R.id.locations_rv);
-
         noConnectionLayout = findViewById(R.id.no_connection_layout);
         locationListLayout = findViewById(R.id.location_list_layout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -215,47 +215,24 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .build();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL, false);
-        locationListAdapter = new LocationListAdapter(MainActivity.this);
         rvLocations.setLayoutManager(layoutManager);
+        locationListAdapter = new LocationListAdapter(MainActivity.this,locations,MainActivity.this);
         rvLocations.setAdapter(locationListAdapter);
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
+        new ItemTouchHelper(new SwipeToDeleteCallback(locationListAdapter)).attachToRecyclerView(rvLocations);
+        screenInitialized = true;
+    }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                weatherViewModel.delete(locations.get(position).getCoordinate());
-                if(position == currentLocationPosition){
-                    currentLocationPosition--;
-                }
-            }
-
-            @Override
-            public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                if(viewHolder.getAdapterPosition() == 0){
-                    return 0;
-                }
-                return super.getSwipeDirs(recyclerView, viewHolder);
-            }
-
-        }).attachToRecyclerView(rvLocations);
-        locationListAdapter.setOnItemClickListener(new LocationListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
+    @Override
+    public void onItemClick(int position) {
+        Log.d("locationListListener", "onItemClick: " + position);
                 currentLocationPosition = position;
+                currentLocationID = locations.get(currentLocationPosition).getCoordinate().getId();
                 WeatherRepository.getInstance(MainActivity.this)
                         .getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
                 HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                 DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                 DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                 updateColor();
-            }
-        });
-        screenInitialized = true;
     }
 
     private void showFabToolTips() {
@@ -294,7 +271,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 for(LocationData l: locations){
                     l.setCoordinate(updateCoordinateName(l.getCoordinate()));
                 }
-                if(firstTimeFetchViewModel){
+                //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
+                if(firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1){
                     DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
@@ -303,19 +281,22 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 }
                 if(dataRefreshing){
                     if(data.size() > currentLocationPosition){
-                        DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                        HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                        WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
-                        updateColor();
-                        dataRefreshing = false;
+                        //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
+                        if(locations.get(currentLocationPosition).getCoordinate().getId() == currentLocationID){
+                            DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                            HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                            WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
+                            updateColor();
+                            dataRefreshing = false;
+                        }
                     }
                 }
                 loadingLayout.setVisibility(View.INVISIBLE);
-                if (mViewPager.getCurrentItem() == 1) {
+                if (mViewPager.getCurrentItem() == 1 && !locationListShowing) {
                     fab.show();
                     showFabToolTips();
                 }
-                locationListAdapter.submitList(locations);
+                locationListAdapter.updateLocationsData(locations);
             }
         });
     }
@@ -351,8 +332,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 String locationName;
                 if (addressPieces.length >= 3) {
                     locationName = addressPieces[addressPieces.length - 3].trim();
-                } else {
-                    locationName = addressPieces[addressPieces.length - 2].trim();
+                }
+                else {
+                    int p = addressPieces.length - 2 < 0 ? 0 : addressPieces.length - 2;
+                    locationName = addressPieces[p].trim();
                 }
                 coordinate.setName(locationName);
             }
@@ -366,7 +349,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         Log.d(TAG, "updateViewsWithData: now updating");
         dataRefreshing = true;
         WeatherRepository.getInstance(this).getLocationWeathers();
-        WeatherRepository.getInstance(this).getAirQuality();
     }
 
     @Override

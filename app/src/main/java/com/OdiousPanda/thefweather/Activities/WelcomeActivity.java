@@ -88,7 +88,6 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Checking for first time launch - before calling setContentView()
         if (PreferencesUtil.isNotFirstTimeLaunch(this)) {
             launchHomeScreen();
@@ -97,12 +96,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome);
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
-        weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<Coordinate>>() {
-            @Override
-            public void onChanged(List<Coordinate> coordinates) {
-
-            }
-        });
         viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
         btnNext = findViewById(R.id.btn_next);
@@ -171,7 +164,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
 
-        PreferencesUtil.setFirstTimeLaunch(this, false);
+        PreferencesUtil.setNotFirstTimeLaunch(this, true);
         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
         finish();
     }
