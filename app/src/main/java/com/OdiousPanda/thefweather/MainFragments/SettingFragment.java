@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
-import com.OdiousPanda.thefweather.CustomUI.AboutDialog;
 import com.OdiousPanda.thefweather.Widgets.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.google.android.material.snackbar.Snackbar;
+import com.mancj.slideup.SlideUp;
+import com.mancj.slideup.SlideUpBuilder;
 
 import java.util.Objects;
 
@@ -34,6 +38,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private String currentSpeedUnit;
     private String currentPressureUnit;
     private boolean isExplicit;
+    private CoordinatorLayout settingScreenLayout;
     private TextView tvSetting;
     private TextView tvTemperature;
     private TextView tvDistance;
@@ -59,6 +64,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnHellYeah;
     private Button btnHelpDev;
     private Button btnHelpMe;
+
+    private SlideUp aboutMeSlideUp;
+
     private int activeButtonColor = Color.argb(255, 255, 255, 255);
     private int buttonColor = Color.argb(255, 255, 255, 255);
     private int textColor = Color.argb(255, 0, 0, 0);
@@ -85,6 +93,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews(View v) {
+        settingScreenLayout = v.findViewById(R.id.setting_layout);
         tvSetting = v.findViewById(R.id.tv_setting);
         tvTemperature = v.findViewById(R.id.tv_temp_setting);
         tvDistance = v.findViewById(R.id.tv_distance_setting);
@@ -111,9 +120,16 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnImNot = v.findViewById(R.id.btn_im_not);
         btnHellYeah = v.findViewById(R.id.btn_hell_yeah);
 
-
+        ConstraintLayout aboutMeLayout = v.findViewById(R.id.about_me_layout);
+        Button closeAboutMeBtn = v.findViewById(R.id.btn_close_about);
+        aboutMeSlideUp = new SlideUpBuilder(aboutMeLayout)
+                .withStartState(SlideUp.State.HIDDEN)
+                .withStartGravity(Gravity.BOTTOM)
+                .withSlideFromOtherView(settingScreenLayout)
+                .build();
         tvRate.setOnClickListener(this);
         tvAbout.setOnClickListener(this);
+        closeAboutMeBtn.setOnClickListener(this);
 
         btnC.setOnClickListener(this);
         btnF.setOnClickListener(this);
@@ -147,8 +163,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void showAboutMeDialog() {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.showDialog(getActivity());
+        aboutMeSlideUp.show();
+    }
+    public void closeAboutMeDialog(){
+        aboutMeSlideUp.hide();
     }
 
     private void getSetting() {
@@ -290,6 +308,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             }
             case R.id.tv_about: {
                 showAboutMeDialog();
+                break;
+            }
+            case R.id.btn_close_about:{
+                closeAboutMeDialog();
                 break;
             }
             default:

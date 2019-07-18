@@ -24,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -169,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             @Override
             public void onPageSelected(int position) {
                 if (position == 1) {
+                    SettingFragment.getInstance().closeAboutMeDialog();
                     fab.show();
                 } else {
                     fab.hide();
@@ -184,7 +186,24 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .withStartState(SlideUp.State.HIDDEN)
                 .withStartGravity(Gravity.BOTTOM)
                 .withSlideFromOtherView(coordinatorLayout)
-                .withGesturesEnabled(false)
+                //.withGesturesEnabled(false)
+                .withListeners(new SlideUp.Listener.Events() {
+                    @Override
+                    public void onSlide(float percent) {
+                        Log.d(TAG, "onSlide: " + percent);
+                        if(percent == 100 && loadingLayout.getVisibility() == View.INVISIBLE && noConnectionLayout.getVisibility() == View.INVISIBLE){
+                            fab.show();
+                        }
+                        else {
+                            fab.hide();
+                        }
+                    }
+
+                    @Override
+                    public void onVisibilityChanged(int visibility) {
+
+                    }
+                })
                 .build();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,6 +245,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     public void onItemClick(int position) {
+        if(currentLocationPosition == position){
+            return;
+        }
         Log.d("locationListListener", "onItemClick: " + position);
         currentLocationPosition = position;
         currentLocationID = locations.get(currentLocationPosition).getCoordinate().getId();
@@ -290,7 +312,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                             HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                             WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
                             updateColor();
-                            fab.show();
                             dataRefreshing = false;
                         }
                     }
@@ -357,7 +378,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     public void updateData() {
-        fab.hide();
         updateViewsWithData();
     }
 
