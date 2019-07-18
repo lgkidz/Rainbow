@@ -50,11 +50,12 @@ public abstract class WeatherDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground: inserting default location");
             coordinateDAO.insert(new Coordinate("0", "0"));
-            coordinateDAO.insert(new Coordinate("41.54366", "36.62115"));
-            coordinateDAO.insert(new Coordinate("78.19304", "-53.67113"));
-            coordinateDAO.insert(new Coordinate("-13.67774","-51.79446"));
-            coordinateDAO.insert(new Coordinate("-11.60935","32.77713"));
-            coordinateDAO.insert(new Coordinate("48.73272","-108.51911"));
+            //random coordinates for testing purposes
+//            coordinateDAO.insert(new Coordinate("41.54366", "36.62115"));
+//            coordinateDAO.insert(new Coordinate("78.19304", "-53.67113"));
+//            coordinateDAO.insert(new Coordinate("-13.67774","-51.79446"));
+//            coordinateDAO.insert(new Coordinate("-11.60935","32.77713"));
+//            coordinateDAO.insert(new Coordinate("48.73272","-108.51911"));
             return null;
         }
     }

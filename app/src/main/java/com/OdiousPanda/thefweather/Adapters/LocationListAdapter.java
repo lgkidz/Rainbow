@@ -89,6 +89,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     private void updateCurrentItem(int position){
         if(position <= activeItem){
             activeItem--;
+            notifyItemChanged(activeItem);
             listener.onItemClick(activeItem);
         }
     }

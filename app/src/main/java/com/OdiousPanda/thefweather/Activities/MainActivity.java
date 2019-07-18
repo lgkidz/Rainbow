@@ -219,8 +219,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL, false);
         rvLocations.setLayoutManager(layoutManager);
         locationListAdapter = new LocationListAdapter(MainActivity.this,locations,MainActivity.this);
-        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(this,R.anim.layout_slide_from_right);
-        rvLocations.setLayoutAnimation(controller);
         rvLocations.setAdapter(locationListAdapter);
         new ItemTouchHelper(new SwipeToDeleteCallback(locationListAdapter)).attachToRecyclerView(rvLocations);
         screenInitialized = true;
@@ -252,22 +250,21 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             public void onChanged(List<Coordinate> coordinates) {
                 if (firstTimeObserve) {
                     weatherViewModel.fetchWeather();
-
+                    setupDataObserver();
                     firstTimeObserve = false;
                 }
-                setupDataObserver();
-
+                weatherViewModel.getAirQualityByCoordinate().observe(MainActivity.this, new Observer<AirQuality>() {
+                    @Override
+                    public void onChanged(AirQuality airQuality) {
+                        DetailsFragment.getInstance().updateAqi(airQuality);
+                    }
+                });
             }
         });
     }
 
     private void setupDataObserver() {
-        weatherViewModel.getAirQualityByCoordinate().observe(this, new Observer<AirQuality>() {
-            @Override
-            public void onChanged(AirQuality airQuality) {
-                DetailsFragment.getInstance().updateAqi(airQuality);
-            }
-        });
+
         weatherViewModel.getLocationData().observe(this, new Observer<List<LocationData>>() {
             @Override
             public void onChanged(List<LocationData> data) {
@@ -278,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
                 if(firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1){
                     DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                    DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                     HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
                     updateColor();
@@ -288,18 +286,16 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
                         if(locations.get(currentLocationPosition).getCoordinate().getId() == currentLocationID){
                             DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                            DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                             HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                             WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
                             updateColor();
+                            fab.show();
                             dataRefreshing = false;
-
                         }
                     }
                 }
-//                locationListAdapter = new LocationListAdapter(MainActivity.this,locations,MainActivity.this);
-//                rvLocations.setAdapter(locationListAdapter);
                 locationListAdapter.updateLocationsData(locations);
-                rvLocations.scheduleLayoutAnimation();
                 loadingLayout.setVisibility(View.INVISIBLE);
                 if (mViewPager.getCurrentItem() == 1 && !locationListShowing) {
                     fab.show();
@@ -361,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     public void updateData() {
+        fab.hide();
         updateViewsWithData();
     }
 
