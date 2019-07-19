@@ -45,6 +45,7 @@ public class WidgetTimeWorker extends Worker {
             remoteViews.setImageViewBitmap(R.id.widget_day_night, NormalWidget.textAsBitmap(mContext, timeString.substring(5), NormalWidget.DN_BITMAP));
             remoteViews.setImageViewBitmap(R.id.widget_date, NormalWidget.textAsBitmap(mContext, dateString, NormalWidget.DATE_BITMAP));
             aWm.updateAppWidget(widgetId, remoteViews);
+            WorkManager.getInstance(mContext).pruneWork();
             OneTimeWorkRequest mRequest = new OneTimeWorkRequest.Builder(WidgetTimeWorker.class)
                     .setInitialDelay(3, TimeUnit.SECONDS)
                     .build();

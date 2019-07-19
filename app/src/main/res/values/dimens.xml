@@ -1,5 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="init_scroll_welcome">945px</dimen>
+    <dimen name="minimum_screen_width">360dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
@@ -37,6 +39,7 @@
     <dimen name="text_view_18sp">18sp</dimen>
     <dimen name="text_view_20sp">20sp</dimen>
     <dimen name="text_view_24sp">24sp</dimen>
+    <dimen name="text_view_30sp">30sp</dimen>
     <dimen name="text_view_36sp">36sp</dimen>
     <dimen name="text_view_48sp">48sp</dimen>
     <dimen name="text_view_54sp">54sp</dimen>

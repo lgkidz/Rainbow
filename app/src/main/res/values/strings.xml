@@ -13,16 +13,16 @@
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Hi there!</string>
-    <string name="slide_1_desc">I\'m Rainbow. I\'n here to show you the basic of using this app. To the next screen!</string>
+    <string name="slide_1_desc">I\'m Rainbow. I\'n here to show you the basic of using this app. Let\'s head to the next screen!</string>
 
-    <string name="slide_2_title">This is the main layouts of Rainbow</string>
-    <string name="slide_2_desc">You just need to swipe left and right to navigate between them. Easy!</string>
+    <string name="slide_2_title">This is the main layout of Rainbow</string>
+    <string name="slide_2_desc">You can swipe left and right to navigate between screens. Easy!</string>
 
     <string name="slide_3_title">To refresh</string>
-    <string name="slide_3_desc">just swipe down on home screen</string>
+    <string name="slide_3_desc">You just need to swipe down on home screen, try it!</string>
 
     <string name="slide_4_title">That\'s Rainbow\'s widget</string>
-    <string name="slide_4_desc">Tap the weather icon to see more details, double tap the quote to refresh the widget</string>
+    <string name="slide_4_desc">You can tap the weather icon to open the details screen, double tap the quote to refresh the widget</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>

@@ -39,9 +39,6 @@ public class WeatherRepository {
     private List<LocationData> locations = new ArrayList<>();
     private MutableLiveData<List<LocationData>> locationDataList = new MutableLiveData<>();
     private MutableLiveData<AirQuality> airQualityByCoordinate = new MutableLiveData<>();
-    private List<AirQuality> airQualities = new ArrayList<>();
-    private MutableLiveData<List<AirQuality>> airQualitiesList = new MutableLiveData<>();
-    private int apiCallCounter = 0;
 
     private WeatherRepository(Context context){
         Log.d(TAG, "WeatherRepository: created");
@@ -84,10 +81,9 @@ public class WeatherRepository {
 
     public MutableLiveData<List<LocationData>> getLocationWeathers(){
         locations.clear();
-        apiCallCounter = 0;
         coordinates = allSavedCoordinates.getValue();
         assert coordinates != null;
-        Log.d(TAG, "getCurrentWeather: getting data from api: total: " + coordinates.size());
+//        Log.d(TAG, "getCurrentWeather: getting data from api: total: " + coordinates.size());
         for(final Coordinate coordinate : coordinates){
             weatherCall.getWeather(coordinate.getLat(), coordinate.getLon()).enqueue(new Callback<Weather>() {
                 @Override
@@ -115,7 +111,7 @@ public class WeatherRepository {
     }
 
     public MutableLiveData<AirQuality> getAirQualityByCoordinate(Coordinate coordinate){
-        Log.d(TAG, "getCurrentAQI: getting current AQI " + coordinate.getLat() + ", " + coordinate.getLon());
+//        Log.d(TAG, "getCurrentAQI: getting current AQI " + coordinate.getLat() + ", " + coordinate.getLon());
         aqiCall.getAirQuality(coordinate.getLat(),coordinate.getLon()).enqueue(new Callback<AirQuality>() {
             @Override
             public void onResponse(@NonNull Call<AirQuality> call, @NonNull Response<AirQuality> response) {
@@ -125,7 +121,7 @@ public class WeatherRepository {
             }
             @Override
             public void onFailure(@NonNull Call<AirQuality> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
+//                Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
         return airQualityByCoordinate;
@@ -157,7 +153,7 @@ public class WeatherRepository {
         @Override
         protected Void doInBackground(Coordinate... coordinates) {
             coordinateDAO.update(coordinates[0]);
-            Log.d(TAG, "doInBackground: updating db");
+//            Log.d(TAG, "doInBackground: updating db");
             return null;
         }
     }

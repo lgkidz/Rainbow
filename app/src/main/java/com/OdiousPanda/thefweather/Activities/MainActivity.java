@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,10 +19,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +55,7 @@ import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
 import com.tooltip.Tooltip;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -129,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void showNoConnection() {
-        loadingLayout.setVisibility(View.VISIBLE);
         noConnectionLayout.setVisibility(View.VISIBLE);
         fab.hide();
     }
@@ -272,21 +268,21 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             public void onChanged(List<Coordinate> coordinates) {
                 if (firstTimeObserve) {
                     weatherViewModel.fetchWeather();
-                    setupDataObserver();
+
                     firstTimeObserve = false;
                 }
-                weatherViewModel.getAirQualityByCoordinate().observe(MainActivity.this, new Observer<AirQuality>() {
-                    @Override
-                    public void onChanged(AirQuality airQuality) {
-                        DetailsFragment.getInstance().updateAqi(airQuality);
-                    }
-                });
+                setupDataObserver();
             }
         });
     }
 
     private void setupDataObserver() {
-
+        weatherViewModel.getAirQualityByCoordinate().observe(MainActivity.this, new Observer<AirQuality>() {
+            @Override
+            public void onChanged(AirQuality airQuality) {
+                DetailsFragment.getInstance().updateAqi(airQuality);
+            }
+        });
         weatherViewModel.getLocationData().observe(this, new Observer<List<LocationData>>() {
             @Override
             public void onChanged(List<LocationData> data) {
@@ -370,15 +366,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         return coordinate;
     }
 
-    private void updateViewsWithData() {
-        Log.d(TAG, "updateViewsWithData: now updating");
-        dataRefreshing = true;
-        WeatherRepository.getInstance(this).getLocationWeathers();
-    }
-
     @Override
     public void updateData() {
-        updateViewsWithData();
+        Log.d(TAG, "updateData: now refreshing data");
+        dataRefreshing = true;
+        WeatherRepository.getInstance(this).getLocationWeathers();
     }
 
     private void updateColor() {
@@ -443,6 +435,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     @Override
     protected void onResume() {
         super.onResume();
+        loadingLayout.setVisibility(View.INVISIBLE);
         registerReceiver(connectionChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         Log.d(TAG, "onResume: ");
     }

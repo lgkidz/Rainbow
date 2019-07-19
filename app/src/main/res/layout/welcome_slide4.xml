@@ -1,24 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="3"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_screen4">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/widget_layout"
+            android:background="#20000000"
+            tools:ignore="UselessParent">
+            <LinearLayout
+                android:id="@+id/layout_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:weightSum="2"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:paddingStart="@dimen/margin_16"
+                    tools:ignore="RtlSymmetry">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="bottom"
+                        android:layout_marginTop="@dimen/margin_8">
+                        <TextView
+                            android:id="@+id/widget_time"
+                            android:textColor="#fff"
+                            android:text="09:34"
+                            android:textSize="@dimen/text_view_48sp"
+                            android:fontFamily="@font/nunito"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:ignore="ContentDescription"
+                            />
+                        <TextView
+                            android:id="@+id/widget_day_night"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#fff"
+                            android:text="AM"
+                            android:textSize="@dimen/text_view_18sp"
+                            android:fontFamily="@font/nunito"
+                            android:layout_marginBottom="@dimen/margin_8"
+                            android:layout_gravity="bottom"
+                            tools:ignore="ContentDescription"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom">
+                        <TextView
+                            android:id="@+id/widget_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#fff"
+                            android:text="Fri, 19 Jul"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:fontFamily="@font/nunito"
+                            tools:ignore="ContentDescription"/>
+                        <ImageView
+                            android:layout_width="@dimen/margin_16"
+                            android:layout_height="@dimen/margin_16"
+                            android:layout_marginStart="@dimen/margin_4"
+                            android:layout_marginEnd="@dimen/margin_4"
+                            android:src="@drawable/ic_location_w"
+                            tools:ignore="ContentDescription"/>
+                        <TextView
+                            android:id="@+id/widget_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#fff"
+                            android:text="Hà Nội"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:fontFamily="@font/nunito"
+                            tools:ignore="ContentDescription"/>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/margin_16"
+                    tools:ignore="RtlSymmetry">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="end"
+                        android:layout_marginBottom="@dimen/margin_n_8">
+
+                        <ImageView
+                            android:id="@+id/widget_icon"
+                            android:layout_width="@dimen/icon_90dp"
+                            android:layout_gravity="end"
+                            android:src="@drawable/cloudy_w"
+                            android:layout_marginEnd="@dimen/margin_n_16"
+                            android:layout_height="@dimen/icon_90dp"
+                            tools:ignore="ContentDescription"/>
+                        <TextView
+                            android:id="@+id/tv_temp_widget"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:textColor="#fff"
+                            android:text="25°C"
+                            android:textSize="@dimen/text_view_30sp"
+                            android:fontFamily="@font/nunito"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/margin_16"
+                            tools:ignore="ContentDescription"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_reaFeel_widget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:textColor="#fff"
+                        android:text="Feels more like: 27°C"
+                        android:textSize="@dimen/text_view_14sp"
+                        android:fontFamily="@font/nunito"
+                        android:gravity="end"
+                        android:paddingStart="@dimen/margin_16"
+                        tools:ignore="ContentDescription"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/widget_quote_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_below="@id/layout_data">
+                <TextView
+                    android:id="@+id/quote_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="#fff"
+                    android:text="A big quote about weather"
+                    android:textSize="@dimen/text_view_54sp"
+                    android:fontFamily="@font/nunito"
+                    tools:ignore="ContentDescription"/>
+
+                <TextView
+                    android:id="@+id/quote_sub"
+                    android:textColor="#fff"
+                    android:text="And a comment"
+                    android:textSize="@dimen/text_view_18sp"
+                    android:fontFamily="@font/nunito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:ignore="UselessParent">
-
-        <ImageView
-            android:id="@+id/instruction_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp360"
-            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,4 +212,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

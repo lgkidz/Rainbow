@@ -1,28 +1,745 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/bg_screen2">
+    android:background="@color/bg_screen2"
+    android:weightSum="3"
+    android:orientation="vertical">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:fadeScrollbars="false"
+        android:background="#20000000">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="@dimen/minimum_screen_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_setting"
+                    android:layout_width="match_parent"
+                    app:fontFamily="@font/nunito"
+                    android:text="@string/setting"
+                    android:textColor="#fff"
+                    android:paddingTop="@dimen/margin_8"
+                    android:paddingBottom="@dimen/margin_8"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_view_24sp"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_temp_setting"
+                        android:layout_width="match_parent"
+                        app:fontFamily="@font/nunito"
+                        android:textColor="#fff"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_view_18sp"
+                        android:text="@string/temperature_setting_title"/>
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/margin_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+                        <Button
+                            android:id="@+id/btn_c"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:fontFamily="@font/nunito"
+                            android:textColor="#fff"
+                            android:background="@color/bg_screen3"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:textAllCaps="false"
+                            android:text="@string/temp_setting_degree_c"/>
+                        <Button
+                            android:id="@+id/btn_f"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:fontFamily="@font/nunito"
+                            android:textColor="#fff"
+                            android:background="@color/bg_screen2"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/temp_setting_degree_f"/>
+                        <Button
+                            android:id="@+id/btn_scientist"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            app:fontFamily="@font/nunito"
+                            android:textColor="#fff"
+                            android:background="@color/bg_screen2"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/scientist"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_distance_setting"
+                        android:layout_width="match_parent"
+                        app:fontFamily="@font/nunito"
+                        android:textColor="#fff"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_view_18sp"
+                        android:text="@string/distance_setting_title"/>
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/margin_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+                        <Button
+                            android:id="@+id/btn_km"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textColor="#fff"
+                            app:fontFamily="@font/nunito"
+                            android:background="@color/bg_screen3"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:textAllCaps="false"
+                            android:text="@string/km"/>
+                        <Button
+                            android:id="@+id/btn_mi"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textColor="#fff"
+                            app:fontFamily="@font/nunito"
+                            android:background="@color/bg_screen2"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/mi"/>
+                        <Button
+                            android:id="@+id/btn_bananas"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textColor="#fff"
+                            app:fontFamily="@font/nunito"
+                            android:background="@color/bg_screen2"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/bananas"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_speed_setting"
+                        android:layout_width="match_parent"
+                        app:fontFamily="@font/nunito"
+                        android:layout_height="wrap_content"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/text_view_18sp"
+                        android:text="@string/speed_setting_title"/>
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/margin_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+                        <Button
+                            android:id="@+id/btn_kmph"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:fontFamily="@font/nunito"
+                            android:textColor="#fff"
+                            android:background="@color/bg_screen3"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:textAllCaps="false"
+                            android:text="@string/kmph"/>
+                        <Button
+                            android:id="@+id/btn_miph"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textColor="#fff"
+                            android:background="@color/bg_screen2"
+                            app:fontFamily="@font/nunito"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/miph"/>
+                        <Button
+                            android:id="@+id/btn_bananaph"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:background="@color/bg_screen2"
+                            android:layout_weight="2"
+                            android:textColor="#fff"
+                            app:fontFamily="@font/nunito"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/banana_h"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_pressure_setting"
+                        android:textColor="#fff"
+                        android:layout_width="match_parent"
+                        app:fontFamily="@font/nunito"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_view_18sp"
+                        android:text="@string/pressure_setting_title"/>
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/margin_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+                        <Button
+                            android:id="@+id/btn_psi"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:fontFamily="@font/nunito"
+                            android:background="@color/bg_screen3"
+                            android:textColor="#fff"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:textAllCaps="false"
+                            android:text="@string/psi"/>
+                        <Button
+                            android:id="@+id/btn_mmhg"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textColor="#fff"
+                            android:background="@color/bg_screen2"
+                            app:fontFamily="@font/nunito"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/mmhg"/>
+                        <Button
+                            android:id="@+id/btn_depress"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:textColor="#fff"
+                            android:background="@color/bg_screen2"
+                            app:fontFamily="@font/nunito"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_view_14sp"
+                            android:text="@string/your_depression"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:layout_width="@dimen/minimum_screen_width"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/tv_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_4"
+                    android:layout_marginTop="@dimen/margin_24"
+                    android:text="25°C"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/text_view_54sp"
+                    app:fontFamily="@font/nunito"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_4"
+                    android:text="Humud and partly cloudy"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/text_view_18sp"
+                    app:fontFamily="@font/nunito"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_temp"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/icon_90dp"
+                    android:layout_height="@dimen/icon_90dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/icon_content_description"
+                    android:src="@drawable/cloudy_w"
+                    app:layout_constraintTop_toTopOf="@id/tv_temp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_temp"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/big_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="A big quote about weather"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/text_view_54sp"
+                    app:fontFamily="@font/nunito"
+                    app:layout_constraintBottom_toTopOf="@+id/small_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/small_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="And a comment on the quote"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/text_view_18sp"
+                    app:fontFamily="@font/nunito"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="@dimen/minimum_screen_width"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:paddingTop="@dimen/margin_8"
+                    android:paddingBottom="@dimen/margin_8"
+                    android:text="@string/details_heading"
+                    android:textSize="@dimen/text_view_24sp"
+                    app:fontFamily="@font/nunito" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:background="@color/bg_screen2"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:id="@+id/ic_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_location_w"
+                            android:layout_gravity="center_vertical"
+                            tools:ignore="ContentDescription"/>
+
+                        <TextView
+                            android:id="@+id/tv_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="Hà Nội"
+                            android:layout_marginStart="@dimen/margin_4"
+                            android:textSize="@dimen/text_view_18sp"
+                            app:fontFamily="@font/nunito"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutRealFeel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_screen2"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:id="@+id/tv_tempRealFeel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:textColor="#fff"
+                        android:text="27°C"
+                        android:layout_marginRight="8dp"
+                        android:textSize="@dimen/text_view_36sp"
+                        app:fontFamily="@font/nunito"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_tempRealFeelTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:textColor="#fff"
+                        android:text="@string/real_feel_title_explicit"
+                        android:textSize="@dimen/text_view_18sp"
+                        app:fontFamily="@font/nunito"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tempRealFeel" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/layoutUV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_4"
+                        android:background="@color/bg_screen2"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_8">
+
+                        <TextView
+                            android:id="@+id/tv_Uv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8 (High af)"
+                            android:textColor="#fff"
+                            android:textSize="@dimen/text_view_20sp"
+                            app:fontFamily="@font/nunito" />
+
+                        <TextView
+                            android:id="@+id/tv_UVTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="@string/uv_index_title"
+                            android:textSize="@dimen/text_view_18sp"
+                            app:fontFamily="@font/nunito" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutHumidity"
+                        android:layout_width="0dp"
+                        android:background="@color/bg_screen2"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_4"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_8">
+
+                        <TextView
+                            android:id="@+id/tv_humidity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="71%"
+                            android:textSize="@dimen/text_view_20sp"
+                            app:fontFamily="@font/nunito" />
+
+                        <TextView
+                            android:id="@+id/tv_humidityTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="@string/humidity_title"
+                            android:textSize="@dimen/text_view_18sp"
+                            app:fontFamily="@font/nunito" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/layoutVisibility"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_4"
+                        android:background="@color/bg_screen2"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_8">
+
+                        <TextView
+                            android:id="@+id/tv_visibility"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="6 km"
+                            android:textSize="@dimen/text_view_20sp"
+                            app:fontFamily="@font/nunito" />
+
+                        <TextView
+                            android:id="@+id/tv_visibilityTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="@string/visibility_title"
+                            android:textSize="@dimen/text_view_18sp"
+                            app:fontFamily="@font/nunito" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutPressure"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/bg_screen2"
+                        android:layout_marginStart="@dimen/margin_4"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_8">
+
+                        <TextView
+                            android:id="@+id/tv_pressure"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="14 psi"
+                            android:textSize="@dimen/text_view_20sp"
+                            app:fontFamily="@font/nunito" />
+
+                        <TextView
+                            android:id="@+id/tv_pressureTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_4"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:text="@string/pressure_title"
+                            android:textSize="@dimen/text_view_18sp"
+                            app:fontFamily="@font/nunito" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutAqi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:padding="@dimen/margin_8">
+
+                    <TextView
+                        android:id="@+id/tv_aqi_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/air_quality_index_title"
+                        android:textSize="@dimen/text_view_24sp"
+                        android:textColor="#fff"
+                        app:fontFamily="@font/nunito"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_aqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginEnd="@dimen/margin_8"
+                        android:textSize="@dimen/text_view_36sp"
+                        app:fontFamily="@font/nunito"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_aqi_summary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:layout_marginEnd="@dimen/margin_8"
+                        android:textSize="@dimen/text_view_18sp"
+                        app:fontFamily="@font/nunito"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_aqi"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_aqi_title" />
+
+                    <ImageView
+                        android:id="@+id/icon_aqi_info"
+                        android:layout_width="@dimen/margin_16"
+                        android:layout_height="@dimen/margin_16"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingEnd="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:id="@+id/wind_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wind_title"
+                        android:textSize="@dimen/text_view_24sp"
+                        app:fontFamily="@font/nunito" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp">
+
+                        <ImageView
+                            android:id="@+id/ground"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/wind_detail_ground_view_height"
+                            android:padding="@dimen/margin_16"
+                            android:src="#333333"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintLeft_toRightOf="parent"
+                            tools:ignore="ContentDescription"/>
+
+                        <ImageView
+                            android:id="@+id/windmill_base"
+                            android:layout_width="@dimen/windmill_base_width"
+                            android:layout_height="@dimen/windmill_base_height"
+                            android:layout_marginStart="@dimen/margin_16"
+                            android:src="@drawable/windmill_base"
+                            app:layout_constraintBottom_toTopOf="@+id/ground"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            tools:ignore="ContentDescription"/>
+
+                        <ImageView
+                            android:id="@+id/windmill_wings"
+                            android:layout_width="@dimen/windmill_wings_width"
+                            android:layout_height="@dimen/windmill_wings_width"
+                            android:src="@drawable/windmill_wings"
+                            app:layout_constraintBottom_toBottomOf="@id/windmill_base"
+                            app:layout_constraintLeft_toLeftOf="@id/windmill_base"
+                            app:layout_constraintRight_toRightOf="@id/windmill_base"
+                            app:layout_constraintTop_toTopOf="@id/windmill_base"
+                            tools:ignore="ContentDescription"/>
+
+                        <TextView
+                            android:id="@+id/wind_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_8"
+                            android:layout_marginBottom="@dimen/margin_8"
+                            android:textSize="@dimen/text_view_20sp"
+                            app:fontFamily="@font/nunito"
+                            app:layout_constraintBottom_toTopOf="@+id/wind_direction"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:id="@+id/wind_direction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_8"
+                            android:layout_marginBottom="@dimen/margin_8"
+                            android:textSize="@dimen/text_view_18sp"
+                            app:fontFamily="@font/nunito"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
-        tools:ignore="UselessParent">
-
-        <ImageView
-            android:id="@+id/instruction_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp360"
-            tools:ignore="ContentDescription" />
-
+        android:gravity="center_horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
             android:text="@string/slide_2_title"
             android:textColor="@android:color/white"
             android:gravity="center"
@@ -42,4 +759,4 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_view_18sp" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

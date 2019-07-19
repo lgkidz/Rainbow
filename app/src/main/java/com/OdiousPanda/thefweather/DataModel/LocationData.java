@@ -1,6 +1,10 @@
 package com.OdiousPanda.thefweather.DataModel;
 
 
+import android.util.Log;
+
+import androidx.annotation.Nullable;
+
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 
@@ -37,4 +41,13 @@ public class LocationData {
         this.airQuality = airQuality;
     }
 
+    public boolean matchIdWith(LocationData obj) {
+        try {
+            return this.getCoordinate().getId() == obj.getCoordinate().getId();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

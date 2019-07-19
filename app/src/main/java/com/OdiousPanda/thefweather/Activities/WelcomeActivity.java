@@ -114,7 +114,6 @@ public class WelcomeActivity extends AppCompatActivity {
         MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,13 +284,6 @@ public class WelcomeActivity extends AppCompatActivity {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater.inflate(layouts[position], container, false);
-            if (position != 0) {
-                ImageView ins = view.findViewById(R.id.instruction_pic);
-                int resourceId = getResources().getIdentifier("drawable/instruction" + position, null, getPackageName());
-                Glide.with(WelcomeActivity.this)
-                        .load(resourceId)
-                        .into(ins);
-            }
             container.addView(view);
             return view;
         }

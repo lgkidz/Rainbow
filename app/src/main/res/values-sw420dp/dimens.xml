@@ -1,4 +1,10 @@
 <resources>
+  <dimen name="init_scroll_welcome">
+    1102.5px
+  </dimen>
+  <dimen name="minimum_screen_width">
+    420.0dp
+  </dimen>
   <dimen name="activity_horizontal_margin">
     18.67dp
   </dimen>
@@ -109,6 +115,9 @@
   </dimen>
   <dimen name="text_view_24sp">
     28.0sp
+  </dimen>
+  <dimen name="text_view_30sp">
+    35.0sp
   </dimen>
   <dimen name="text_view_36sp">
     42.0sp
