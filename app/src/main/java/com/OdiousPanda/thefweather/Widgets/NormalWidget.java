@@ -29,16 +29,12 @@ import android.view.View;
 import android.widget.RemoteViews;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-
 import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.API.WeatherCall;
 import com.OdiousPanda.thefweather.Activities.MainActivity;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
-import com.OdiousPanda.thefweather.Service.WidgetTimeWorker;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -50,10 +46,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -84,9 +77,6 @@ public class NormalWidget extends AppWidgetProvider {
     private static final String RF_BITMAP = "RFBitmap";
     private static final String MAIN_BITMAP = "mainBitmap";
     private static final String SUB_BITMAP = "subBitmap";
-    public static final String TIME_BITMAP = "timeBitmap";
-    public static final String DN_BITMAP = "dnBitmap";
-    public static final String DATE_BITMAP = "dateBitmap";
     private static final String LOCATION_BITMAP = "locationBitmap";
 
     private static final int DOUBLE_CLICK_DELAY = 500;
@@ -97,15 +87,6 @@ public class NormalWidget extends AppWidgetProvider {
         widgetId = appWidgetId;
         remoteViews = views;
         aWm = appWidgetManager;
-
-        Date date = new Date();
-        String timeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM",Locale.getDefault());
-        remoteViews.setImageViewBitmap(R.id.widget_time,textAsBitmap(context,timeString.substring(0,5),TIME_BITMAP));
-        remoteViews.setImageViewBitmap(R.id.widget_day_night,textAsBitmap(context,timeString.substring(5), DN_BITMAP));
-        remoteViews.setImageViewBitmap(R.id.widget_date,textAsBitmap(context,dateFormat.format(date),DATE_BITMAP));
-        OneTimeWorkRequest mRequest = new OneTimeWorkRequest.Builder(WidgetTimeWorker.class).build();
-        WorkManager.getInstance(context).enqueue(mRequest);
 
         if (PreferencesUtil.isNotFirstTimeLaunch(context)) {
             Intent tapIntent = new Intent(context,NormalWidget.class);
@@ -142,20 +123,8 @@ public class NormalWidget extends AppWidgetProvider {
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_24sp));
                 break;
             }
-            case TIME_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48sp));
-                break;
-            }
-            case DN_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
-                break;
-            }
-            case DATE_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_14sp));
-                break;
-            }
             case LOCATION_BITMAP:{
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_14sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
                 break;
             }
         }
