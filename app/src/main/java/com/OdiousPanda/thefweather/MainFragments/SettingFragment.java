@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
@@ -73,7 +74,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private int buttonColor = Color.argb(255, 255, 255, 255);
     private int textColor = Color.argb(255, 0, 0, 0);
     private int buttonTextColor = Color.argb(255, 0, 0, 0);
-    private int activeButtonTextColor = Color.argb(255, 0, 0, 0);
+    private int activeButtonTextColor = Color.argb(255, 255, 255, 255);
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -95,6 +96,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews(View v) {
+        activeButtonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.default_active_button_bg);
+        buttonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.default_button_bg);
         settingScreenLayout = v.findViewById(R.id.setting_layout);
         tvSetting = v.findViewById(R.id.tv_setting);
         tvTemperature = v.findViewById(R.id.tv_temp_setting);
@@ -160,7 +163,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnHellYeah.setOnClickListener(this);
         btnHelpDev.setOnClickListener(this);
         btnHelpMe.setOnClickListener(this);
-
     }
 
     private void showHelpDevDialog() {
@@ -193,6 +195,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         colorThoseButtons();
         colorThoseTextView();
+        updateUserPrefer();
     }
 
     private void colorThoseTextView() {
@@ -332,6 +335,30 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+        updateUserPrefer();
+    }
+
+    private void updateUserPrefer() {
+        boolean useF = currentTempUnit.equals(getString(R.string.temp_setting_degree_f));
+        boolean useMile = currentDistanceUnit.equals(getString(R.string.mi));
+        boolean useMph = currentSpeedUnit.equals(getString(R.string.miph));
+        boolean useK = currentTempUnit.equals(getString(R.string.temp_setting_degree_k));
+        boolean useBanana = currentDistanceUnit.equals(getString(R.string.bananas));
+        boolean useBananaH = currentSpeedUnit.equals(getString(R.string.banana_h));
+        boolean useDepression = currentPressureUnit.equals(getString(R.string.depression_unit));
+        String prefer = getString(R.string.temperature_setting_title) + " ";
+        if(useF && useMile && useMph){
+            prefer += getString(R.string.prefer_american);
+        }
+        else{
+            if(useK && useBanana && useBananaH && useDepression){
+                prefer += getString(R.string.prefer_abnormal);
+            }
+            else {
+                prefer += getString(R.string.prefer_not_american);
+            }
+        }
+        tvTemperature.setText(prefer);
     }
 
     public void updateColorTheme(int[] argb) {
@@ -360,6 +387,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateWidgetIntent);
         updateTempButtonColor(id);
+        currentTempUnit = PreferencesUtil.getTemperatureUnit(getActivity());
     }
 
     private void updateTempButtonColor(int id) {
@@ -398,6 +426,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
 
         updateDistanceButtonColor(id);
+        currentDistanceUnit = PreferencesUtil.getDistanceUnit(Objects.requireNonNull(getActivity()));
     }
 
     private void updateDistanceButtonColor(int id) {
@@ -435,6 +464,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updateSharedPref(pref, getString(R.string.banana_h));
         }
         updateSpeedButtonColor(id);
+        currentSpeedUnit = PreferencesUtil.getSpeedUnit(Objects.requireNonNull(getActivity()));
     }
 
     private void updateSpeedButtonColor(int id) {
@@ -479,6 +509,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updateSharedPref(pref, getString(R.string.depression_unit));
         }
         updatePressureButtonColor(id);
+        currentPressureUnit = PreferencesUtil.getPressureUnit(Objects.requireNonNull(getActivity()));
     }
 
     private void updatePressureButtonColor(int id) {

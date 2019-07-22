@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 app:fontFamily="@font/nunito"
                 android:text="@string/setting"
+                android:textColor="@color/absoluteBlack"
                 android:paddingTop="@dimen/margin_8"
                 android:paddingBottom="@dimen/margin_8"
                 android:gravity="center"
@@ -37,6 +38,7 @@
                     android:id="@+id/tv_temp_setting"
                     android:layout_width="match_parent"
                     app:fontFamily="@font/nunito"
+                    android:textColor="@color/absoluteBlack"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_view_18sp"
                     android:text="@string/temperature_setting_title"/>
@@ -51,6 +53,8 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_view_14sp"
@@ -61,6 +65,8 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
@@ -71,6 +77,8 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_weight="2"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
@@ -88,6 +96,7 @@
                     android:id="@+id/tv_distance_setting"
                     android:layout_width="match_parent"
                     app:fontFamily="@font/nunito"
+                    android:textColor="@color/absoluteBlack"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_view_18sp"
                     android:text="@string/distance_setting_title"/>
@@ -102,6 +111,8 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_view_14sp"
@@ -112,6 +123,8 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
@@ -121,6 +134,8 @@
                         android:id="@+id/btn_bananas"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:layout_weight="1"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
@@ -153,6 +168,8 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_view_14sp"
@@ -166,6 +183,8 @@
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
                         android:text="@string/miph"/>
                     <Button
@@ -175,6 +194,8 @@
                         android:layout_weight="2"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:textAllCaps="false"
                         android:textSize="@dimen/text_view_14sp"
                         android:text="@string/banana_h"/>
@@ -190,6 +211,7 @@
                     android:id="@+id/tv_pressure_setting"
                     android:layout_width="match_parent"
                     app:fontFamily="@font/nunito"
+                    android:textColor="@color/absoluteBlack"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_view_18sp"
                     android:text="@string/pressure_setting_title"/>
@@ -206,6 +228,8 @@
                         android:layout_weight="1"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
                         android:textAllCaps="false"
                         android:text="@string/psi"/>
@@ -216,6 +240,8 @@
                         android:layout_weight="1"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:textAllCaps="false"
                         android:textSize="@dimen/text_view_14sp"
                         android:text="@string/mmhg"/>
@@ -225,6 +251,8 @@
                         android:layout_width="0dp"
                         android:layout_weight="2"
                         app:fontFamily="@font/nunito"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
                         android:textSize="@dimen/text_view_14sp"
@@ -242,6 +270,7 @@
                     android:layout_width="match_parent"
                     app:fontFamily="@font/nunito"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_18sp"
                     android:text="@string/explicit_setting_title"/>
                 <LinearLayout
@@ -257,6 +286,8 @@
                         android:layout_weight="1"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
                         android:textAllCaps="false"
                         android:text="@string/im_not"/>
@@ -267,6 +298,8 @@
                         android:layout_weight="1"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:textAllCaps="false"
                         android:textSize="@dimen/text_view_14sp"
                         android:text="@string/hell_yeah"/>
@@ -283,6 +316,7 @@
                     android:layout_width="match_parent"
                     app:fontFamily="@font/nunito"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_18sp"
                     android:text="@string/help_setting_title"/>
                 <LinearLayout
@@ -298,6 +332,8 @@
                         android:layout_weight="1"
                         app:fontFamily="@font/nunito"
                         android:layout_marginEnd="@dimen/margin_4"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_view_14sp"
                         android:textAllCaps="false"
@@ -308,6 +344,8 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_marginStart="@dimen/margin_4"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
                         app:fontFamily="@font/nunito"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
@@ -327,12 +365,14 @@
                     app:fontFamily="@font/nunito"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_view_18sp"
+                    android:textColor="@color/absoluteBlack"
                     android:layout_marginTop="@dimen/margin_32"
                     android:text="@string/rate_setting_title"/>
                 <TextView
                     android:id="@+id/tv_about"
                     android:layout_width="wrap_content"
                     app:fontFamily="@font/nunito"
+                    android:textColor="@color/absoluteBlack"
                     android:layout_marginTop="@dimen/margin_32"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_view_18sp"
@@ -340,5 +380,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <include layout="@layout/about_me_layout"/>
+    <include layout="@layout/about_me_layout" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

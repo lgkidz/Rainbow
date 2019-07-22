@@ -1,5 +1,9 @@
 package com.OdiousPanda.thefweather.Utilities;
 
+import android.content.Context;
+
+import com.OdiousPanda.thefweather.R;
+
 import java.util.Random;
 
 public class UnitConverter {
@@ -61,13 +65,13 @@ public class UnitConverter {
         return (float) (speed * 0.447);
     }
 
-    public static String convertToPressureUnit(float pressure, String unit) {
+    public static String convertToPressureUnit(Context context,float pressure, String unit) {
         if (unit.equals("psi")) {
             return Math.round(pressure / 68.948) + " psi";
         } else if (unit.equals("mmHg")) {
             return Math.round(pressure / 1.333) + " mmHg";
         } else {
-            String[] depressLevels = {"Mild", "Depressed", "Crippling", "A little", "Let's die", "Oof", "Happy af!", "Not at all", "Over 9000"};
+            String[] depressLevels = context.getResources().getStringArray(R.array.depression_levels);
             return depressLevels[new Random().nextInt(depressLevels.length)];
         }
     }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,8 +22,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -39,6 +42,7 @@ import com.OdiousPanda.thefweather.Adapters.LocationListAdapter;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.CustomUI.MovableFAB;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
+import com.OdiousPanda.thefweather.DataModel.AQI.Co;
 import com.OdiousPanda.thefweather.DataModel.Coordinate;
 import com.OdiousPanda.thefweather.DataModel.LocationData;
 import com.OdiousPanda.thefweather.Helpers.SwipeToDeleteCallback;
@@ -50,6 +54,9 @@ import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
@@ -87,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private List<LocationData> locations = new ArrayList<>();
     private int currentLocationPosition = 0; // first position of the location list
     private int currentLocationID = 1; // default ID for current location
+    private int currentPage = 1;
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -112,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         if (intent != null && intent.getAction() != null) {
             if (intent.getAction().equals(NormalWidget.ACTION_TO_DETAILS)) {
                 mViewPager.setCurrentItem(2);
+                currentPage = 2;
             }
         }
         HomeScreenFragment.getInstance().setOnRefreshListener(this);
@@ -159,17 +168,37 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
                 if (position == 1) {
+                    if(currentPage == 0){
+                        ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
+                                , "backgroundColor"
+                                , new ArgbEvaluator()
+                                , Color.WHITE
+                                , currentBackgroundColor);
+                        colorFade.setDuration(150);
+                        colorFade.start();
+                    }
                     SettingFragment.getInstance().closeAboutMeDialog();
                     fab.show();
-                } else {
+
+                } else if(position == 0) {
+                    fab.hide();
+                    ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
+                            , "backgroundColor"
+                            , new ArgbEvaluator()
+                            , currentBackgroundColor
+                            , Color.WHITE);
+                    colorFade.setDuration(150);
+                    colorFade.start();
+                }
+                else {
                     fab.hide();
                 }
+                currentPage = position;
             }
 
             @Override
@@ -192,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         }
                         else if(percent < 100){
                             locationListShowing = true;
+                            fab.hide();
                         }
                         else {
                             fab.hide();
@@ -411,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         });
         colorFade.start();
         DetailsFragment.getInstance().updateColorTheme(argb);
-        SettingFragment.getInstance().updateColorTheme(argb);
+        //SettingFragment.getInstance().updateColorTheme(argb);
         HomeScreenFragment.getInstance().setColorTheme(textColorCode);
     }
 

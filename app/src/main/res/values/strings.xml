@@ -39,7 +39,10 @@
     <string name="im_not">I\'m not</string>
     <string name="hell_yeah">Hell yeah!</string>
     <string name="setting">Setting</string>
-    <string name="temperature_setting_title">Select what you prefer</string>
+    <string name="temperature_setting_title">Select what you prefer: </string>
+    <string name="prefer_american"> I\'m American</string>
+    <string name="prefer_not_american"> I\'m not American</string>
+    <string name="prefer_abnormal"> I\'m abnormal</string>
     <string name="distance_setting_title">Distance unit</string>
     <string name="speed_setting_title">Speed Unit</string>
     <string name="pressure_setting_title">Pressure Unit</string>
@@ -117,4 +120,41 @@
     <string name="explicit_setting_title">Are you okay with swearing?</string>
     <string name="snack_bar_undo">Undo</string>
     <string name="snack_bar_text">Location deleted.</string>
+
+    <string name="uv_summary_0">It\'s night</string>
+    <string name="uv_summary_3">(Low)</string>
+    <string name="uv_summary_6">(Moderate)</string>
+    <string name="uv_summary_8">(High)</string>
+    <string name="uv_summary_11">(High af)</string>
+    <string name="uv_summary_11_above">(Extreme)</string>
+
+    <string name="depress_val_0">Mild</string>
+    <string name="depress_val_1">Depressed</string>
+    <string name="depress_val_2">Crippling</string>
+    <string name="depress_val_3">A little</string>
+    <string name="depress_val_4">Enough to die</string>
+    <string name="depress_val_5">Oof</string>
+    <string name="depress_val_6">Somewhat</string>
+    <string name="depress_val_7">Not at all</string>
+    <string name="depress_val_8">Aaaargghhh!!</string>
+    <string name="depress_val_9">42?</string>
+    <string name="depress_val_10">Unbearable</string>
+    <string name="depress_val_11">Nein</string>
+    <string name="depress_val_12">Chuck Norris</string>
+
+    <string-array name="depression_levels">
+        <item>@string/depress_val_0</item>
+        <item>@string/depress_val_1</item>
+        <item>@string/depress_val_2</item>
+        <item>@string/depress_val_3</item>
+        <item>@string/depress_val_4</item>
+        <item>@string/depress_val_5</item>
+        <item>@string/depress_val_6</item>
+        <item>@string/depress_val_7</item>
+        <item>@string/depress_val_8</item>
+        <item>@string/depress_val_9</item>
+        <item>@string/depress_val_10</item>
+        <item>@string/depress_val_11</item>
+        <item>@string/depress_val_12</item>
+    </string-array>
 </resources>

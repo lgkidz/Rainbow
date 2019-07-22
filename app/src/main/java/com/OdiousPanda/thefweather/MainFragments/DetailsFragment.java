@@ -136,11 +136,7 @@ public class DetailsFragment extends Fragment {
         aqiPb = v.findViewById(R.id.aqi_progress_bar);
 
         boolean isExplicit = PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()));
-        if (isExplicit) {
-            tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
-        } else {
-            tvRealFeelTitle.setText(getText(R.string.real_feel_title));
-        }
+        updateRealFeedTitle(isExplicit);
 
         aqiInfo = v.findViewById(R.id.icon_aqi_info);
         aqiInfo.setOnClickListener(new View.OnClickListener() {
@@ -175,8 +171,7 @@ public class DetailsFragment extends Fragment {
         }
 
         if (currentWeather != null) {
-            ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), headingColor);
-            rvForecast.setAdapter(adapter);
+            update7dayForeCastData();
         }
     }
 
@@ -225,25 +220,12 @@ public class DetailsFragment extends Fragment {
         String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
         boolean isExplicit = PreferencesUtil.isExplicit(getActivity());
 
-        tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit));
-
-        if (isExplicit) {
-            tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
-        } else {
-            tvRealFeelTitle.setText(getText(R.string.real_feel_title));
-        }
-
-        tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(), currentPressureUnit));
-        if (currentPressureUnit.equals(getString(R.string.depression_unit))) {
-            tvPressureTitle.setText(getString(R.string.pressure_title_alt));
-        } else {
-            tvPressureTitle.setText(getString(R.string.pressure_title));
-        }
-        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
-
-        tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(), currentSpeedUnit));
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), headingColor);
-        rvForecast.setAdapter(adapter);
+        updateRealFeelTemperature(currentTempUnit);
+        updateRealFeedTitle(isExplicit);
+        updatePressureData(currentPressureUnit);
+        updateVisibilityData(currentDistanceUnit);
+        updateWindSpeedData(currentSpeedUnit);
+        update7dayForeCastData();
     }
 
     public void updateData(Weather weather) {
@@ -252,31 +234,30 @@ public class DetailsFragment extends Fragment {
         String currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
         String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
         String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
-        tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit));
-        String uvSummary;
-        if (currentWeather.getCurrently().getUvIndex() == 0) {
-            uvSummary = "It's night!";
-        } else if (currentWeather.getCurrently().getUvIndex() < 3) {
-            uvSummary = " (Low)";
-        } else if (currentWeather.getCurrently().getUvIndex() < 6) {
-            uvSummary = " (Moderate)";
-        } else if (currentWeather.getCurrently().getUvIndex() < 8) {
-            uvSummary = " (High)";
-        } else if (currentWeather.getCurrently().getUvIndex() < 11) {
-            uvSummary = " (High af)";
-        } else {
-            uvSummary = " (Extreme)";
-        }
-        String uvValueText = (Math.round(currentWeather.getCurrently().getUvIndex()) == 0 ? "" : Math.round(currentWeather.getCurrently().getUvIndex())) + uvSummary;
-        tvUV.setText(uvValueText);
-        String humidityText = Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%";
-        tvHumidity.setText(humidityText);
-        tvPressure.setText(UnitConverter.convertToPressureUnit(currentWeather.getCurrently().getPressure(), currentPressureUnit));
-        if (currentPressureUnit.equals(getString(R.string.depression_unit))) {
-            tvPressureTitle.setText(getString(R.string.depression_level_title));
-        }
-        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
 
+        updateRealFeelTemperature(currentTempUnit);
+        updateUvData();
+        updateHumidityData();
+        updatePressureData(currentPressureUnit);
+        updateVisibilityData(currentDistanceUnit);
+        updateWindSpeedData(currentSpeedUnit);
+        update7dayForeCastData();
+    }
+
+    private void updateRealFeedTitle(boolean isExplicit) {
+        if (isExplicit) {
+            tvRealFeelTitle.setText(getText(R.string.real_feel_title_explicit));
+        } else {
+            tvRealFeelTitle.setText(getText(R.string.real_feel_title));
+        }
+    }
+
+    private void update7dayForeCastData() {
+        ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), headingColor);
+        rvForecast.setAdapter(adapter);
+    }
+
+    private void updateWindSpeedData(String currentSpeedUnit) {
         tvWindSpeed.setText(UnitConverter.convertToSpeedUnit(currentWeather.getCurrently().getWindSpeed(), currentSpeedUnit));
         float windSpeedMps = UnitConverter.toMeterPerSecond(currentWeather.getCurrently().getWindSpeed());
         String windDirectionText = "";
@@ -331,8 +312,47 @@ public class DetailsFragment extends Fragment {
         rotate.setDuration(duration);
         rotate.setRepeatCount(Animation.INFINITE);
         windmillWings.startAnimation(rotate);
-        ForecastAdapter adapter = new ForecastAdapter(getActivity(), currentWeather.getDaily(), headingColor);
-        rvForecast.setAdapter(adapter);
+    }
+
+    private void updateRealFeelTemperature(String currentTempUnit) {
+        tvRealFeel.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit));
+    }
+
+    private void updateVisibilityData(String currentDistanceUnit) {
+        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
+    }
+
+    private void updatePressureData(String currentPressureUnit) {
+        tvPressure.setText(UnitConverter.convertToPressureUnit(getActivity(),currentWeather.getCurrently().getPressure(), currentPressureUnit));
+        if (currentPressureUnit.equals(getString(R.string.depression_unit))) {
+            tvPressureTitle.setText(getString(R.string.depression_level_title));
+        }else {
+            tvPressureTitle.setText(getString(R.string.pressure_title));
+        }
+    }
+
+    private void updateHumidityData() {
+        String humidityText = Math.round(currentWeather.getCurrently().getHumidity() * 100) + "%";
+        tvHumidity.setText(humidityText);
+    }
+
+    private void updateUvData() {
+        String uvSummary = " ";
+        if (currentWeather.getCurrently().getUvIndex() == 0) {
+            uvSummary += getString(R.string.uv_summary_0);
+        } else if (currentWeather.getCurrently().getUvIndex() < 3) {
+            uvSummary += getString(R.string.uv_summary_3);
+        } else if (currentWeather.getCurrently().getUvIndex() < 6) {
+            uvSummary += getString(R.string.uv_summary_6);
+        } else if (currentWeather.getCurrently().getUvIndex() < 8) {
+            uvSummary  += getString(R.string.uv_summary_8);
+        } else if (currentWeather.getCurrently().getUvIndex() < 11) {
+            uvSummary += getString(R.string.uv_summary_11);
+        } else {
+            uvSummary += getString(R.string.uv_summary_11_above);
+        }
+        String uvValueText = (Math.round(currentWeather.getCurrently().getUvIndex()) == 0 ? "" : Math.round(currentWeather.getCurrently().getUvIndex())) + uvSummary;
+        tvUV.setText(uvValueText);
     }
 
     public void updateCurrentLocationName(String locationName) {
