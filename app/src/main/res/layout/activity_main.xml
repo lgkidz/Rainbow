@@ -22,7 +22,7 @@
         android:backgroundTint="#fff"
         app:rippleColor="@color/bg_screen1"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_location_b"/>
+        android:src="@drawable/ic_round_location_b"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/location_list_layout"
         android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:layout_width="@dimen/icon_36dp"
             android:layout_height="@dimen/icon_36dp"
             android:layout_marginStart="@dimen/margin_16"
-            android:src="@drawable/ic_arrow_back"
+            android:src="@drawable/ic_round_arrow_b"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/location_title"
             app:layout_constraintBottom_toBottomOf="@id/location_title"
@@ -62,7 +62,7 @@
             android:layout_width="@dimen/icon_36dp"
             android:layout_height="@dimen/icon_36dp"
             android:layout_marginEnd="@dimen/margin_16"
-            android:src="@drawable/ic_add_b"
+            android:src="@drawable/ic_round_add_b"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/location_title"
             app:layout_constraintBottom_toBottomOf="@id/location_title"

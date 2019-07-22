@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,6 +67,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnHelpMe;
 
     private SlideUp aboutMeSlideUp;
+    public boolean aboutMeShowing = false;
 
     private int activeButtonColor = Color.argb(255, 255, 255, 255);
     private int buttonColor = Color.argb(255, 255, 255, 255);
@@ -120,12 +122,23 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnImNot = v.findViewById(R.id.btn_im_not);
         btnHellYeah = v.findViewById(R.id.btn_hell_yeah);
 
-        ConstraintLayout aboutMeLayout = v.findViewById(R.id.about_me_layout);
-        Button closeAboutMeBtn = v.findViewById(R.id.btn_close_about);
+        final ConstraintLayout aboutMeLayout = v.findViewById(R.id.about_me_layout);
+        ImageView closeAboutMeBtn = v.findViewById(R.id.btn_close_about);
         aboutMeSlideUp = new SlideUpBuilder(aboutMeLayout)
                 .withStartState(SlideUp.State.HIDDEN)
                 .withStartGravity(Gravity.BOTTOM)
                 .withSlideFromOtherView(settingScreenLayout)
+                .withListeners(new SlideUp.Listener.Events() {
+                    @Override
+                    public void onSlide(float percent) {
+                        aboutMeShowing = percent != 100;
+                    }
+
+                    @Override
+                    public void onVisibilityChanged(int visibility) {
+
+                    }
+                })
                 .build();
         tvRate.setOnClickListener(this);
         tvAbout.setOnClickListener(this);
@@ -164,9 +177,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void showAboutMeDialog() {
         aboutMeSlideUp.show();
+        aboutMeShowing = true;
     }
     public void closeAboutMeDialog(){
         aboutMeSlideUp.hide();
+        aboutMeShowing = false;
     }
 
     private void getSetting() {

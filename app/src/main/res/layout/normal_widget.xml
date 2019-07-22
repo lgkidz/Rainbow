@@ -48,7 +48,7 @@
                 android:layout_height="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_4"
                 android:layout_marginEnd="@dimen/margin_4"
-                android:src="@drawable/ic_location_w"
+                android:src="@drawable/ic_round_location_w"
                 tools:ignore="ContentDescription"/>
             <ImageView
                 android:id="@+id/widget_location"

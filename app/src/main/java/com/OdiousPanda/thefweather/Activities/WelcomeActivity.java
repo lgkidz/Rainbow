@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -32,7 +30,7 @@ import com.OdiousPanda.thefweather.DataModel.Coordinate;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
-import com.bumptech.glide.Glide;
+import com.OdiousPanda.thefweather.Widgets.NormalWidget;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -162,9 +160,15 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-
         PreferencesUtil.setNotFirstTimeLaunch(this, true);
-        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+        Intent mainActivityIntent = new Intent(WelcomeActivity.this,MainActivity.class);
+        Intent intent = getIntent();
+        if (intent != null && intent.getAction() != null) {
+            if (intent.getAction().equals(NormalWidget.ACTION_TO_DETAILS)) {
+                mainActivityIntent.setAction(NormalWidget.ACTION_TO_DETAILS);
+            }
+        }
+        startActivity(mainActivityIntent);
         finish();
     }
 

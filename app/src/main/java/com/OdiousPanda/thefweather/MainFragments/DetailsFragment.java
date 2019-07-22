@@ -11,6 +11,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,6 +67,7 @@ public class DetailsFragment extends Fragment {
     private LinearLayout layoutPressure;
     private ConstraintLayout layoutAqi;
     private ImageView aqiInfo;
+    private ProgressBar aqiPb;
     private RecyclerView rvForecast;
     private ImageView windmillWings;
     private int headingColor = Color.argb(255, 0, 0, 0);
@@ -131,7 +133,7 @@ public class DetailsFragment extends Fragment {
         layoutVisibility = v.findViewById(R.id.layoutVisibility);
         layoutPressure = v.findViewById(R.id.layoutPressure);
         layoutAqi = v.findViewById(R.id.layoutAqi);
-
+        aqiPb = v.findViewById(R.id.aqi_progress_bar);
 
         boolean isExplicit = PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()));
         if (isExplicit) {
@@ -182,9 +184,9 @@ public class DetailsFragment extends Fragment {
         tvHeading.setTextColor(headingColor);
         tvLocation.setTextColor(textColor);
         if (textColor == Color.WHITE) {
-            icLocation.setImageResource(R.drawable.ic_location_w);
+            icLocation.setImageResource(R.drawable.ic_round_location_w);
         } else {
-            icLocation.setImageResource(R.drawable.ic_location_b);
+            icLocation.setImageResource(R.drawable.ic_round_location_b);
         }
         tvRealFeel.setTextColor(textColor);
         tvRealFeelTitle.setTextColor(textColor);
@@ -340,6 +342,7 @@ public class DetailsFragment extends Fragment {
     }
 
     public void updateAqi(AirQuality air) {
+        aqiPb.setVisibility(View.GONE);
         airQuality = air;
         int aqi = Math.round(airQuality.getData().aqi);
         tvAqi.setText(String.valueOf(aqi));

@@ -55,7 +55,6 @@ import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
 import com.tooltip.Tooltip;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -189,6 +188,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         Log.d(TAG, "onSlide: " + percent);
                         if(percent == 100 && loadingLayout.getVisibility() == View.INVISIBLE && noConnectionLayout.getVisibility() == View.INVISIBLE){
                             fab.show();
+                            locationListShowing = false;
+                        }
+                        else if(percent < 100){
+                            locationListShowing = true;
                         }
                         else {
                             fab.hide();
@@ -286,11 +289,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         weatherViewModel.getLocationData().observe(this, new Observer<List<LocationData>>() {
             @Override
             public void onChanged(List<LocationData> data) {
-                locations = data;
+                if(data.size() > 0){
+                    locations = data;
+                }
+
                 for(LocationData l: locations){
                     l.setCoordinate(updateCoordinateName(l.getCoordinate()));
                 }
-                //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
+                    //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
                 if(firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1){
                     DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
@@ -449,6 +455,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     public void onBackPressed() {
+        if(SettingFragment.getInstance().aboutMeShowing){
+            SettingFragment.getInstance().closeAboutMeDialog();
+            return;
+        }
         if (locationListShowing) {
             hideLocationList();
             return;
@@ -465,6 +475,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     protected void onStop() {
+        finish();
         super.onStop();
         Log.d(TAG, "onStop: ");
     }
