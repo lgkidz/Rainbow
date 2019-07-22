@@ -92,6 +92,9 @@
   <dimen name="icon_24dp">
     21.33dp
   </dimen>
+  <dimen name="icon_30dp">
+    26.67dp
+  </dimen>
   <dimen name="icon_36dp">
     32.0dp
   </dimen>

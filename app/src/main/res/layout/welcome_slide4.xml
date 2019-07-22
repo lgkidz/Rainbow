@@ -53,7 +53,7 @@
                         android:fontFamily="@font/nunito"
                         android:paddingStart="@dimen/margin_16"
                         android:text="25°C"
-                        android:textColor="#fff"
+                        android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_30sp"
                         tools:ignore="ContentDescription,HardcodedText" />
                 </LinearLayout>
@@ -72,7 +72,7 @@
                         android:gravity="end"
                         android:paddingStart="@dimen/margin_16"
                         android:text="Feels more like: 27°C"
-                        android:textColor="#fff"
+                        android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
                         tools:ignore="ContentDescription,HardcodedText" />
 
@@ -81,7 +81,7 @@
                         android:layout_height="@dimen/margin_16"
                         android:layout_marginStart="@dimen/margin_4"
                         android:layout_marginEnd="@dimen/margin_4"
-                        android:src="@drawable/ic_location_w"
+                        android:src="@drawable/ic_round_location_w"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito"
                         android:text="Hà Nội"
-                        android:textColor="#fff"
+                        android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
@@ -112,7 +112,7 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/nunito"
                     android:text="A big quote about weather"
-                    android:textColor="#fff"
+                    android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_54sp"
                     tools:ignore="ContentDescription,HardcodedText" />
 
@@ -123,7 +123,7 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/nunito"
                     android:text="And a comment"
-                    android:textColor="#fff"
+                    android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_18sp"
                     tools:ignore="ContentDescription,HardcodedText" />
             </LinearLayout>

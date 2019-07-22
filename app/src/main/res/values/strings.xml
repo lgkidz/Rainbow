@@ -100,6 +100,13 @@
     <string name="aqi_very_unhealthy_des" translatable="true">Everyone may experience serious health effects</string>
     <string name="aqi_hazardous_des" translatable="true">Health warning of emergency conditions</string>
 
+    <string name="r_aqi_good_des" translatable="true">Fresh air!!!</string>
+    <string name="r_aqi_moderate_des" translatable="true">Doesn\'t seem so bad</string>
+    <string name="r_aqi_unhealthy_sensitive_des" translatable="true">If you\'re a special snowflake, then it\'s unhealthy.</string>
+    <string name="r_aqi_unhealthy_des" translatable="true">Go out and get some evil pixie dust in your lung.</string>
+    <string name="r_aqi_very_unhealthy_des" translatable="true">Lung diseases are outside! Gotta catch \'em all!</string>
+    <string name="r_aqi_hazardous_des" translatable="true">Living in chernobyl would be more healthy.</string>
+
     <string name="sun" translatable="true">Sun</string>
     <string name="wind_title" translatable="true">Wind</string>
     <string name="wind_north" translatable="true">North</string>

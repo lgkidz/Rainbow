@@ -12,7 +12,7 @@
         android:gravity="center"
         android:padding="@dimen/margin_16"
         android:text="This place is currently under development, please go back!"
-        android:textColor="#000"
+        android:textColor="@color/absoluteBlack"
         android:textSize="@dimen/text_view_18sp"
         app:fontFamily="@font/nunito"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,8 @@
         android:layout_height="@dimen/icon_36dp"
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginTop="@dimen/margin_16"
-        android:src="@drawable/ic_arrow_back"
+        android:src="@drawable/ic_round_back_b"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

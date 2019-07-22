@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -22,10 +21,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -42,7 +39,6 @@ import com.OdiousPanda.thefweather.Adapters.LocationListAdapter;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.CustomUI.MovableFAB;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
-import com.OdiousPanda.thefweather.DataModel.AQI.Co;
 import com.OdiousPanda.thefweather.DataModel.Coordinate;
 import com.OdiousPanda.thefweather.DataModel.LocationData;
 import com.OdiousPanda.thefweather.Helpers.SwipeToDeleteCallback;
@@ -54,9 +50,6 @@ import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
@@ -177,12 +170,15 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
                                 , "backgroundColor"
                                 , new ArgbEvaluator()
-                                , Color.WHITE
+                                , ContextCompat.getColor(MainActivity.this,R.color.setting_bg)
                                 , currentBackgroundColor);
-                        colorFade.setDuration(150);
+                        colorFade.setDuration(200);
                         colorFade.start();
                     }
                     SettingFragment.getInstance().closeAboutMeDialog();
+                    if(DetailsFragment.getInstance().aqiDetailShowing){
+                        DetailsFragment.getInstance().closeAqiDetailDialog();
+                    }
                     fab.show();
 
                 } else if(position == 0) {
@@ -191,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                             , "backgroundColor"
                             , new ArgbEvaluator()
                             , currentBackgroundColor
-                            , Color.WHITE);
-                    colorFade.setDuration(150);
+                            , ContextCompat.getColor(MainActivity.this,R.color.setting_bg));
+                    colorFade.setDuration(200);
                     colorFade.start();
                 }
                 else {
@@ -487,6 +483,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     public void onBackPressed() {
         if(SettingFragment.getInstance().aboutMeShowing){
             SettingFragment.getInstance().closeAboutMeDialog();
+            return;
+        }
+        if(DetailsFragment.getInstance().aqiDetailShowing){
+            DetailsFragment.getInstance().closeAqiDetailDialog();
             return;
         }
         if (locationListShowing) {

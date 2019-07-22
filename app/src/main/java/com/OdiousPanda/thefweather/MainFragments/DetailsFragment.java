@@ -1,12 +1,14 @@
 package com.OdiousPanda.thefweather.MainFragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -16,13 +18,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.OdiousPanda.thefweather.Adapters.ForecastAdapter;
-import com.OdiousPanda.thefweather.CustomUI.AirQualityDialog;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
@@ -70,6 +73,15 @@ public class DetailsFragment extends Fragment {
     private ProgressBar aqiPb;
     private RecyclerView rvForecast;
     private ImageView windmillWings;
+    private CardView aqiDetailLayout;
+    private LinearLayout airQualityIndexScale;
+    private ImageView aqiIndexIndicator;
+    private TextView tvDetailAqiIndex;
+    private TextView tvDetailAqiLevel;
+    private TextView tvDetailAqiDes;
+    private ImageView btnAqiDetailClose;
+    private View aqiDetailLayoutBg;
+    public boolean aqiDetailShowing = false;
     private int headingColor = Color.argb(255, 0, 0, 0);
     private int textColor = Color.argb(255, 0, 0, 0);
     private int layoutColor = Color.argb(0, 0, 0, 0);
@@ -135,6 +147,14 @@ public class DetailsFragment extends Fragment {
         layoutAqi = v.findViewById(R.id.layoutAqi);
         aqiPb = v.findViewById(R.id.aqi_progress_bar);
 
+        aqiDetailLayout = v.findViewById(R.id.aqi_detail_layout);
+        tvDetailAqiIndex = v.findViewById(R.id.tv_aqi_index);
+        tvDetailAqiLevel = v.findViewById(R.id.tv_aqi_level);
+        tvDetailAqiDes = v.findViewById(R.id.tv_aqi_des);
+        aqiIndexIndicator = v.findViewById(R.id.aqi_index_indicator);
+        airQualityIndexScale = v.findViewById(R.id.index_scale);
+        btnAqiDetailClose = v.findViewById(R.id.btn_close_aqi_detail);
+        aqiDetailLayoutBg = v.findViewById(R.id.aqi_detail_layout_bg);
         boolean isExplicit = PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()));
         updateRealFeedTitle(isExplicit);
 
@@ -142,10 +162,15 @@ public class DetailsFragment extends Fragment {
         aqiInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(airQuality != null){
-                    AirQualityDialog airQualityDialog = new AirQualityDialog(getActivity(), airQuality);
-                    airQualityDialog.showDialog();
+                if(airQuality != null && !aqiDetailShowing) {
+                    showAqiDetailDialog();
                 }
+            }
+        });
+        btnAqiDetailClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeAqiDetailDialog();
             }
         });
 
@@ -364,23 +389,105 @@ public class DetailsFragment extends Fragment {
     public void updateAqi(AirQuality air) {
         aqiPb.setVisibility(View.GONE);
         airQuality = air;
-        int aqi = Math.round(airQuality.getData().aqi);
-        tvAqi.setText(String.valueOf(aqi));
-        String aqiSummary;
-        if (aqi < 51) {
-            aqiSummary = "Hmmmm, fresh air!";
-        } else if (aqi < 101) {
-            aqiSummary = "The air is quite okay.";
-        } else if (aqi < 151) {
-            aqiSummary = "A bit unhealthy for those special snowflakes.";
-        } else if (aqi < 201) {
-            aqiSummary = "Unhealthy! Inhale more for diseases.";
-        } else if (aqi < 301) {
-            aqiSummary = "Unhealthy as heck! Lung cancer awaits you outside.";
-        } else {
-            aqiSummary = "Living in chernobyl would be more healthy.";
+        final float aqi = airQuality.getData().aqi;
+        tvAqi.setText(String.valueOf((int)aqi));
+        tvDetailAqiIndex.setText(String.valueOf((int)aqi));
+        String aqiSummary = "";
+        Context context = getActivity();
+        assert context != null;
+        if (aqi <= 50) {
+            aqiSummary = getString(R.string.r_aqi_good_des);
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_good));
+            tvDetailAqiLevel.setText(getString(R.string.aqi_good));
+            tvDetailAqiDes.setText(getString(R.string.aqi_good_des));
+        } else if (aqi <= 100) {
+            aqiSummary = getString(R.string.r_aqi_moderate_des);
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_moderate));
+            tvDetailAqiLevel.setText(getString(R.string.aqi_moderate));
+            tvDetailAqiDes.setText(getString(R.string.aqi_moderate_des));
+        } else if (aqi <= 150) {
+            aqiSummary = getString(R.string.r_aqi_unhealthy_sensitive_des);
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive));
+            tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
+            tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_sensitive_des));
+        } else if (aqi <= 200) {
+            aqiSummary = getString(R.string.r_aqi_unhealthy_des);
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy));
+            tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy));
+            tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_des));
+        } else if (aqi <= 300) {
+            aqiSummary = getString(R.string.r_aqi_very_unhealthy_des);
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_very_unhealthy));
+            tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
+            tvDetailAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
+        } else if (aqi <= 500) {
+            aqiSummary = getString(R.string.r_aqi_hazardous_des);
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_hazardous));
+            tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
+            tvDetailAqiDes.setText(getString(R.string.aqi_hazardous_des));
         }
         tvAqiSummary.setText(aqiSummary);
+        airQualityIndexScale.post(new Runnable() {
+            public void run() {
+                try {
+                    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) aqiIndexIndicator.getLayoutParams();
+                    float scaleWidth = (float) airQualityIndexScale.getWidth();
+                    float leftMargin = aqi / 500 * scaleWidth;
+                    params.leftMargin = (int) leftMargin;
+                    aqiIndexIndicator.setLayoutParams(params);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+            }
+        });
+    }
+
+    private void showAqiDetailDialog() {
+        Animation popIn = AnimationUtils.loadAnimation(getActivity(),R.anim.pop_in);
+        Animation fadeIn = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_in);
+        popIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                aqiDetailLayoutBg.setVisibility(View.VISIBLE);
+                aqiDetailLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        aqiDetailLayoutBg.startAnimation(fadeIn);
+        aqiDetailLayout.startAnimation(popIn);
+        aqiDetailShowing = true;
+    }
+    public void closeAqiDetailDialog(){
+        Animation popOut = AnimationUtils.loadAnimation(getActivity(),R.anim.pop_out);
+        final Animation fadeOut = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_out);
+        popOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                aqiDetailLayoutBg.startAnimation(fadeOut);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                aqiDetailLayoutBg.setVisibility(View.INVISIBLE);
+                aqiDetailLayout.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        aqiDetailLayout.startAnimation(popOut);
+        aqiDetailShowing = false;
     }
 }

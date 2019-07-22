@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:backgroundTint="#fff"
+        android:backgroundTint="@color/pureWhite"
         app:rippleColor="@color/bg_screen1"
         android:layout_margin="16dp"
         android:src="@drawable/ic_round_location_b"/>
@@ -27,20 +27,17 @@
         android:id="@+id/location_list_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:background="@color/pureWhite">
 
         <TextView
             android:id="@+id/location_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:gravity="center"
             android:padding="@dimen/margin_16"
             android:text="@string/location_list_title"
-            android:textColor="#000"
-            android:textSize="@dimen/text_view_20sp"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_24sp"
             app:fontFamily="@font/nunito"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,10 +45,10 @@
 
         <ImageView
             android:id="@+id/btn_go_back"
-            android:layout_width="@dimen/icon_36dp"
-            android:layout_height="@dimen/icon_36dp"
+            android:layout_width="@dimen/icon_30dp"
+            android:layout_height="@dimen/icon_30dp"
             android:layout_marginStart="@dimen/margin_16"
-            android:src="@drawable/ic_round_arrow_b"
+            android:src="@drawable/ic_round_back_b"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/location_title"
             app:layout_constraintBottom_toBottomOf="@id/location_title"
@@ -59,8 +56,8 @@
 
         <ImageView
             android:id="@+id/btn_add_location"
-            android:layout_width="@dimen/icon_36dp"
-            android:layout_height="@dimen/icon_36dp"
+            android:layout_width="@dimen/icon_30dp"
+            android:layout_height="@dimen/icon_30dp"
             android:layout_marginEnd="@dimen/margin_16"
             android:src="@drawable/ic_round_add_b"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        android:background="#fff">
+        android:background="@color/pureWhite">
         <ImageView
             android:id="@+id/loading_icon"
             android:layout_centerInParent="true"
@@ -101,7 +98,7 @@
             android:textSize="@dimen/text_view_18sp"
             android:layout_below="@id/loading_icon"
             android:layout_centerInParent="true"
-            android:textColor="#000"
+            android:textColor="@color/absoluteBlack"
             android:text="@string/loading_text"/>
     </RelativeLayout>
     <RelativeLayout
@@ -109,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        android:background="#fff">
+        android:background="@color/pureWhite">
         <ImageView
             android:id="@+id/no_connection_icon"
             android:layout_width="@dimen/icon_90dp"
@@ -122,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#000"
+            android:textColor="@color/absoluteBlack"
             android:layout_below="@id/no_connection_icon"
             app:fontFamily="@font/nunito"
             android:textSize="@dimen/text_view_18sp"
@@ -133,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#000"
+            android:textColor="@color/absoluteBlack"
             android:layout_below="@id/tv_1"
             app:fontFamily="@font/nunito"
             android:textSize="@dimen/text_view_18sp"
@@ -144,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#000"
+            android:textColor="@color/absoluteBlack"
             android:layout_below="@id/tv_2"
             app:fontFamily="@font/nunito"
             android:textSize="@dimen/text_view_18sp"
