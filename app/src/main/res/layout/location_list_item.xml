@@ -57,6 +57,8 @@
                 android:layout_width="@dimen/icon_48dp"
                 android:layout_gravity="center"
                 android:layout_height="@dimen/icon_48dp"
+                android:padding="@dimen/margin_4"
+                android:layout_marginEnd="@dimen/margin_4"
                 tools:ignore="ContentDescription" />
             <TextView
                 android:id="@+id/location_temperature"

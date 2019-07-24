@@ -18,7 +18,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.OdiousPanda.thefweather.Activities.HelpMeActivity;
 import com.OdiousPanda.thefweather.Widgets.NormalWidget;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
@@ -40,13 +39,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private String currentSpeedUnit;
     private String currentPressureUnit;
     private boolean isExplicit;
-    private CoordinatorLayout settingScreenLayout;
     private TextView tvSetting;
     private TextView tvTemperature;
     private TextView tvDistance;
     private TextView tvSpeed;
     private TextView tvPressure;
-    private TextView tvHelp;
     private TextView tvRate;
     private TextView tvAbout;
     private TextView tvExplicit;
@@ -64,8 +61,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnScientist;
     private Button btnImNot;
     private Button btnHellYeah;
-    private Button btnHelpDev;
-    private Button btnHelpMe;
 
     private SlideUp aboutMeSlideUp;
     public boolean aboutMeShowing = false;
@@ -98,13 +93,12 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void initViews(View v) {
         activeButtonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.default_active_button_bg);
         buttonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.default_button_bg);
-        settingScreenLayout = v.findViewById(R.id.setting_layout);
+        CoordinatorLayout settingScreenLayout = v.findViewById(R.id.setting_layout);
         tvSetting = v.findViewById(R.id.tv_setting);
         tvTemperature = v.findViewById(R.id.tv_temp_setting);
         tvDistance = v.findViewById(R.id.tv_distance_setting);
         tvSpeed = v.findViewById(R.id.tv_speed_setting);
         tvPressure = v.findViewById(R.id.tv_pressure_setting);
-        tvHelp = v.findViewById(R.id.tv_help_setting);
         tvRate = v.findViewById(R.id.tv_rate);
         tvAbout = v.findViewById(R.id.tv_about);
         tvExplicit = v.findViewById(R.id.tv_explicit_setting);
@@ -120,8 +114,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnMmhg = v.findViewById(R.id.btn_mmhg);
         btnDepress = v.findViewById(R.id.btn_depress);
         btnScientist = v.findViewById(R.id.btn_scientist);
-        btnHelpDev = v.findViewById(R.id.btn_help_dev);
-        btnHelpMe = v.findViewById(R.id.btn_help_me);
         btnImNot = v.findViewById(R.id.btn_im_not);
         btnHellYeah = v.findViewById(R.id.btn_hell_yeah);
 
@@ -161,16 +153,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnMi.setOnClickListener(this);
         btnImNot.setOnClickListener(this);
         btnHellYeah.setOnClickListener(this);
-        btnHelpDev.setOnClickListener(this);
-        btnHelpMe.setOnClickListener(this);
-    }
-
-    private void showHelpDevDialog() {
-        Snackbar.make(btnHelpDev, "The developer is still working on this feature", Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void startHelpMeActivity() {
-        startActivity(new Intent(getActivity(), HelpMeActivity.class));
     }
 
     private void rateThisApp() {
@@ -206,7 +188,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         tvSpeed.setTextColor(textColor);
         tvPressure.setTextColor(textColor);
         tvRate.setTextColor(textColor);
-        tvHelp.setTextColor(textColor);
         tvExplicit.setTextColor(textColor);
     }
 
@@ -248,8 +229,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         } else {
             updateExplicitButtonColor(btnHellYeah.getId());
         }
-
-        updateHelpButtonColor();
     }
 
     @Override
@@ -310,14 +289,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             }
             case R.id.btn_hell_yeah: {
                 changeExplicitSetting(id);
-                break;
-            }
-            case R.id.btn_help_dev: {
-                showHelpDevDialog();
-                break;
-            }
-            case R.id.btn_help_me: {
-                startHelpMeActivity();
                 break;
             }
             case R.id.tv_rate: {
@@ -490,13 +461,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             btnMiph.setTextColor(buttonTextColor);
             btnBananaph.setTextColor(activeButtonTextColor);
         }
-    }
-
-    private void updateHelpButtonColor() {
-        btnHelpDev.setBackgroundColor(buttonColor);
-        btnHelpMe.setBackgroundColor(buttonColor);
-        btnHelpMe.setTextColor(buttonTextColor);
-        btnHelpDev.setTextColor(buttonTextColor);
     }
 
     private void changePressureUnit(int id) {

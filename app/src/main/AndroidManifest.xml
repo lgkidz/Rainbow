@@ -17,8 +17,6 @@
         android:roundIcon="@drawable/logo_rainbow"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.HelpMeActivity"
-            android:screenOrientation="portrait"/>
 
         <receiver android:name=".Widgets.NormalWidget">
             <intent-filter>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -18,8 +19,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,7 +74,7 @@ public class DetailsFragment extends Fragment {
     private ProgressBar aqiPb;
     private RecyclerView rvForecast;
     private ImageView windmillWings;
-    private CardView aqiDetailLayout;
+    private ConstraintLayout aqiDetailLayout;
     private LinearLayout airQualityIndexScale;
     private ImageView aqiIndexIndicator;
     private TextView tvDetailAqiIndex;
@@ -467,6 +468,7 @@ public class DetailsFragment extends Fragment {
         aqiDetailLayout.startAnimation(popIn);
         aqiDetailShowing = true;
     }
+
     public void closeAqiDetailDialog(){
         Animation popOut = AnimationUtils.loadAnimation(getActivity(),R.anim.pop_out);
         final Animation fadeOut = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_out);

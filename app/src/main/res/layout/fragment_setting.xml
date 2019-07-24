@@ -307,54 +307,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_help_setting"
-                    android:layout_width="match_parent"
-                    app:fontFamily="@font/nunito"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
-                    android:text="@string/help_setting_title"/>
-                <LinearLayout
-                    android:layout_marginTop="@dimen/margin_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-                    <Button
-                        android:id="@+id/btn_help_dev"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        app:fontFamily="@font/nunito"
-                        android:layout_marginEnd="@dimen/margin_4"
-                        android:background="@color/default_button_bg"
-                        android:textColor="@color/pureWhite"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_view_14sp"
-                        android:textAllCaps="false"
-                        android:text="@string/help_the_developer"/>
-                    <Button
-                        android:id="@+id/btn_help_me"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginStart="@dimen/margin_4"
-                        android:background="@color/default_button_bg"
-                        android:textColor="@color/pureWhite"
-                        app:fontFamily="@font/nunito"
-                        android:layout_height="wrap_content"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/text_view_14sp"
-                        android:text="@string/help_me"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
