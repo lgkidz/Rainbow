@@ -5,6 +5,8 @@
     <color name="colorAccent">#ffffffff</color>
     <color name="absoluteBlack">#ff000000</color>
     <color name="halfSnappedBlack">#80000000</color>
+    <color name="coldBlue">#ff92d7ed</color>
+    <color name="hotPink">#ffe8998c</color>
     <color name="pureWhite">#ffffffff</color>
     <color name="setting_bg">#fffffafa</color>
     <color name="default_button_bg">#ffe0e0</color>

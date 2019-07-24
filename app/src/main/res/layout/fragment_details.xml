@@ -29,7 +29,7 @@
                 android:paddingBottom="@dimen/margin_8"
                 android:text="@string/details_heading"
                 android:textSize="@dimen/text_view_24sp"
-                app:fontFamily="@font/nunito" />
+                app:fontFamily="@font/montserrat" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutLocation"
@@ -69,7 +69,7 @@
                         android:text="@string/default_location"
                         android:layout_marginStart="@dimen/margin_4"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -92,7 +92,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:textSize="@dimen/text_view_36sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -104,7 +104,7 @@
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
                     android:textSize="@dimen/text_view_18sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="@dimen/text_view_20sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
 
                     <TextView
                         android:id="@+id/tv_UVTitle"
@@ -146,7 +146,7 @@
                         android:gravity="center"
                         android:text="@string/uv_index_title"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -164,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="@dimen/text_view_20sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
 
                     <TextView
                         android:id="@+id/tv_humidityTitle"
@@ -174,7 +174,7 @@
                         android:gravity="center"
                         android:text="@string/humidity_title"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -203,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="@dimen/text_view_20sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
 
                     <TextView
                         android:id="@+id/tv_visibilityTitle"
@@ -213,7 +213,7 @@
                         android:gravity="center"
                         android:text="@string/visibility_title"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -231,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="@dimen/text_view_20sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
 
                     <TextView
                         android:id="@+id/tv_pressureTitle"
@@ -241,7 +241,7 @@
                         android:gravity="center"
                         android:text="@string/pressure_title"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -270,7 +270,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/air_quality_index_title"
                     android:textSize="@dimen/text_view_24sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -281,7 +281,7 @@
                     android:layout_marginTop="@dimen/margin_16"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:textSize="@dimen/text_view_36sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -293,7 +293,7 @@
                     android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:textSize="@dimen/text_view_18sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintEnd_toStartOf="@+id/tv_aqi"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_aqi_title" />
@@ -321,7 +321,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/wind_title"
                     android:textSize="@dimen/text_view_24sp"
-                    app:fontFamily="@font/nunito" />
+                    app:fontFamily="@font/montserrat" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -367,7 +367,7 @@
                         android:layout_marginEnd="@dimen/margin_8"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:textSize="@dimen/text_view_20sp"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         app:layout_constraintBottom_toTopOf="@+id/wind_direction"
                         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -378,7 +378,7 @@
                         android:layout_marginEnd="@dimen/margin_8"
                         android:layout_marginBottom="@dimen/margin_8"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -400,7 +400,7 @@
             <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
             <!--android:paddingStart="@dimen/activity_horizontal_margin"-->
             <!--android:paddingEnd="@dimen/activity_horizontal_margin"-->
-            <!--app:fontFamily="@font/nunito" />-->
+            <!--app:fontFamily="@font/montserrat" />-->
 
             <!--</LinearLayout>-->
 
@@ -420,7 +420,7 @@
                     android:paddingEnd="@dimen/activity_horizontal_margin"
                     android:text="@string/forecast_title"
                     android:textSize="@dimen/text_view_24sp"
-                    app:fontFamily="@font/nunito" />
+                    app:fontFamily="@font/montserrat" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_forecast"

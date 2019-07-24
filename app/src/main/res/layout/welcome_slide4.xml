@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|end"
                         android:layout_marginTop="@dimen/margin_4"
-                        android:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:paddingStart="@dimen/margin_16"
                         android:text="25°C"
                         android:textColor="@color/pureWhite"
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:gravity="end"
                         android:paddingStart="@dimen/margin_16"
                         android:text="Feels more like: 27°C"
@@ -88,7 +88,7 @@
                         android:id="@+id/widget_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:text="Hà Nội"
                         android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     android:text="A big quote about weather"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_54sp"
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     android:text="And a comment"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_18sp"
@@ -145,7 +145,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_view_24sp"
             android:textStyle="bold"
-            app:fontFamily="@font/nunito" />
+            app:fontFamily="@font/montserrat" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -157,7 +157,7 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_view_18sp"
-            app:fontFamily="@font/nunito" />
+            app:fontFamily="@font/montserrat" />
 
     </LinearLayout>
 

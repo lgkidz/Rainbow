@@ -128,11 +128,11 @@
     <string name="snack_bar_undo">Undo</string>
     <string name="snack_bar_text">Location deleted.</string>
 
-    <string name="uv_summary_0">It\'s night</string>
+    <string name="uv_summary_0">(Sun set)</string>
     <string name="uv_summary_3">(Low)</string>
     <string name="uv_summary_6">(Moderate)</string>
     <string name="uv_summary_8">(High)</string>
-    <string name="uv_summary_11">(High af)</string>
+    <string name="uv_summary_11">(Very high)</string>
     <string name="uv_summary_11_above">(Extreme)</string>
 
     <string name="depress_val_0">Mild</string>

@@ -27,7 +27,7 @@
                 <TextView
                     android:id="@+id/tv_setting"
                     android:layout_width="match_parent"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     android:text="@string/setting"
                     android:textColor="@color/pureWhite"
                     android:paddingTop="@dimen/margin_8"
@@ -43,7 +43,7 @@
                     <TextView
                         android:id="@+id/tv_temp_setting"
                         android:layout_width="match_parent"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/pureWhite"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_view_18sp"
@@ -59,7 +59,7 @@
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:textColor="@color/pureWhite"
                             android:background="@color/bg_screen3"
                             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:textColor="@color/pureWhite"
                             android:background="@color/bg_screen2"
                             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="0dp"
                             android:layout_weight="2"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:textColor="@color/pureWhite"
                             android:background="@color/bg_screen2"
                             android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     <TextView
                         android:id="@+id/tv_distance_setting"
                         android:layout_width="match_parent"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/pureWhite"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_view_18sp"
@@ -118,7 +118,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:textColor="@color/pureWhite"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:background="@color/bg_screen3"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_view_14sp"
@@ -130,7 +130,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:textColor="@color/pureWhite"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:background="@color/bg_screen2"
                             android:layout_height="wrap_content"
                             android:textAllCaps="false"
@@ -142,7 +142,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:textColor="@color/pureWhite"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:background="@color/bg_screen2"
                             android:layout_height="wrap_content"
                             android:textAllCaps="false"
@@ -159,7 +159,7 @@
                     <TextView
                         android:id="@+id/tv_speed_setting"
                         android:layout_width="match_parent"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:layout_height="wrap_content"
                         android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_18sp"
@@ -175,7 +175,7 @@
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:textColor="@color/pureWhite"
                             android:background="@color/bg_screen3"
                             android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                             android:layout_weight="1"
                             android:textColor="@color/pureWhite"
                             android:background="@color/bg_screen2"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:layout_height="wrap_content"
                             android:textAllCaps="false"
                             android:textSize="@dimen/text_view_14sp"
@@ -201,7 +201,7 @@
                             android:background="@color/bg_screen2"
                             android:layout_weight="2"
                             android:textColor="@color/pureWhite"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:layout_height="wrap_content"
                             android:textAllCaps="false"
                             android:textSize="@dimen/text_view_14sp"
@@ -218,7 +218,7 @@
                         android:id="@+id/tv_pressure_setting"
                         android:textColor="@color/pureWhite"
                         android:layout_width="match_parent"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_view_18sp"
                         android:text="@string/pressure_setting_title"/>
@@ -233,7 +233,7 @@
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:background="@color/bg_screen3"
                             android:textColor="@color/pureWhite"
                             android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                             android:layout_weight="1"
                             android:textColor="@color/pureWhite"
                             android:background="@color/bg_screen2"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:layout_height="wrap_content"
                             android:textAllCaps="false"
                             android:textSize="@dimen/text_view_14sp"
@@ -259,7 +259,7 @@
                             android:layout_weight="2"
                             android:textColor="@color/pureWhite"
                             android:background="@color/bg_screen2"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             android:layout_height="wrap_content"
                             android:textAllCaps="false"
                             android:textSize="@dimen/text_view_14sp"
@@ -284,7 +284,7 @@
                     android:text="25°C"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_54sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="HardcodedText" />
@@ -297,7 +297,7 @@
                     android:text="Humud and partly cloudy"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_18sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_temp"
                     tools:ignore="HardcodedText" />
@@ -321,7 +321,7 @@
                     android:text="A big quote about weather"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_54sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintBottom_toTopOf="@+id/small_text"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText" />
@@ -333,7 +333,7 @@
                     android:text="And a comment on the quote"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_18sp"
-                    app:fontFamily="@font/nunito"
+                    app:fontFamily="@font/montserrat"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText" />
@@ -355,7 +355,7 @@
                     android:paddingBottom="@dimen/margin_8"
                     android:text="@string/details_heading"
                     android:textSize="@dimen/text_view_24sp"
-                    app:fontFamily="@font/nunito" />
+                    app:fontFamily="@font/montserrat" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutLocation"
@@ -399,7 +399,7 @@
                             android:text="Hà Nội"
                             android:layout_marginStart="@dimen/margin_4"
                             android:textSize="@dimen/text_view_18sp"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 
@@ -426,7 +426,7 @@
                         android:text="27°C"
                         android:layout_marginRight="8dp"
                         android:textSize="@dimen/text_view_36sp"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -440,7 +440,7 @@
                         android:textColor="@color/pureWhite"
                         android:text="@string/real_feel_title_explicit"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -475,7 +475,7 @@
                             android:text="8 (High af)"
                             android:textColor="@color/pureWhite"
                             android:textSize="@dimen/text_view_20sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
 
                         <TextView
                             android:id="@+id/tv_UVTitle"
@@ -486,7 +486,7 @@
                             android:textColor="@color/pureWhite"
                             android:text="@string/uv_index_title"
                             android:textSize="@dimen/text_view_18sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -507,7 +507,7 @@
                             android:textColor="@color/pureWhite"
                             android:text="71%"
                             android:textSize="@dimen/text_view_20sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
 
                         <TextView
                             android:id="@+id/tv_humidityTitle"
@@ -518,7 +518,7 @@
                             android:textColor="@color/pureWhite"
                             android:text="@string/humidity_title"
                             android:textSize="@dimen/text_view_18sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -550,7 +550,7 @@
                             android:textColor="@color/pureWhite"
                             android:text="6 km"
                             android:textSize="@dimen/text_view_20sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
 
                         <TextView
                             android:id="@+id/tv_visibilityTitle"
@@ -561,7 +561,7 @@
                             android:textColor="@color/pureWhite"
                             android:text="@string/visibility_title"
                             android:textSize="@dimen/text_view_18sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -582,7 +582,7 @@
                             android:textColor="@color/pureWhite"
                             android:text="14 psi"
                             android:textSize="@dimen/text_view_20sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
 
                         <TextView
                             android:id="@+id/tv_pressureTitle"
@@ -593,7 +593,7 @@
                             android:textColor="@color/pureWhite"
                             android:text="@string/pressure_title"
                             android:textSize="@dimen/text_view_18sp"
-                            app:fontFamily="@font/nunito" />
+                            app:fontFamily="@font/montserrat" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -613,7 +613,7 @@
                         android:text="@string/air_quality_index_title"
                         android:textSize="@dimen/text_view_24sp"
                         android:textColor="@color/pureWhite"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -624,7 +624,7 @@
                         android:layout_marginTop="@dimen/margin_16"
                         android:layout_marginEnd="@dimen/margin_8"
                         android:textSize="@dimen/text_view_36sp"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -636,7 +636,7 @@
                         android:layout_marginTop="@dimen/margin_8"
                         android:layout_marginEnd="@dimen/margin_8"
                         android:textSize="@dimen/text_view_18sp"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         app:layout_constraintEnd_toStartOf="@+id/tv_aqi"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_aqi_title" />
@@ -664,7 +664,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/wind_title"
                         android:textSize="@dimen/text_view_24sp"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -710,7 +710,7 @@
                             android:layout_marginEnd="@dimen/margin_8"
                             android:layout_marginBottom="@dimen/margin_8"
                             android:textSize="@dimen/text_view_20sp"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             app:layout_constraintBottom_toTopOf="@+id/wind_direction"
                             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -721,7 +721,7 @@
                             android:layout_marginEnd="@dimen/margin_8"
                             android:layout_marginBottom="@dimen/margin_8"
                             android:textSize="@dimen/text_view_18sp"
-                            app:fontFamily="@font/nunito"
+                            app:fontFamily="@font/montserrat"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -743,7 +743,7 @@
             android:text="@string/slide_2_title"
             android:textColor="@android:color/white"
             android:gravity="center"
-            app:fontFamily="@font/nunito"
+            app:fontFamily="@font/montserrat"
             android:textSize="@dimen/text_view_24sp"
             android:textStyle="bold" />
 
@@ -753,7 +753,7 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            app:fontFamily="@font/nunito"
+            app:fontFamily="@font/montserrat"
             android:text="@string/slide_2_desc"
             android:textAlignment="center"
             android:textColor="@android:color/white"

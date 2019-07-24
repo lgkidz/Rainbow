@@ -29,7 +29,7 @@
                 android:text="25°C"
                 android:textColor="@color/pureWhite"
                 android:textSize="@dimen/text_view_54sp"
-                app:fontFamily="@font/nunito"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
@@ -42,7 +42,7 @@
                 android:text="Humud and partly cloudy"
                 android:textColor="@color/pureWhite"
                 android:textSize="@dimen/text_view_18sp"
-                app:fontFamily="@font/nunito"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_temp"
                 tools:ignore="HardcodedText" />
@@ -66,7 +66,7 @@
                 android:text="A big quote about weather"
                 android:textColor="@color/pureWhite"
                 android:textSize="@dimen/text_view_54sp"
-                app:fontFamily="@font/nunito"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toTopOf="@+id/small_text"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="HardcodedText" />
@@ -78,7 +78,7 @@
                 android:text="And a comment on the quote"
                 android:textColor="@color/pureWhite"
                 android:textSize="@dimen/text_view_18sp"
-                app:fontFamily="@font/nunito"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="HardcodedText" />
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:text="@string/slide_3_title"
             android:layout_marginTop="@dimen/margin_16"
-            app:fontFamily="@font/nunito"
+            app:fontFamily="@font/montserrat"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_view_24sp"
             android:textStyle="bold" />
@@ -108,7 +108,7 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            app:fontFamily="@font/nunito"
+            app:fontFamily="@font/montserrat"
             android:text="@string/slide_3_desc"
             android:textAlignment="center"
             android:textColor="@android:color/white"

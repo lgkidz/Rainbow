@@ -1,7 +1,4 @@
 <resources>
-  <dimen name="init_scroll_welcome">
-    840.0px
-  </dimen>
   <dimen name="minimum_screen_width">
     320.0dp
   </dimen>
@@ -44,8 +41,14 @@
   <dimen name="margin_4">
     3.56dp
   </dimen>
+  <dimen name="margin_6">
+    5.33dp
+  </dimen>
   <dimen name="margin_8">
     7.11dp
+  </dimen>
+  <dimen name="margin_12">
+    10.67dp
   </dimen>
   <dimen name="margin_n_8">
     -7.11dp
@@ -131,6 +134,9 @@
   <dimen name="text_view_54sp">
     48.0sp
   </dimen>
+  <dimen name="text_view_62sp">
+    55.11sp
+  </dimen>
   <dimen name="widget_height">
     95.11dp
   </dimen>
@@ -139,5 +145,14 @@
   </dimen>
   <dimen name="widget_margin">
     7.11dp
+  </dimen>
+  <dimen name="temperature_pointer_width">
+    1.78dp
+  </dimen>
+  <dimen name="temperature_pointer_height">
+    24.89dp
+  </dimen>
+  <dimen name="temperature_bar_height">
+    10.67dp
   </dimen>
 </resources>

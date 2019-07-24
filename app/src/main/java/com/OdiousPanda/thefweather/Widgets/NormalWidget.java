@@ -129,7 +129,7 @@ public class NormalWidget extends AppWidgetProvider {
                 break;
             }
         }
-        Typeface nunito = ResourcesCompat.getFont(context,R.font.nunito);
+        Typeface nunito = ResourcesCompat.getFont(context,R.font.montserrat);
         paint.setTypeface(nunito);
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.LEFT);

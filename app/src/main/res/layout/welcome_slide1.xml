@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slide_1_title"
-            app:fontFamily="@font/nunito"
+            app:fontFamily="@font/montserrat"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_view_24sp"
             android:textStyle="bold" />
@@ -38,7 +38,7 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            app:fontFamily="@font/nunito"
+            app:fontFamily="@font/montserrat"
             android:text="@string/slide_1_desc"
             android:textAlignment="center"
             android:textColor="@android:color/white"

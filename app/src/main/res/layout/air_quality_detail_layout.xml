@@ -39,7 +39,7 @@
                 android:id="@+id/aqi_dialog_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fontFamily="@font/nunito"
+                app:fontFamily="@font/montserrat"
                 android:text="@string/air_quality_dialog_heading"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_20sp"
@@ -58,7 +58,7 @@
                 android:text="@string/air_quality_dialog_description"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_18sp"
-                app:fontFamily="@font/nunito"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aqi_dialog_title" />
@@ -85,7 +85,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_12sp"
                         android:text="0"
@@ -94,7 +94,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_12sp"
                         android:text="50"
@@ -103,7 +103,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_12sp"
                         android:text="100"
@@ -112,7 +112,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_12sp"
                         android:text="150"
@@ -121,7 +121,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_12sp"
                         android:text="200"
@@ -130,7 +130,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_12sp"
                         android:text="300"
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_12sp"
                         android:text="500"
@@ -224,7 +224,7 @@
                         android:layout_weight="1"
                         android:text="@string/aqi_good"
                         android:textColor="@color/absoluteBlack"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textSize="@dimen/text_view_12sp"/>
                     <TextView
                         android:layout_width="0dp"
@@ -233,7 +233,7 @@
                         android:gravity="end"
                         android:text="@string/aqi_hazardous"
                         android:textColor="@color/absoluteBlack"
-                        app:fontFamily="@font/nunito"
+                        app:fontFamily="@font/montserrat"
                         android:textSize="@dimen/text_view_12sp"/>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_view_48sp"
                     android:textColor="@color/absoluteBlack"
-                    app:fontFamily="@font/nunito"/>
+                    app:fontFamily="@font/montserrat"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -270,7 +270,7 @@
                         android:layout_height="match_parent"
                         android:textSize="@dimen/text_view_18sp"
                         android:textColor="@color/absoluteBlack"
-                        app:fontFamily="@font/nunito"/>
+                        app:fontFamily="@font/montserrat"/>
                     <TextView
                         android:id="@+id/tv_aqi_des"
                         android:layout_weight="1"
@@ -278,7 +278,7 @@
                         android:layout_height="match_parent"
                         android:textSize="@dimen/text_view_14sp"
                         android:textColor="@color/absoluteBlack"
-                        app:fontFamily="@font/nunito" />
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -286,7 +286,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:fontFamily="@font/nunito"
+                app:fontFamily="@font/montserrat"
                 android:paddingEnd="@dimen/margin_16"
                 android:paddingRight="@dimen/margin_16"
                 android:text="@string/provided_by_aqi_cn_org"

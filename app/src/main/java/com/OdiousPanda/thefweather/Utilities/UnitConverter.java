@@ -43,6 +43,15 @@ public class UnitConverter {
         return toKelvinPretty(temp);
     }
 
+    public static String convertToTemperatureUnitClean(float temp, String unit) {
+        if (unit.equals(DEGREE + "C")) {
+            return Math.round(toCelsius(temp)) + DEGREE;
+        } else if (unit.equals(DEGREE + "F")) {
+            return Math.round(toFahrenheit(temp)) + DEGREE;
+        }
+        return Math.round(toKelvin(temp)) + DEGREE;
+    }
+
     public static String convertToDistanceUnit(float distance, String unit) {
         if (unit.equals("km")) {
             return Math.round(distance * 1.609) + " km";

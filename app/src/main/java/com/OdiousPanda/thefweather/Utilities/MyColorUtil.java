@@ -1,6 +1,11 @@
 package com.OdiousPanda.thefweather.Utilities;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
+import android.widget.Toast;
+
+import com.OdiousPanda.thefweather.R;
 
 import java.util.Random;
 
@@ -28,6 +33,22 @@ public class MyColorUtil {
         int b = 255 - argb[3];
 
         return Color.argb(255, r, g, b);
+    }
+
+    @SuppressLint("ResourceType")
+    public static int getTemperaturePointerColor(Context context, float offset){
+        String coldBlueString = context.getResources().getString(R.color.coldBlue);
+        String hotPinkString = context.getResources().getString(R.color.hotPink);
+        int[] coldBlue = new int[]{Integer.parseInt(coldBlueString.substring(3,5),16),
+                        Integer.parseInt(coldBlueString.substring(5,7),16),
+                        Integer.parseInt(coldBlueString.substring(7,9),16)};
+        int[] hotPink = new int[]{Integer.parseInt(hotPinkString.substring(3,5),16),
+                Integer.parseInt(hotPinkString.substring(5,7),16),
+                Integer.parseInt(hotPinkString.substring(7,9),16)};
+        int r = (int)(coldBlue[0] + (hotPink[0] - coldBlue[0]) * offset);
+        int g = (int)(coldBlue[1] + (hotPink[1] - coldBlue[1]) * offset);
+        int b = (int)(coldBlue[2] + (hotPink[2] - coldBlue[2]) * offset);
+        return Color.argb(255,r,g,b);
     }
 
 }

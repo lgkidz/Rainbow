@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .setGravity(Gravity.TOP)
                 .setDismissOnClick(true)
                 .setCancelable(true)
-                .setTypeface(ResourcesCompat.getFont(this, R.font.nunito))
+                .setTypeface(ResourcesCompat.getFont(this, R.font.montserrat))
                 .build();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL, false);
@@ -326,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 if(firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1){
                     DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+                    HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                     HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
                     updateColor();

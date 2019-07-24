@@ -177,7 +177,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         colorThoseButtons();
         colorThoseTextView();
-        updateUserPrefer();
     }
 
     private void colorThoseTextView() {
@@ -306,30 +305,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
-        updateUserPrefer();
-    }
-
-    private void updateUserPrefer() {
-        boolean useF = currentTempUnit.equals(getString(R.string.temp_setting_degree_f));
-        boolean useMile = currentDistanceUnit.equals(getString(R.string.mi));
-        boolean useMph = currentSpeedUnit.equals(getString(R.string.miph));
-        boolean useK = currentTempUnit.equals(getString(R.string.temp_setting_degree_k));
-        boolean useBanana = currentDistanceUnit.equals(getString(R.string.bananas));
-        boolean useBananaH = currentSpeedUnit.equals(getString(R.string.banana_h));
-        boolean useDepression = currentPressureUnit.equals(getString(R.string.depression_unit));
-        String prefer = getString(R.string.temperature_setting_title) + " ";
-        if(useF && useMile && useMph){
-            prefer += getString(R.string.prefer_american);
-        }
-        else{
-            if(useK && useBanana && useBananaH && useDepression){
-                prefer += getString(R.string.prefer_abnormal);
-            }
-            else {
-                prefer += getString(R.string.prefer_not_american);
-            }
-        }
-        tvTemperature.setText(prefer);
     }
 
     public void updateColorTheme(int[] argb) {
