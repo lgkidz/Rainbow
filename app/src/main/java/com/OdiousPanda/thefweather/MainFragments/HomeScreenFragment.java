@@ -5,15 +5,15 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -56,9 +56,14 @@ public class HomeScreenFragment extends Fragment {
     private TextView tvUvIndex;
     private TextView tvHumidity;
     private TextView tvVisibility;
+    private TextView tvUvSummary;
     private RecyclerView rvDailyForecast;
     private QuoteGenerator quoteGenerator;
     private Weather currentWeather;
+    private float pointerPreviousX = 0;
+    private float previousTemp = 0;
+    private int previousTempColor = 0;
+    private final int pointerAnimationDuration = 1000;
     private OnLayoutRefreshListener callback;
     private boolean showingBackground = false;
     public HomeScreenFragment() {
@@ -101,6 +106,7 @@ public class HomeScreenFragment extends Fragment {
         tvUvIndex = v.findViewById(R.id.uv_value);
         tvHumidity = v.findViewById(R.id.humidity_value);
         tvVisibility = v.findViewById(R.id.visibility_value);
+        tvUvSummary = v.findViewById(R.id.uv_summary);
         rvDailyForecast = v.findViewById(R.id.daily_forecast_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rvDailyForecast.setLayoutManager(linearLayoutManager);
@@ -144,6 +150,10 @@ public class HomeScreenFragment extends Fragment {
     void updateUnit() {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         tvTemp.setText(UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getTemperature(), currentTempUnit));
+        tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureLow(),currentTempUnit));
+        tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureMax(),currentTempUnit));
+        DailyForecastAdapter adapter = new DailyForecastAdapter(getActivity(), currentWeather.getDaily());
+        rvDailyForecast.setAdapter(adapter);
     }
 
     public void updateData(Weather weather) {
@@ -164,48 +174,96 @@ public class HomeScreenFragment extends Fragment {
         final float currentTemp = currentWeather.getCurrently().getTemperature();
         final float minTemp = currentWeather.getDaily().getData().get(0).getTemperatureLow();
         final float maxTemp = currentWeather.getDaily().getData().get(0).getTemperatureMax();
-        String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
-        tvTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentTemp, currentTempUnit));
+        final String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
+        //tvTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentTemp, currentTempUnit));
         tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(minTemp,currentTempUnit));
         tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(maxTemp,currentTempUnit));
         tvDescription.setText(currentWeather.getCurrently().getSummary());
+        if(previousTempColor == 0){
+            previousTempColor = ContextCompat.getColor(getActivity(),R.color.coldBlue);
+        }
         tempBar.post(new Runnable() {
             @Override
             public void run() {
                 try{
                     ConstraintLayout.LayoutParams pointerParams = (ConstraintLayout.LayoutParams) tempPointer.getLayoutParams();
                     ConstraintLayout.LayoutParams tvTempParams = (ConstraintLayout.LayoutParams) tvTemp.getLayoutParams();
+                    ConstraintLayout.LayoutParams barParams = (ConstraintLayout.LayoutParams) tempBar.getLayoutParams();
                     float tempBarWidth = (float) tempBar.getWidth();
                     float tvTempWidth = (float) tvTemp.getWidth();
                     float leftMargin = (currentTemp - minTemp) / (maxTemp - minTemp) * tempBarWidth;
-                    float rightMargin = (maxTemp - currentTemp) / (maxTemp - minTemp) * tempBarWidth;
                     if(leftMargin < tvTempWidth/2){
-                        tvTempParams.leftMargin = (int)leftMargin;
+                        tvTempParams.leftMargin = barParams.leftMargin;
                         tvTemp.setLayoutParams(tvTempParams);
                     }
-                    if(rightMargin < tvTempWidth/2){
-                        tvTempParams.rightMargin = (int) rightMargin;
+                    if(barParams.rightMargin < tvTempWidth/2 ){
+                        tvTempParams.rightMargin = barParams.rightMargin;
                         tvTemp.setLayoutParams(tvTempParams);
                     }
-                    int pointerColor = MyColorUtil.getTemperaturePointerColor(Objects.requireNonNull(getActivity()),(currentTemp - minTemp) / (maxTemp - minTemp));
-                    Drawable pointerBackground = DrawableCompat.wrap(Objects.requireNonNull(AppCompatResources.getDrawable(getActivity(),R.drawable.temperature_pointer)));
-                    pointerBackground.setTint(pointerColor);
-                    GradientDrawable gd = new GradientDrawable(
-                            GradientDrawable.Orientation.BOTTOM_TOP,
-                            new int[] {pointerColor,0xFFFFFFFF});
-                    gd.setCornerRadius(getActivity().getResources().getDimension(R.dimen.margin_4));
-                    tempPointer.setBackground(pointerBackground);
-                    tvTemp.setTextColor(pointerColor);
-                    tvDescription.setTextColor(pointerColor);
-                    pointerParams.leftMargin = (int) leftMargin;
-                    tempPointer.setLayoutParams(pointerParams);
+                    if(leftMargin < Objects.requireNonNull(getActivity()).getResources().getDimension(R.dimen.margin_4)){
+                        leftMargin = getActivity().getResources().getDimension(R.dimen.margin_4);
+                    }
+                    if(tempBarWidth - leftMargin < Objects.requireNonNull(getActivity()).getResources().getDimension(R.dimen.margin_4)){
+                        leftMargin -= getActivity().getResources().getDimension(R.dimen.margin_4);
+                    }
+                    if(pointerPreviousX == 0){
+                        pointerPreviousX = pointerParams.leftMargin;
+                    }
+                    final int newTempColor = MyColorUtil.getTemperaturePointerColor(Objects.requireNonNull(getActivity()),(currentTemp - minTemp) / (maxTemp - minTemp));
+                    Animation pointerSlideAnimation = new TranslateAnimation(pointerPreviousX,leftMargin,0,0);
+                    pointerSlideAnimation.setInterpolator(new DecelerateInterpolator());
+                    pointerSlideAnimation.setDuration(pointerAnimationDuration);
+                    pointerSlideAnimation.setFillAfter(true);
+                    final float finalLeftMargin = leftMargin;
+                    pointerSlideAnimation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
 
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            pointerPreviousX = finalLeftMargin;
+                            previousTemp = currentTemp;
+                            previousTempColor = newTempColor;
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    ValueAnimator tempChange = ValueAnimator.ofFloat(previousTemp, currentTemp);
+                    tempChange.setDuration(pointerAnimationDuration);
+                    tempChange.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            tvTemp.setText(UnitConverter.convertToTemperatureUnitClean((float) animation.getAnimatedValue(), currentTempUnit));
+                        }
+                    });
+
+                    ValueAnimator tempColorChange = ValueAnimator.ofObject(new ArgbEvaluator(), previousTempColor, newTempColor);
+                    tempColorChange.setDuration(pointerAnimationDuration);
+                    tempColorChange.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            int color = (int) animation.getAnimatedValue();
+                            Drawable pointerBackground = DrawableCompat.wrap(Objects.requireNonNull(AppCompatResources.getDrawable(getActivity(),R.drawable.temperature_pointer)));
+                            pointerBackground.setTint(color);
+                            tempPointer.setBackground(pointerBackground);
+                            tvTemp.setTextColor(color);
+                            tvDescription.setTextColor(color);
+                        }
+                    });
+                    tempChange.start();
+                    tempColorChange.start();
+                    tvTemp.startAnimation(pointerSlideAnimation);
+                    tempPointer.startAnimation(pointerSlideAnimation);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
             }
         });
-
     }
 
     private void updateDailyForecastData() {
@@ -214,22 +272,23 @@ public class HomeScreenFragment extends Fragment {
     }
 
     private void updateUvData() {
-        String uvSummary = " ";
+        String uvSummary;
         if (currentWeather.getCurrently().getUvIndex() == 0) {
-            uvSummary += getString(R.string.uv_summary_0);
+            uvSummary = getString(R.string.uv_summary_0);
         } else if (currentWeather.getCurrently().getUvIndex() < 3) {
-            uvSummary += getString(R.string.uv_summary_3);
+            uvSummary = getString(R.string.uv_summary_3);
         } else if (currentWeather.getCurrently().getUvIndex() < 6) {
-            uvSummary += getString(R.string.uv_summary_6);
+            uvSummary = getString(R.string.uv_summary_6);
         } else if (currentWeather.getCurrently().getUvIndex() < 8) {
-            uvSummary  += getString(R.string.uv_summary_8);
+            uvSummary  = getString(R.string.uv_summary_8);
         } else if (currentWeather.getCurrently().getUvIndex() < 11) {
-            uvSummary += getString(R.string.uv_summary_11);
+            uvSummary = getString(R.string.uv_summary_11);
         } else {
-            uvSummary += getString(R.string.uv_summary_11_above);
+            uvSummary = getString(R.string.uv_summary_11_above);
         }
-        String uvValueText = Math.round(currentWeather.getCurrently().getUvIndex()) + uvSummary;
+        String uvValueText = String.valueOf(Math.round(currentWeather.getCurrently().getUvIndex()));
         tvUvIndex.setText(uvValueText);
+        tvUvSummary.setText(uvSummary);
     }
 
     private void updateVisibilityData() {

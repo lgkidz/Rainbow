@@ -281,7 +281,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
         DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
         DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+        HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
         updateColor();
+        hideLocationList();
     }
 
     private void showFabToolTips() {
@@ -338,6 +340,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         if(locations.get(currentLocationPosition).getCoordinate().getId() == currentLocationID){
                             DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                             DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+                            HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                             HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                             WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
                             updateColor();

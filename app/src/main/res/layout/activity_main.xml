@@ -21,7 +21,8 @@
         android:layout_gravity="end|center"
         android:backgroundTint="@color/pureWhite"
         app:rippleColor="@color/bg_screen1"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/icon_24dp"
         android:src="@drawable/ic_round_location_b"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/location_list_layout"

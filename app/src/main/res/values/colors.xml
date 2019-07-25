@@ -8,9 +8,9 @@
     <color name="coldBlue">#ff92d7ed</color>
     <color name="hotPink">#ffe8998c</color>
     <color name="pureWhite">#ffffffff</color>
-    <color name="setting_bg">#fffffafa</color>
-    <color name="default_button_bg">#ffe0e0</color>
-    <color name="default_active_button_bg">#ffc0d0</color>
+    <color name="setting_bg">@color/pureWhite</color>
+    <color name="default_button_bg">@color/coldBlue</color>
+    <color name="default_active_button_bg">@color/hotPink</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#f64c73</color>
