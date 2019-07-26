@@ -32,7 +32,7 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
     @NonNull
     @Override
     public DailyForecastAdapter.ForecastViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.daily_forecast_item_new, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.daily_forecast_item, parent, false);
         return new DailyForecastAdapter.ForecastViewHolder(v);
     }
 

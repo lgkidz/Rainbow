@@ -33,7 +33,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     @SuppressLint("StaticFieldLeak")
     private static SettingFragment instance;
-
+    public static final String ACTION_UPDATE_UNIT = "Rainbow.update.unit";
     private String currentTempUnit;
     private String currentDistanceUnit;
     private String currentSpeedUnit;
@@ -68,7 +68,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private int activeButtonColor = Color.argb(255, 255, 255, 255);
     private int buttonColor = Color.argb(255, 255, 255, 255);
     private int textColor = Color.argb(255, 0, 0, 0);
-    private int buttonTextColor = Color.argb(255, 0, 0, 0);
+    private int buttonTextColor = Color.argb(255, 255, 255, 255);
     private int activeButtonTextColor = Color.argb(255, 255, 255, 255);
     public SettingFragment() {
         // Required empty public constructor
@@ -334,6 +334,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         Objects.requireNonNull(getActivity()).sendBroadcast(updateWidgetIntent);
         updateTempButtonColor(id);
         currentTempUnit = PreferencesUtil.getTemperatureUnit(getActivity());
+        Intent updateUnitBroadcast = new Intent();
+        updateUnitBroadcast.setAction(ACTION_UPDATE_UNIT);
+        getActivity().sendBroadcast(updateUnitBroadcast);
     }
 
     private void updateTempButtonColor(int id) {

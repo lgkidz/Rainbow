@@ -87,16 +87,27 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private List<LocationData> locations = new ArrayList<>();
     private int currentLocationPosition = 0; // first position of the location list
     private int currentLocationID = 1; // default ID for current location
-    private int currentPage = 1;
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             if (isConnected(context)) {
                 if (screenInitialized) {
                     startGettingData();
                 }
             } else {
                 showNoConnection();
+            }
+        }
+    };
+
+    BroadcastReceiver unitUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: action: " + intent.getAction());
+            if(screenInitialized){
+                locationListAdapter = new LocationListAdapter(MainActivity.this,locations,MainActivity.this);
+                rvLocations.setAdapter(locationListAdapter);
             }
         }
     };
@@ -109,13 +120,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         setContentView(R.layout.activity_main);
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         initViews();
-        Intent intent = getIntent();
-        if (intent != null && intent.getAction() != null) {
-            if (intent.getAction().equals(NormalWidget.ACTION_TO_DETAILS)) {
-                mViewPager.setCurrentItem(2);
-                currentPage = 2;
-            }
-        }
         HomeScreenFragment.getInstance().setOnRefreshListener(this);
         if (isConnected(this)) {
             startGettingData();
@@ -166,23 +170,16 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             @Override
             public void onPageSelected(int position) {
                 if (position == 1) {
-                    if(currentPage == 0){
-                        ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
-                                , "backgroundColor"
-                                , new ArgbEvaluator()
-                                , ContextCompat.getColor(MainActivity.this,R.color.setting_bg)
-                                , currentBackgroundColor);
-                        colorFade.setDuration(200);
-                        colorFade.start();
-                    }
+                    ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
+                            , "backgroundColor"
+                            , new ArgbEvaluator()
+                            , ContextCompat.getColor(MainActivity.this, R.color.setting_bg)
+                            , currentBackgroundColor);
+                    colorFade.setDuration(200);
+                    colorFade.start();
                     SettingFragment.getInstance().closeAboutMeDialog();
-                    if(DetailsFragment.getInstance().aqiDetailShowing){
-                        DetailsFragment.getInstance().closeAqiDetailDialog();
-                    }
                     fab.show();
-
-                } else if(position == 0) {
-                    fab.hide();
+                } else {
                     ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
                             , "backgroundColor"
                             , new ArgbEvaluator()
@@ -190,11 +187,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                             , ContextCompat.getColor(MainActivity.this,R.color.setting_bg));
                     colorFade.setDuration(200);
                     colorFade.start();
-                }
-                else {
                     fab.hide();
                 }
-                currentPage = position;
             }
 
             @Override
@@ -206,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .withStartState(SlideUp.State.HIDDEN)
                 .withStartGravity(Gravity.BOTTOM)
                 .withSlideFromOtherView(coordinatorLayout)
-                //.withGesturesEnabled(false)
                 .withListeners(new SlideUp.Listener.Events() {
                     @Override
                     public void onSlide(float percent) {
@@ -280,7 +273,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
         HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
         DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-        DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
         HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
         updateColor();
         hideLocationList();
@@ -327,7 +319,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
                 if(firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1){
                     DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                    DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                     HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                     HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
@@ -339,7 +330,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
                         if(locations.get(currentLocationPosition).getCoordinate().getId() == currentLocationID){
                             DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                            DetailsFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                             HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                             HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                             WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
@@ -440,7 +430,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             }
         });
         colorFade.start();
-        DetailsFragment.getInstance().updateColorTheme(argb);
         //SettingFragment.getInstance().updateColorTheme(argb);
         HomeScreenFragment.getInstance().setColorTheme(textColorCode);
     }
@@ -473,6 +462,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         super.onResume();
         loadingLayout.setVisibility(View.INVISIBLE);
         registerReceiver(connectionChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        registerReceiver(unitUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_UNIT));
         Log.d(TAG, "onResume: ");
     }
 
@@ -480,6 +470,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     protected void onPause() {
         super.onPause();
         unregisterReceiver(connectionChangeReceiver);
+        unregisterReceiver(unitUpdateReceiver);
         Log.d(TAG, "onPause: ");
     }
 
@@ -487,10 +478,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     public void onBackPressed() {
         if(SettingFragment.getInstance().aboutMeShowing){
             SettingFragment.getInstance().closeAboutMeDialog();
-            return;
-        }
-        if(DetailsFragment.getInstance().aqiDetailShowing){
-            DetailsFragment.getInstance().closeAqiDetailDialog();
             return;
         }
         if (locationListShowing) {

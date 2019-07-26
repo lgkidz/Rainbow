@@ -65,9 +65,9 @@
     <string name="mi">mile</string>
     <string name="km">km</string>
     <string name="scientist">I\'m a scientist</string>
-    <string name="details_heading">All things you need to know</string>
-    <string name="real_feel_title">is what it fucking feels like</string>
-    <string name="real_feel_title_explicit">is what it feels like</string>
+    <string name="details_heading">Today\'s weather starter pack</string>
+    <string name="real_feel_title">What it fucking feels like: </string>
+    <string name="real_feel_title_explicit">What it feels like: </string>
     <string name="uv_index_title">UV Index</string>
     <string name="humidity_title">Humidity</string>
     <string name="visibility_title">Visibility</string>
@@ -148,6 +148,12 @@
     <string name="depress_val_10">Unbearable</string>
     <string name="depress_val_11">Nein</string>
     <string name="depress_val_12">Chuck Norris</string>
+    <string name="what_to_eat_title">What to eat today?</string>
+    <string name="food_to_eat_placeholder">Rainbow said:</string>
+    <string name="details_info_title">Other useful information</string>
+    <string name="cloud_cover_title">Cloud cover</string>
+    <string name="why_this_pack">Why this pack?</string>
+    <string name="cause_it_s">Because it\'s</string>
 
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>

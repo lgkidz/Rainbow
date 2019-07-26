@@ -49,7 +49,7 @@ public class UnitConverter {
         } else if (unit.equals(DEGREE + "F")) {
             return Math.round(toFahrenheit(temp)) + DEGREE;
         }
-        return Math.round(toKelvin(temp)) + DEGREE;
+        return Math.round(toKelvin(temp)) + DEGREE + "K";
     }
 
     public static String convertToDistanceUnit(float distance, String unit) {

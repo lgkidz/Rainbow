@@ -162,12 +162,6 @@ public class WelcomeActivity extends AppCompatActivity {
     private void launchHomeScreen() {
         PreferencesUtil.setNotFirstTimeLaunch(this, true);
         Intent mainActivityIntent = new Intent(WelcomeActivity.this,MainActivity.class);
-        Intent intent = getIntent();
-        if (intent != null && intent.getAction() != null) {
-            if (intent.getAction().equals(NormalWidget.ACTION_TO_DETAILS)) {
-                mainActivityIntent.setAction(NormalWidget.ACTION_TO_DETAILS);
-            }
-        }
         startActivity(mainActivityIntent);
         finish();
     }

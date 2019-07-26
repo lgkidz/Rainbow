@@ -146,6 +146,9 @@
   <dimen name="widget_margin">
     12.0dp
   </dimen>
+  <dimen name="divider_height">
+    1.5dp
+  </dimen>
   <dimen name="temperature_pointer_width">
     3.0dp
   </dimen>

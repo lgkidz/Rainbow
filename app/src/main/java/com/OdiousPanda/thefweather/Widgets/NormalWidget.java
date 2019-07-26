@@ -73,7 +73,6 @@ public class NormalWidget extends AppWidgetProvider {
     private static AppWidgetManager aWm;
     public static final String ACTION_UPDATE = "actionUpdate";
     public static final String ACTION_TAP = "widgetTap";
-    public static final String ACTION_TO_DETAILS = "toDetailsScreen";
     private static final String TEMP_BITMAP = "tempBitmap";
     private static final String RF_BITMAP = "RFBitmap";
     private static final String MAIN_BITMAP = "mainBitmap";
@@ -95,7 +94,6 @@ public class NormalWidget extends AppWidgetProvider {
             PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
             remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout,tapPending);
             Intent toDetailsScreenIntent = new Intent(context, WelcomeActivity.class);
-            toDetailsScreenIntent.setAction(ACTION_TO_DETAILS);
             PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId, toDetailsScreenIntent,PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
             PreferencesUtil.setWidgetTapCount(context,0);
