@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragments.SettingFragment">
+    tools:context=".MainFragments.SettingFragment"
+    android:background="@color/pureWhite">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -257,6 +258,52 @@
                         android:textAllCaps="false"
                         android:textSize="@dimen/text_view_14sp"
                         android:text="@string/your_depression"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_background_setting"
+                    android:layout_width="match_parent"
+                    app:fontFamily="@font/montserrat"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/absoluteBlack"
+                    android:textSize="@dimen/text_view_18sp"
+                    android:text="@string/background_setting_title"/>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+                    <Button
+                        android:id="@+id/btn_random_color"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        app:fontFamily="@font/montserrat"
+                        android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp"
+                        android:textAllCaps="false"
+                        android:text="@string/random_color"/>
+                    <Button
+                        android:id="@+id/btn_picture"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        app:fontFamily="@font/montserrat"
+                        android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/text_view_14sp"
+                        android:text="@string/picture"/>
                 </LinearLayout>
             </LinearLayout>
 

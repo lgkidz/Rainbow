@@ -154,6 +154,9 @@
     <string name="cloud_cover_title">Cloud cover</string>
     <string name="why_this_pack">Why this pack?</string>
     <string name="cause_it_s">Because it\'s</string>
+    <string name="random_color">Random Color</string>
+    <string name="picture">Picture</string>
+    <string name="background_setting_title">Home Background</string>
 
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>

@@ -221,7 +221,7 @@ public class DetailsFragment extends Fragment {
     private void updateRealFeelTemperature(String currentTempUnit) {
         boolean isExplicit = PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()));
         String placeholder = isExplicit ? getString(R.string.real_feel_title_explicit) : getString(R.string.real_feel_title);
-        String realfeel = placeholder + " " + UnitConverter.convertToTemperatureUnit(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit);
+        String realfeel = placeholder + " " + UnitConverter.convertToTemperatureUnitClean(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit);
         tvRealFeel.setText(realfeel);
     }
 

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.OdiousPanda.thefweather.Adapters.DailyForecastAdapter;
+import com.OdiousPanda.thefweather.CustomUI.MovableConstrainLayout;
 import com.OdiousPanda.thefweather.DataModel.Quote;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
@@ -43,6 +45,7 @@ public class HomeScreenFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private MovableConstrainLayout layoutData;
     private TextView tvTemp;
     private TextView tvDescription;
     private TextView tvBigText;
@@ -96,6 +99,7 @@ public class HomeScreenFragment extends Fragment {
     }
 
     private void initViews(View v) {
+        layoutData = v.findViewById(R.id.layout_data);
         tvBigText = v.findViewById(R.id.big_text);
         tvDescription = v.findViewById(R.id.tv_description);
         tvSmallText = v.findViewById(R.id.small_text);
@@ -118,7 +122,7 @@ public class HomeScreenFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         rvDailyForecast.addItemDecoration(dividerItemDecoration);
         swipeRefreshLayout = v.findViewById(R.id.home_layout);
-
+        
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -156,6 +160,7 @@ public class HomeScreenFragment extends Fragment {
         tvTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getCurrently().getTemperature(), currentTempUnit));
         tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureLow(),currentTempUnit));
         tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureMax(),currentTempUnit));
+        updateVisibilityData();
         DailyForecastAdapter adapter = new DailyForecastAdapter(getActivity(), currentWeather.getDaily());
         rvDailyForecast.setAdapter(adapter);
     }
