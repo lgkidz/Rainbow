@@ -12,6 +12,7 @@ public class PreferencesUtil {
     private static final String BACKGROUND_SETTING = "backgroundType";
     public static final String BACKGROUND_COLOR = "color";
     public static final String BACKGROUND_PICTURE = "picture";
+    public static final String BACKGROUND_PICTURE_RANDOM = "picture_random";
     // Shared preferences file name
     private static final String PREF_NAME = "RainbowPreferencesName";
     private static final String IS_NOT_FIRST_TIME_LAUNCH = "IsAppFirstTimeLaunch";

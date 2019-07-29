@@ -113,6 +113,9 @@
   <dimen name="text_view_14sp">
     21.0sp
   </dimen>
+  <dimen name="text_view_16sp">
+    24.0sp
+  </dimen>
   <dimen name="text_view_18sp">
     27.0sp
   </dimen>

@@ -154,10 +154,13 @@
     <string name="cloud_cover_title">Cloud cover</string>
     <string name="why_this_pack">Why this pack?</string>
     <string name="cause_it_s">Because it\'s</string>
-    <string name="random_color">Random Color</string>
-    <string name="picture">Picture</string>
+    <string name="random_color">Colors</string>
+    <string name="picture">Weather photo</string>
     <string name="background_setting_title">Home Background</string>
-
+    <string name="random_picture">Random photo</string>
+    <string name="photo_details_title">Photo details</string>
+    <string name="not_available">N/A</string>
+    <string name="photo_name_na">Photo\'s description not provided</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>

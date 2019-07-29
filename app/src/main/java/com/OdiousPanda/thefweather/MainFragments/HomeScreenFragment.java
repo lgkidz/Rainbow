@@ -5,13 +5,20 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.system.Os;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,12 +35,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.OdiousPanda.thefweather.API.Constant;
 import com.OdiousPanda.thefweather.Adapters.DailyForecastAdapter;
+import com.OdiousPanda.thefweather.CustomUI.ExpandCollapseAnimation;
 import com.OdiousPanda.thefweather.CustomUI.MovableConstrainLayout;
 import com.OdiousPanda.thefweather.DataModel.Quote;
+import com.OdiousPanda.thefweather.DataModel.Unsplash.Unsplash;
 import com.OdiousPanda.thefweather.DataModel.Weather.Weather;
 import com.OdiousPanda.thefweather.R;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
+import com.OdiousPanda.thefweather.Utilities.MyTextUtil;
 import com.OdiousPanda.thefweather.Utilities.PreferencesUtil;
 import com.OdiousPanda.thefweather.Utilities.QuoteGenerator;
 import com.OdiousPanda.thefweather.Utilities.UnitConverter;
@@ -45,13 +56,11 @@ public class HomeScreenFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private MovableConstrainLayout layoutData;
     private TextView tvTemp;
     private TextView tvDescription;
     private TextView tvBigText;
     private TextView tvSmallText;
-    private ImageView icon;
-    private String iconName;
+    private ImageView iconInfo;
     private TextView tvLocation;
     private View tempBar;
     private View tempPointer;
@@ -63,6 +72,17 @@ public class HomeScreenFragment extends Fragment {
     private TextView tvUvSummary;
     private ConstraintLayout tempLayout;
     private RecyclerView rvDailyForecast;
+
+    private ConstraintLayout photoDetailsLayout;
+    private ImageView btnClosePhotoDetails;
+    private TextView tvPhotoTitle;
+    private TextView tvPhotoBy;
+    private TextView tvCamera;
+    private TextView tvAperture;
+    private TextView tvExposureTime;
+    private TextView tvIso;
+    private TextView tvFocalLength;
+    public boolean photoDetailsShowing = false;
     private QuoteGenerator quoteGenerator;
     private Weather currentWeather;
     private float pointerPreviousX = 0;
@@ -71,7 +91,6 @@ public class HomeScreenFragment extends Fragment {
     private float tempPreviousX = pointerPreviousX;
     private final int pointerAnimationDuration = 1000;
     private OnLayoutRefreshListener callback;
-    private boolean showingBackground = false;
     public HomeScreenFragment() {
         // Required empty public constructor
     }
@@ -99,12 +118,12 @@ public class HomeScreenFragment extends Fragment {
     }
 
     private void initViews(View v) {
-        layoutData = v.findViewById(R.id.layout_data);
+        MovableConstrainLayout layoutData = v.findViewById(R.id.layout_data);
         tvBigText = v.findViewById(R.id.big_text);
         tvDescription = v.findViewById(R.id.tv_description);
         tvSmallText = v.findViewById(R.id.small_text);
         tvTemp = v.findViewById(R.id.tv_temp);
-        icon = v.findViewById(R.id.icon);
+        iconInfo = v.findViewById(R.id.icon);
         tvLocation = v.findViewById(R.id.tv_location);
         tempBar = v.findViewById(R.id.temperature_bar);
         tempPointer = v.findViewById(R.id.temperature_pointer);
@@ -115,6 +134,38 @@ public class HomeScreenFragment extends Fragment {
         tvVisibility = v.findViewById(R.id.visibility_value);
         tvUvSummary = v.findViewById(R.id.uv_summary);
         tempLayout = v.findViewById(R.id.temp_layout);
+        if(PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)){
+            iconInfo.setVisibility(View.VISIBLE);
+        }
+        else{
+            iconInfo.setVisibility(View.GONE);
+        }
+        photoDetailsLayout = v.findViewById(R.id.photo_detail_layout);
+        tvPhotoTitle = v.findViewById(R.id.photo_name);
+        tvPhotoBy = v.findViewById(R.id.photo_by);
+        btnClosePhotoDetails = v.findViewById(R.id.close_photo_detail);
+        tvCamera = v.findViewById(R.id.camera_name);
+        tvAperture = v.findViewById(R.id.tvAperture);
+        tvExposureTime = v.findViewById(R.id.tvExposureTime);
+        tvFocalLength = v.findViewById(R.id.tvFocalLength);
+        tvIso = v.findViewById(R.id.tvIso);
+        tvPhotoBy.setClickable(true);
+        tvPhotoBy.setMovementMethod(LinkMovementMethod.getInstance());
+        ExpandCollapseAnimation.collapse(photoDetailsLayout);
+        iconInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPhotoDetailBox();
+            }
+        });
+
+        btnClosePhotoDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePhotoDetailBox();
+            }
+        });
+
         rvDailyForecast = v.findViewById(R.id.daily_forecast_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rvDailyForecast.setLayoutManager(linearLayoutManager);
@@ -145,13 +196,17 @@ public class HomeScreenFragment extends Fragment {
             }
 
         });
+        if(PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)){
+            iconInfo.setVisibility(View.VISIBLE);
+        }
+        else{
+            iconInfo.setVisibility(View.GONE);
+        }
         colorAnimation.start();
         if (textColor == Color.WHITE) {
-            int iconResourceId = Objects.requireNonNull(getActivity()).getResources().getIdentifier("drawable/" + iconName + "_w", null, getActivity().getPackageName());
-            icon.setImageResource(iconResourceId);
+            iconInfo.setImageResource(R.drawable.ic_info_w);
         } else {
-            int iconResourceId = Objects.requireNonNull(getActivity()).getResources().getIdentifier("drawable/" + iconName + "_b", null, getActivity().getPackageName());
-            icon.setImageResource(iconResourceId);
+            iconInfo.setImageResource(R.drawable.ic_info_b);
         }
     }
 
@@ -168,9 +223,6 @@ public class HomeScreenFragment extends Fragment {
     public void updateData(Weather weather) {
         currentWeather = weather;
         quoteGenerator.updateHomeScreenQuote(weather);
-
-        String iconNameRaw = currentWeather.getCurrently().getIcon();
-        iconName = iconNameRaw.replace("-", "_");
         updateUvData();
         updateTemperatureData();
         updateHumidityData();
@@ -196,6 +248,7 @@ public class HomeScreenFragment extends Fragment {
             @Override
             public void run() {
                 try{
+                    tempPointer.setVisibility(View.VISIBLE);
                     ConstraintLayout.LayoutParams pointerParams = (ConstraintLayout.LayoutParams) tempPointer.getLayoutParams();
                     float layoutWidth = (float) tempLayout.getWidth();
                     float tempBarWidth = (float) tempBar.getWidth();
@@ -334,7 +387,72 @@ public class HomeScreenFragment extends Fragment {
         tvSmallText.setText(quote.getSub());
     }
 
+    public void updatePhotoDetail(Unsplash unsplash){
+        String photoTitle = unsplash.description!=null?unsplash.description.substring(0, 1).toUpperCase() + unsplash.description.substring(1):getString(R.string.photo_name_na);
+        String userProfileLink = unsplash.user.links.html;
+        String userName = unsplash.user.name;
+        String cameraMaker = unsplash.exif.make;
+        String cameraModel = unsplash.exif.model!=null?unsplash.exif.model:getString(R.string.not_available);
+        if(cameraMaker != null){
+            if(cameraMaker.toLowerCase().contains("canon") || cameraMaker.toLowerCase().contains("nikon")){
+                cameraMaker = "";
+            }
+        }
+        String camera = cameraMaker + " " + cameraModel;
+        String aperture = unsplash.exif.aperture!=null?"f/"+unsplash.exif.aperture:getString(R.string.not_available);
+        String focalLength = unsplash.exif.focalLength!=null?unsplash.exif.focalLength+" mm":getString(R.string.not_available);
+        String iso = unsplash.exif.iso!=null?String.valueOf(unsplash.exif.iso):getString(R.string.not_available);
+        String exposureTIme = unsplash.exif.exposureTime!=null?unsplash.exif.exposureTime:getString(R.string.not_available);
+
+        tvPhotoTitle.setText(photoTitle);
+
+        tvPhotoBy.setText(MyTextUtil.getReferralHtml(getActivity(),userProfileLink,userName));
+        tvCamera.setText(camera);
+        tvAperture.setText(aperture);
+        tvFocalLength.setText(focalLength);
+        tvIso.setText(iso);
+        tvExposureTime.setText(exposureTIme);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void openPhotoDetailBox(){
+        iconInfo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+        btnClosePhotoDetails.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+        ExpandCollapseAnimation.expand(photoDetailsLayout);
+        photoDetailsShowing = true;
+    }
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void closePhotoDetailBox(){
+        btnClosePhotoDetails.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+        iconInfo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+        ExpandCollapseAnimation.collapse(photoDetailsLayout);
+        photoDetailsShowing = false;
+    }
+
     public interface OnLayoutRefreshListener {
         void updateData();
     }
+
 }

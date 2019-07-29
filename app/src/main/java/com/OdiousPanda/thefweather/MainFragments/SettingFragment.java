@@ -59,13 +59,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnHellYeah;
     private Button btnColor;
     private Button btnPicture;
+    private Button btnPictureRandom;
 
     private SlideUp aboutMeSlideUp;
     public boolean aboutMeShowing = false;
 
     private int activeButtonColor = Color.argb(255, 255, 255, 255);
     private int buttonColor = Color.argb(255, 255, 255, 255);
-    private int textColor = Color.argb(255, 0, 0, 0);
     private int buttonTextColor = Color.argb(255, 255, 255, 255);
     private int activeButtonTextColor = Color.argb(255, 255, 255, 255);
     public SettingFragment() {
@@ -110,6 +110,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnHellYeah = v.findViewById(R.id.btn_hell_yeah);
         btnColor = v.findViewById(R.id.btn_random_color);
         btnPicture = v.findViewById(R.id.btn_picture);
+        btnPictureRandom = v.findViewById(R.id.btn_picture_random);
 
         final ConstraintLayout aboutMeLayout = v.findViewById(R.id.about_me_layout);
         ImageView closeAboutMeBtn = v.findViewById(R.id.btn_close_about);
@@ -149,6 +150,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnHellYeah.setOnClickListener(this);
         btnColor.setOnClickListener(this);
         btnPicture.setOnClickListener(this);
+        btnPictureRandom.setOnClickListener(this);
     }
 
     private void rateThisApp() {
@@ -209,8 +211,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         if(currentBackgroundSetting.equals(PreferencesUtil.BACKGROUND_COLOR)){
             updateBackgroundSettingButtonColor(btnColor.getId());
-        } else{
+        } else if(currentBackgroundSetting.equals(PreferencesUtil.BACKGROUND_PICTURE)){
             updateBackgroundSettingButtonColor(btnPicture.getId());
+        } else{
+            updateBackgroundSettingButtonColor(btnPictureRandom.getId());
         }
 
         if (isExplicit) {
@@ -224,58 +228,31 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.btn_c: {
-                changeTempUnit(id);
-                break;
-            }
-            case R.id.btn_f: {
-                changeTempUnit(id);
-                break;
-            }
+            case R.id.btn_c:
+            case R.id.btn_f:
             case R.id.btn_scientist: {
                 changeTempUnit(id);
                 break;
             }
-            case R.id.btn_km: {
-                changeDistanceUnit(id);
-                break;
-            }
-            case R.id.btn_mi: {
-                changeDistanceUnit(id);
-                break;
-            }
+            case R.id.btn_km:
+            case R.id.btn_mi:
             case R.id.btn_bananas: {
                 changeDistanceUnit(id);
                 break;
             }
-            case R.id.btn_kmph: {
-                changeSpeedUnit(id);
-                break;
-            }
-            case R.id.btn_miph: {
-                changeSpeedUnit(id);
-                break;
-            }
+            case R.id.btn_kmph:
+            case R.id.btn_miph:
             case R.id.btn_bananaph: {
                 changeSpeedUnit(id);
                 break;
             }
-            case R.id.btn_psi: {
-                changePressureUnit(id);
-                break;
-            }
-            case R.id.btn_mmhg: {
-                changePressureUnit(id);
-                break;
-            }
+            case R.id.btn_psi:
+            case R.id.btn_mmhg:
             case R.id.btn_depress: {
                 changePressureUnit(id);
                 break;
             }
-            case R.id.btn_im_not: {
-                changeExplicitSetting(id);
-                break;
-            }
+            case R.id.btn_im_not:
             case R.id.btn_hell_yeah: {
                 changeExplicitSetting(id);
                 break;
@@ -292,16 +269,15 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 closeAboutMeDialog();
                 break;
             }
-            case R.id.btn_random_color:{
+            case R.id.btn_random_color:
+            case R.id.btn_picture:
+            case R.id.btn_picture_random:{
                 changeBackgroundSetting(id);
                 break;
             }
-            case R.id.btn_picture:{
-                changeBackgroundSetting(id);
+            default:{
                 break;
             }
-            default:
-                break;
         }
     }
 
@@ -360,6 +336,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
 
         updateDistanceButtonColor(id);
+        Intent updateUnitBroadcast = new Intent();
+        updateUnitBroadcast.setAction(ACTION_UPDATE_UNIT);
+        Objects.requireNonNull(getActivity()).sendBroadcast(updateUnitBroadcast);
         currentDistanceUnit = PreferencesUtil.getDistanceUnit(Objects.requireNonNull(getActivity()));
     }
 
@@ -468,13 +447,24 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         if (id == R.id.btn_random_color) {
             btnColor.setBackgroundColor(activeButtonColor);
             btnPicture.setBackgroundColor(buttonColor);
+            btnPictureRandom.setBackgroundColor(buttonColor);
             btnColor.setTextColor(activeButtonTextColor);
             btnPicture.setTextColor(buttonTextColor);
-        } else {
+            btnPictureRandom.setTextColor(buttonTextColor);
+        } else if(id == R.id.btn_picture) {
             btnColor.setBackgroundColor(buttonColor);
             btnPicture.setBackgroundColor(activeButtonColor);
+            btnPictureRandom.setBackgroundColor(buttonColor);
             btnColor.setTextColor(buttonTextColor);
             btnPicture.setTextColor(activeButtonTextColor);
+            btnPictureRandom.setTextColor(buttonTextColor);
+        } else {
+            btnColor.setBackgroundColor(buttonColor);
+            btnPicture.setBackgroundColor(buttonColor);
+            btnPictureRandom.setBackgroundColor(activeButtonColor);
+            btnColor.setTextColor(buttonTextColor);
+            btnPicture.setTextColor(buttonTextColor);
+            btnPictureRandom.setTextColor(activeButtonTextColor);
         }
     }
 
@@ -508,13 +498,16 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void changeBackgroundSetting(int id) {
         if (id == R.id.btn_random_color) {
             PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()),PreferencesUtil.BACKGROUND_COLOR);
-        } else {
+        } else if(id == R.id.btn_picture) {
             PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()),PreferencesUtil.BACKGROUND_PICTURE);
+        }
+        else if(id == R.id.btn_picture_random){
+            PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()),PreferencesUtil.BACKGROUND_PICTURE_RANDOM);
         }
         updateBackgroundSettingButtonColor(id);
         Intent updateBackgroundBroadcast = new Intent();
         updateBackgroundBroadcast.setAction(ACTION_UPDATE_BACKGROUND);
-        getActivity().sendBroadcast(updateBackgroundBroadcast);
+        Objects.requireNonNull(getActivity()).sendBroadcast(updateBackgroundBroadcast);
         currentBackgroundSetting = PreferencesUtil.getBackgroundSetting(getActivity());
     }
 

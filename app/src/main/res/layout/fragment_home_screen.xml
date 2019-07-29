@@ -6,7 +6,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragments.HomeScreenFragment">
+    tools:context=".MainFragments.HomeScreenFragment"
+    android:clipToPadding="false"
+    android:clipChildren="false">
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/home_layout"
@@ -21,6 +24,7 @@
                 android:paddingStart="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_16"
                 android:paddingTop="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent">
@@ -31,27 +35,29 @@
                     android:textColor="@color/absoluteBlack"
                     app:fontFamily="@font/montserrat"
                     android:textSize="@dimen/text_view_20sp"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/icon"
-                    android:layout_marginBottom="@dimen/margin_4"/>
+                    app:layout_constraintBottom_toBottomOf="parent" />
                 <ImageView
                     android:id="@+id/icon"
-                    android:layout_width="@dimen/icon_36dp"
+                    android:layout_width="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_height="@dimen/icon_36dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_location"
+                    app:layout_constraintTop_toBottomOf="@id/tv_location"
                     tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:id="@+id/big_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_8"
                 android:lineSpacingMultiplier="0.8"
                 android:text="@string/quote_placeholder"
                 android:textSize="@dimen/text_view_48sp"
+                android:textColor="@color/absoluteBlack"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_view_18sp"
+                android:textColor="@color/absoluteBlack"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +85,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
     <com.OdiousPanda.thefweather.CustomUI.MovableConstrainLayout
+        android:elevation="@dimen/margin_8"
         android:id="@+id/layout_data"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -141,6 +149,7 @@
                 android:background="@drawable/temperature_bar"
                 app:layout_constraintBottom_toBottomOf="parent" />
             <View
+                android:visibility="invisible"
                 android:id="@+id/temperature_pointer"
                 app:layout_constraintBottom_toBottomOf="@id/temperature_bar"
                 android:layout_marginBottom="@dimen/margin_6"
@@ -278,5 +287,5 @@
 
         </androidx.recyclerview.widget.RecyclerView>
     </com.OdiousPanda.thefweather.CustomUI.MovableConstrainLayout>
-
+    <include layout="@layout/photo_details_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

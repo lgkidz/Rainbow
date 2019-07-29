@@ -19,6 +19,13 @@ public class RetrofitService {
 
     private static Retrofit retrofitAQI = new Retrofit.Builder()
             .baseUrl(Constant.AQI_BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    private static Retrofit retrofitUnSplash = new Retrofit.Builder()
+            .baseUrl(Constant.UNPLASH_BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -27,4 +34,8 @@ public class RetrofitService {
     }
 
     public static AQICall createAQICall(){return retrofitAQI.create(AQICall.class);}
+
+    public static UnsplashCall createUnsplashCall(){
+        return retrofitUnSplash.create(UnsplashCall.class);
+    }
 }

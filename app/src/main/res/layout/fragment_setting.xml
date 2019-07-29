@@ -279,7 +279,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:weightSum="5">
                     <Button
                         android:id="@+id/btn_random_color"
                         style="@style/Widget.AppCompat.Button.Borderless"
@@ -296,7 +296,7 @@
                         android:id="@+id/btn_picture"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         app:fontFamily="@font/montserrat"
                         android:layout_height="wrap_content"
                         android:background="@color/default_button_bg"
@@ -304,6 +304,18 @@
                         android:textAllCaps="false"
                         android:textSize="@dimen/text_view_14sp"
                         android:text="@string/picture"/>
+                    <Button
+                        android:id="@+id/btn_picture_random"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        app:fontFamily="@font/montserrat"
+                        android:layout_height="wrap_content"
+                        android:background="@color/default_button_bg"
+                        android:textColor="@color/pureWhite"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/text_view_14sp"
+                        android:text="@string/random_picture"/>
                 </LinearLayout>
             </LinearLayout>
 

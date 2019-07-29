@@ -3,6 +3,7 @@ package com.OdiousPanda.thefweather.Utilities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.OdiousPanda.thefweather.R;
@@ -19,6 +20,23 @@ public class MyColorUtil {
         int r = argb[1];
         int g = argb[2];
         int b = argb[3];
+
+        if ((r * 0.299 + g * 0.587 + b * 0.114) > 186) {
+            return Color.argb(255, 0, 0, 0);
+        }
+
+        return Color.argb(255, 255, 255, 255);
+    }
+
+    public static int blackOrWhiteOf(int color) {
+        String hexColor = String.format("#%06X", (0xFFFFFF & color));
+        Log.d("loglog", "blackOrWhiteOf: " + hexColor);
+        int[] rgb = new int[]{Integer.parseInt(hexColor.substring(1,3),16),
+                Integer.parseInt(hexColor.substring(3,5),16),
+                Integer.parseInt(hexColor.substring(5,7),16)};
+        int r = rgb[0];
+        int g = rgb[1];
+        int b = rgb[2];
 
         if ((r * 0.299 + g * 0.587 + b * 0.114) > 186) {
             return Color.argb(255, 0, 0, 0);

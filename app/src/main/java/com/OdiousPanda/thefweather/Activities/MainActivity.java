@@ -7,7 +7,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -32,17 +35,20 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.OdiousPanda.thefweather.API.RetrofitService;
 import com.OdiousPanda.thefweather.Adapters.LocationListAdapter;
 import com.OdiousPanda.thefweather.Adapters.SectionsPagerAdapter;
 import com.OdiousPanda.thefweather.CustomUI.MovableFAB;
 import com.OdiousPanda.thefweather.DataModel.AQI.AirQuality;
 import com.OdiousPanda.thefweather.DataModel.Coordinate;
 import com.OdiousPanda.thefweather.DataModel.LocationData;
+import com.OdiousPanda.thefweather.DataModel.Unsplash.Unsplash;
 import com.OdiousPanda.thefweather.Helpers.SwipeToDeleteCallback;
 import com.OdiousPanda.thefweather.MainFragments.DetailsFragment;
 import com.OdiousPanda.thefweather.MainFragments.HomeScreenFragment;
@@ -53,9 +59,14 @@ import com.OdiousPanda.thefweather.Repositories.WeatherRepository;
 import com.OdiousPanda.thefweather.Utilities.MyColorUtil;
 import com.OdiousPanda.thefweather.ViewModels.WeatherViewModel;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.TransitionOptions;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
@@ -67,11 +78,15 @@ import java.util.List;
 import java.util.Locale;
 
 import mumayank.com.airlocationlibrary.AirLocation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener,LocationListAdapter.OnItemClickListener {
 
     private static final String TAG = "weatherA";
-    Tooltip fabTooltip;
+    private Tooltip fabTooltip;
+    private ImageView background;
     private WeatherViewModel weatherViewModel;
     private boolean firstTimeObserve = true;
     private boolean firstTimeFetchViewModel = true;
@@ -160,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
     private void initViews() {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // Set up the ViewPager with the sections locationListAdapter.
+        background = findViewById(R.id.background);
         mViewPager = findViewById(R.id.container);
         coordinatorLayout = findViewById(R.id.main_content);
         loadingIcon = findViewById(R.id.loading_icon);
@@ -401,52 +416,102 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void updateBackground() {
-        if(PreferencesUtil.getBackgroundSetting(MainActivity.this).equals(PreferencesUtil.BACKGROUND_PICTURE)){
-            String iconRaw = locations.get(currentLocationPosition).getWeather().getCurrently().getIcon();
-            String iconName = iconRaw.replace("-", "_");
-            int iconResourceId = getResources().getIdentifier("drawable/" + iconName + "_picture", null,getPackageName());
-            Glide.with(MainActivity.this).load(iconResourceId)
-                    .centerCrop()
-                    .into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                            coordinatorLayout.setBackground(resource);
-                        }
-                    });
-            HomeScreenFragment.getInstance().setColorTheme(Color.WHITE);
-        } else{
-            final int[] argb = MyColorUtil.randomColorCode();
-            int textColorCode = MyColorUtil.blackOrWhiteOf(argb);
-            ObjectAnimator colorFade = ObjectAnimator.ofObject(coordinatorLayout
-                    , "backgroundColor"
-                    , new ArgbEvaluator()
-                    , currentBackgroundColor
-                    , Color.argb(argb[0], argb[1], argb[2], argb[3]));
-            colorFade.setDuration(200);
-            colorFade.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    currentBackgroundColor = Color.argb(argb[0], argb[1], argb[2], argb[3]);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-            colorFade.start();
-            HomeScreenFragment.getInstance().setColorTheme(textColorCode);
+        switch (PreferencesUtil.getBackgroundSetting(MainActivity.this)) {
+            case PreferencesUtil.BACKGROUND_PICTURE:
+                updateBackgroundWeatherPicture();
+                break;
+            case PreferencesUtil.BACKGROUND_COLOR:
+                updateBackgroundColor();
+                break;
+            case PreferencesUtil.BACKGROUND_PICTURE_RANDOM:
+                updateBackgroundRandomPicture();
+                break;
         }
+    }
+
+    private void updateBackgroundRandomPicture(){
+        RetrofitService.createUnsplashCall().getRandomPotrait().enqueue(new Callback<Unsplash>() {
+            @Override
+            public void onResponse(@NonNull Call<Unsplash> call, @NonNull Response<Unsplash> response) {
+                if(response.isSuccessful()){
+                    Unsplash unsplash = response.body();
+                    assert unsplash != null;
+                    Glide.with(MainActivity.this).load(unsplash.urls.regular)
+                            .placeholder(background.getDrawable())
+                            .transition(DrawableTransitionOptions.withCrossFade(400))
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .centerCrop()
+                            .addListener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    Bitmap bitmap = ((BitmapDrawable)resource).getBitmap();
+                                    Palette p = Palette.from(bitmap).generate();
+                                    int backgroundColor = p.getDominantColor(Color.BLACK);
+                                    int textColor = MyColorUtil.blackOrWhiteOf(backgroundColor);
+                                    HomeScreenFragment.getInstance().setColorTheme(textColor);
+                                    return false;
+                                }
+                            })
+                            .into(background);
+                    HomeScreenFragment.getInstance().updatePhotoDetail(unsplash);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Unsplash> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void updateBackgroundWeatherPicture(){
+        String iconRaw = locations.get(currentLocationPosition).getWeather().getCurrently().getIcon();
+        String iconName = iconRaw.replace("-", "_");
+        int iconResourceId = getResources().getIdentifier("drawable/" + iconName + "_picture", null,getPackageName());
+        Glide.with(MainActivity.this).load(iconResourceId)
+                .centerCrop()
+                .into(background);
+        HomeScreenFragment.getInstance().setColorTheme(Color.WHITE);
+    }
+
+    private void updateBackgroundColor(){
+        background.setImageResource(android.R.color.transparent);
+        final int[] argb = MyColorUtil.randomColorCode();
+        int textColorCode = MyColorUtil.blackOrWhiteOf(argb);
+        ObjectAnimator colorFade = ObjectAnimator.ofObject(background
+                , "backgroundColor"
+                , new ArgbEvaluator()
+                , currentBackgroundColor
+                , Color.argb(argb[0], argb[1], argb[2], argb[3]));
+        colorFade.setDuration(200);
+        colorFade.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                currentBackgroundColor = Color.argb(argb[0], argb[1], argb[2], argb[3]);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        colorFade.start();
+        HomeScreenFragment.getInstance().setColorTheme(textColorCode);
     }
 
     private void hideLocationList() {
@@ -493,12 +558,16 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     public void onBackPressed() {
+        if (locationListShowing) {
+            hideLocationList();
+            return;
+        }
         if(SettingFragment.getInstance().aboutMeShowing){
             SettingFragment.getInstance().closeAboutMeDialog();
             return;
         }
-        if (locationListShowing) {
-            hideLocationList();
+        if(HomeScreenFragment.getInstance().photoDetailsShowing){
+            HomeScreenFragment.getInstance().closePhotoDetailBox();
             return;
         }
         super.onBackPressed();

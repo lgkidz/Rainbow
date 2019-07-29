@@ -7,8 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/pureWhite"
     tools:context=".Activities.MainActivity">
-
+    <ImageView
+        android:id="@+id/background"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription"/>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -148,4 +154,5 @@
             android:translationY="@dimen/margin_n_16"
             android:text="@string/no_connection_tv3"/>
     </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -44,20 +44,19 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
             Log.d("movable layout", "onTouch: action_down");
             downRawY = motionEvent.getRawY();
             dY = view.getY() - downRawY;
-
-            return true; // Consumed
+            return true;
 
         } else if (action == MotionEvent.ACTION_MOVE) {
             Log.d("movable layout", "onTouch: action_move");
             float newY = motionEvent.getRawY() + dY;
-            newY = Math.max((float)parentHeight/2, newY); // Don't allow the FAB past the top of the parent
-            newY = Math.min(parentHeight - bottomBoundary - layoutParams.bottomMargin, newY); // Don't allow the FAB past the bottom of the parent
+            newY = Math.max((float)parentHeight/2, newY); // Don't allow the layout past the top of the parent /2
+            newY = Math.min(parentHeight - bottomBoundary - layoutParams.bottomMargin, newY); // Don't allow the layout past the bottom of the parent
             view.animate()
                     .y(newY)
                     .setDuration(0)
                     .start();
 
-            return true; // Consumed
+            return true;
 
         } else if (action == MotionEvent.ACTION_UP) {
             Log.d("movable layout", "onTouch: action_up");
@@ -65,8 +64,15 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
             float upDY = upRawY - downRawY;
             Log.d("movable layout", "onTouch: " + upDY);
             float restY = (float) parentHeight/2;
-            if(upDY > 0){
-                restY = parentHeight - bottomBoundary - layoutParams.bottomMargin;
+            if(Math.abs(upDY) < bottomBoundary/2){
+                if(upRawY > parentHeight/2 + bottomBoundary/2){
+                    restY = parentHeight - bottomBoundary - layoutParams.bottomMargin;
+                }
+            }
+            else{
+                if(upDY > 0){
+                    restY = parentHeight - bottomBoundary - layoutParams.bottomMargin;
+                }
             }
             view.animate()
                     .y(restY)
