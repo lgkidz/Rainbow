@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:248215632496:android:04381fc35a7ab01d",
+        "mobilesdk_app_id": "1:248215632496:android:4176dcdc639019a2",
         "android_client_info": {
-          "package_name": "com.OdiousPanda.thefweather"
+          "package_name": "com.OdiousPanda.rainbow"
         }
       },
       "oauth_client": [
         {
-          "client_id": "248215632496-68tpu5de7s43rep45lkm35lpb54bkd9c.apps.googleusercontent.com",
+          "client_id": "248215632496-pcl28lnb18o2uhhds9g3n43lr1od91qb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.OdiousPanda.thefweather",
+            "package_name": "com.OdiousPanda.rainbow",
             "certificate_hash": "7cf0e33d4f18c9c6ddeac0c13dd0c52a1b3c8b4c"
           }
         },
