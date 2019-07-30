@@ -89,7 +89,6 @@ import com.tooltip.Tooltip;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -172,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         setContentView(R.layout.activity_main);
         Places.initialize(getApplicationContext(), Constant.GOOGLE_API_KEY);
         placesClient = Places.createClient(this);
+
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         initViews();
         HomeScreenFragment.getInstance().setOnRefreshListener(this);
@@ -397,40 +397,39 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateCurrentLocation() {
         Log.d(TAG, "updateCurrentLocation: update Current Location");
-
-
-        // Use fields to define the data types to return.
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG);
-        // Use the builder to create a FindCurrentPlaceRequest.
-        FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            Task<FindCurrentPlaceResponse> placeResponse = placesClient.findCurrentPlace(request);
-            placeResponse.addOnCompleteListener(new OnCompleteListener<FindCurrentPlaceResponse>() {
-                @Override
-                public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
-                    if(task.isSuccessful()){
-                        FindCurrentPlaceResponse response = task.getResult();
-                        assert response != null;
-                        if(response.getPlaceLikelihoods().size() > 0){
-                            Place p = response.getPlaceLikelihoods().get(0).getPlace();
-                            Coordinate currentLocation = new Coordinate();
-                            currentLocation.setName(p.getName());
-                            currentLocation.setId(1); // default ID for current Location
-                            currentLocation.setLat(String.valueOf(Objects.requireNonNull(p.getLatLng()).latitude));
-                            currentLocation.setLon(String.valueOf(p.getLatLng().longitude));
-                            weatherViewModel.fetchAirQualityByCoordinate(currentLocation);
-                            weatherViewModel.update(currentLocation);
+        AirLocation airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
+            @Override
+            public void onSuccess(@NonNull Location location) {
+                Coordinate currentLocation = new Coordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                currentLocation.setId(1); // default ID for current Location
+                Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
+                try {
+                    Geocoder geo = new Geocoder(MainActivity.this, Locale.getDefault());
+                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if (!addresses.isEmpty()) {
+                        String address = addresses.get(0).getAddressLine(0);
+                        String[] addressPieces = address.split(",");
+                        String locationName;
+                        if (addressPieces.length >= 3) {
+                            locationName = addressPieces[addressPieces.length - 3].trim();
+                        } else {
+                            locationName = addressPieces[addressPieces.length - 2].trim();
                         }
-                    }else {
-                        Exception exception = task.getException();
-                        if (exception instanceof ApiException) {
-                            ApiException apiException = (ApiException) exception;
-                            Log.e(TAG, "Place not found: " + apiException.getStatusCode());
-                        }
+                        currentLocation.setName(locationName);
+                        HomeScreenFragment.getInstance().updateCurrentLocationName(locationName);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
-        }
+                weatherViewModel.update(currentLocation);
+
+            }
+
+            @Override
+            public void onFailed(@NonNull AirLocation.LocationFailedEnum locationFailedEnum) {
+
+            }
+        });
     }
 
     @Override
@@ -610,7 +609,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     protected void onStop() {
-        finish();
+        //finish();
         super.onStop();
         Log.d(TAG, "onStop: ");
     }

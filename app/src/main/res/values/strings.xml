@@ -161,6 +161,7 @@
     <string name="photo_details_title">Photo details</string>
     <string name="not_available">N/A</string>
     <string name="photo_name_na">Photo\'s description not provided</string>
+    <string name="sponsor">Sponsor</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>

@@ -41,7 +41,7 @@ public class ExpandCollapseAnimation {
         };
 
         // Expansion speed of 1dp/ms
-        a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
+        a.setDuration(250);
         a.setInterpolator(new DecelerateInterpolator());
         v.startAnimation(a);
     }
@@ -68,8 +68,7 @@ public class ExpandCollapseAnimation {
             }
         };
 
-        // Collapse speed of 1dp/ms
-        a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+        a.setDuration(250);
         a.setInterpolator(new AccelerateInterpolator());
         v.startAnimation(a);
     }

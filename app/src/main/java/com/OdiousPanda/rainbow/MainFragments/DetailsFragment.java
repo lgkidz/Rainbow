@@ -25,6 +25,11 @@ import com.OdiousPanda.rainbow.Utilities.ClothesIconUtil;
 import com.OdiousPanda.rainbow.Utilities.FoodUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.Objects;
 
@@ -120,6 +125,15 @@ public class DetailsFragment extends Fragment {
         if (currentWeather != null) {
             updateUnit();
         }
+
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        AdView adView = v.findViewById(R.id.adView);
+        adView.loadAd(adRequest);
     }
 
     void updateUnit() {

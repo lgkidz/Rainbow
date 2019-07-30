@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import com.OdiousPanda.rainbow.API.RetrofitService;
 import com.OdiousPanda.rainbow.API.WeatherCall;
+import com.OdiousPanda.rainbow.Activities.MainActivity;
 import com.OdiousPanda.rainbow.Activities.WelcomeActivity;
 import com.OdiousPanda.rainbow.DataModel.Quote;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
@@ -92,8 +93,8 @@ public class NormalWidget extends AppWidgetProvider {
             tapIntent.setAction(ACTION_TAP);
             PendingIntent tapPending = PendingIntent.getBroadcast(context,0,tapIntent,0);
             remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout,tapPending);
-            Intent toDetailsScreenIntent = new Intent(context, WelcomeActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId, toDetailsScreenIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent toDetailsScreenIntent = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,widgetId, toDetailsScreenIntent,0);
             remoteViews.setOnClickPendingIntent(R.id.layout_data,pendingIntent);
             PreferencesUtil.setWidgetTapCount(context,0);
             aWm.updateAppWidget(widgetId, remoteViews);

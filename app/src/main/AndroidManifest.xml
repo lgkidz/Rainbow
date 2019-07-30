@@ -17,7 +17,9 @@
         android:roundIcon="@drawable/logo_rainbow"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4450316213569654~1706912347"/>
         <receiver android:name="com.OdiousPanda.rainbow.Widgets.NormalWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
