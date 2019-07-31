@@ -98,7 +98,7 @@ public class WeatherRepository {
                                 return o1.getCoordinate().getId() - o2.getCoordinate().getId();
                             }
                         });
-                        locationDataList.postValue(locations);
+                        locationDataList.setValue(locations);
                     }
                 }
                 @Override

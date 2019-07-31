@@ -20,7 +20,6 @@ public class WeatherViewModel extends AndroidViewModel {
     private MutableLiveData<AirQuality> airQualityByCoordinate = new MutableLiveData<>();
     private WeatherRepository repository;
     private LiveData<List<Coordinate>> allSavedCoordinate;
-    private LiveData<LocationData> currentLocationData = new MutableLiveData<>();
 
     public WeatherViewModel(Application application) {
         super(application);

@@ -1,6 +1,5 @@
 package com.OdiousPanda.rainbow.Activities;
 
-import android.Manifest;
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -8,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -56,10 +54,10 @@ import com.OdiousPanda.rainbow.Helpers.SwipeToDeleteCallback;
 import com.OdiousPanda.rainbow.MainFragments.DetailsFragment;
 import com.OdiousPanda.rainbow.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.rainbow.MainFragments.SettingFragment;
-import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Repositories.WeatherRepository;
 import com.OdiousPanda.rainbow.Utilities.MyColorUtil;
+import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.ViewModels.WeatherViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -68,16 +66,11 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
@@ -91,7 +84,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import mumayank.com.airlocationlibrary.AirLocation;
 import retrofit2.Call;
@@ -123,12 +115,18 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private boolean screenInitialized = false;
     private LocationListAdapter locationListAdapter;
     private List<LocationData> locations = new ArrayList<>();
+    BroadcastReceiver unitUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: action: " + intent.getAction());
+            if (screenInitialized) {
+                locationListAdapter = new LocationListAdapter(MainActivity.this, locations, MainActivity.this);
+                rvLocations.setAdapter(locationListAdapter);
+            }
+        }
+    };
     private int currentLocationPosition = 0; // first position of the location list
     private String currentLocationName = ""; // default ID for current location
-
-    private int AUTOCOMPLETE_REQUEST_CODE = 1201;
-    private PlacesClient placesClient;
-
     BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -142,18 +140,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             }
         }
     };
-
-    BroadcastReceiver unitUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive: action: " + intent.getAction());
-            if (screenInitialized) {
-                locationListAdapter = new LocationListAdapter(MainActivity.this, locations, MainActivity.this);
-                rvLocations.setAdapter(locationListAdapter);
-            }
-        }
-    };
-
+    private int AUTOCOMPLETE_REQUEST_CODE = 1201;
+    private PlacesClient placesClient;
+    private boolean toolTipShown = false;
+    private int currentBackgroundColor = Color.argb(255, 255, 255, 255);
+    private int c = 0;
     BroadcastReceiver backgroundUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -162,8 +153,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             }
         }
     };
-    private boolean toolTipShown = false;
-    private int currentBackgroundColor = Color.argb(255, 255, 255, 255);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,7 +232,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .withListeners(new SlideUp.Listener.Events() {
                     @Override
                     public void onSlide(float percent) {
-                        Log.d(TAG, "onSlide: " + percent);
                         if (percent == 100 && loadingLayout.getVisibility() == View.INVISIBLE && noConnectionLayout.getVisibility() == View.INVISIBLE) {
                             fab.show();
                             locationListShowing = false;
@@ -347,6 +335,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 setupDataObserver();
             }
         });
+
+
     }
 
     private void setupDataObserver() {
@@ -362,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 if (data.size() > 0) {
                     locations = data;
                 }
-                //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
+//                Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
                 if (firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1) {
                     DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                     HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
@@ -374,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 if (dataRefreshing) {
                     if (data.size() > currentLocationPosition) {
                         //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
-                        if (locations.get(currentLocationPosition).getCoordinate().getName().equalsIgnoreCase(currentLocationName) || currentLocationPosition == 0) {
+                        if (locations.get(currentLocationPosition).getCoordinate().getName().equalsIgnoreCase(currentLocationName) || locations.get(currentLocationPosition).getCoordinate().getId() == 1) {
                             DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
                             HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
                             HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
@@ -422,7 +412,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     e.printStackTrace();
                 }
                 weatherViewModel.update(currentLocation);
-
+                weatherViewModel.fetchAirQualityByCoordinate(currentLocation);
             }
 
             @Override
@@ -453,11 +443,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         }
     }
 
-    private void updateBackgroundRandomPicture(){
+    private void updateBackgroundRandomPicture() {
+        c++;
+        Log.d(TAG, "updateBackgroundRandomPicture: " + c);
         RetrofitService.createUnsplashCall().getRandomPotrait().enqueue(new Callback<Unsplash>() {
             @Override
             public void onResponse(@NonNull Call<Unsplash> call, @NonNull Response<Unsplash> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Unsplash unsplash = response.body();
                     assert unsplash != null;
                     Glide.with(MainActivity.this).load(unsplash.urls.regular)
@@ -473,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
                                 @Override
                                 public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    Bitmap bitmap = ((BitmapDrawable)resource).getBitmap();
+                                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
                                     Palette p = Palette.from(bitmap).generate();
                                     int backgroundColor = p.getDominantColor(Color.BLACK);
                                     int textColor = MyColorUtil.blackOrWhiteOf(backgroundColor);
@@ -493,10 +485,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         });
     }
 
-    private void updateBackgroundWeatherPicture(){
+    private void updateBackgroundWeatherPicture() {
         String iconRaw = locations.get(currentLocationPosition).getWeather().getCurrently().getIcon();
         String iconName = iconRaw.replace("-", "_");
-        int imageResourceId = getResources().getIdentifier("drawable/" + iconName + "_picture", null,getPackageName());
+        int imageResourceId = getResources().getIdentifier("drawable/" + iconName + "_picture", null, getPackageName());
         Glide.with(MainActivity.this).load(imageResourceId)
                 .placeholder(background.getDrawable())
                 .transition(DrawableTransitionOptions.withCrossFade(200))
@@ -506,7 +498,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         HomeScreenFragment.getInstance().setColorTheme(Color.WHITE);
     }
 
-    private void updateBackgroundColor(){
+    private void updateBackgroundColor() {
         background.setImageResource(android.R.color.transparent);
         final int[] argb = MyColorUtil.randomColorCode();
         int textColorCode = MyColorUtil.blackOrWhiteOf(argb);
@@ -570,7 +562,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         loadingLayout.setVisibility(View.INVISIBLE);
         registerReceiver(connectionChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         registerReceiver(unitUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_UNIT));
-        registerReceiver(backgroundUpdateReceiver,new IntentFilter(SettingFragment.ACTION_UPDATE_BACKGROUND));
+        registerReceiver(backgroundUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_BACKGROUND));
         Log.d(TAG, "onResume: ");
     }
 
@@ -589,11 +581,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             hideLocationList();
             return;
         }
-        if(SettingFragment.getInstance().aboutMeShowing){
+        if (SettingFragment.getInstance().aboutMeShowing) {
             SettingFragment.getInstance().closeAboutMeDialog();
             return;
         }
-        if(HomeScreenFragment.getInstance().photoDetailsShowing){
+        if (HomeScreenFragment.getInstance().photoDetailsShowing) {
             HomeScreenFragment.getInstance().closePhotoDetailBox();
             return;
         }
@@ -624,8 +616,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == AUTOCOMPLETE_REQUEST_CODE){
-            if(resultCode == RESULT_OK){
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
                 assert data != null;
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 LatLng latLng = place.getLatLng();
@@ -635,11 +627,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 c.setLon(String.valueOf(latLng.longitude));
                 c.setName(place.getName());
                 weatherViewModel.insert(c);
-                RetrofitService.createWeatherCall().getWeather(String.valueOf(latLng.latitude),String.valueOf(latLng.longitude))
+                RetrofitService.createWeatherCall().getWeather(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude))
                         .enqueue(new Callback<Weather>() {
                             @Override
                             public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
-                                if(response.isSuccessful()){
+                                if (response.isSuccessful()) {
                                     LocationData l = new LocationData(c);
                                     l.setWeather(response.body());
                                     locations.add(l);
@@ -652,7 +644,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
                             }
                         });
-            } else if(resultCode == AutocompleteActivity.RESULT_ERROR) {
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 assert data != null;
                 Status status = Autocomplete.getStatusFromIntent(data);
                 Log.d(TAG, status.getStatusMessage());

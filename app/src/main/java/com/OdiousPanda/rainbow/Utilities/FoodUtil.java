@@ -76,6 +76,10 @@ public class FoodUtil {
     }
 
     public void updateNewFood(){
+        if(foods.size() == 0){
+            queryFoods();
+            return;
+        }
         Food food = foods.get(new Random().nextInt(foods.size()));
         int icon = getIcons(food.getAtt());
         DetailsFragment.getInstance().updateFoodData(icon,food.getName());
