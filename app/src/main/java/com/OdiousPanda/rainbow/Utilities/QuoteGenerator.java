@@ -60,13 +60,13 @@ public class QuoteGenerator {
         }
         filterQuotes();
         Quote randomQuote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
-        if(randomQuote.getMain() == null && randomQuote.getSub() == null){
+        if (randomQuote.getMain() == null && randomQuote.getSub() == null) {
             randomQuote.setDefaultQuote();
         }
         HomeScreenFragment.getInstance().updateQuote(randomQuote);
     }
 
-    private void filterQuotes(){
+    private void filterQuotes() {
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         List<String> criteria = new ArrayList<>();

@@ -40,8 +40,7 @@ public class LocationData {
     public boolean matchIdWith(LocationData obj) {
         try {
             return this.getCoordinate().getId() == obj.getCoordinate().getId();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

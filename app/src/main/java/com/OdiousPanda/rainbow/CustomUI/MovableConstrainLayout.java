@@ -28,7 +28,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
         init();
     }
 
-    private void init(){
+    private void init() {
         setOnTouchListener(this);
     }
 
@@ -36,10 +36,10 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
     public boolean onTouch(View view, MotionEvent motionEvent) {
         ConstraintLayout.LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
         int viewHeight = view.getHeight();
-        View viewParent = (View)view.getParent();
+        View viewParent = (View) view.getParent();
         int parentHeight = viewParent.getHeight();
         int action = motionEvent.getAction();
-        float bottomBoundary = (float)viewHeight * 58/100;
+        float bottomBoundary = (float) viewHeight * 58 / 100;
         if (action == MotionEvent.ACTION_DOWN) {
             Log.d("movable layout", "onTouch: action_down");
             downRawY = motionEvent.getRawY();
@@ -49,7 +49,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
         } else if (action == MotionEvent.ACTION_MOVE) {
             Log.d("movable layout", "onTouch: action_move");
             float newY = motionEvent.getRawY() + dY;
-            newY = Math.max((float)parentHeight/2, newY); // Don't allow the layout past the top of the parent /2
+            newY = Math.max((float) parentHeight / 2, newY); // Don't allow the layout past the top of the parent /2
             newY = Math.min(parentHeight - bottomBoundary - layoutParams.bottomMargin, newY); // Don't allow the layout past the bottom of the parent
             view.animate()
                     .y(newY)
@@ -63,14 +63,13 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
             float upRawY = motionEvent.getRawY();
             float upDY = upRawY - downRawY;
             Log.d("movable layout", "onTouch: " + upDY);
-            float restY = (float) parentHeight/2;
-            if(Math.abs(upDY) < bottomBoundary/2){
-                if(upRawY > parentHeight/2 + bottomBoundary/2){
+            float restY = (float) parentHeight / 2;
+            if (Math.abs(upDY) < bottomBoundary / 2) {
+                if (upRawY > parentHeight / 2 + bottomBoundary / 2) {
                     restY = parentHeight - bottomBoundary - layoutParams.bottomMargin;
                 }
-            }
-            else{
-                if(upDY > 0){
+            } else {
+                if (upDY > 0) {
                     restY = parentHeight - bottomBoundary - layoutParams.bottomMargin;
                 }
             }

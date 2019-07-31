@@ -9,9 +9,10 @@ public class AirQuality {
     public String status;
     @SerializedName("data")
     @Expose
-    public Data data;
+    private Data data;
 
     private String address;
+
     public String getAddress() {
         return address;
     }

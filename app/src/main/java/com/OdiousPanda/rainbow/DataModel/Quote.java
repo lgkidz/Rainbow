@@ -29,7 +29,7 @@ public class Quote {
         this.sub = sub;
     }
 
-    public void setDefaultQuote(){
+    public void setDefaultQuote() {
         this.main = "If you see these lines.";
         this.sub = "Something went wrong... :|";
     }

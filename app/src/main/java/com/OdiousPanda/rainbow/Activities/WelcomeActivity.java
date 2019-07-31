@@ -1,7 +1,6 @@
 package com.OdiousPanda.rainbow.Activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
@@ -11,9 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,11 +18,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.OdiousPanda.rainbow.Adapters.WelcomePagerAdapter;
 import com.OdiousPanda.rainbow.DataModel.Coordinate;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
@@ -44,10 +42,9 @@ import mumayank.com.airlocationlibrary.AirLocation;
 public class WelcomeActivity extends AppCompatActivity {
 
     private static final String TAG = "weatherA";
-    WeatherViewModel weatherViewModel;
+    private WeatherViewModel weatherViewModel;
     private ViewPager viewPager;
     private LinearLayout dotsLayout;
-    private int[] layouts;
     private Button btnNext;
     private boolean locationUpdated = false;
     //  viewpager change listener
@@ -62,7 +59,7 @@ public class WelcomeActivity extends AppCompatActivity {
             addBottomDots(position);
 
             // changing the next button text 'NEXT' / 'GOT IT'
-            if (position == layouts.length - 1) {
+            if (position == 2) {
                 // last page. make button text to GOT IT
                 btnNext.setText(getString(R.string.start));
             } else {
@@ -81,6 +78,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         }
     };
+    private ConstraintLayout dotsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,20 +94,14 @@ public class WelcomeActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
         btnNext = findViewById(R.id.btn_next);
-
-
-        // layouts of all welcome sliders
-        layouts = new int[]{
-                R.layout.welcome_slide1,
-                R.layout.welcome_slide2,
-                R.layout.welcome_slide3,
-                R.layout.welcome_slide4};
+        viewPager.setOffscreenPageLimit(3);
+        dotsContainer = findViewById(R.id.dotsContainer);
 
         // adding bottom dots
         addBottomDots(0);
 
-        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
-        viewPager.setAdapter(myViewPagerAdapter);
+        WelcomePagerAdapter adapter = new WelcomePagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +115,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 // checking for last page
                 // if last page home screen will be launched
                 int current = getItem(+1);
-                if (current < layouts.length) {
+                if (current < 3) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
@@ -136,7 +128,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void addBottomDots(int currentPage) {
-        TextView[] dots = new TextView[layouts.length];
+        TextView[] dots = new TextView[3];
 
         int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
         int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
@@ -146,12 +138,12 @@ public class WelcomeActivity extends AppCompatActivity {
             dots[i] = new TextView(this);
             dots[i].setText(HtmlCompat.fromHtml("&#8226;", HtmlCompat.FROM_HTML_MODE_LEGACY));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(colorsInactive[currentPage]);
+            dots[i].setTextColor(colorsInactive[0]);
             dotsLayout.addView(dots[i]);
         }
 
-        if (dots.length > 0)
-            dots[currentPage].setTextColor(colorsActive[currentPage]);
+        dots[currentPage].setTextColor(colorsActive[0]);
+
     }
 
     private int getItem(int i) {
@@ -160,7 +152,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         PreferencesUtil.setNotFirstTimeLaunch(this, true);
-        Intent mainActivityIntent = new Intent(WelcomeActivity.this,MainActivity.class);
+        Intent mainActivityIntent = new Intent(WelcomeActivity.this, MainActivity.class);
         startActivity(mainActivityIntent);
         finish();
     }
@@ -267,39 +259,5 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.setData(uri);
         startActivity(intent);
         finish();
-    }
-
-    /**
-     * View pager adapter
-     */
-    public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater layoutInflater;
-
-        @NonNull
-        @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View view = layoutInflater.inflate(layouts[position], container, false);
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return layouts.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object obj) {
-            return view == obj;
-        }
-
-
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            View view = (View) object;
-            container.removeView(view);
-        }
     }
 }

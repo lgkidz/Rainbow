@@ -9,10 +9,10 @@ public class PreferencesUtil {
     public static final String SPEED_UNIT = "speedUnit";
     public static final String PRESSURE_UNIT = "pressureUnit";
     public static final String EXPLICIT_SETTING = "explicitOrNot";
-    private static final String BACKGROUND_SETTING = "backgroundType";
     public static final String BACKGROUND_COLOR = "color";
     public static final String BACKGROUND_PICTURE = "picture";
     public static final String BACKGROUND_PICTURE_RANDOM = "picture_random";
+    private static final String BACKGROUND_SETTING = "backgroundType";
     // Shared preferences file name
     private static final String PREF_NAME = "RainbowPreferencesName";
     private static final String IS_NOT_FIRST_TIME_LAUNCH = "IsAppFirstTimeLaunch";
@@ -25,12 +25,12 @@ public class PreferencesUtil {
     private static final boolean DEFAULT_EXPLICIT_SETTING = true;
     private static final boolean DEFAULT_NOT_FIRST_TIME_LAUNCH_VALUE = false;
 
-    public static String getBackgroundSetting(Context context){
+    public static String getBackgroundSetting(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return pref.getString(BACKGROUND_SETTING, DEFAULT_BACKGROUND_SETTING);
     }
 
-    public static void setBackgroundSetting(Context context, String value){
+    public static void setBackgroundSetting(Context context, String value) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(BACKGROUND_SETTING, value);

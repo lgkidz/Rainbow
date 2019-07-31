@@ -44,7 +44,7 @@ public class WeatherViewModel extends AndroidViewModel {
         locationData = repository.getLocationWeathers();
     }
 
-    public void fetchAirQualityByCoordinate(Coordinate coordinate){
+    public void fetchAirQualityByCoordinate(Coordinate coordinate) {
         airQualityByCoordinate = repository.getAirQualityByCoordinate(coordinate);
     }
 
@@ -52,11 +52,11 @@ public class WeatherViewModel extends AndroidViewModel {
         return allSavedCoordinate;
     }
 
-    public LiveData<List<LocationData>> getLocationData(){
+    public LiveData<List<LocationData>> getLocationData() {
         return locationData;
     }
 
-    public LiveData<AirQuality> getAirQualityByCoordinate(){
+    public LiveData<AirQuality> getAirQualityByCoordinate() {
         return airQualityByCoordinate;
     }
 }

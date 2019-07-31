@@ -18,37 +18,33 @@ public class ClothesIconUtil {
     private List<Integer> foot = new ArrayList<>();
     private List<Integer> hand = new ArrayList<>();
 
-    public ClothesIconUtil(Weather weather){
+    public ClothesIconUtil(Weather weather) {
         this.weather = weather;
         generateCriteria();
         getIcons();
     }
 
-    private void getIcons(){
+    private void getIcons() {
         Field[] drawablesFields = com.OdiousPanda.rainbow.R.drawable.class.getFields();
         for (Field field : drawablesFields) {
             try {
-                if(field.getName().contains("head_")){
-                    if(field.getName().contains(criteria)){
+                if (field.getName().contains("head_")) {
+                    if (field.getName().contains(criteria)) {
                         head.add(field.getInt(null));
                     }
-                }
-                else if(field.getName().contains("upper_")){
-                    if(field.getName().contains(criteria)){
+                } else if (field.getName().contains("upper_")) {
+                    if (field.getName().contains(criteria)) {
                         upper.add(field.getInt(null));
                     }
-                }
-                else if(field.getName().contains("lower_")){
-                    if(field.getName().contains(criteria)){
+                } else if (field.getName().contains("lower_")) {
+                    if (field.getName().contains(criteria)) {
                         lower.add(field.getInt(null));
                     }
-                }
-                else if(field.getName().contains("foot_")){
-                    if(field.getName().contains(criteria)){
+                } else if (field.getName().contains("foot_")) {
+                    if (field.getName().contains(criteria)) {
                         foot.add(field.getInt(null));
                     }
-                }
-                else if(field.getName().contains("hand_")){
+                } else if (field.getName().contains("hand_")) {
                     hand.add(field.getInt(null));
                 }
             } catch (Exception e) {
@@ -57,7 +53,7 @@ public class ClothesIconUtil {
         }
     }
 
-    private void generateCriteria(){
+    private void generateCriteria() {
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         if (temp > 30) {
@@ -72,34 +68,34 @@ public class ClothesIconUtil {
         }
     }
 
-    public String getCause(){
+    public String getCause() {
         return rain ? " " + criteria + " and raining." : " " + criteria + ".";
     }
 
-    public int getHeadIcon(){
+    public int getHeadIcon() {
         return head.get(new Random().nextInt(head.size()));
     }
 
-    public int getUpperIcon(){
+    public int getUpperIcon() {
         return upper.get(new Random().nextInt(upper.size()));
     }
 
-    public int getLowerIcon(){
+    public int getLowerIcon() {
         return lower.get(new Random().nextInt(lower.size()));
     }
 
-    public int getFootIcon(){
+    public int getFootIcon() {
         return foot.get(new Random().nextInt(foot.size()));
     }
 
-    public int getHandOneIcon(){
-        if(rain){
+    public int getHandOneIcon() {
+        if (rain) {
             return R.drawable.rain_ic_umbrella;
         }
         return hand.get(new Random().nextInt(hand.size()));
     }
 
-    public int getHandTwoIcon(){
+    public int getHandTwoIcon() {
         return hand.get(new Random().nextInt(hand.size()));
     }
 }

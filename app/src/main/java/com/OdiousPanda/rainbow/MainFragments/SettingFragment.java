@@ -18,9 +18,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.OdiousPanda.rainbow.Widgets.NormalWidget;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
+import com.OdiousPanda.rainbow.Widgets.NormalWidget;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
@@ -30,10 +30,11 @@ import java.util.Objects;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
-    @SuppressLint("StaticFieldLeak")
-    private static SettingFragment instance;
     public static final String ACTION_UPDATE_UNIT = "Rainbow.update.unit";
     public static final String ACTION_UPDATE_BACKGROUND = "Rainbow.update.background";
+    @SuppressLint("StaticFieldLeak")
+    private static SettingFragment instance;
+    public boolean aboutMeShowing = false;
     private String currentTempUnit;
     private String currentDistanceUnit;
     private String currentSpeedUnit;
@@ -59,14 +60,12 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnColor;
     private Button btnPicture;
     private Button btnPictureRandom;
-
     private SlideUp aboutMeSlideUp;
-    public boolean aboutMeShowing = false;
-
     private int activeButtonColor = Color.argb(255, 255, 255, 255);
     private int buttonColor = Color.argb(255, 255, 255, 255);
     private int buttonTextColor = Color.argb(255, 255, 255, 255);
     private int activeButtonTextColor = Color.argb(255, 255, 255, 255);
+
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -88,8 +87,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews(View v) {
-        activeButtonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.default_active_button_bg);
-        buttonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.default_button_bg);
+        activeButtonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.default_active_button_bg);
+        buttonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.default_button_bg);
         CoordinatorLayout settingScreenLayout = v.findViewById(R.id.setting_layout);
         tvRate = v.findViewById(R.id.tv_rate);
         tvAbout = v.findViewById(R.id.tv_about);
@@ -160,7 +159,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         aboutMeSlideUp.show();
         aboutMeShowing = true;
     }
-    public void closeAboutMeDialog(){
+
+    public void closeAboutMeDialog() {
         aboutMeSlideUp.hide();
         aboutMeShowing = false;
     }
@@ -208,11 +208,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updatePressureButtonColor(btnDepress.getId());
         }
 
-        if(currentBackgroundSetting.equals(PreferencesUtil.BACKGROUND_COLOR)){
+        if (currentBackgroundSetting.equals(PreferencesUtil.BACKGROUND_COLOR)) {
             updateBackgroundSettingButtonColor(btnColor.getId());
-        } else if(currentBackgroundSetting.equals(PreferencesUtil.BACKGROUND_PICTURE)){
+        } else if (currentBackgroundSetting.equals(PreferencesUtil.BACKGROUND_PICTURE)) {
             updateBackgroundSettingButtonColor(btnPicture.getId());
-        } else{
+        } else {
             updateBackgroundSettingButtonColor(btnPictureRandom.getId());
         }
 
@@ -264,17 +264,17 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 showAboutMeDialog();
                 break;
             }
-            case R.id.btn_close_about:{
+            case R.id.btn_close_about: {
                 closeAboutMeDialog();
                 break;
             }
             case R.id.btn_random_color:
             case R.id.btn_picture:
-            case R.id.btn_picture_random:{
+            case R.id.btn_picture_random: {
                 changeBackgroundSetting(id);
                 break;
             }
-            default:{
+            default: {
                 break;
             }
         }
@@ -450,7 +450,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             btnColor.setTextColor(activeButtonTextColor);
             btnPicture.setTextColor(buttonTextColor);
             btnPictureRandom.setTextColor(buttonTextColor);
-        } else if(id == R.id.btn_picture) {
+        } else if (id == R.id.btn_picture) {
             btnColor.setBackgroundColor(buttonColor);
             btnPicture.setBackgroundColor(activeButtonColor);
             btnPictureRandom.setBackgroundColor(buttonColor);
@@ -496,12 +496,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void changeBackgroundSetting(int id) {
         if (id == R.id.btn_random_color) {
-            PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()),PreferencesUtil.BACKGROUND_COLOR);
-        } else if(id == R.id.btn_picture) {
-            PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()),PreferencesUtil.BACKGROUND_PICTURE);
-        }
-        else if(id == R.id.btn_picture_random){
-            PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()),PreferencesUtil.BACKGROUND_PICTURE_RANDOM);
+            PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.BACKGROUND_COLOR);
+        } else if (id == R.id.btn_picture) {
+            PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.BACKGROUND_PICTURE);
+        } else if (id == R.id.btn_picture_random) {
+            PreferencesUtil.setBackgroundSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.BACKGROUND_PICTURE_RANDOM);
         }
         updateBackgroundSettingButtonColor(id);
         Intent updateBackgroundBroadcast = new Intent();
@@ -517,8 +516,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             } else {
                 PreferencesUtil.setExplicitSetting(Objects.requireNonNull(getActivity()), false);
             }
-        }
-        else{
+        } else {
             PreferencesUtil.setUnitSetting(Objects.requireNonNull(getActivity()), pref, value);
         }
         DetailsFragment.getInstance().updateUnit();

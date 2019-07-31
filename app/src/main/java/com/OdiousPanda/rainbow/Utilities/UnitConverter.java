@@ -74,7 +74,7 @@ public class UnitConverter {
         return (float) (speed * 0.447);
     }
 
-    public static String convertToPressureUnit(Context context,float pressure, String unit) {
+    public static String convertToPressureUnit(Context context, float pressure, String unit) {
         if (unit.equals("psi")) {
             return Math.round(pressure / 68.948) + " psi";
         } else if (unit.equals("mmHg")) {

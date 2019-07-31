@@ -1,7 +1,5 @@
 package com.OdiousPanda.rainbow.CustomUI;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -10,11 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MovableFAB extends FloatingActionButton implements View.OnTouchListener {
     private final static float CLICK_DRAG_TOLERANCE = 10; // Often, there will be a slight, unintentional, drag when the user taps the FAB, so we need to account for this.
 
     private float downRawX, downRawY;
     private float dX, dY;
+
     public MovableFAB(Context context) {
         super(context);
         init();
@@ -35,13 +36,13 @@ public class MovableFAB extends FloatingActionButton implements View.OnTouchList
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent){
+    public boolean onTouch(View view, MotionEvent motionEvent) {
 
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)view.getLayoutParams();
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
         int viewWidth = view.getWidth();
         int viewHeight = view.getHeight();
 
-        View viewParent = (View)view.getParent();
+        View viewParent = (View) view.getParent();
         int parentWidth = viewParent.getWidth();
         int parentHeight = viewParent.getHeight();
         int action = motionEvent.getAction();
@@ -55,8 +56,7 @@ public class MovableFAB extends FloatingActionButton implements View.OnTouchList
 
             return true; // Consumed
 
-        }
-        else if (action == MotionEvent.ACTION_MOVE) {
+        } else if (action == MotionEvent.ACTION_MOVE) {
             Log.d("fab", "onTouch: action_move");
             float newX = motionEvent.getRawX() + dX;
             newX = Math.max(layoutParams.leftMargin, newX); // Don't allow the FAB past the left hand side of the parent
@@ -74,15 +74,14 @@ public class MovableFAB extends FloatingActionButton implements View.OnTouchList
 
             return true; // Consumed
 
-        }
-        else if (action == MotionEvent.ACTION_UP) {
+        } else if (action == MotionEvent.ACTION_UP) {
             Log.d("fab", "onTouch: action_up");
             float upRawX = motionEvent.getRawX();
             float upRawY = motionEvent.getRawY();
             float upDX = upRawX - downRawX;
             float upDY = upRawY - downRawY;
             float restX = parentWidth - viewWidth - layoutParams.rightMargin;
-            if(upRawX < parentWidth/2 - viewWidth/2){
+            if (upRawX < parentWidth / 2 - viewWidth / 2) {
                 restX = layoutParams.leftMargin;
             }
 
@@ -94,13 +93,11 @@ public class MovableFAB extends FloatingActionButton implements View.OnTouchList
 
             if (Math.abs(upDX) < CLICK_DRAG_TOLERANCE && Math.abs(upDY) < CLICK_DRAG_TOLERANCE) { // A click
                 return performClick();
-            }
-            else { // A drag
+            } else { // A drag
                 return true; // Consumed
             }
 
-        }
-        else {
+        } else {
             return super.onTouchEvent(motionEvent);
         }
 

@@ -1,6 +1,7 @@
 package com.OdiousPanda.rainbow.API;
 
 import com.OdiousPanda.rainbow.DataModel.AQI.AirQuality;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

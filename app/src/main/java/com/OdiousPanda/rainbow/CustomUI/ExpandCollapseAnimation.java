@@ -23,14 +23,13 @@ public class ExpandCollapseAnimation {
         v.getLayoutParams().height = 1;
         v.getLayoutParams().width = 1;
         v.setVisibility(View.VISIBLE);
-        Animation a = new Animation()
-        {
+        Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
                 v.getLayoutParams().height = interpolatedTime == 1
                         ? ViewGroup.LayoutParams.WRAP_CONTENT
-                        : (int)(targetHeight * interpolatedTime);
-                v.getLayoutParams().width = (int)(targetWidth * interpolatedTime);
+                        : (int) (targetHeight * interpolatedTime);
+                v.getLayoutParams().width = (int) (targetWidth * interpolatedTime);
                 v.requestLayout();
             }
 
@@ -49,15 +48,14 @@ public class ExpandCollapseAnimation {
     public static void collapse(final View v) {
         final int initialHeight = v.getMeasuredHeight();
         final int initialWidth = v.getMeasuredWidth();
-        Animation a = new Animation()
-        {
+        Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if(interpolatedTime == 1){
+                if (interpolatedTime == 1) {
                     v.setVisibility(View.GONE);
-                }else{
-                    v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
-                    v.getLayoutParams().width = initialWidth - (int)(initialWidth * interpolatedTime);
+                } else {
+                    v.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
+                    v.getLayoutParams().width = initialWidth - (int) (initialWidth * interpolatedTime);
                     v.requestLayout();
                 }
             }

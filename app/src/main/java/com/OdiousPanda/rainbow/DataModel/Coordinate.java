@@ -22,10 +22,11 @@ public class Coordinate {
     @Expose
     private String name;
 
-    public Coordinate(){}
+    public Coordinate() {
+    }
 
     @Ignore
-    public Coordinate(String lat, String lon){
+    public Coordinate(String lat, String lon) {
         this.lat = lat;
         this.lon = lon;
     }

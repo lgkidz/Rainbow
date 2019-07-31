@@ -5,6 +5,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_container_height">60dp</dimen>
     <dimen name="dots_margin_bottom">20dp</dimen>
     <dimen name="img_width_height">120dp</dimen>
     <dimen name="slide_title">30dp</dimen>
@@ -31,6 +32,7 @@
     <dimen name="big_icon_128dp">128dp</dimen>
     <dimen name="forecast_item_height">220dp</dimen>
     <dimen name="icon_90dp">90dp</dimen>
+    <dimen name="icon_72dp">72dp</dimen>
     <dimen name="icon_24dp">24dp</dimen>
     <dimen name="icon_30dp">30dp</dimen>
     <dimen name="icon_36dp">36dp</dimen>

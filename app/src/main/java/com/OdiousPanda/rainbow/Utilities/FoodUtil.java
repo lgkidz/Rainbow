@@ -24,11 +24,11 @@ public class FoodUtil {
     private List<Food> foods = new ArrayList<>();
     private List<Field> foodIcons = new ArrayList<>();
 
-    public FoodUtil(){
+    public FoodUtil() {
         Field[] drawablesFields = com.OdiousPanda.rainbow.R.drawable.class.getFields();
         for (Field field : drawablesFields) {
             try {
-                if(field.getName().contains("dish") || field.getName().contains("dessert") || field.getName().contains("drink")){
+                if (field.getName().contains("dish") || field.getName().contains("dessert") || field.getName().contains("drink")) {
                     foodIcons.add(field);
                 }
             } catch (Exception e) {
@@ -38,31 +38,31 @@ public class FoodUtil {
         queryFoods();
     }
 
-    private int getIcons(String attribute){
+    private int getIcons(String attribute) {
 
         List<Integer> icons = new ArrayList<>();
         for (Field field : foodIcons) {
             try {
-                if(field.getName().contains(attribute)){
+                if (field.getName().contains(attribute)) {
                     icons.add(field.getInt(null));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if(icons.size() == 0){
+        if (icons.size() == 0) {
             return R.drawable.dish_ic_dish;
         }
         return icons.get(new Random().nextInt(icons.size()));
     }
 
-    private void queryFoods(){
+    private void queryFoods() {
         db.collection("foods")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Food food = document.toObject(Food.class);
                                 foods.add(food);
@@ -75,13 +75,13 @@ public class FoodUtil {
                 });
     }
 
-    public void updateNewFood(){
-        if(foods.size() == 0){
+    public void updateNewFood() {
+        if (foods.size() == 0) {
             queryFoods();
             return;
         }
         Food food = foods.get(new Random().nextInt(foods.size()));
         int icon = getIcons(food.getAtt());
-        DetailsFragment.getInstance().updateFoodData(icon,food.getName());
+        DetailsFragment.getInstance().updateFoodData(icon, food.getName());
     }
 }

@@ -14,6 +14,9 @@
   <dimen name="dots_height">
     45.0dp
   </dimen>
+  <dimen name="dots_container_height">
+    90.0dp
+  </dimen>
   <dimen name="dots_margin_bottom">
     30.0dp
   </dimen>
@@ -91,6 +94,9 @@
   </dimen>
   <dimen name="icon_90dp">
     135.0dp
+  </dimen>
+  <dimen name="icon_72dp">
+    108.0dp
   </dimen>
   <dimen name="icon_24dp">
     36.0dp

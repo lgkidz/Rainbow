@@ -16,12 +16,12 @@ import com.OdiousPanda.rainbow.R;
 
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
+    private final ColorDrawable background;
     private LocationListAdapter mAdapter;
     private Drawable icon;
-    private final ColorDrawable background;
 
-    public SwipeToDeleteCallback(LocationListAdapter adapter){
-        super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+    public SwipeToDeleteCallback(LocationListAdapter adapter) {
+        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         mAdapter = adapter;
         icon = ContextCompat.getDrawable(mAdapter.getContext(), R.drawable.ic_round_delete);
         background = new ColorDrawable(Color.RED);
@@ -40,14 +40,14 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        if(viewHolder.getAdapterPosition() == 0){
+        if (viewHolder.getAdapterPosition() == 0) {
             return 0;
         }
         return super.getSwipeDirs(recyclerView, viewHolder);
     }
 
     @Override
-    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         View itemView = viewHolder.itemView;

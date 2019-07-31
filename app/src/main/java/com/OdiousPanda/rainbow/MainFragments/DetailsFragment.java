@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import com.OdiousPanda.rainbow.DataModel.AQI.AirQuality;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
@@ -158,7 +159,7 @@ public class DetailsFragment extends Fragment {
         updateWindSpeedData(currentSpeedUnit);
     }
 
-    public void updateFoodData(int foodIcon, String foodName){
+    public void updateFoodData(int foodIcon, String foodName) {
         icFoodType.setImageResource(foodIcon);
         tvFood.setText(foodName);
     }
@@ -240,10 +241,10 @@ public class DetailsFragment extends Fragment {
     }
 
     private void updatePressureData(String currentPressureUnit) {
-        tvPressure.setText(UnitConverter.convertToPressureUnit(getActivity(),currentWeather.getCurrently().getPressure(), currentPressureUnit));
+        tvPressure.setText(UnitConverter.convertToPressureUnit(getActivity(), currentWeather.getCurrently().getPressure(), currentPressureUnit));
         if (currentPressureUnit.equals(getString(R.string.depression_unit))) {
             tvPressureTitle.setText(getString(R.string.depression_level_title));
-        }else {
+        } else {
             tvPressureTitle.setText(getString(R.string.pressure_title));
         }
     }
@@ -256,31 +257,31 @@ public class DetailsFragment extends Fragment {
 
     public void updateAqi(AirQuality air) {
         final float aqi = air.getData().aqi;
-        tvDetailAqiIndex.setText(String.valueOf((int)aqi));
+        tvDetailAqiIndex.setText(String.valueOf((int) aqi));
         Context context = getActivity();
         assert context != null;
         if (aqi <= 50) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_good));
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_good));
             tvDetailAqiLevel.setText(getString(R.string.aqi_good));
             tvDetailAqiDes.setText(getString(R.string.aqi_good_des));
         } else if (aqi <= 100) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_moderate));
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_moderate));
             tvDetailAqiLevel.setText(getString(R.string.aqi_moderate));
             tvDetailAqiDes.setText(getString(R.string.aqi_moderate_des));
         } else if (aqi <= 150) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive));
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_unhealthy_sensitive));
             tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
             tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_sensitive_des));
         } else if (aqi <= 200) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy));
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_unhealthy));
             tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy));
             tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_des));
         } else if (aqi <= 300) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_very_unhealthy));
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_very_unhealthy));
             tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
             tvDetailAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
         } else if (aqi <= 500) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_hazardous));
+            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_hazardous));
             tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
             tvDetailAqiDes.setText(getString(R.string.aqi_hazardous_des));
         }

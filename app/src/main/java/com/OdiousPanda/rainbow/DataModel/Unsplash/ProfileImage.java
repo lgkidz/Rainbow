@@ -1,6 +1,8 @@
 package com.OdiousPanda.rainbow.DataModel.Unsplash;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 public class ProfileImage {
 
     @SerializedName("small")

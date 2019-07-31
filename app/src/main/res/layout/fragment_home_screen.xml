@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragments.HomeScreenFragment"
+    android:clipChildren="false"
     android:clipToPadding="false"
-    android:clipChildren="false">
+    android:orientation="vertical"
+    tools:context=".MainFragments.HomeScreenFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/home_layout"
-        app:layout_constraintBottom_toTopOf="@id/guideline"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/location_layout"
-                android:paddingStart="@dimen/margin_16"
-                android:paddingEnd="@dimen/margin_16"
-                android:paddingTop="@dimen/margin_16"
-                android:paddingBottom="@dimen/margin_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_16"
+                android:paddingTop="@dimen/margin_16"
+                android:paddingEnd="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_4"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <TextView
                     android:id="@+id/tv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/absoluteBlack"
-                    app:fontFamily="@font/montserrat"
                     android:textSize="@dimen/text_view_20sp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:fontFamily="@font/montserrat"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/icon"
                     android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_location"
                     app:layout_constraintTop_toBottomOf="@id/tv_location"
+                    app:layout_constraintTop_toTopOf="@id/tv_location"
                     tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/big_text"
                 android:layout_width="match_parent"
@@ -56,21 +60,22 @@
                 android:layout_marginEnd="@dimen/margin_8"
                 android:lineSpacingMultiplier="0.8"
                 android:text="@string/quote_placeholder"
-                android:textSize="@dimen/text_view_48sp"
                 android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_48sp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/location_layout" />
+
             <TextView
-                android:layout_marginEnd="@dimen/margin_16"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginBottom="@dimen/margin_8"
                 android:id="@+id/small_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_view_18sp"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_8"
                 android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_18sp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -84,120 +89,135 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
+
     <com.OdiousPanda.rainbow.CustomUI.MovableConstrainLayout
-        android:elevation="@dimen/margin_8"
         android:id="@+id/layout_data"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/pureWhite"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:elevation="@dimen/margin_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/temp_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingBottom="@dimen/margin_8"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/guideline1">
+            app:layout_constraintBottom_toTopOf="@id/guideline1"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fontFamily="@font/montserrat"
                 android:layout_marginTop="@dimen/margin_8"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_14sp" />
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fontFamily="@font/montserrat"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_30sp"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toTopOf="@id/temperature_pointer"
-                app:layout_constraintStart_toStartOf="@id/temperature_pointer"
-                app:layout_constraintEnd_toEndOf="@id/temperature_pointer"/>
+                app:layout_constraintEnd_toEndOf="@id/temperature_pointer"
+                app:layout_constraintStart_toStartOf="@id/temperature_pointer" />
+
             <TextView
                 android:id="@+id/min_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fontFamily="@font/montserrat"
                 android:layout_marginBottom="@dimen/margin_4"
                 android:textColor="@color/coldBlue"
                 android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toTopOf="@id/temperature_bar"
-                app:layout_constraintStart_toStartOf="@id/temperature_bar"/>
+                app:layout_constraintStart_toStartOf="@id/temperature_bar" />
+
             <TextView
                 android:id="@+id/max_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fontFamily="@font/montserrat"
                 android:textColor="@color/hotPink"
                 android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toTopOf="@id/temperature_bar"
-                app:layout_constraintEnd_toEndOf="@id/temperature_bar"/>
+                app:layout_constraintEnd_toEndOf="@id/temperature_bar" />
+
             <View
                 android:id="@+id/temperature_bar"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/margin_8"
                 android:layout_height="@dimen/temperature_bar_height"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_8"
                 android:background="@drawable/temperature_bar"
                 app:layout_constraintBottom_toBottomOf="parent" />
+
             <View
-                android:visibility="invisible"
                 android:id="@+id/temperature_pointer"
-                app:layout_constraintBottom_toBottomOf="@id/temperature_bar"
-                android:layout_marginBottom="@dimen/margin_6"
-                app:layout_constraintStart_toStartOf="@id/temperature_bar"
                 android:layout_width="@dimen/temperature_pointer_width"
                 android:layout_height="@dimen/temperature_pointer_height"
-                android:background="@drawable/temperature_pointer" />
+                android:layout_marginBottom="@dimen/margin_6"
+                android:background="@drawable/temperature_pointer"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/temperature_bar"
+                app:layout_constraintStart_toStartOf="@id/temperature_bar" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.4" />
+
         <LinearLayout
             android:id="@+id/basic_detail_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:weightSum="3"
             android:paddingStart="@dimen/margin_16"
             android:paddingEnd="@dimen/margin_8"
             android:paddingBottom="@dimen/margin_16"
-            app:layout_constraintTop_toBottomOf="@id/guideline1"
-            android:baselineAligned="false">
+            android:weightSum="3"
+            app:layout_constraintTop_toBottomOf="@id/guideline1">
+
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="@dimen/icon_24dp"
                     android:layout_height="@dimen/icon_24dp"
-                    android:src="@drawable/ic_uv"
                     android:layout_gravity="center_vertical"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginEnd="@dimen/margin_8"/>
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:src="@drawable/ic_uv"
+                    tools:ignore="ContentDescription" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/uv_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_14sp"
-                        app:fontFamily="@font/montserrat"/>
+                        app:fontFamily="@font/montserrat" />
+
                     <TextView
                         android:id="@+id/uv_summary"
                         android:layout_width="wrap_content"
@@ -205,87 +225,99 @@
                         android:text="@string/uv_index_title"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_14sp"
-                        app:fontFamily="@font/montserrat"/>
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="@dimen/icon_24dp"
                     android:layout_height="@dimen/icon_24dp"
-                    android:src="@drawable/ic_humidity"
                     android:layout_gravity="center_vertical"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginEnd="@dimen/margin_8"/>
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:src="@drawable/ic_humidity"
+                    tools:ignore="ContentDescription" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/humidity_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_14sp"
-                        app:fontFamily="@font/montserrat"/>
+                        app:fontFamily="@font/montserrat" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/humidity_title"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_14sp"
-                        app:fontFamily="@font/montserrat"/>
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="@dimen/icon_24dp"
                     android:layout_height="@dimen/icon_24dp"
-                    android:src="@drawable/ic_visibility"
                     android:layout_gravity="center_vertical"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginEnd="@dimen/margin_8"/>
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:src="@drawable/ic_visibility"
+                    tools:ignore="ContentDescription" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/visibility_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_14sp"
-                        app:fontFamily="@font/montserrat"/>
+                        app:fontFamily="@font/montserrat" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/visibility_title"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_14sp"
-                        app:fontFamily="@font/montserrat"/>
+                        app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/daily_forecast_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingStart="@dimen/margin_16"
             android:paddingEnd="@dimen/margin_16"
-            app:layout_constraintTop_toBottomOf="@id/basic_detail_layout"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/basic_detail_layout"
             tools:listitem="@layout/daily_forecast_item">
 
         </androidx.recyclerview.widget.RecyclerView>
     </com.OdiousPanda.rainbow.CustomUI.MovableConstrainLayout>
+
     <include layout="@layout/photo_details_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,9 +30,9 @@ public class MyColorUtil {
     public static int blackOrWhiteOf(int color) {
         String hexColor = String.format("#%06X", (0xFFFFFF & color));
         Log.d("loglog", "blackOrWhiteOf: " + hexColor);
-        int[] rgb = new int[]{Integer.parseInt(hexColor.substring(1,3),16),
-                Integer.parseInt(hexColor.substring(3,5),16),
-                Integer.parseInt(hexColor.substring(5,7),16)};
+        int[] rgb = new int[]{Integer.parseInt(hexColor.substring(1, 3), 16),
+                Integer.parseInt(hexColor.substring(3, 5), 16),
+                Integer.parseInt(hexColor.substring(5, 7), 16)};
         int r = rgb[0];
         int g = rgb[1];
         int b = rgb[2];
@@ -53,19 +53,19 @@ public class MyColorUtil {
     }
 
     @SuppressLint("ResourceType")
-    public static int getTemperaturePointerColor(Context context, float offset){
+    public static int getTemperaturePointerColor(Context context, float offset) {
         String coldBlueString = context.getResources().getString(R.color.coldBlue);
         String hotPinkString = context.getResources().getString(R.color.hotPink);
-        int[] coldBlue = new int[]{Integer.parseInt(coldBlueString.substring(3,5),16),
-                        Integer.parseInt(coldBlueString.substring(5,7),16),
-                        Integer.parseInt(coldBlueString.substring(7,9),16)};
-        int[] hotPink = new int[]{Integer.parseInt(hotPinkString.substring(3,5),16),
-                Integer.parseInt(hotPinkString.substring(5,7),16),
-                Integer.parseInt(hotPinkString.substring(7,9),16)};
-        int r = (int)(coldBlue[0] + (hotPink[0] - coldBlue[0]) * offset);
-        int g = (int)(coldBlue[1] + (hotPink[1] - coldBlue[1]) * offset);
-        int b = (int)(coldBlue[2] + (hotPink[2] - coldBlue[2]) * offset);
-        return Color.argb(255,r,g,b);
+        int[] coldBlue = new int[]{Integer.parseInt(coldBlueString.substring(3, 5), 16),
+                Integer.parseInt(coldBlueString.substring(5, 7), 16),
+                Integer.parseInt(coldBlueString.substring(7, 9), 16)};
+        int[] hotPink = new int[]{Integer.parseInt(hotPinkString.substring(3, 5), 16),
+                Integer.parseInt(hotPinkString.substring(5, 7), 16),
+                Integer.parseInt(hotPinkString.substring(7, 9), 16)};
+        int r = (int) (coldBlue[0] + (hotPink[0] - coldBlue[0]) * offset);
+        int g = (int) (coldBlue[1] + (hotPink[1] - coldBlue[1]) * offset);
+        int b = (int) (coldBlue[2] + (hotPink[2] - coldBlue[2]) * offset);
+        return Color.argb(255, r, g, b);
     }
 
 }

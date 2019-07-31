@@ -99,16 +99,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private boolean firstTimeObserve = true;
     private boolean firstTimeFetchViewModel = true;
     private boolean dataRefreshing = false;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private CoordinatorLayout coordinatorLayout;
     private RelativeLayout loadingLayout;
-    private RelativeLayout noConnectionLayout;
-    private ConstraintLayout locationListLayout;
+    private ConstraintLayout noConnectionLayout;
     private MovableFAB fab;
-    private ImageView locationListBackButton;
-    private ImageView loadingIcon;
-    private ImageView addLocation;
     private RecyclerView rvLocations;
     private SlideUp slideUp;
     private boolean locationListShowing = false;
@@ -141,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         }
     };
     private int AUTOCOMPLETE_REQUEST_CODE = 1201;
-    private PlacesClient placesClient;
     private boolean toolTipShown = false;
     private int currentBackgroundColor = Color.argb(255, 255, 255, 255);
     private int c = 0;
@@ -159,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Places.initialize(getApplicationContext(), Constant.GOOGLE_API_KEY);
-        placesClient = Places.createClient(this);
+        PlacesClient placesClient = Places.createClient(this);
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         initViews();
@@ -187,22 +180,22 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void initViews() {
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         background = findViewById(R.id.background);
         mViewPager = findViewById(R.id.container);
-        coordinatorLayout = findViewById(R.id.main_content);
-        loadingIcon = findViewById(R.id.loading_icon);
+        CoordinatorLayout coordinatorLayout = findViewById(R.id.main_content);
+        ImageView loadingIcon = findViewById(R.id.loading_icon);
         Animation spin = AnimationUtils.loadAnimation(MainActivity.this, R.anim.spin);
         loadingIcon.startAnimation(spin);
         loadingLayout = findViewById(R.id.loading_layout);
         fab = findViewById(R.id.fab);
         fab.hide();
-        addLocation = findViewById(R.id.btn_add_location);
-        locationListBackButton = findViewById(R.id.btn_go_back);
+        ImageView addLocation = findViewById(R.id.btn_add_location);
+        ImageView locationListBackButton = findViewById(R.id.btn_go_back);
         rvLocations = findViewById(R.id.locations_rv);
         rvLocations.setHasFixedSize(true);
         noConnectionLayout = findViewById(R.id.no_connection_layout);
-        locationListLayout = findViewById(R.id.location_list_layout);
+        ConstraintLayout locationListLayout = findViewById(R.id.location_list_layout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setCurrentItem(1);

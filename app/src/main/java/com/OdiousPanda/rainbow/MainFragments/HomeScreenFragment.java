@@ -47,6 +47,8 @@ public class HomeScreenFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
+    private final int pointerAnimationDuration = 1000;
+    public boolean photoDetailsShowing = false;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvTemp;
     private TextView tvDescription;
@@ -64,7 +66,6 @@ public class HomeScreenFragment extends Fragment {
     private TextView tvUvSummary;
     private ConstraintLayout tempLayout;
     private RecyclerView rvDailyForecast;
-
     private ConstraintLayout photoDetailsLayout;
     private ImageView btnClosePhotoDetails;
     private TextView tvPhotoTitle;
@@ -74,15 +75,14 @@ public class HomeScreenFragment extends Fragment {
     private TextView tvExposureTime;
     private TextView tvIso;
     private TextView tvFocalLength;
-    public boolean photoDetailsShowing = false;
     private QuoteGenerator quoteGenerator;
     private Weather currentWeather;
     private float pointerPreviousX = 0;
     private float previousTemp = 0;
     private int previousTempColor = 0;
     private float tempPreviousX = pointerPreviousX;
-    private final int pointerAnimationDuration = 1000;
     private OnLayoutRefreshListener callback;
+
     public HomeScreenFragment() {
         // Required empty public constructor
     }
@@ -126,10 +126,9 @@ public class HomeScreenFragment extends Fragment {
         tvVisibility = v.findViewById(R.id.visibility_value);
         tvUvSummary = v.findViewById(R.id.uv_summary);
         tempLayout = v.findViewById(R.id.temp_layout);
-        if(PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)){
+        if (PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)) {
             iconInfo.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             iconInfo.setVisibility(View.GONE);
         }
         photoDetailsLayout = v.findViewById(R.id.photo_detail_layout);
@@ -165,7 +164,7 @@ public class HomeScreenFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         rvDailyForecast.addItemDecoration(dividerItemDecoration);
         swipeRefreshLayout = v.findViewById(R.id.home_layout);
-        
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -188,10 +187,9 @@ public class HomeScreenFragment extends Fragment {
             }
 
         });
-        if(PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)){
+        if (PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)) {
             iconInfo.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             iconInfo.setVisibility(View.GONE);
         }
         colorAnimation.start();
@@ -205,8 +203,8 @@ public class HomeScreenFragment extends Fragment {
     void updateUnit() {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         tvTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getCurrently().getTemperature(), currentTempUnit));
-        tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureLow(),currentTempUnit));
-        tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureMax(),currentTempUnit));
+        tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureLow(), currentTempUnit));
+        tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureMax(), currentTempUnit));
         updateVisibilityData();
         DailyForecastAdapter adapter = new DailyForecastAdapter(getActivity(), currentWeather.getDaily());
         rvDailyForecast.setAdapter(adapter);
@@ -223,23 +221,23 @@ public class HomeScreenFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    private void updateTemperatureData(){
+    private void updateTemperatureData() {
         float currentTemp = currentWeather.getCurrently().getTemperature();
         final float minTemp = currentWeather.getDaily().getData().get(0).getTemperatureLow();
         final float maxTemp = currentWeather.getDaily().getData().get(0).getTemperatureMax();
         final String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
-        currentTemp = Math.min(maxTemp, Math.max(currentTemp,minTemp));
-        tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(minTemp,currentTempUnit));
-        tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(maxTemp,currentTempUnit));
+        currentTemp = Math.min(maxTemp, Math.max(currentTemp, minTemp));
+        tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(minTemp, currentTempUnit));
+        tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(maxTemp, currentTempUnit));
         tvDescription.setText(currentWeather.getCurrently().getSummary());
-        if(previousTempColor == 0){
-            previousTempColor = ContextCompat.getColor(getActivity(),R.color.coldBlue);
+        if (previousTempColor == 0) {
+            previousTempColor = ContextCompat.getColor(getActivity(), R.color.coldBlue);
         }
         final float finalCurrentTemp = currentTemp;
         tempBar.post(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     tempPointer.setVisibility(View.VISIBLE);
                     ConstraintLayout.LayoutParams pointerParams = (ConstraintLayout.LayoutParams) tempPointer.getLayoutParams();
                     float layoutWidth = (float) tempLayout.getWidth();
@@ -247,23 +245,23 @@ public class HomeScreenFragment extends Fragment {
                     float tvTempWidth = (float) tvTemp.getWidth();
                     float leftMargin = (finalCurrentTemp - minTemp) / (maxTemp - minTemp) * tempBarWidth;
                     float tempLeftMargin = leftMargin;
-                    if(leftMargin < tvTempWidth/2){
-                        tempLeftMargin = tvTempWidth/2;
+                    if (leftMargin < tvTempWidth / 2) {
+                        tempLeftMargin = tvTempWidth / 2;
                     }
-                    if(layoutWidth - tempLeftMargin < tvTempWidth){
+                    if (layoutWidth - tempLeftMargin < tvTempWidth) {
                         tempLeftMargin = layoutWidth - tvTempWidth;
                     }
-                    if(leftMargin < Objects.requireNonNull(getActivity()).getResources().getDimension(R.dimen.margin_4)){
+                    if (leftMargin < Objects.requireNonNull(getActivity()).getResources().getDimension(R.dimen.margin_4)) {
                         leftMargin = getActivity().getResources().getDimension(R.dimen.margin_4);
                     }
-                    if(tempBarWidth - leftMargin < Objects.requireNonNull(getActivity()).getResources().getDimension(R.dimen.margin_4)){
+                    if (tempBarWidth - leftMargin < Objects.requireNonNull(getActivity()).getResources().getDimension(R.dimen.margin_4)) {
                         leftMargin -= getActivity().getResources().getDimension(R.dimen.margin_4);
                     }
-                    if(pointerPreviousX == 0){
+                    if (pointerPreviousX == 0) {
                         pointerPreviousX = pointerParams.leftMargin;
                     }
-                    final int newTempColor = MyColorUtil.getTemperaturePointerColor(Objects.requireNonNull(getActivity()),(finalCurrentTemp - minTemp) / (maxTemp - minTemp));
-                    Animation pointerSlideAnimation = new TranslateAnimation(pointerPreviousX,leftMargin,0,0);
+                    final int newTempColor = MyColorUtil.getTemperaturePointerColor(Objects.requireNonNull(getActivity()), (finalCurrentTemp - minTemp) / (maxTemp - minTemp));
+                    Animation pointerSlideAnimation = new TranslateAnimation(pointerPreviousX, leftMargin, 0, 0);
                     pointerSlideAnimation.setInterpolator(new DecelerateInterpolator());
                     pointerSlideAnimation.setDuration(pointerAnimationDuration);
                     pointerSlideAnimation.setFillAfter(true);
@@ -288,7 +286,7 @@ public class HomeScreenFragment extends Fragment {
 
                         }
                     });
-                    Animation tempSlideAnimation = new TranslateAnimation(tempPreviousX,tempLeftMargin,0,0);
+                    Animation tempSlideAnimation = new TranslateAnimation(tempPreviousX, tempLeftMargin, 0, 0);
                     tempSlideAnimation.setInterpolator(new DecelerateInterpolator());
                     tempSlideAnimation.setDuration(pointerAnimationDuration);
                     tempSlideAnimation.setFillAfter(true);
@@ -307,7 +305,7 @@ public class HomeScreenFragment extends Fragment {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
                             int color = (int) animation.getAnimatedValue();
-                            Drawable pointerBackground = DrawableCompat.wrap(Objects.requireNonNull(AppCompatResources.getDrawable(getActivity(),R.drawable.temperature_pointer)));
+                            Drawable pointerBackground = DrawableCompat.wrap(Objects.requireNonNull(AppCompatResources.getDrawable(getActivity(), R.drawable.temperature_pointer)));
                             pointerBackground.setTint(color);
                             tempPointer.setBackground(pointerBackground);
                             tvTemp.setTextColor(color);
@@ -318,7 +316,7 @@ public class HomeScreenFragment extends Fragment {
                     tempColorChange.start();
                     tvTemp.startAnimation(tempSlideAnimation);
                     tempPointer.startAnimation(pointerSlideAnimation);
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -339,7 +337,7 @@ public class HomeScreenFragment extends Fragment {
         } else if (currentWeather.getCurrently().getUvIndex() < 6) {
             uvSummary = getString(R.string.uv_summary_6);
         } else if (currentWeather.getCurrently().getUvIndex() < 8) {
-            uvSummary  = getString(R.string.uv_summary_8);
+            uvSummary = getString(R.string.uv_summary_8);
         } else if (currentWeather.getCurrently().getUvIndex() < 11) {
             uvSummary = getString(R.string.uv_summary_11);
         } else {
@@ -361,7 +359,7 @@ public class HomeScreenFragment extends Fragment {
     }
 
     public void updateCurrentLocationName(String locationName) {
-        if(this.tvLocation != null){
+        if (this.tvLocation != null) {
             this.tvLocation.setText(locationName);
         }
     }
@@ -379,28 +377,28 @@ public class HomeScreenFragment extends Fragment {
         tvSmallText.setText(quote.getSub());
     }
 
-    public void updatePhotoDetail(Unsplash unsplash){
-        String photoTitle = unsplash.description!=null?unsplash.description.substring(0, 1).toUpperCase() + unsplash.description.substring(1):getString(R.string.photo_name_na);
+    public void updatePhotoDetail(Unsplash unsplash) {
+        String photoTitle = unsplash.description != null ? unsplash.description.substring(0, 1).toUpperCase() + unsplash.description.substring(1) : getString(R.string.photo_name_na);
         String userProfileLink = unsplash.user.links.html;
         String userName = unsplash.user.name;
         String cameraMaker = unsplash.exif.make;
-        String cameraModel = unsplash.exif.model!=null?unsplash.exif.model:getString(R.string.not_available);
-        if(cameraMaker != null){
-            if(cameraMaker.toLowerCase().contains("canon") || cameraMaker.toLowerCase().contains("nikon")){
+        String cameraModel = unsplash.exif.model != null ? unsplash.exif.model : getString(R.string.not_available);
+        if (cameraMaker != null) {
+            if (cameraMaker.toLowerCase().contains("canon") || cameraMaker.toLowerCase().contains("nikon")) {
                 cameraMaker = "";
             }
         } else {
             cameraMaker = "";
         }
         String camera = cameraMaker + " " + cameraModel;
-        String aperture = unsplash.exif.aperture!=null?"f/"+unsplash.exif.aperture:getString(R.string.not_available);
-        String focalLength = unsplash.exif.focalLength!=null?unsplash.exif.focalLength+" mm":getString(R.string.not_available);
-        String iso = unsplash.exif.iso!=null?String.valueOf(unsplash.exif.iso):getString(R.string.not_available);
-        String exposureTIme = unsplash.exif.exposureTime!=null?unsplash.exif.exposureTime:getString(R.string.not_available);
+        String aperture = unsplash.exif.aperture != null ? "f/" + unsplash.exif.aperture : getString(R.string.not_available);
+        String focalLength = unsplash.exif.focalLength != null ? unsplash.exif.focalLength + " mm" : getString(R.string.not_available);
+        String iso = unsplash.exif.iso != null ? String.valueOf(unsplash.exif.iso) : getString(R.string.not_available);
+        String exposureTIme = unsplash.exif.exposureTime != null ? unsplash.exif.exposureTime : getString(R.string.not_available);
 
         tvPhotoTitle.setText(photoTitle);
 
-        tvPhotoBy.setText(MyTextUtil.getReferralHtml(getActivity(),userProfileLink,userName));
+        tvPhotoBy.setText(MyTextUtil.getReferralHtml(getActivity(), userProfileLink, userName));
         tvCamera.setText(camera);
         tvAperture.setText(aperture);
         tvFocalLength.setText(focalLength);
@@ -409,7 +407,7 @@ public class HomeScreenFragment extends Fragment {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void openPhotoDetailBox(){
+    private void openPhotoDetailBox() {
         iconInfo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -428,7 +426,7 @@ public class HomeScreenFragment extends Fragment {
 
 
     @SuppressLint("ClickableViewAccessibility")
-    public void closePhotoDetailBox(){
+    public void closePhotoDetailBox() {
         btnClosePhotoDetails.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

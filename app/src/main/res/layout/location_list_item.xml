@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="2"
     android:background="@color/pureWhite"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
     <LinearLayout
         android:layout_width="0dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
+
         <View
             android:id="@+id/current_item_indicator"
             android:layout_width="@dimen/margin_4"
             android:layout_height="match_parent"
-            android:background="#ff0000"
-            android:layout_marginEnd="@dimen/margin_16"/>
+            android:layout_marginEnd="@dimen/margin_16"
+            android:background="#ff0000" />
+
         <ImageView
             android:id="@+id/current_location_icon"
             android:layout_width="wrap_content"
@@ -26,50 +29,54 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_round_location_b"
             tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/location_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/margin_16"
             android:paddingTop="@dimen/margin_16"
+            android:paddingEnd="@dimen/margin_16"
             android:paddingBottom="@dimen/margin_16"
-            app:fontFamily="@font/montserrat"
-            android:textSize="@dimen/text_view_24sp"
             android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_24sp"
+            app:fontFamily="@font/montserrat"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:paddingEnd="@dimen/margin_32"
         tools:ignore="RtlSymmetry">
+
         <LinearLayout
             android:id="@+id/details_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables,UselessParent">
+
             <ImageView
                 android:id="@+id/location_weather_icon"
                 android:layout_width="@dimen/icon_48dp"
-                android:layout_gravity="center"
                 android:layout_height="@dimen/icon_48dp"
-                android:padding="@dimen/margin_4"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/margin_4"
+                android:padding="@dimen/margin_4"
                 tools:ignore="ContentDescription" />
+
             <TextView
                 android:id="@+id/location_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:fontFamily="@font/montserrat"
+                android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_18sp"
-                android:textColor="@color/absoluteBlack"/>
+                app:fontFamily="@font/montserrat" />
         </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

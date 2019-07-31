@@ -50,11 +50,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|end"
                         android:layout_marginTop="@dimen/margin_4"
-                        app:fontFamily="@font/montserrat"
                         android:paddingStart="@dimen/margin_16"
                         android:text="25°C"
                         android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_30sp"
+                        app:fontFamily="@font/montserrat"
                         tools:ignore="ContentDescription,HardcodedText" />
                 </LinearLayout>
 
@@ -68,12 +68,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        app:fontFamily="@font/montserrat"
                         android:gravity="end"
                         android:paddingStart="@dimen/margin_16"
                         android:text="Feels more like: 27°C"
                         android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
+                        app:fontFamily="@font/montserrat"
                         tools:ignore="ContentDescription,HardcodedText" />
 
                     <ImageView
@@ -88,10 +88,10 @@
                         android:id="@+id/widget_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:fontFamily="@font/montserrat"
                         android:text="Hà Nội"
                         android:textColor="@color/pureWhite"
                         android:textSize="@dimen/text_view_14sp"
+                        app:fontFamily="@font/montserrat"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
 
@@ -110,10 +110,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:fontFamily="@font/montserrat"
                     android:text="A big quote about weather"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_54sp"
+                    app:fontFamily="@font/montserrat"
                     tools:ignore="ContentDescription,HardcodedText" />
 
                 <TextView
@@ -121,10 +121,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:fontFamily="@font/montserrat"
                     android:text="And a comment"
                     android:textColor="@color/pureWhite"
                     android:textSize="@dimen/text_view_18sp"
+                    app:fontFamily="@font/montserrat"
                     tools:ignore="ContentDescription,HardcodedText" />
             </LinearLayout>
         </RelativeLayout>
