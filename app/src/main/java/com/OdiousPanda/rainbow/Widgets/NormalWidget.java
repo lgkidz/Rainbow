@@ -330,6 +330,7 @@ public class NormalWidget extends AppWidgetProvider {
         if (quote.getMain() == null && quote.getSub() == null) {
             quote.setDefaultQuote();
         }
+        //remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
         remoteViews.setImageViewBitmap(R.id.quote_main, textAsBitmap(context, quote.getMain(), MAIN_BITMAP));
         remoteViews.setImageViewBitmap(R.id.quote_sub, textAsBitmap(context, quote.getSub(), SUB_BITMAP));
         remoteViews.setViewVisibility(R.id.widget_loading_layout, View.INVISIBLE);

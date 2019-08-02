@@ -1,6 +1,7 @@
 package com.OdiousPanda.rainbow.MainFragments;
 
 import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,12 +23,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.rainbow.R;
+import com.OdiousPanda.rainbow.Utilities.MyTextUtil;
+import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Widgets.NormalWidget;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -61,8 +68,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnPicture;
     private Button btnPictureRandom;
     private SlideUp aboutMeSlideUp;
-    private int activeButtonColor = Color.argb(255, 255, 255, 255);
-    private int buttonColor = Color.argb(255, 255, 255, 255);
+    private Switch dailyNotificationSwitch;
+    private TextView dailyNotificationTime;
+    private TimePickerDialog timePickerDialog;
+    private NotificationUtil notificationUtil;
     private int buttonTextColor = Color.argb(255, 255, 255, 255);
     private int activeButtonTextColor = Color.argb(255, 255, 255, 255);
 
@@ -87,8 +96,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews(View v) {
-        activeButtonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.default_active_button_bg);
-        buttonColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.default_button_bg);
         CoordinatorLayout settingScreenLayout = v.findViewById(R.id.setting_layout);
         tvRate = v.findViewById(R.id.tv_rate);
         tvAbout = v.findViewById(R.id.tv_about);
@@ -109,6 +116,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnColor = v.findViewById(R.id.btn_random_color);
         btnPicture = v.findViewById(R.id.btn_picture);
         btnPictureRandom = v.findViewById(R.id.btn_picture_random);
+        dailyNotificationSwitch = v.findViewById(R.id.daily_notification_switch);
+        dailyNotificationTime = v.findViewById(R.id.daily_notification_time);
 
         final ConstraintLayout aboutMeLayout = v.findViewById(R.id.about_me_layout);
         ImageView closeAboutMeBtn = v.findViewById(R.id.btn_close_about);
@@ -172,7 +181,58 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
         isExplicit = PreferencesUtil.isExplicit(getActivity());
         currentBackgroundSetting = PreferencesUtil.getBackgroundSetting(getActivity());
+        setupNotificationSetting();
         colorThoseButtons();
+    }
+
+    private void setupNotificationSetting() {
+        if (PreferencesUtil.getNotificationSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.NOTIFICATION_SETTING_ON)) {
+            dailyNotificationSwitch.setChecked(true);
+            dailyNotificationTime.setTextColor(Color.BLACK);
+        } else {
+            dailyNotificationSwitch.setChecked(false);
+            dailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.halfSnappedBlack));
+        }
+        notificationUtil = new NotificationUtil(getActivity());
+        dailyNotificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    PreferencesUtil.setNotificationSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.NOTIFICATION_SETTING_ON);
+                    dailyNotificationTime.setTextColor(Color.BLACK);
+                    notificationUtil.startDailyNotification();
+                } else {
+                    PreferencesUtil.setNotificationSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.NOTIFICATION_SETTING_OFF);
+                    dailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.halfSnappedBlack));
+                    notificationUtil.cancelDailyNotification();
+                }
+            }
+        });
+
+        Calendar calendar = PreferencesUtil.getNotificationTime(getActivity());
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int minute = calendar.get(Calendar.MINUTE);
+        String timeString = getString(R.string.time_place_holder) + " " + MyTextUtil.getTimeStringPretty(hour, minute);
+        dailyNotificationTime.setText(timeString);
+        timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int min) {
+                String time = getString(R.string.time_place_holder) + " " + MyTextUtil.getTimeStringPretty(hourOfDay, min);
+                dailyNotificationTime.setText(time);
+                PreferencesUtil.setNotificationTime(Objects.requireNonNull(getActivity()), hourOfDay, min);
+                notificationUtil.cancelDailyNotification();
+                notificationUtil.startDailyNotification();
+            }
+        }, hour, minute, false);
+
+        dailyNotificationTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PreferencesUtil.getNotificationSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.NOTIFICATION_SETTING_ON)) {
+                    timePickerDialog.show();
+                }
+            }
+        });
     }
 
     private void colorThoseButtons() {
@@ -301,23 +361,23 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void updateTempButtonColor(int id) {
         if (id == R.id.btn_c) {
-            btnC.setBackgroundColor(activeButtonColor);
-            btnF.setBackgroundColor(buttonColor);
-            btnScientist.setBackgroundColor(buttonColor);
+            btnC.setBackgroundResource(R.drawable.left_button_active);
+            btnF.setBackgroundResource(R.drawable.middle_button);
+            btnScientist.setBackgroundResource(R.drawable.right_button);
             btnC.setTextColor(activeButtonTextColor);
             btnF.setTextColor(buttonTextColor);
             btnScientist.setTextColor(buttonTextColor);
         } else if (id == R.id.btn_f) {
-            btnC.setBackgroundColor(buttonColor);
-            btnF.setBackgroundColor(activeButtonColor);
-            btnScientist.setBackgroundColor(buttonColor);
+            btnC.setBackgroundResource(R.drawable.left_button);
+            btnF.setBackgroundResource(R.drawable.middle_button_active);
+            btnScientist.setBackgroundResource(R.drawable.right_button);
             btnC.setTextColor(buttonTextColor);
             btnF.setTextColor(activeButtonTextColor);
             btnScientist.setTextColor(buttonTextColor);
         } else {
-            btnC.setBackgroundColor(buttonColor);
-            btnF.setBackgroundColor(buttonColor);
-            btnScientist.setBackgroundColor(activeButtonColor);
+            btnC.setBackgroundResource(R.drawable.left_button);
+            btnF.setBackgroundResource(R.drawable.middle_button);
+            btnScientist.setBackgroundResource(R.drawable.right_button_active);
             btnC.setTextColor(buttonTextColor);
             btnF.setTextColor(buttonTextColor);
             btnScientist.setTextColor(activeButtonTextColor);
@@ -338,28 +398,29 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         Intent updateUnitBroadcast = new Intent();
         updateUnitBroadcast.setAction(ACTION_UPDATE_UNIT);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateUnitBroadcast);
+        HomeScreenFragment.getInstance().updateUnit();
         currentDistanceUnit = PreferencesUtil.getDistanceUnit(Objects.requireNonNull(getActivity()));
     }
 
     private void updateDistanceButtonColor(int id) {
         if (id == R.id.btn_km) {
-            btnKm.setBackgroundColor(activeButtonColor);
-            btnMi.setBackgroundColor(buttonColor);
-            btnBanana.setBackgroundColor(buttonColor);
+            btnKm.setBackgroundResource(R.drawable.left_button_active);
+            btnMi.setBackgroundResource(R.drawable.middle_button);
+            btnBanana.setBackgroundResource(R.drawable.right_button);
             btnKm.setTextColor(activeButtonTextColor);
             btnMi.setTextColor(buttonTextColor);
             btnBanana.setTextColor(buttonTextColor);
         } else if (id == R.id.btn_mi) {
-            btnKm.setBackgroundColor(buttonColor);
-            btnMi.setBackgroundColor(activeButtonColor);
-            btnBanana.setBackgroundColor(buttonColor);
+            btnKm.setBackgroundResource(R.drawable.left_button);
+            btnMi.setBackgroundResource(R.drawable.middle_button_active);
+            btnBanana.setBackgroundResource(R.drawable.right_button);
             btnKm.setTextColor(buttonTextColor);
             btnMi.setTextColor(activeButtonTextColor);
             btnBanana.setTextColor(buttonTextColor);
         } else {
-            btnKm.setBackgroundColor(buttonColor);
-            btnMi.setBackgroundColor(buttonColor);
-            btnBanana.setBackgroundColor(activeButtonColor);
+            btnKm.setBackgroundResource(R.drawable.left_button);
+            btnMi.setBackgroundResource(R.drawable.middle_button);
+            btnBanana.setBackgroundResource(R.drawable.right_button_active);
             btnKm.setTextColor(buttonTextColor);
             btnMi.setTextColor(buttonTextColor);
             btnBanana.setTextColor(activeButtonTextColor);
@@ -381,23 +442,23 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void updateSpeedButtonColor(int id) {
         if (id == R.id.btn_kmph) {
-            btnKmph.setBackgroundColor(activeButtonColor);
-            btnMiph.setBackgroundColor(buttonColor);
-            btnBananaph.setBackgroundColor(buttonColor);
+            btnKmph.setBackgroundResource(R.drawable.left_button_active);
+            btnMiph.setBackgroundResource(R.drawable.middle_button);
+            btnBananaph.setBackgroundResource(R.drawable.right_button);
             btnKmph.setTextColor(activeButtonTextColor);
             btnMiph.setTextColor(buttonTextColor);
             btnBananaph.setTextColor(buttonTextColor);
         } else if (id == R.id.btn_miph) {
-            btnKmph.setBackgroundColor(buttonColor);
-            btnMiph.setBackgroundColor(activeButtonColor);
-            btnBananaph.setBackgroundColor(buttonColor);
+            btnKmph.setBackgroundResource(R.drawable.left_button);
+            btnMiph.setBackgroundResource(R.drawable.middle_button_active);
+            btnBananaph.setBackgroundResource(R.drawable.right_button);
             btnKmph.setTextColor(buttonTextColor);
             btnMiph.setTextColor(activeButtonTextColor);
             btnBananaph.setTextColor(buttonTextColor);
         } else {
-            btnKmph.setBackgroundColor(buttonColor);
-            btnMiph.setBackgroundColor(buttonColor);
-            btnBananaph.setBackgroundColor(activeButtonColor);
+            btnKmph.setBackgroundResource(R.drawable.left_button);
+            btnMiph.setBackgroundResource(R.drawable.middle_button);
+            btnBananaph.setBackgroundResource(R.drawable.right_button_active);
             btnKmph.setTextColor(buttonTextColor);
             btnMiph.setTextColor(buttonTextColor);
             btnBananaph.setTextColor(activeButtonTextColor);
@@ -419,23 +480,23 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void updatePressureButtonColor(int id) {
         if (id == R.id.btn_psi) {
-            btnPsi.setBackgroundColor(activeButtonColor);
-            btnMmhg.setBackgroundColor(buttonColor);
-            btnDepress.setBackgroundColor(buttonColor);
+            btnPsi.setBackgroundResource(R.drawable.left_button_active);
+            btnMmhg.setBackgroundResource(R.drawable.middle_button);
+            btnDepress.setBackgroundResource(R.drawable.right_button);
             btnPsi.setTextColor(activeButtonTextColor);
             btnMmhg.setTextColor(buttonTextColor);
             btnDepress.setTextColor(buttonTextColor);
         } else if (id == R.id.btn_mmhg) {
-            btnPsi.setBackgroundColor(buttonColor);
-            btnMmhg.setBackgroundColor(activeButtonColor);
-            btnDepress.setBackgroundColor(buttonColor);
+            btnPsi.setBackgroundResource(R.drawable.left_button);
+            btnMmhg.setBackgroundResource(R.drawable.middle_button_active);
+            btnDepress.setBackgroundResource(R.drawable.right_button);
             btnPsi.setTextColor(buttonTextColor);
             btnMmhg.setTextColor(activeButtonTextColor);
             btnDepress.setTextColor(buttonTextColor);
         } else {
-            btnPsi.setBackgroundColor(buttonColor);
-            btnMmhg.setBackgroundColor(buttonColor);
-            btnDepress.setBackgroundColor(activeButtonColor);
+            btnPsi.setBackgroundResource(R.drawable.left_button);
+            btnMmhg.setBackgroundResource(R.drawable.middle_button);
+            btnDepress.setBackgroundResource(R.drawable.right_button_active);
             btnPsi.setTextColor(buttonTextColor);
             btnMmhg.setTextColor(buttonTextColor);
             btnDepress.setTextColor(activeButtonTextColor);
@@ -444,23 +505,23 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void updateBackgroundSettingButtonColor(int id) {
         if (id == R.id.btn_random_color) {
-            btnColor.setBackgroundColor(activeButtonColor);
-            btnPicture.setBackgroundColor(buttonColor);
-            btnPictureRandom.setBackgroundColor(buttonColor);
+            btnColor.setBackgroundResource(R.drawable.left_button_active);
+            btnPicture.setBackgroundResource(R.drawable.middle_button);
+            btnPictureRandom.setBackgroundResource(R.drawable.right_button);
             btnColor.setTextColor(activeButtonTextColor);
             btnPicture.setTextColor(buttonTextColor);
             btnPictureRandom.setTextColor(buttonTextColor);
         } else if (id == R.id.btn_picture) {
-            btnColor.setBackgroundColor(buttonColor);
-            btnPicture.setBackgroundColor(activeButtonColor);
-            btnPictureRandom.setBackgroundColor(buttonColor);
+            btnColor.setBackgroundResource(R.drawable.left_button);
+            btnPicture.setBackgroundResource(R.drawable.middle_button_active);
+            btnPictureRandom.setBackgroundResource(R.drawable.right_button);
             btnColor.setTextColor(buttonTextColor);
             btnPicture.setTextColor(activeButtonTextColor);
             btnPictureRandom.setTextColor(buttonTextColor);
         } else {
-            btnColor.setBackgroundColor(buttonColor);
-            btnPicture.setBackgroundColor(buttonColor);
-            btnPictureRandom.setBackgroundColor(activeButtonColor);
+            btnColor.setBackgroundResource(R.drawable.left_button);
+            btnPicture.setBackgroundResource(R.drawable.middle_button);
+            btnPictureRandom.setBackgroundResource(R.drawable.right_button_active);
             btnColor.setTextColor(buttonTextColor);
             btnPicture.setTextColor(buttonTextColor);
             btnPictureRandom.setTextColor(activeButtonTextColor);
@@ -482,13 +543,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void updateExplicitButtonColor(int id) {
         if (id == R.id.btn_im_not) {
-            btnImNot.setBackgroundColor(activeButtonColor);
-            btnHellYeah.setBackgroundColor(buttonColor);
+            btnImNot.setBackgroundResource(R.drawable.left_button_active);
+            btnHellYeah.setBackgroundResource(R.drawable.right_button);
             btnImNot.setTextColor(activeButtonTextColor);
             btnHellYeah.setTextColor(buttonTextColor);
         } else {
-            btnImNot.setBackgroundColor(buttonColor);
-            btnHellYeah.setBackgroundColor(activeButtonColor);
+            btnImNot.setBackgroundResource(R.drawable.left_button);
+            btnHellYeah.setBackgroundResource(R.drawable.right_button_active);
             btnImNot.setTextColor(buttonTextColor);
             btnHellYeah.setTextColor(activeButtonTextColor);
         }

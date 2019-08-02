@@ -57,6 +57,7 @@ import com.OdiousPanda.rainbow.MainFragments.SettingFragment;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Repositories.WeatherRepository;
 import com.OdiousPanda.rainbow.Utilities.MyColorUtil;
+import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.ViewModels.WeatherViewModel;
 import com.bumptech.glide.Glide;
@@ -163,7 +164,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             showNoConnection();
         }
         Log.d(TAG, "onCreate: ");
-
+        if (PreferencesUtil.getNotificationSetting(this).equals(PreferencesUtil.NOTIFICATION_SETTING_ON)) {
+            NotificationUtil notificationUtil = new NotificationUtil(this);
+            notificationUtil.startDailyNotification();
+        }
     }
 
     private void showNoConnection() {
@@ -344,29 +348,30 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             public void onChanged(List<LocationData> data) {
                 if (data.size() > 0) {
                     locations = data;
-                }
-//                Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
-                if (firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1) {
-                    DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                    HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
-                    HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                    WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
-                    updateBackground();
-                    firstTimeFetchViewModel = false;
-                }
-                if (dataRefreshing) {
-                    if (data.size() > currentLocationPosition) {
-                        //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
-                        if (locations.get(currentLocationPosition).getCoordinate().getName().equalsIgnoreCase(currentLocationName) || locations.get(currentLocationPosition).getCoordinate().getId() == 1) {
-                            DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                            HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
-                            HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
-                            WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
-                            updateBackground();
-                            dataRefreshing = false;
+                    if (firstTimeFetchViewModel && locations.get(0).getCoordinate().getId() == 1) {
+                        DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                        HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+                        HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                        WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
+                        updateBackground();
+                        firstTimeFetchViewModel = false;
+                    }
+                    if (dataRefreshing) {
+                        if (data.size() > currentLocationPosition) {
+                            //Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
+                            if (locations.get(currentLocationPosition).getCoordinate().getName().equalsIgnoreCase(currentLocationName) || locations.get(currentLocationPosition).getCoordinate().getId() == 1) {
+                                DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                                HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+                                HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
+                                WeatherRepository.getInstance(MainActivity.this).getAirQualityByCoordinate(locations.get(currentLocationPosition).getCoordinate());
+                                updateBackground();
+                                dataRefreshing = false;
+                            }
                         }
                     }
                 }
+//                Due to the api responses don't come in order, we have to check if the current showing data is from correct location ID
+
                 locationListAdapter.updateLocationsData(locations);
                 loadingLayout.setVisibility(View.INVISIBLE);
                 if (mViewPager.getCurrentItem() == 1 && !locationListShowing) {
@@ -448,7 +453,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     Glide.with(MainActivity.this).load(unsplash.urls.regular)
                             .placeholder(background.getDrawable())
                             .transition(DrawableTransitionOptions.withCrossFade(200))
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()
                             .addListener(new RequestListener<Drawable>() {
                                 @Override

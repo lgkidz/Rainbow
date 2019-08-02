@@ -60,7 +60,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@color/default_button_bg"
+                        android:background="@drawable/left_button"
                         android:text="@string/temp_setting_degree_c"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
@@ -169,6 +169,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/speed_setting_title"
+                    android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_18sp"
                     app:fontFamily="@font/montserrat" />
 
@@ -395,6 +396,47 @@
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16">
+
+                <TextView
+                    android:id="@+id/daily_notification_setting_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/daily_notification_setting_title"
+                    android:textColor="@color/absoluteBlack"
+                    android:textSize="@dimen/text_view_18sp"
+                    app:fontFamily="@font/montserrat"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Switch
+                    android:id="@+id/daily_notification_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/daily_notification_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_8"
+                    android:paddingBottom="@dimen/margin_8"
+                    android:text="@string/time_place_holder"
+                    android:textColor="@color/absoluteBlack"
+                    android:textSize="@dimen/text_view_16sp"
+                    app:fontFamily="@font/montserrat"
+                    app:layout_constraintEnd_toStartOf="@id/daily_notification_switch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/daily_notification_setting_title" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

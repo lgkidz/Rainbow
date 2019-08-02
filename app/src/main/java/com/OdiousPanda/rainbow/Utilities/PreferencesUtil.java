@@ -3,6 +3,9 @@ package com.OdiousPanda.rainbow.Utilities;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Calendar;
+import java.util.Objects;
+
 public class PreferencesUtil {
     public static final String TEMPERATURE_UNIT = "tempUnit";
     public static final String DISTANCE_UNIT = "distanceUnit";
@@ -13,6 +16,8 @@ public class PreferencesUtil {
     public static final String BACKGROUND_PICTURE = "picture";
     public static final String BACKGROUND_PICTURE_RANDOM = "picture_random";
     private static final String BACKGROUND_SETTING = "backgroundType";
+    public static final String NOTIFICATION_SETTING_ON = "on";
+    public static final String NOTIFICATION_SETTING_OFF = "off";
     // Shared preferences file name
     private static final String PREF_NAME = "RainbowPreferencesName";
     private static final String IS_NOT_FIRST_TIME_LAUNCH = "IsAppFirstTimeLaunch";
@@ -24,6 +29,41 @@ public class PreferencesUtil {
     private static final String DEFAULT_BACKGROUND_SETTING = BACKGROUND_COLOR;
     private static final boolean DEFAULT_EXPLICIT_SETTING = true;
     private static final boolean DEFAULT_NOT_FIRST_TIME_LAUNCH_VALUE = false;
+    private static final String NOTIFICATION_SETTING = "notification";
+    private static final String NOTIFICATION_TIME = "notificationTime";
+    private static final String NOTIFICATION_TIME_DEFAULT = "8:00";
+
+    public static Calendar getNotificationTime(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        String[] parts = Objects.requireNonNull(pref.getString(NOTIFICATION_TIME, NOTIFICATION_TIME_DEFAULT)).split(":");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(parts[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(parts[1]));
+        return calendar;
+    }
+
+    public static void setNotificationTime(Context context, int hourInt, int minuteInt) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        String hour = String.valueOf(hourInt);
+        String minute = String.valueOf(minuteInt);
+        String time = hour + ":" + minute;
+        editor.putString(NOTIFICATION_TIME, time);
+        editor.apply();
+    }
+
+    public static String getNotificationSetting(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return pref.getString(NOTIFICATION_SETTING, NOTIFICATION_SETTING_ON);
+    }
+
+    public static void setNotificationSetting(Context context, String value) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(NOTIFICATION_SETTING, value);
+        editor.apply();
+    }
 
     public static String getBackgroundSetting(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

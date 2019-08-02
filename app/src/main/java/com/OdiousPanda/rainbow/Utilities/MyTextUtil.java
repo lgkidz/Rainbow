@@ -58,4 +58,17 @@ public class MyTextUtil {
         strBuilder.setSpan(clickable, start, end, flags);
         strBuilder.removeSpan(span);
     }
+
+    public static String getTimeStringPretty(int h, int m) {
+        String AP = " AM";
+        String minute = m < 10 ? "0" + m : String.valueOf(m);
+        if (h >= 12) {
+            AP = " PM";
+            if (h >= 13) {
+                h -= 12;
+            }
+        }
+        String hour = String.valueOf(h);
+        return hour + ":" + minute + AP;
+    }
 }
