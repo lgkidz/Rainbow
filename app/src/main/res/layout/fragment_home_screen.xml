@@ -185,7 +185,7 @@
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            android:paddingStart="@dimen/margin_16"
+            android:paddingStart="@dimen/margin_8"
             android:paddingEnd="@dimen/margin_8"
             android:paddingBottom="@dimen/margin_16"
             android:weightSum="3"
@@ -273,11 +273,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/precipitation_type"
                     android:layout_width="@dimen/icon_24dp"
                     android:layout_height="@dimen/icon_24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/margin_8"
-                    android:src="@drawable/ic_visibility"
+                    android:src="@drawable/ic_rain_chance"
                     tools:ignore="ContentDescription" />
 
                 <LinearLayout
@@ -286,7 +287,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/visibility_value"
+                        android:id="@+id/precipitation_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/absoluteBlack"
@@ -296,7 +297,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/visibility_title"
+                        android:text="@string/chance"
                         android:textColor="@color/absoluteBlack"
                         android:textSize="@dimen/text_view_14sp"
                         app:fontFamily="@font/montserrat" />

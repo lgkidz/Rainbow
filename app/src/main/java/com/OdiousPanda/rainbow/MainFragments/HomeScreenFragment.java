@@ -62,7 +62,8 @@ public class HomeScreenFragment extends Fragment {
     private TextView tvMaxTemp;
     private TextView tvUvIndex;
     private TextView tvHumidity;
-    private TextView tvVisibility;
+    private TextView tvPrecipitation;
+    private ImageView icPrecipitationType;
     private TextView tvUvSummary;
     private ConstraintLayout tempLayout;
     private RecyclerView rvDailyForecast;
@@ -123,7 +124,8 @@ public class HomeScreenFragment extends Fragment {
         tvMaxTemp = v.findViewById(R.id.max_temp);
         tvUvIndex = v.findViewById(R.id.uv_value);
         tvHumidity = v.findViewById(R.id.humidity_value);
-        tvVisibility = v.findViewById(R.id.visibility_value);
+        tvPrecipitation = v.findViewById(R.id.precipitation_value);
+        icPrecipitationType = v.findViewById(R.id.precipitation_type);
         tvUvSummary = v.findViewById(R.id.uv_summary);
         tempLayout = v.findViewById(R.id.temp_layout);
         if (PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)) {
@@ -205,7 +207,7 @@ public class HomeScreenFragment extends Fragment {
         tvTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getCurrently().getTemperature(), currentTempUnit));
         tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureLow(), currentTempUnit));
         tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureMax(), currentTempUnit));
-        updateVisibilityData();
+        updatePrecipitationData();
         DailyForecastAdapter adapter = new DailyForecastAdapter(getActivity(), currentWeather.getDaily());
         rvDailyForecast.setAdapter(adapter);
     }
@@ -216,7 +218,7 @@ public class HomeScreenFragment extends Fragment {
         updateUvData();
         updateTemperatureData();
         updateHumidityData();
-        updateVisibilityData();
+        updatePrecipitationData();
         updateDailyForecastData();
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -348,9 +350,12 @@ public class HomeScreenFragment extends Fragment {
         tvUvSummary.setText(uvSummary);
     }
 
-    private void updateVisibilityData() {
-        String currentDistanceUnit = PreferencesUtil.getDistanceUnit(Objects.requireNonNull(getActivity()));
-        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
+    private void updatePrecipitationData() {
+        String type = currentWeather.getDaily().getData().get(0).getPrecipType();
+        float value = currentWeather.getCurrently().getPrecipProbability();
+        String valueString = (int) value * 100 + "%";
+        tvPrecipitation.setText(valueString);
+        icPrecipitationType.setImageResource(type.equals("rain") ? R.drawable.ic_rain_chance : R.drawable.ic_snow_chance);
     }
 
     private void updateHumidityData() {

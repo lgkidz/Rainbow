@@ -3,6 +3,8 @@ package com.OdiousPanda.rainbow.DataModel.Weather;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Weather {
     @SerializedName("latitude")
     @Expose
@@ -22,6 +24,11 @@ public class Weather {
     @SerializedName("daily")
     @Expose
     public Daily daily;
+
+    @SerializedName("alerts")
+    @Expose
+    public List<Alert> alerts;
+
     @SerializedName("flags")
     @Expose
     public Flags flags;
@@ -91,5 +98,13 @@ public class Weather {
 
     public void setOffset(Integer offset) {
         this.offset = offset;
+    }
+
+    public List<Alert> getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(List<Alert> alerts) {
+        this.alerts = alerts;
     }
 }

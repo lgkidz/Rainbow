@@ -52,13 +52,13 @@ public class DetailsFragment extends Fragment {
     private TextView tvDetailAqiLevel;
     private TextView tvDetailAqiDes;
     private TextView tvCloudCover;
+    private TextView tvVisibility;
 
     private ImageView icHead;
     private ImageView icUpper;
     private ImageView icLower;
     private ImageView icFoot;
-    private ImageView icHand1;
-    private ImageView icHand2;
+    private ImageView icHand;
     private TextView tvWearCause;
 
     private ImageView icFoodType;
@@ -105,13 +105,13 @@ public class DetailsFragment extends Fragment {
         aqiIndexIndicator = v.findViewById(R.id.aqi_index_indicator);
         airQualityIndexScale = v.findViewById(R.id.index_scale);
         tvCloudCover = v.findViewById(R.id.cloudCover_value);
+        tvVisibility = v.findViewById(R.id.tv_visibility);
 
         icHead = v.findViewById(R.id.ic_headWear);
         icUpper = v.findViewById(R.id.ic_upperBody);
         icLower = v.findViewById(R.id.ic_lowerBody);
         icFoot = v.findViewById(R.id.ic_footWare);
-        icHand1 = v.findViewById(R.id.ic_hand1);
-        icHand2 = v.findViewById(R.id.ic_hand2);
+        icHand = v.findViewById(R.id.ic_hand);
         tvWearCause = v.findViewById(R.id.tvWearCause);
 
         icFoodType = v.findViewById(R.id.ic_foodType);
@@ -141,10 +141,15 @@ public class DetailsFragment extends Fragment {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
         String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
-
+        String currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
+        updateVisibilityData(currentDistanceUnit);
         updateRealFeelTemperature(currentTempUnit);
         updatePressureData(currentPressureUnit);
         updateWindSpeedData(currentSpeedUnit);
+    }
+
+    private void updateVisibilityData(String currentDistanceUnit) {
+        tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
     }
 
     public void updateData(Weather weather) {
@@ -152,6 +157,8 @@ public class DetailsFragment extends Fragment {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
         String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
+        String currentDistanceUnit = PreferencesUtil.getDistanceUnit(getActivity());
+        updateVisibilityData(currentDistanceUnit);
         updateWearIcons();
         updateRealFeelTemperature(currentTempUnit);
         updateCloudCoverData();
@@ -170,8 +177,7 @@ public class DetailsFragment extends Fragment {
         icUpper.setImageResource(clothesIconUtil.getUpperIcon());
         icLower.setImageResource(clothesIconUtil.getLowerIcon());
         icFoot.setImageResource(clothesIconUtil.getFootIcon());
-        icHand1.setImageResource(clothesIconUtil.getHandOneIcon());
-        icHand2.setImageResource(clothesIconUtil.getHandTwoIcon());
+        icHand.setImageResource(clothesIconUtil.getHandIcon());
         String cause = getString(R.string.cause_it_s) + clothesIconUtil.getCause();
         tvWearCause.setText(cause);
     }

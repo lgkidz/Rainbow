@@ -151,7 +151,7 @@
     <string name="what_to_eat_title">What to eat today?</string>
     <string name="food_to_eat_placeholder">Rainbow said:</string>
     <string name="details_info_title">Other useful information</string>
-    <string name="cloud_cover_title">Cloud cover</string>
+    <string name="cloud_cover_title">Cloud</string>
     <string name="why_this_pack">Why this pack?</string>
     <string name="cause_it_s">Because it\'s</string>
     <string name="random_color">Colors</string>
@@ -164,6 +164,7 @@
     <string name="sponsor">Sponsor</string>
     <string name="time_place_holder">Time:</string>
     <string name="daily_notification_setting_title">Daily notification</string>
+    <string name="chance">Chance</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>

@@ -74,7 +74,6 @@
                 android:layout_width="@dimen/icon_36dp"
                 android:layout_height="@dimen/icon_36dp"
                 android:layout_marginEnd="@dimen/margin_16"
-                android:src="@drawable/clear_day_b"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
@@ -84,8 +83,6 @@
                 android:layout_width="@dimen/icon_36dp"
                 android:layout_height="@dimen/icon_36dp"
                 android:layout_marginTop="@dimen/margin_8"
-
-                android:src="@drawable/clear_day_b"
                 app:layout_constraintEnd_toEndOf="@+id/ic_headWear"
                 app:layout_constraintStart_toStartOf="@+id/ic_headWear"
                 app:layout_constraintTop_toBottomOf="@+id/ic_headWear"
@@ -96,32 +93,20 @@
                 android:layout_width="@dimen/icon_36dp"
                 android:layout_height="@dimen/icon_36dp"
                 android:layout_marginTop="@dimen/margin_8"
-                android:src="@drawable/clear_day_b"
                 app:layout_constraintEnd_toEndOf="@+id/ic_upperBody"
                 app:layout_constraintStart_toStartOf="@+id/ic_upperBody"
                 app:layout_constraintTop_toBottomOf="@+id/ic_upperBody"
                 tools:ignore="ContentDescription" />
 
             <ImageView
-                android:id="@+id/ic_hand2"
+                android:id="@+id/ic_hand"
                 android:layout_width="@dimen/icon_36dp"
                 android:layout_height="@dimen/icon_36dp"
                 android:layout_marginEnd="@dimen/margin_16"
-                android:src="@drawable/clear_day_b"
+                android:padding="@dimen/margin_4"
                 app:layout_constraintBottom_toBottomOf="@+id/ic_upperBody"
                 app:layout_constraintEnd_toStartOf="@+id/ic_upperBody"
                 app:layout_constraintTop_toTopOf="@+id/ic_upperBody"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/ic_hand1"
-                android:layout_width="@dimen/icon_36dp"
-                android:layout_height="@dimen/icon_36dp"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:src="@drawable/clear_day_b"
-                app:layout_constraintBottom_toBottomOf="@+id/ic_hand2"
-                app:layout_constraintEnd_toStartOf="@+id/ic_hand2"
-                app:layout_constraintTop_toTopOf="@+id/ic_hand2"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -129,7 +114,7 @@
                 android:layout_width="@dimen/icon_36dp"
                 android:layout_height="@dimen/icon_36dp"
                 android:layout_marginEnd="@dimen/margin_16"
-                android:src="@drawable/clear_day_b"
+                android:padding="@dimen/margin_4"
                 app:layout_constraintBottom_toBottomOf="@+id/ic_lowerBody"
                 app:layout_constraintEnd_toStartOf="@+id/ic_lowerBody"
                 app:layout_constraintTop_toTopOf="@+id/ic_lowerBody"
@@ -182,6 +167,7 @@
                 android:layout_width="@dimen/icon_24dp"
                 android:layout_height="@dimen/icon_24dp"
                 android:layout_marginEnd="@dimen/margin_16"
+                android:padding="@dimen/margin_4"
                 android:src="@drawable/ic_round_refresh_b"
                 app:layout_constraintBottom_toBottomOf="@id/ic_foodType"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -210,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="2"
+                android:weightSum="3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -286,6 +272,44 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/pressure_title"
+                            android:textColor="@color/absoluteBlack"
+                            android:textSize="@dimen/text_view_14sp"
+                            app:fontFamily="@font/montserrat" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_24dp"
+                        android:layout_height="@dimen/icon_24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/margin_8"
+                        android:src="@drawable/ic_visibility"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/absoluteBlack"
+                            android:textSize="@dimen/text_view_14sp"
+                            app:fontFamily="@font/montserrat" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/visibility_title"
                             android:textColor="@color/absoluteBlack"
                             android:textSize="@dimen/text_view_14sp"
                             app:fontFamily="@font/montserrat" />

@@ -398,7 +398,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         Intent updateUnitBroadcast = new Intent();
         updateUnitBroadcast.setAction(ACTION_UPDATE_UNIT);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateUnitBroadcast);
-        HomeScreenFragment.getInstance().updateUnit();
+        DetailsFragment.getInstance().updateUnit();
         currentDistanceUnit = PreferencesUtil.getDistanceUnit(Objects.requireNonNull(getActivity()));
     }
 

@@ -95,6 +95,7 @@ public class NormalWidget extends AppWidgetProvider {
             PendingIntent tapPending = PendingIntent.getBroadcast(context, 0, tapIntent, 0);
             remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout, tapPending);
             Intent toDetailsScreenIntent = new Intent(context, MainActivity.class);
+            toDetailsScreenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, widgetId, toDetailsScreenIntent, 0);
             remoteViews.setOnClickPendingIntent(R.id.layout_data, pendingIntent);
             PreferencesUtil.setWidgetTapCount(context, 0);

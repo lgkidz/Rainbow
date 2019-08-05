@@ -88,14 +88,10 @@ public class ClothesIconUtil {
         return foot.get(new Random().nextInt(foot.size()));
     }
 
-    public int getHandOneIcon() {
+    public int getHandIcon() {
         if (rain) {
             return R.drawable.rain_ic_umbrella;
         }
-        return hand.get(new Random().nextInt(hand.size()));
-    }
-
-    public int getHandTwoIcon() {
         return hand.get(new Random().nextInt(hand.size()));
     }
 }

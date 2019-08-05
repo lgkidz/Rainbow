@@ -84,7 +84,7 @@ public class NotificationUtil {
                             float temp = (today.getTemperatureMax() + today.getTemperatureMin()) / 2;
                             String tempString = UnitConverter.convertToTemperatureUnit(temp, PreferencesUtil.getTemperatureUnit(context));
                             String currentSummary = weather.getCurrently().getSummary();
-                            String summary = today.getSummary().toLowerCase();
+                            String summary = today.getSummary();
                             String precipitationProb = (int) (100 * today.getPrecipProbability()) + "%";
                             String precipitationProbType = today.getPrecipType().toLowerCase();
                             String iconName = today.getIcon().replace("-", "_");
@@ -101,7 +101,7 @@ public class NotificationUtil {
 
                             int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_b", null, context.getPackageName());
 
-                            String contentText = "Today will be " + summary + " There will be " + precipitationProb + " chance of " + precipitationProbType + additionalComment;
+                            String contentText = summary + " There will be " + precipitationProb + " chance of " + precipitationProbType + additionalComment;
                             String contentTitle = tempString + " - " + currentSummary;
 
                             Intent notificationIntent = new Intent(context, MainActivity.class);
@@ -135,7 +135,8 @@ public class NotificationUtil {
 
     public void startDailyNotification() {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = PreferencesUtil.getNotificationTime(context);
+        Calendar calendar = PreferencesUtil.getNotificationTime(context); //get notification time set by user
+        calendar.add(Calendar.DATE, 1);  //set the time to tomorrow
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmPendingIntent);
     }
 
