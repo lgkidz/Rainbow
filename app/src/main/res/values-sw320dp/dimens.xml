@@ -14,9 +14,9 @@
   <dimen name="dots_height">
     26.67dp
   </dimen>
-    <dimen name="dots_container_height">
-        53.33dp
-    </dimen>
+  <dimen name="dots_container_height">
+    53.33dp
+  </dimen>
   <dimen name="dots_margin_bottom">
     17.78dp
   </dimen>
@@ -95,9 +95,9 @@
   <dimen name="icon_90dp">
     80.0dp
   </dimen>
-    <dimen name="icon_72dp">
-        64.0dp
-    </dimen>
+  <dimen name="icon_72dp">
+    64.0dp
+  </dimen>
   <dimen name="icon_24dp">
     21.33dp
   </dimen>
@@ -167,10 +167,10 @@
   <dimen name="temperature_bar_height">
     10.67dp
   </dimen>
-    <dimen name="sun_bar_height">
-        113.78dp
-    </dimen>
-    <dimen name="sun_bar_width">
-        0.44dp
-    </dimen>
+  <dimen name="sun_bar_height">
+    113.78dp
+  </dimen>
+  <dimen name="sun_bar_width">
+    0.44dp
+  </dimen>
 </resources>
