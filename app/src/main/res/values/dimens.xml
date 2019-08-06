@@ -56,4 +56,6 @@
     <dimen name="temperature_pointer_width">2dp</dimen>
     <dimen name="temperature_pointer_height">28dp</dimen>
     <dimen name="temperature_bar_height">12dp</dimen>
+    <dimen name="sun_bar_height">128dp</dimen>
+    <dimen name="sun_bar_width">0.5dp</dimen>
 </resources>

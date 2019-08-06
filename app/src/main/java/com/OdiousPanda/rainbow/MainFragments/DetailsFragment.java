@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
+import java.text.DateFormat;
 import java.util.Objects;
 
 public class DetailsFragment extends Fragment {
@@ -65,6 +67,10 @@ public class DetailsFragment extends Fragment {
     private TextView tvFood;
     private ImageView icRefreshFood;
     private FoodUtil foodUtil;
+
+    private TextView tvSunrise;
+    private TextView tvMidday;
+    private TextView tvSunset;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -106,6 +112,9 @@ public class DetailsFragment extends Fragment {
         airQualityIndexScale = v.findViewById(R.id.index_scale);
         tvCloudCover = v.findViewById(R.id.cloudCover_value);
         tvVisibility = v.findViewById(R.id.tv_visibility);
+        tvSunrise = v.findViewById(R.id.sunrise_time);
+        tvMidday = v.findViewById(R.id.midDay_time);
+        tvSunset = v.findViewById(R.id.sunset_time);
 
         icHead = v.findViewById(R.id.ic_headWear);
         icUpper = v.findViewById(R.id.ic_upperBody);
@@ -120,6 +129,8 @@ public class DetailsFragment extends Fragment {
         icRefreshFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Animation spin = AnimationUtils.loadAnimation(getActivity(), R.anim.quick_spin);
+                icRefreshFood.startAnimation(spin);
                 foodUtil.updateNewFood();
             }
         });
@@ -148,6 +159,16 @@ public class DetailsFragment extends Fragment {
         updateWindSpeedData(currentSpeedUnit);
     }
 
+    private void updateSunData() {
+        DateFormat df = DateFormat.getTimeInstance(java.text.DateFormat.SHORT);
+        long sunriseTime = currentWeather.getDaily().getData().get(0).getSunriseTime() * 1000;
+        long sunsetTime = currentWeather.getDaily().getData().get(0).getSunsetTime() * 1000;
+        long middayTime = (sunriseTime + sunsetTime) / 2;
+        tvSunrise.setText(df.format(sunriseTime));
+        tvMidday.setText(df.format(middayTime));
+        tvSunset.setText(df.format(sunsetTime));
+    }
+
     private void updateVisibilityData(String currentDistanceUnit) {
         tvVisibility.setText(UnitConverter.convertToDistanceUnit(currentWeather.getCurrently().getVisibility(), currentDistanceUnit));
     }
@@ -164,6 +185,7 @@ public class DetailsFragment extends Fragment {
         updateCloudCoverData();
         updatePressureData(currentPressureUnit);
         updateWindSpeedData(currentSpeedUnit);
+        updateSunData();
     }
 
     public void updateFoodData(int foodIcon, String foodName) {

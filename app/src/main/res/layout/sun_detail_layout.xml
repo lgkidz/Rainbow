@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/sun_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:paddingStart="@dimen/margin_16"
+        android:paddingEnd="@dimen/margin_16"
+        android:text="@string/sun"
+        android:textColor="@color/absoluteBlack"
+        android:textSize="@dimen/text_view_20sp"
+        app:fontFamily="@font/montserrat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sun_title">
+
+        <ImageView
+            android:id="@+id/sunBar"
+            android:layout_width="@dimen/sun_bar_width"
+            android:layout_height="@dimen/sun_bar_height"
+            android:src="@color/halfSnappedBlack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/sunRise"
+            android:layout_width="@dimen/margin_16"
+            android:layout_height="@dimen/margin_16"
+            android:src="@drawable/sun_rise_indicator_background"
+            app:layout_constraintEnd_toEndOf="@id/sunBar"
+            app:layout_constraintStart_toStartOf="@id/sunBar"
+            app:layout_constraintTop_toTopOf="@id/sunBar"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/midDay"
+            android:layout_width="@dimen/margin_12"
+            android:layout_height="@dimen/margin_12"
+            android:src="@drawable/mid_day_indicator_background"
+            app:layout_constraintBottom_toBottomOf="@id/sunBar"
+            app:layout_constraintEnd_toEndOf="@id/sunBar"
+            app:layout_constraintStart_toStartOf="@id/sunBar"
+            app:layout_constraintTop_toTopOf="@id/sunBar"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/sunSet"
+            android:layout_width="@dimen/margin_16"
+            android:layout_height="@dimen/margin_16"
+            android:src="@drawable/sun_set_indicator_background"
+            app:layout_constraintBottom_toBottomOf="@id/sunBar"
+            app:layout_constraintEnd_toEndOf="@id/sunBar"
+            app:layout_constraintStart_toStartOf="@id/sunBar"
+            app:layout_constraintTop_toBottomOf="@id/sunBar"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_32"
+            android:fontFamily="@font/montserrat"
+            android:gravity="end"
+            android:padding="@dimen/margin_16"
+            android:text="@string/sun_rise"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/sunRise"
+            app:layout_constraintEnd_toStartOf="@id/sunRise"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sunRise" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_32"
+            android:fontFamily="@font/montserrat"
+            android:gravity="end"
+            android:padding="@dimen/margin_16"
+            android:text="@string/mid_day"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_14sp"
+            app:layout_constraintBottom_toBottomOf="@id/midDay"
+            app:layout_constraintEnd_toStartOf="@id/midDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/midDay" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_32"
+            android:fontFamily="@font/montserrat"
+            android:gravity="end"
+            android:padding="@dimen/margin_16"
+            android:text="@string/sun_set"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/sunSet"
+            app:layout_constraintEnd_toStartOf="@id/sunSet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sunSet" />
+
+        <TextView
+            android:id="@+id/sunset_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start"
+            android:padding="@dimen/margin_16"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/sunSet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sunSet"
+            app:layout_constraintTop_toTopOf="@id/sunSet" />
+
+        <TextView
+            android:id="@+id/midDay_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start"
+            android:padding="@dimen/margin_16"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_14sp"
+            app:layout_constraintBottom_toBottomOf="@id/midDay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/midDay"
+            app:layout_constraintTop_toTopOf="@id/midDay" />
+
+        <TextView
+            android:id="@+id/sunrise_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start"
+            android:padding="@dimen/margin_16"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_16sp"
+            app:layout_constraintBottom_toBottomOf="@id/sunRise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sunRise"
+            app:layout_constraintTop_toTopOf="@id/sunRise" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

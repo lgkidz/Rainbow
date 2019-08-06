@@ -8,13 +8,13 @@ import java.util.List;
 public class Hourly {
     @SerializedName("summary")
     @Expose
-    public String summary;
+    private String summary;
     @SerializedName("icon")
     @Expose
     public String icon;
     @SerializedName("data")
     @Expose
-    public List<Datum> data = null;
+    private List<Datum> data = null;
 
     public String getSummary() {
         return summary;

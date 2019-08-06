@@ -7,6 +7,9 @@
     <color name="halfSnappedBlack">#80000000</color>
     <color name="coldBlue">#ff92d7ed</color>
     <color name="hotPink">#ffe8998c</color>
+    <color name="sunRise">#ffffa700</color>
+    <color name="midDay">#ff81e1e3</color>
+    <color name="sunSet">#ffff6700</color>
     <color name="pureWhite">#ffffffff</color>
     <color name="setting_bg">@color/pureWhite</color>
     <color name="default_button_bg">@color/coldBlue</color>

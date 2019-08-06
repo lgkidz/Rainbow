@@ -50,7 +50,6 @@ public class WeatherRepository {
         getAllCoordinates();
         weatherCall = RetrofitService.createWeatherCall();
         aqiCall = RetrofitService.createAQICall();
-
     }
 
     public static synchronized WeatherRepository getInstance(Context context) {

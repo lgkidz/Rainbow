@@ -107,7 +107,7 @@
     <string name="r_aqi_very_unhealthy_des" translatable="true">Lung diseases are outside! Gotta catch \'em all!</string>
     <string name="r_aqi_hazardous_des" translatable="true">Living in chernobyl would be more healthy.</string>
 
-    <string name="sun" translatable="true">Sun</string>
+    <string name="sun">Sun</string>
     <string name="wind_title" translatable="true">Wind</string>
     <string name="wind_north" translatable="true">North</string>
     <string name="wind_north_east" translatable="true">Northeast</string>
@@ -165,6 +165,9 @@
     <string name="time_place_holder">Time:</string>
     <string name="daily_notification_setting_title">Daily notification</string>
     <string name="chance">Chance</string>
+    <string name="sun_rise">Sunrise</string>
+    <string name="mid_day">Midday</string>
+    <string name="sun_set">Sunset</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>

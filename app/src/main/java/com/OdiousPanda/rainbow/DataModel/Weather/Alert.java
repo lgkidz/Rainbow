@@ -8,15 +8,15 @@ import java.util.List;
 public class Alert {
     @SerializedName("description")
     @Expose
-    public String description;
+    private String description;
 
     @SerializedName("expires")
     @Expose
-    public long expires;
+    private long expires;
 
     @SerializedName("regions")
     @Expose
-    public List<String> regions;
+    private List<String> regions;
 
 
     @SerializedName("severity")
@@ -27,7 +27,7 @@ public class Alert {
      * "watch" (an individual should prepare for potentially severe weather), or
      * "warning" (an individual should take immediate action to protect themselves and others from potentially severe weather).
      */
-    public String severity;
+    private String severity;
 
     @SerializedName("time")
     @Expose
@@ -35,11 +35,11 @@ public class Alert {
 
     @SerializedName("title")
     @Expose
-    public String title;
+    private String title;
 
     @SerializedName("uri")
     @Expose
-    public String uri;
+    private String uri;
 
     public String getDescription() {
         return description;

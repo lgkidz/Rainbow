@@ -167,4 +167,10 @@
   <dimen name="temperature_bar_height">
     10.67dp
   </dimen>
+    <dimen name="sun_bar_height">
+        113.78dp
+    </dimen>
+    <dimen name="sun_bar_width">
+        0.44dp
+    </dimen>
 </resources>

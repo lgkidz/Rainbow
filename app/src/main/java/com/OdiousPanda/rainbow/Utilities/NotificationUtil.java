@@ -33,7 +33,7 @@ import retrofit2.Response;
 import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
 public class NotificationUtil {
-    public static final String NOTIFY_ACTION = "rainbow.notification.notify";
+    private static final String NOTIFY_ACTION = "rainbow.notification.notify";
     private final String channelName = "Rainbow Notification channel";
     private final String channelDescription = "Daily weather notification";
     private final String channelId = "rainbow.notification.channel.id";
@@ -86,22 +86,24 @@ public class NotificationUtil {
                             String currentSummary = weather.getCurrently().getSummary();
                             String summary = today.getSummary();
                             String precipitationProb = (int) (100 * today.getPrecipProbability()) + "%";
-                            String precipitationProbType = today.getPrecipType().toLowerCase();
+                            String precipitationProbType = today.getPrecipType();
                             String iconName = today.getIcon().replace("-", "_");
                             String additionalComment = ".";
-                            if (precipitationProbType.equals("rain")) {
-                                additionalComment = today.getPrecipProbability() < 0.6 ? "." : ". Bring an umbrella just in case.";
-                            } else {
-                                if (temp < 15) {
-                                    additionalComment = ". It's cold, you should put on your jacket.";
-                                } else if (temp > 27) {
-                                    additionalComment = ". The weather is hot, so stay hydrated.";
+                            int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_b", null, context.getPackageName());
+                            String contentText = summary;
+                            if (precipitationProbType != null) {
+                                contentText += " There will be " + precipitationProb + " chance of " + precipitationProbType.toLowerCase();
+                                if (precipitationProbType.equals("rain")) {
+                                    additionalComment = today.getPrecipProbability() < 0.6 ? "." : ". Bring an umbrella just in case.";
+                                } else {
+                                    if (temp < 15) {
+                                        additionalComment = ". It's cold, you should put on your jacket.";
+                                    } else if (temp > 27) {
+                                        additionalComment = ". The weather is hot, so stay hydrated.";
+                                    }
                                 }
                             }
-
-                            int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_b", null, context.getPackageName());
-
-                            String contentText = summary + " There will be " + precipitationProb + " chance of " + precipitationProbType + additionalComment;
+                            contentText += additionalComment;
                             String contentTitle = tempString + " - " + currentSummary;
 
                             Intent notificationIntent = new Intent(context, MainActivity.class);

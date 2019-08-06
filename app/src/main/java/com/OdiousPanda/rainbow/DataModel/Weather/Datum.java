@@ -9,55 +9,55 @@ public class Datum {
     public Integer time;
     @SerializedName("summary")
     @Expose
-    public String summary;
+    private String summary;
     @SerializedName("icon")
     @Expose
     public String icon;
     @SerializedName("precipIntensity")
     @Expose
-    public Float precipIntensity;
+    private Float precipIntensity;
     @SerializedName("precipProbability")
     @Expose
-    public Float precipProbability;
+    private Float precipProbability;
     @SerializedName("temperature")
     @Expose
-    public Float temperature;
+    private Float temperature;
     @SerializedName("apparentTemperature")
     @Expose
-    public Float apparentTemperature;
+    private Float apparentTemperature;
     @SerializedName("dewPoint")
     @Expose
-    public Float dewPoint;
+    private Float dewPoint;
     @SerializedName("humidity")
     @Expose
-    public Float humidity;
+    private Float humidity;
     @SerializedName("pressure")
     @Expose
-    public Float pressure;
+    private Float pressure;
     @SerializedName("windSpeed")
     @Expose
-    public Float windSpeed;
+    private Float windSpeed;
     @SerializedName("windGust")
     @Expose
-    public Float windGust;
+    private Float windGust;
     @SerializedName("windBearing")
     @Expose
-    public Float windBearing;
+    private Float windBearing;
     @SerializedName("cloudCover")
     @Expose
-    public Float cloudCover;
+    private Float cloudCover;
     @SerializedName("uvIndex")
     @Expose
-    public Float uvIndex;
+    private Float uvIndex;
     @SerializedName("visibility")
     @Expose
     public Float visibility;
     @SerializedName("ozone")
     @Expose
-    public Float ozone;
+    private Float ozone;
     @SerializedName("precipType")
     @Expose
-    public String precipType;
+    private String precipType;
 
     public Integer getTime() {
         return time;

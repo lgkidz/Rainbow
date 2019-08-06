@@ -8,13 +8,13 @@ import java.util.List;
 public class Flags {
     @SerializedName("sources")
     @Expose
-    public List<String> sources = null;
+    private List<String> sources = null;
     @SerializedName("nearest-station")
     @Expose
-    public Float nearestStation;
+    private Float nearestStation;
     @SerializedName("units")
     @Expose
-    public String units;
+    private String units;
 
     public List<String> getSources() {
         return sources;

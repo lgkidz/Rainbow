@@ -355,7 +355,9 @@ public class HomeScreenFragment extends Fragment {
         float value = currentWeather.getCurrently().getPrecipProbability();
         String valueString = (int) value * 100 + "%";
         tvPrecipitation.setText(valueString);
-        icPrecipitationType.setImageResource(type.equals("rain") ? R.drawable.ic_rain_chance : R.drawable.ic_snow_chance);
+        if (type != null) {
+            icPrecipitationType.setImageResource(type.equals("rain") ? R.drawable.ic_rain_chance : R.drawable.ic_snow_chance);
+        }
     }
 
     private void updateHumidityData() {

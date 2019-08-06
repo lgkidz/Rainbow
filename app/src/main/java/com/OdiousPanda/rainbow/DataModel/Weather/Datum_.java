@@ -6,127 +6,127 @@ import com.google.gson.annotations.SerializedName;
 public class Datum_ {
     @SerializedName("time")
     @Expose
-    public Integer time;
+    public long time;
     @SerializedName("summary")
     @Expose
-    public String summary;
+    private String summary;
     @SerializedName("icon")
     @Expose
     public String icon;
     @SerializedName("sunriseTime")
     @Expose
-    public Integer sunriseTime;
+    private long sunriseTime;
     @SerializedName("sunsetTime")
     @Expose
-    public Integer sunsetTime;
+    private long sunsetTime;
     @SerializedName("moonPhase")
     @Expose
-    public Float moonPhase;
+    private Float moonPhase;
     @SerializedName("precipIntensity")
     @Expose
-    public Float precipIntensity;
+    private Float precipIntensity;
     @SerializedName("precipIntensityMax")
     @Expose
-    public Float precipIntensityMax;
+    private Float precipIntensityMax;
     @SerializedName("precipIntensityMaxTime")
     @Expose
-    public Integer precipIntensityMaxTime;
+    private long precipIntensityMaxTime;
     @SerializedName("precipProbability")
     @Expose
-    public Float precipProbability;
+    private Float precipProbability;
     @SerializedName("precipType")
     @Expose
-    public String precipType;
+    private String precipType;
     @SerializedName("temperatureHigh")
     @Expose
-    public Float temperatureHigh;
+    private Float temperatureHigh;
     @SerializedName("temperatureHighTime")
     @Expose
-    public Integer temperatureHighTime;
+    private long temperatureHighTime;
     @SerializedName("temperatureLow")
     @Expose
-    public Float temperatureLow;
+    private Float temperatureLow;
     @SerializedName("temperatureLowTime")
     @Expose
-    public Integer temperatureLowTime;
+    private long temperatureLowTime;
     @SerializedName("apparentTemperatureHigh")
     @Expose
-    public Float apparentTemperatureHigh;
+    private Float apparentTemperatureHigh;
     @SerializedName("apparentTemperatureHighTime")
     @Expose
-    public Integer apparentTemperatureHighTime;
+    private long apparentTemperatureHighTime;
     @SerializedName("apparentTemperatureLow")
     @Expose
-    public Float apparentTemperatureLow;
+    private Float apparentTemperatureLow;
     @SerializedName("apparentTemperatureLowTime")
     @Expose
-    public Integer apparentTemperatureLowTime;
+    private long apparentTemperatureLowTime;
     @SerializedName("dewPoint")
     @Expose
-    public Float dewPoint;
+    private Float dewPoint;
     @SerializedName("humidity")
     @Expose
-    public Float humidity;
+    private Float humidity;
     @SerializedName("pressure")
     @Expose
-    public Float pressure;
+    private Float pressure;
     @SerializedName("windSpeed")
     @Expose
-    public Float windSpeed;
+    private Float windSpeed;
     @SerializedName("windGust")
     @Expose
-    public Float windGust;
+    private Float windGust;
     @SerializedName("windGustTime")
     @Expose
-    public Integer windGustTime;
+    private long windGustTime;
     @SerializedName("windBearing")
     @Expose
-    public Float windBearing;
+    private Float windBearing;
     @SerializedName("cloudCover")
     @Expose
-    public Float cloudCover;
+    private Float cloudCover;
     @SerializedName("uvIndex")
     @Expose
-    public Float uvIndex;
+    private Float uvIndex;
     @SerializedName("uvIndexTime")
     @Expose
-    public Integer uvIndexTime;
+    private long uvIndexTime;
     @SerializedName("visibility")
     @Expose
     public Float visibility;
     @SerializedName("ozone")
     @Expose
-    public Float ozone;
+    private Float ozone;
     @SerializedName("temperatureMin")
     @Expose
-    public Float temperatureMin;
+    private Float temperatureMin;
     @SerializedName("temperatureMinTime")
     @Expose
-    public Integer temperatureMinTime;
+    private long temperatureMinTime;
     @SerializedName("temperatureMax")
     @Expose
-    public Float temperatureMax;
+    private Float temperatureMax;
     @SerializedName("temperatureMaxTime")
     @Expose
-    public Integer temperatureMaxTime;
+    private long temperatureMaxTime;
     @SerializedName("apparentTemperatureMin")
     @Expose
-    public Float apparentTemperatureMin;
+    private Float apparentTemperatureMin;
     @SerializedName("apparentTemperatureMinTime")
     @Expose
-    public Integer apparentTemperatureMinTime;
+    private long apparentTemperatureMinTime;
     @SerializedName("apparentTemperatureMax")
     @Expose
-    public Float apparentTemperatureMax;
+    private Float apparentTemperatureMax;
     @SerializedName("apparentTemperatureMaxTime")
     @Expose
-    public Integer apparentTemperatureMaxTime;
+    private long apparentTemperatureMaxTime;
 
-    public Integer getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -146,19 +146,19 @@ public class Datum_ {
         this.icon = icon;
     }
 
-    public Integer getSunriseTime() {
+    public long getSunriseTime() {
         return sunriseTime;
     }
 
-    public void setSunriseTime(Integer sunriseTime) {
+    public void setSunriseTime(long sunriseTime) {
         this.sunriseTime = sunriseTime;
     }
 
-    public Integer getSunsetTime() {
+    public long getSunsetTime() {
         return sunsetTime;
     }
 
-    public void setSunsetTime(Integer sunsetTime) {
+    public void setSunsetTime(long sunsetTime) {
         this.sunsetTime = sunsetTime;
     }
 
@@ -186,11 +186,11 @@ public class Datum_ {
         this.precipIntensityMax = precipIntensityMax;
     }
 
-    public Integer getPrecipIntensityMaxTime() {
+    public long getPrecipIntensityMaxTime() {
         return precipIntensityMaxTime;
     }
 
-    public void setPrecipIntensityMaxTime(Integer precipIntensityMaxTime) {
+    public void setPrecipIntensityMaxTime(long precipIntensityMaxTime) {
         this.precipIntensityMaxTime = precipIntensityMaxTime;
     }
 
@@ -218,11 +218,11 @@ public class Datum_ {
         this.temperatureHigh = temperatureHigh;
     }
 
-    public Integer getTemperatureHighTime() {
+    public long getTemperatureHighTime() {
         return temperatureHighTime;
     }
 
-    public void setTemperatureHighTime(Integer temperatureHighTime) {
+    public void setTemperatureHighTime(long temperatureHighTime) {
         this.temperatureHighTime = temperatureHighTime;
     }
 
@@ -234,11 +234,11 @@ public class Datum_ {
         this.temperatureLow = temperatureLow;
     }
 
-    public Integer getTemperatureLowTime() {
+    public long getTemperatureLowTime() {
         return temperatureLowTime;
     }
 
-    public void setTemperatureLowTime(Integer temperatureLowTime) {
+    public void setTemperatureLowTime(long temperatureLowTime) {
         this.temperatureLowTime = temperatureLowTime;
     }
 
@@ -250,11 +250,11 @@ public class Datum_ {
         this.apparentTemperatureHigh = apparentTemperatureHigh;
     }
 
-    public Integer getApparentTemperatureHighTime() {
+    public long getApparentTemperatureHighTime() {
         return apparentTemperatureHighTime;
     }
 
-    public void setApparentTemperatureHighTime(Integer apparentTemperatureHighTime) {
+    public void setApparentTemperatureHighTime(long apparentTemperatureHighTime) {
         this.apparentTemperatureHighTime = apparentTemperatureHighTime;
     }
 
@@ -266,11 +266,11 @@ public class Datum_ {
         this.apparentTemperatureLow = apparentTemperatureLow;
     }
 
-    public Integer getApparentTemperatureLowTime() {
+    public long getApparentTemperatureLowTime() {
         return apparentTemperatureLowTime;
     }
 
-    public void setApparentTemperatureLowTime(Integer apparentTemperatureLowTime) {
+    public void setApparentTemperatureLowTime(long apparentTemperatureLowTime) {
         this.apparentTemperatureLowTime = apparentTemperatureLowTime;
     }
 
@@ -314,11 +314,11 @@ public class Datum_ {
         this.windGust = windGust;
     }
 
-    public Integer getWindGustTime() {
+    public long getWindGustTime() {
         return windGustTime;
     }
 
-    public void setWindGustTime(Integer windGustTime) {
+    public void setWindGustTime(long windGustTime) {
         this.windGustTime = windGustTime;
     }
 
@@ -346,11 +346,11 @@ public class Datum_ {
         this.uvIndex = uvIndex;
     }
 
-    public Integer getUvIndexTime() {
+    public long getUvIndexTime() {
         return uvIndexTime;
     }
 
-    public void setUvIndexTime(Integer uvIndexTime) {
+    public void setUvIndexTime(long uvIndexTime) {
         this.uvIndexTime = uvIndexTime;
     }
 
@@ -378,11 +378,11 @@ public class Datum_ {
         this.temperatureMin = temperatureMin;
     }
 
-    public Integer getTemperatureMinTime() {
+    public long getTemperatureMinTime() {
         return temperatureMinTime;
     }
 
-    public void setTemperatureMinTime(Integer temperatureMinTime) {
+    public void setTemperatureMinTime(long temperatureMinTime) {
         this.temperatureMinTime = temperatureMinTime;
     }
 
@@ -394,11 +394,11 @@ public class Datum_ {
         this.temperatureMax = temperatureMax;
     }
 
-    public Integer getTemperatureMaxTime() {
+    public long getTemperatureMaxTime() {
         return temperatureMaxTime;
     }
 
-    public void setTemperatureMaxTime(Integer temperatureMaxTime) {
+    public void setTemperatureMaxTime(long temperatureMaxTime) {
         this.temperatureMaxTime = temperatureMaxTime;
     }
 
@@ -410,11 +410,11 @@ public class Datum_ {
         this.apparentTemperatureMin = apparentTemperatureMin;
     }
 
-    public Integer getApparentTemperatureMinTime() {
+    public long getApparentTemperatureMinTime() {
         return apparentTemperatureMinTime;
     }
 
-    public void setApparentTemperatureMinTime(Integer apparentTemperatureMinTime) {
+    public void setApparentTemperatureMinTime(long apparentTemperatureMinTime) {
         this.apparentTemperatureMinTime = apparentTemperatureMinTime;
     }
 
@@ -426,11 +426,11 @@ public class Datum_ {
         this.apparentTemperatureMax = apparentTemperatureMax;
     }
 
-    public Integer getApparentTemperatureMaxTime() {
+    public long getApparentTemperatureMaxTime() {
         return apparentTemperatureMaxTime;
     }
 
-    public void setApparentTemperatureMaxTime(Integer apparentTemperatureMaxTime) {
+    public void setApparentTemperatureMaxTime(long apparentTemperatureMaxTime) {
         this.apparentTemperatureMaxTime = apparentTemperatureMaxTime;
     }
 }
