@@ -33,7 +33,7 @@ import retrofit2.Response;
 import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
 public class NotificationUtil {
-    private static final String NOTIFY_ACTION = "rainbow.notification.notify";
+    static final String NOTIFY_ACTION = "rainbow.notification.notify";
     private final String channelName = "Rainbow Notification channel";
     private final String channelDescription = "Daily weather notification";
     private final String channelId = "rainbow.notification.channel.id";

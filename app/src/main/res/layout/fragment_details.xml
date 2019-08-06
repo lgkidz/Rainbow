@@ -152,13 +152,16 @@
 
             <TextView
                 android:id="@+id/food"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_8"
-                android:text="@string/food_to_eat_placeholder"
-                android:textColor="@color/absoluteBlack"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="@dimen/margin_8"
                 android:textSize="@dimen/text_view_14sp"
                 app:fontFamily="@font/montserrat"
+                android:paddingEnd="@dimen/margin_8"
+                android:textColor="#0000ff"
+                app:layout_constraintEnd_toStartOf="@id/ic_refreshFood"
                 app:layout_constraintBottom_toBottomOf="@id/ic_foodType"
                 app:layout_constraintStart_toEndOf="@id/ic_foodType" />
 

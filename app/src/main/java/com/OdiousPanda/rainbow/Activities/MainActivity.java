@@ -48,6 +48,7 @@ import com.OdiousPanda.rainbow.CustomUI.MovableFAB;
 import com.OdiousPanda.rainbow.DataModel.AQI.AirQuality;
 import com.OdiousPanda.rainbow.DataModel.Coordinate;
 import com.OdiousPanda.rainbow.DataModel.LocationData;
+import com.OdiousPanda.rainbow.DataModel.Nearby.NearbySearch;
 import com.OdiousPanda.rainbow.DataModel.Unsplash.Unsplash;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.Helpers.SwipeToDeleteCallback;
@@ -57,6 +58,7 @@ import com.OdiousPanda.rainbow.MainFragments.SettingFragment;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Repositories.WeatherRepository;
 import com.OdiousPanda.rainbow.Utilities.MyColorUtil;
+import com.OdiousPanda.rainbow.Utilities.MyTextUtil;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.ViewModels.WeatherViewModel;
@@ -309,6 +311,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         HomeScreenFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
         DetailsFragment.getInstance().updateData(locations.get(currentLocationPosition).getWeather());
         HomeScreenFragment.getInstance().updateCurrentLocationName(locations.get(currentLocationPosition).getCoordinate().getName());
+        searchNearbyPlaceToEat(locations.get(currentLocationPosition).getCoordinate().getLat(), locations.get(currentLocationPosition).getCoordinate().getLon());
         updateBackground();
         hideLocationList();
     }
@@ -383,6 +386,27 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         });
     }
 
+    private void searchNearbyPlaceToEat(String lat, String lon) {
+        String locationString = MyTextUtil.locationStringForNearbySearch(lat, lon);
+        int radius = Constant.NEARBY_SEARCH_RADIUS_DEFAULT;
+        String keyword = Constant.NEARBY_SEARCH_KEYWORD;
+        String apiKey = Constant.GOOGLE_API_KEY;
+        RetrofitService.createNearbySearchCall().searchNearby(locationString, radius, keyword, apiKey).enqueue(new Callback<NearbySearch>() {
+            @Override
+            public void onResponse(@NonNull Call<NearbySearch> call, @NonNull Response<NearbySearch> response) {
+                if (response.isSuccessful()) {
+                    NearbySearch nearbySearch = response.body();
+                    DetailsFragment.getInstance().updateNearbySearchData(nearbySearch);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NearbySearch> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
     private void updateCurrentLocation() {
         Log.d(TAG, "updateCurrentLocation: update Current Location");
         AirLocation airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
@@ -411,6 +435,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 }
                 weatherViewModel.update(currentLocation);
                 weatherViewModel.fetchAirQualityByCoordinate(currentLocation);
+                searchNearbyPlaceToEat(currentLocation.getLat(), currentLocation.getLon());
             }
 
             @Override

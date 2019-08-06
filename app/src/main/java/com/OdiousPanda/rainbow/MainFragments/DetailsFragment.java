@@ -2,7 +2,11 @@ package com.OdiousPanda.rainbow.MainFragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +25,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.rainbow.DataModel.AQI.AirQuality;
+import com.OdiousPanda.rainbow.DataModel.Nearby.NearbySearch;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.ClothesIconUtil;
-import com.OdiousPanda.rainbow.Utilities.FoodUtil;
+import com.OdiousPanda.rainbow.Utilities.FoodIconUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
 import com.google.android.gms.ads.AdRequest;
@@ -35,6 +40,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 
 import java.text.DateFormat;
 import java.util.Objects;
+import java.util.Random;
 
 public class DetailsFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
@@ -66,11 +72,13 @@ public class DetailsFragment extends Fragment {
     private ImageView icFoodType;
     private TextView tvFood;
     private ImageView icRefreshFood;
-    private FoodUtil foodUtil;
+    private FoodIconUtil foodIconUtil;
 
     private TextView tvSunrise;
     private TextView tvMidday;
     private TextView tvSunset;
+
+    private NearbySearch nearbySearchData = new NearbySearch();
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -94,7 +102,7 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
         initViews(v);
-        foodUtil = new FoodUtil();
+        foodIconUtil = new FoodIconUtil();
         return v;
     }
 
@@ -131,7 +139,11 @@ public class DetailsFragment extends Fragment {
             public void onClick(View v) {
                 Animation spin = AnimationUtils.loadAnimation(getActivity(), R.anim.quick_spin);
                 icRefreshFood.startAnimation(spin);
-                foodUtil.updateNewFood();
+                if (nearbySearchData.getResults() != null) {
+                    if (nearbySearchData.getResults().size() > 0) {
+                        updateFoodData();
+                    }
+                }
             }
         });
         if (currentWeather != null) {
@@ -188,9 +200,35 @@ public class DetailsFragment extends Fragment {
         updateSunData();
     }
 
-    public void updateFoodData(int foodIcon, String foodName) {
-        icFoodType.setImageResource(foodIcon);
-        tvFood.setText(foodName);
+    private void updateFoodData() {
+        icFoodType.setImageResource(foodIconUtil.getRandomIcons());
+        String currentPlaceName = tvFood.getText().toString();
+        String placeName;
+        while (true) {
+            int p = new Random().nextInt(nearbySearchData.getResults().size());
+            if (!nearbySearchData.getResults().get(p).getName().equalsIgnoreCase(currentPlaceName)) {
+                placeName = nearbySearchData.getResults().get(p).getName();
+                break;
+            }
+        }
+        SpannableString content = new SpannableString(placeName);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tvFood.setText(content);
+        String uri = "geo:0,0?q=" + placeName;
+        final Intent toMapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        tvFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(toMapIntent);
+            }
+        });
+    }
+
+    public void updateNearbySearchData(NearbySearch nearbySearch) {
+        nearbySearchData = nearbySearch;
+        if (nearbySearchData.getResults().size() > 0) {
+            updateFoodData();
+        }
     }
 
     private void updateWearIcons() {

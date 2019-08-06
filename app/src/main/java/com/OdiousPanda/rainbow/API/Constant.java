@@ -11,4 +11,7 @@ public class Constant {
     static final String UNSPLASH_KEY = "50220d02e66c5cd71407f6f1cfc63f3a721258d08ff6190f8f25231471bb51f3";
     static final String UNSPLASH_ORIENTATION_POTRAIT = "portrait";
     static final String UNSPLASH_ORIENTATION_LANDSCAPE = "landscape";
+    public static final int NEARBY_SEARCH_RADIUS_DEFAULT = 5000; // in meter
+    public static final String NEARBY_SEARCH_KEYWORD = "food";
+    static final String GOOGLE_MAP_API_BASE_URL = "https://maps.googleapis.com/";
 }

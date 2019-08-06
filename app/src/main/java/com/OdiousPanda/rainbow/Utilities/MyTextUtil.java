@@ -25,8 +25,8 @@ public class MyTextUtil {
         html += "'>";
         html += profileName;
         html += "</a> on <a href='";
-        html += Constant.UNSPLASH_HOME_URL;
-        html += "'> Unsplash";
+        html += Constant.UNSPLASH_HOME_URL + referralString;
+        html += "'> Unsplash</a>";
         CharSequence sequence = Html.fromHtml(html);
         SpannableStringBuilder strBuilder = new SpannableStringBuilder(sequence);
         URLSpan[] urls = strBuilder.getSpans(0, sequence.length(), URLSpan.class);
@@ -70,5 +70,9 @@ public class MyTextUtil {
         }
         String hour = String.valueOf(h);
         return hour + ":" + minute + AP;
+    }
+
+    public static String locationStringForNearbySearch(String lat, String lon) {
+        return lat + "," + lon;
     }
 }
