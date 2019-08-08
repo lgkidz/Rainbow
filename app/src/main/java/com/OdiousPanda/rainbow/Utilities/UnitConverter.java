@@ -4,11 +4,18 @@ import android.content.Context;
 
 import com.OdiousPanda.rainbow.R;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class UnitConverter {
 
     private final static String DEGREE = "\u00b0";
+
+    private static String banana(){
+        byte[] bananaByte = {(byte) 0xF0, (byte) 0x9F, (byte) 0x8D, (byte) 0x8C};
+        return new String(bananaByte, StandardCharsets.UTF_8);
+    }
 
     public static float toCelsius(float temp) {
         return (temp - 32) * 5 / 9;
@@ -56,7 +63,7 @@ public class UnitConverter {
         if (unit.equals("km")) {
             return Math.round(distance * 1.609) + " km";
         } else if (unit.equals("bananas")) {
-            return Math.round(distance * 9041.254) + " bananas";
+            return Math.round(distance * 9041.254) + " " + banana();
         }
         return Math.round(distance) + " mile";
     }
@@ -65,7 +72,7 @@ public class UnitConverter {
         if (unit.equals("kmph")) {
             return Math.round(speed * 1.609) + " km/h";
         } else if (unit.equals("bananas per hour")) {
-            return Math.round(speed * 9041.254) + " banana/h";
+            return Math.round(speed * 9041.254) + " " + banana() +"/h";
         }
         return Math.round(speed) + " mph";
     }
