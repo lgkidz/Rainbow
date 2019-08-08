@@ -117,7 +117,7 @@ public class NormalWidget extends AppWidgetProvider {
                 break;
             }
             case MAIN_BITMAP: {
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_40sp));
                 break;
             }
             case SUB_BITMAP: {

@@ -23,7 +23,10 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.OdiousPanda.rainbow.Adapters.HourlyForecastAdapter;
 import com.OdiousPanda.rainbow.DataModel.AQI.AirQuality;
 import com.OdiousPanda.rainbow.DataModel.Nearby.NearbySearch;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
@@ -47,7 +50,7 @@ public class DetailsFragment extends Fragment {
     private static DetailsFragment instance;
 
     private Weather currentWeather;
-
+    private TextView tvSunTitle;
     private TextView tvRealFeel;
     private TextView tvPressure;
     private TextView tvPressureTitle;
@@ -77,6 +80,7 @@ public class DetailsFragment extends Fragment {
     private TextView tvSunrise;
     private TextView tvMidday;
     private TextView tvSunset;
+    private RecyclerView hourlyForecastRv;
 
     private NearbySearch nearbySearchData = new NearbySearch();
 
@@ -107,6 +111,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void initViews(View v) {
+        tvSunTitle = v.findViewById(R.id.sun_title);
         tvRealFeel = v.findViewById(R.id.tv_tempRealFeel);
         tvPressure = v.findViewById(R.id.tv_pressure);
         tvPressureTitle = v.findViewById(R.id.tv_pressureTitle);
@@ -123,6 +128,10 @@ public class DetailsFragment extends Fragment {
         tvSunrise = v.findViewById(R.id.sunrise_time);
         tvMidday = v.findViewById(R.id.midDay_time);
         tvSunset = v.findViewById(R.id.sunset_time);
+
+        hourlyForecastRv = v.findViewById(R.id.hourlyForecastRv);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        hourlyForecastRv.setLayoutManager(manager);
 
         icHead = v.findViewById(R.id.ic_headWear);
         icUpper = v.findViewById(R.id.ic_upperBody);
@@ -169,9 +178,12 @@ public class DetailsFragment extends Fragment {
         updateRealFeelTemperature(currentTempUnit);
         updatePressureData(currentPressureUnit);
         updateWindSpeedData(currentSpeedUnit);
+        updateHourlyForecastDat();
+        updateSunData();
     }
 
     private void updateSunData() {
+        tvSunTitle.setText(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()))?getString(R.string.sun):getString(R.string.sun_not_explicit));
         DateFormat df = DateFormat.getTimeInstance(java.text.DateFormat.SHORT);
         long sunriseTime = currentWeather.getDaily().getData().get(0).getSunriseTime() * 1000;
         long sunsetTime = currentWeather.getDaily().getData().get(0).getSunsetTime() * 1000;
@@ -198,6 +210,12 @@ public class DetailsFragment extends Fragment {
         updatePressureData(currentPressureUnit);
         updateWindSpeedData(currentSpeedUnit);
         updateSunData();
+        updateHourlyForecastDat();
+    }
+
+    private void updateHourlyForecastDat(){
+        HourlyForecastAdapter adapter = new HourlyForecastAdapter(currentWeather.getHourly().getData(),getActivity());
+        hourlyForecastRv.setAdapter(adapter);
     }
 
     private void updateFoodData() {

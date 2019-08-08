@@ -40,8 +40,7 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
     public void onBindViewHolder(@NonNull DailyForecastAdapter.ForecastViewHolder holder, int position) {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(context);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
-        Date date = new Date((long) dailyData.getData().get(position).getTime() * 1000);
-        String weekday = sdf.format(date);
+        String weekday = sdf.format(dailyData.getData().get(position).getTime() * 1000);
         float temp = (dailyData.getData().get(position).getTemperatureMax() + dailyData.getData().get(position).getTemperatureMin()) / 2;
         String textTemp = UnitConverter.convertToTemperatureUnitClean(temp, currentTempUnit);
         String iconName = dailyData.getData().get(position).getIcon().replace("-", "_");

@@ -1,0 +1,130 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/basic_detail_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:weightSum="3"
+    android:paddingStart="@dimen/margin_16"
+    android:paddingTop="@dimen/margin_16"
+    android:paddingEnd="@dimen/margin_16"
+    android:paddingBottom="@dimen/margin_16">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/icon_24dp"
+            android:layout_height="@dimen/icon_24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:src="@drawable/ic_cloud_cover"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cloudCover_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cloud_cover_title"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/icon_24dp"
+            android:layout_height="@dimen/icon_24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:src="@drawable/ic_pressure"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat" />
+
+            <TextView
+                android:id="@+id/tv_pressureTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pressure_title"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/icon_24dp"
+            android:layout_height="@dimen/icon_24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:src="@drawable/ic_visibility"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_visibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/visibility_title"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

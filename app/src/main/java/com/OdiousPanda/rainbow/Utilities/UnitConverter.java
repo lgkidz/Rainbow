@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.OdiousPanda.rainbow.R;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 

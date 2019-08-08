@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class Datum {
     @SerializedName("time")
     @Expose
-    public Integer time;
+    public long time;
     @SerializedName("summary")
     @Expose
     private String summary;
@@ -59,11 +59,11 @@ public class Datum {
     @Expose
     private String precipType;
 
-    public Integer getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

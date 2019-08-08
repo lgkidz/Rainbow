@@ -1,0 +1,79 @@
+package com.OdiousPanda.rainbow.Adapters;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.OdiousPanda.rainbow.DataModel.Weather.Datum;
+import com.OdiousPanda.rainbow.R;
+import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
+import com.OdiousPanda.rainbow.Utilities.UnitConverter;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+
+public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAdapter.HourlyForecastItem> {
+
+    private List<Datum> mData;
+    private Context mContext;
+
+    public HourlyForecastAdapter(List<Datum> data, Context context){
+        this.mData = data;
+        this.mContext = context;
+    }
+
+    @NonNull
+    @Override
+    public HourlyForecastItem onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.hourly_forecast_item,parent,false);
+        return new HourlyForecastItem(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull HourlyForecastItem holder, int position) {
+        String temp = UnitConverter.convertToTemperatureUnitClean(mData.get(position).getTemperature(), PreferencesUtil.getTemperatureUnit(mContext));
+        String iconName = mData.get(position).getIcon().replace("-","_");
+        int iconResourceId = mContext.getResources().getIdentifier("drawable/" + iconName + "_b", null, mContext.getPackageName());
+        SimpleDateFormat df = new SimpleDateFormat("h a", Locale.getDefault());
+        String time = position==0?"Now":df.format(mData.get(position).getTime() * 1000).toLowerCase();
+        String precip = (int) (mData.get(position).getPrecipProbability() * 100) + "%";
+        if ((int) (mData.get(position).getPrecipProbability() * 100) == 0){
+            holder.precipitation.setVisibility(View.INVISIBLE);
+        }
+        holder.setData(temp,iconResourceId,precip,time);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size()/2;
+    }
+
+    class HourlyForecastItem extends RecyclerView.ViewHolder{
+        private TextView temperature;
+        private ImageView icon;
+        TextView precipitation;
+        private TextView hour;
+
+        HourlyForecastItem(@NonNull View itemView) {
+            super(itemView);
+            temperature = itemView.findViewById(R.id.hourlyTemp);
+            icon = itemView.findViewById(R.id.hourlyIcon);
+            precipitation = itemView.findViewById(R.id.hourlyPrecipitation);
+            hour = itemView.findViewById(R.id.hourlyHour);
+        }
+
+        void setData(String temp, int iconResource, String precip, String time){
+            temperature.setText(temp);
+            icon.setImageResource(iconResource);
+            precipitation.setText(precip);
+            hour.setText(time);
+        }
+    }
+}

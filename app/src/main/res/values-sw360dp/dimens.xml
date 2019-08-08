@@ -137,6 +137,9 @@
   <dimen name="text_view_36sp">
     36sp
   </dimen>
+  <dimen name="text_view_40sp">
+    40sp
+  </dimen>
   <dimen name="text_view_48sp">
     48sp
   </dimen>
@@ -157,6 +160,9 @@
   </dimen>
   <dimen name="divider_height">
     1dp
+  </dimen>
+  <dimen name="hourly_forecast_item_height">
+    104dp
   </dimen>
   <dimen name="temperature_pointer_width">
     2dp

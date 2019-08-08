@@ -168,6 +168,8 @@
     <string name="sun_rise">Sunrise</string>
     <string name="mid_day">Midday</string>
     <string name="sun_set">Sunset</string>
+    <string name="hourly_forecast_title">The next hours</string>
+    <string name="sun_not_explicit">Blazing hot plasma ball</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>
