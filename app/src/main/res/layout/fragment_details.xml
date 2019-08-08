@@ -196,11 +196,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/margin_16"
-                android:paddingTop="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_8"
+
                 android:text="@string/hourly_forecast_title"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_20sp"
+
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
