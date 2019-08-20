@@ -16,7 +16,6 @@ import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.ForecastViewHolder> {

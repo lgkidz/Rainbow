@@ -21,11 +21,9 @@ import java.util.Objects;
  */
 public class WelcomeFragment3 extends Fragment {
 
-
     public WelcomeFragment3() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

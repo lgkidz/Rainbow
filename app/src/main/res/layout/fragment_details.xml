@@ -157,12 +157,12 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingStart="@dimen/margin_8"
-                android:textSize="@dimen/text_view_14sp"
-                app:fontFamily="@font/montserrat"
                 android:paddingEnd="@dimen/margin_8"
                 android:textColor="@color/hyperBlue"
-                app:layout_constraintEnd_toStartOf="@id/ic_refreshFood"
+                android:textSize="@dimen/text_view_14sp"
+                app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toBottomOf="@id/ic_foodType"
+                app:layout_constraintEnd_toStartOf="@id/ic_refreshFood"
                 app:layout_constraintStart_toEndOf="@id/ic_foodType" />
 
             <ImageView
@@ -191,6 +191,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/hourlyForecastTitle"
                 android:layout_width="wrap_content"
@@ -206,16 +207,20 @@
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hourlyForecastRv"
-                app:layout_constraintTop_toBottomOf="@id/hourlyForecastTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/hourlyForecastTitle">
 
             </androidx.recyclerview.widget.RecyclerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <include layout="@layout/aqi_detail_layout" />
+
         <include layout="@layout/wind_detail_layout" />
+
         <include layout="@layout/sun_detail_layout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

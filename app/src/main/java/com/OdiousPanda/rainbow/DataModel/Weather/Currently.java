@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Currently {
+    @SerializedName("visibility")
+    @Expose
+    public Float visibility;
     @SerializedName("time")
     @Expose
     private long time;
@@ -49,9 +52,6 @@ public class Currently {
     @SerializedName("uvIndex")
     @Expose
     private Float uvIndex;
-    @SerializedName("visibility")
-    @Expose
-    public Float visibility;
     @SerializedName("ozone")
     @Expose
     private Float ozone;

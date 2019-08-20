@@ -7,12 +7,15 @@ public class Datum_ {
     @SerializedName("time")
     @Expose
     public long time;
-    @SerializedName("summary")
-    @Expose
-    private String summary;
     @SerializedName("icon")
     @Expose
     public String icon;
+    @SerializedName("visibility")
+    @Expose
+    public Float visibility;
+    @SerializedName("summary")
+    @Expose
+    private String summary;
     @SerializedName("sunriseTime")
     @Expose
     private long sunriseTime;
@@ -91,9 +94,6 @@ public class Datum_ {
     @SerializedName("uvIndexTime")
     @Expose
     private long uvIndexTime;
-    @SerializedName("visibility")
-    @Expose
-    public Float visibility;
     @SerializedName("ozone")
     @Expose
     private Float ozone;

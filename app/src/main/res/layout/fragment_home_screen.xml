@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
@@ -183,12 +184,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingStart="@dimen/margin_16"
             android:paddingEnd="@dimen/margin_16"
             android:paddingBottom="@dimen/margin_16"
             android:weightSum="3"
-            android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/guideline1">
 
             <LinearLayout

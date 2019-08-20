@@ -24,8 +24,6 @@
     <string name="slide_4_title">That\'s Rainbow\'s widget</string>
     <string name="slide_4_desc">You can tap the weather icon to open the details screen, double tap the quote to refresh the widget</string>
 
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
-    <string name="play_again">Play Again</string>
     <string name="app_need_permissions_to_run">This app cannot run without the permissions to use this feature</string>
     <string name="exit">Exit</string>
     <string name="icon_content_description">icon</string>
@@ -40,9 +38,6 @@
     <string name="hell_yeah">Hell yeah!</string>
     <string name="setting">Setting</string>
     <string name="temperature_setting_title">Select what you prefer: </string>
-    <string name="prefer_american"> I\'m American</string>
-    <string name="prefer_not_american"> I\'m not American</string>
-    <string name="prefer_abnormal"> I\'m abnormal</string>
     <string name="distance_setting_title">Distance unit</string>
     <string name="speed_setting_title">Speed Unit</string>
     <string name="pressure_setting_title">Pressure Unit</string>
@@ -52,8 +47,6 @@
     <string name="temp_setting_degree_f">°F</string>
     <string name="temp_setting_degree_c">°C</string>
     <string name="temp_setting_degree_k">°K</string>
-    <string name="help_me">Help me</string>
-    <string name="help_the_developer">Help the developer</string>
     <string name="your_depression">your depression</string>
     <string name="depression_unit">depressions</string>
     <string name="mmhg">mmHg</string>
@@ -85,7 +78,7 @@
     <string name="no_connection_tv1">Cloud not found</string>
     <string name="no_connection_tv2">Yeah clear sky is cool but have you tried connecting to the internet?</string>
     <string name="no_connection_tv3">Do you really want me to cry?</string>
-    <string name="air_quality_dialog_heading">Air quality</string>
+    <string name="air_quality_dialog_heading">Air Quality</string>
 
     <string name="aqi_good" translatable="true">Good</string>
     <string name="aqi_moderate" translatable="true">Moderate</string>
@@ -123,7 +116,7 @@
     <string name="quote_placeholder">…</string>
     <string name="depression_level_title">Depression level</string>
     <string name="air_quality_dialog_description">Here are some scientific information</string>
-    <string name="provided_by_aqi_cn_org">provided by aqicn.org</string>
+    <string name="provided_by_aqi_cn_org">Provided by aqicn.org</string>
     <string name="explicit_setting_title">Are you okay with swearing?</string>
     <string name="snack_bar_undo">Undo</string>
     <string name="snack_bar_text">Location deleted.</string>

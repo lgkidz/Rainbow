@@ -130,7 +130,7 @@ public class DetailsFragment extends Fragment {
         tvSunset = v.findViewById(R.id.sunset_time);
 
         hourlyForecastRv = v.findViewById(R.id.hourlyForecastRv);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         hourlyForecastRv.setLayoutManager(manager);
 
         icHead = v.findViewById(R.id.ic_headWear);
@@ -183,7 +183,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void updateSunData() {
-        tvSunTitle.setText(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()))?getString(R.string.sun):getString(R.string.sun_not_explicit));
+        tvSunTitle.setText(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity())) ? getString(R.string.sun) : getString(R.string.sun_not_explicit));
         DateFormat df = DateFormat.getTimeInstance(java.text.DateFormat.SHORT);
         long sunriseTime = currentWeather.getDaily().getData().get(0).getSunriseTime() * 1000;
         long sunsetTime = currentWeather.getDaily().getData().get(0).getSunsetTime() * 1000;
@@ -213,8 +213,8 @@ public class DetailsFragment extends Fragment {
         updateHourlyForecastDat();
     }
 
-    private void updateHourlyForecastDat(){
-        HourlyForecastAdapter adapter = new HourlyForecastAdapter(currentWeather.getHourly().getData(),getActivity());
+    private void updateHourlyForecastDat() {
+        HourlyForecastAdapter adapter = new HourlyForecastAdapter(currentWeather.getHourly().getData(), getActivity());
         hourlyForecastRv.setAdapter(adapter);
     }
 

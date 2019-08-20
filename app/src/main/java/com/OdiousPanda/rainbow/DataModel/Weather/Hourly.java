@@ -6,12 +6,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Hourly {
-    @SerializedName("summary")
-    @Expose
-    private String summary;
     @SerializedName("icon")
     @Expose
     public String icon;
+    @SerializedName("summary")
+    @Expose
+    private String summary;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;

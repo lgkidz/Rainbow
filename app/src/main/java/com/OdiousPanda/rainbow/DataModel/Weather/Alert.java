@@ -6,19 +6,18 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Alert {
+    @SerializedName("time")
+    @Expose
+    public long time;
     @SerializedName("description")
     @Expose
     private String description;
-
     @SerializedName("expires")
     @Expose
     private long expires;
-
     @SerializedName("regions")
     @Expose
     private List<String> regions;
-
-
     @SerializedName("severity")
     @Expose
     /*
@@ -28,11 +27,6 @@ public class Alert {
      * "warning" (an individual should take immediate action to protect themselves and others from potentially severe weather).
      */
     private String severity;
-
-    @SerializedName("time")
-    @Expose
-    public long time;
-
     @SerializedName("title")
     @Expose
     private String title;

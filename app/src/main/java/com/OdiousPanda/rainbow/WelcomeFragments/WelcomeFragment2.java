@@ -1,6 +1,5 @@
 package com.OdiousPanda.rainbow.WelcomeFragments;
 
-
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,11 +20,9 @@ import java.util.Objects;
  */
 public class WelcomeFragment2 extends Fragment {
 
-
     public WelcomeFragment2() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

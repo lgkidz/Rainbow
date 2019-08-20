@@ -5,6 +5,7 @@
     <color name="colorAccent">@color/hotPink</color>
     <color name="absoluteBlack">#ff000000</color>
     <color name="halfSnappedBlack">#80000000</color>
+    <color name="black15">#0F000000</color>
     <color name="hyperBlue">#FF0000FF</color>
     <color name="flickRBlue">#FF216bd6</color>
     <color name="coldBlue">#ff92d7ed</color>

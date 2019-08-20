@@ -49,6 +49,7 @@ public class HomeScreenFragment extends Fragment {
     private static HomeScreenFragment instance;
     private final int pointerAnimationDuration = 1000;
     public boolean photoDetailsShowing = false;
+    private MovableConstrainLayout layoutData;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvTemp;
     private TextView tvDescription;
@@ -111,7 +112,7 @@ public class HomeScreenFragment extends Fragment {
     }
 
     private void initViews(View v) {
-        MovableConstrainLayout layoutData = v.findViewById(R.id.layout_data);
+        layoutData = v.findViewById(R.id.layout_data);
         tvBigText = v.findViewById(R.id.big_text);
         tvDescription = v.findViewById(R.id.tv_description);
         tvSmallText = v.findViewById(R.id.small_text);
@@ -166,7 +167,6 @@ public class HomeScreenFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         rvDailyForecast.addItemDecoration(dividerItemDecoration);
         swipeRefreshLayout = v.findViewById(R.id.home_layout);
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -353,7 +353,7 @@ public class HomeScreenFragment extends Fragment {
     private void updatePrecipitationData() {
         String type = currentWeather.getDaily().getData().get(0).getPrecipType();
         float value = currentWeather.getCurrently().getPrecipProbability();
-        String valueString = (int) value * 100 + "%";
+        String valueString = (int) (value * 100) + "%";
         tvPrecipitation.setText(valueString);
         if (type != null) {
             icPrecipitationType.setImageResource(type.equals("rain") ? R.drawable.ic_rain_chance : R.drawable.ic_snow_chance);
