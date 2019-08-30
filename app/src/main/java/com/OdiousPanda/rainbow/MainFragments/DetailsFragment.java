@@ -364,7 +364,7 @@ public class DetailsFragment extends Fragment {
             tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_very_unhealthy));
             tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
             tvDetailAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
-        } else if (aqi <= 500) {
+        } else {
             tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_hazardous));
             tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
             tvDetailAqiDes.setText(getString(R.string.aqi_hazardous_des));
@@ -375,7 +375,11 @@ public class DetailsFragment extends Fragment {
                     ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) aqiIndexIndicator.getLayoutParams();
                     float scaleWidth = (float) airQualityIndexScale.getWidth();
                     float leftMargin = aqi / 500 * scaleWidth;
-                    params.leftMargin = (int) leftMargin;
+                    if(aqi > 500){
+                        leftMargin = scaleWidth;
+                    }
+                    params.leftMargin = (int) leftMargin - aqiIndexIndicator.getWidth()/2;
+
                     aqiIndexIndicator.setLayoutParams(params);
                 } catch (Exception e) {
                     e.printStackTrace();
