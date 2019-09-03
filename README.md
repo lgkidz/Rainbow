@@ -3,6 +3,7 @@
 Rainbow is an Android weather app that packs tons of useful information while providing a fun and easy-to-use UI and UX.
 
 ## Demo
+![](https://lgkidz.github.io/images/rainbow_into.gif)
 <p float="left">
   <img src="https://lgkidz.github.io/images/rainbow_home.png" width="250" />
   <img src="https://lgkidz.github.io/images/rainbow_setting.jpg" width="250" /> 
