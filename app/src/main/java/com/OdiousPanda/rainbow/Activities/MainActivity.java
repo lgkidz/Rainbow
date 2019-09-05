@@ -607,6 +607,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             SettingFragment.getInstance().closeAboutMeDialog();
             return;
         }
+        if(DetailsFragment.getInstance().aqiMoreDeatailsShowing){
+            DetailsFragment.getInstance().closeAqiMoreDetailsDialog();
+            return;
+        }
         if (HomeScreenFragment.getInstance().photoDetailsShowing) {
             HomeScreenFragment.getInstance().closePhotoDetailBox();
             return;

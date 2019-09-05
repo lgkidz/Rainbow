@@ -34,6 +34,8 @@
     <dimen name="icon_90dp">90dp</dimen>
     <dimen name="icon_72dp">72dp</dimen>
     <dimen name="icon_24dp">24dp</dimen>
+    <dimen name="icon_18dp">18dp</dimen>
+    <dimen name="icon_14dp">14dp</dimen>
     <dimen name="icon_30dp">30dp</dimen>
     <dimen name="icon_36dp">36dp</dimen>
     <dimen name="icon_48dp">48dp</dimen>
@@ -60,4 +62,7 @@
     <dimen name="temperature_bar_height">12dp</dimen>
     <dimen name="sun_bar_height">128dp</dimen>
     <dimen name="sun_bar_width">0.5dp</dimen>
+    <dimen name="aqi_stroke_width">2dp</dimen>
+    <dimen name="aqi_translation_X">-2dp</dimen>
+    <dimen name="aqi_Index_size">72dp</dimen>
 </resources>

@@ -86,6 +86,7 @@
     <string name="aqi_unhealthy" translatable="true">Unhealthy</string>
     <string name="aqi_very_unhealthy" translatable="true">Very Unhealthy</string>
     <string name="aqi_hazardous" translatable="true">Hazardous</string>
+
     <string name="aqi_good_des" translatable="true">Air quality is considered satisfactory</string>
     <string name="aqi_moderate_des" translatable="true">Air quality is acceptable</string>
     <string name="aqi_unhealthy_sensitive_des" translatable="true">Members of sensitive groups may experience health effects</string>
@@ -93,12 +94,27 @@
     <string name="aqi_very_unhealthy_des" translatable="true">Everyone may experience serious health effects</string>
     <string name="aqi_hazardous_des" translatable="true">Health warning of emergency conditions</string>
 
-    <string name="r_aqi_good_des" translatable="true">Fresh air!!!</string>
-    <string name="r_aqi_moderate_des" translatable="true">Doesn\'t seem so bad</string>
-    <string name="r_aqi_unhealthy_sensitive_des" translatable="true">If you\'re a special snowflake, then it\'s unhealthy.</string>
-    <string name="r_aqi_unhealthy_des" translatable="true">Go out and get some evil pixie dust in your lung.</string>
+    <string name="r_aqi_good_des" translatable="true">Go fill your lung with fresh air!!!</string>
+    <string name="r_aqi_moderate_des" translatable="true">Seems … breathable?</string>
+    <string name="r_aqi_unhealthy_sensitive_des" translatable="true">It\'s unhealthy for special snowflakes, but wear a face mask just in case</string>
+    <string name="r_aqi_unhealthy_des" translatable="true">You probably gonna need a gas mask!</string>
     <string name="r_aqi_very_unhealthy_des" translatable="true">Lung diseases are outside! Gotta catch \'em all!</string>
-    <string name="r_aqi_hazardous_des" translatable="true">Living in chernobyl would be more healthy.</string>
+    <string name="r_aqi_hazardous_des" translatable="true">Give yourself a day off. Don\'t commit suicide by breathing the air outside.</string>
+
+    <string name="aqi_good_des_full" translatable="true">Air quality is considered satisfactory, and air pollution poses little or no risk.</string>
+    <string name="aqi_moderate_des_full" translatable="true">Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.</string>
+    <string name="aqi_unhealthy_sensitive_des_full" translatable="true">Members of sensitive groups may experience health effects. The general public is not likely to be affected.</string>
+    <string name="aqi_unhealthy_des_full" translatable="true">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.</string>
+    <string name="aqi_very_unhealthy_des_full" translatable="true">Health warnings of emergency conditions. The entire population is more likely to be affected.</string>
+    <string name="aqi_hazardous_des_full" translatable="true">Health alert: everyone may experience more serious health effects.</string>
+
+    <!--    Cautionary Statement (for PM2.5)-->
+    <string name="aqi_good_cs" translatable="true">None</string>
+    <string name="aqi_moderate_cs" translatable="true">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="aqi_unhealthy_sensitive_cs" translatable="true">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="aqi_unhealthy_cs" translatable="true">Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion</string>
+    <string name="aqi_very_unhealthy_cs" translatable="true">Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.</string>
+    <string name="aqi_hazardous_cs" translatable="true">Everyone should avoid all outdoor exertion</string>
 
     <string name="sun">Sun</string>
     <string name="wind_title" translatable="true">Wind</string>
@@ -163,6 +179,10 @@
     <string name="sun_set">Sunset</string>
     <string name="hourly_forecast_title">The next hours</string>
     <string name="sun_not_explicit">Blazing hot plasma ball</string>
+    <string name="air_quality_levels">Air Quality Levels</string>
+    <string name="color_legend">Color legend</string>
+    <string name="cautionary_statement">Cautionary Statement</string>
+    <string name="aqi_source_standard">The tables above defines the Air Quality Index scale as defined by the US-EPA 2016 standard.</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>

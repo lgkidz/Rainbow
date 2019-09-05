@@ -101,6 +101,12 @@
   <dimen name="icon_24dp">
     21.33dp
   </dimen>
+  <dimen name="icon_18dp">
+    16.0dp
+  </dimen>
+  <dimen name="icon_14dp">
+    12.44dp
+  </dimen>
   <dimen name="icon_30dp">
     26.67dp
   </dimen>
@@ -178,5 +184,14 @@
   </dimen>
   <dimen name="sun_bar_width">
     0.44dp
+  </dimen>
+  <dimen name="aqi_stroke_width">
+    1.78dp
+  </dimen>
+  <dimen name="aqi_translation_X">
+    -1.78dp
+  </dimen>
+  <dimen name="aqi_Index_size">
+    64.0dp
   </dimen>
 </resources>

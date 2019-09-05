@@ -3,10 +3,13 @@ package com.OdiousPanda.rainbow.MainFragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.ClothesIconUtil;
 import com.OdiousPanda.rainbow.Utilities.FoodIconUtil;
+import com.OdiousPanda.rainbow.Utilities.MyColorUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
 import com.google.android.gms.ads.AdRequest;
@@ -40,6 +44,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.mancj.slideup.SlideUp;
+import com.mancj.slideup.SlideUpBuilder;
 
 import java.text.DateFormat;
 import java.util.Objects;
@@ -60,8 +66,16 @@ public class DetailsFragment extends Fragment {
     private LinearLayout airQualityIndexScale;
     private ImageView aqiIndexIndicator;
     private TextView tvDetailAqiIndex;
+    private TextView tvAqiMoreIndex;
     private TextView tvDetailAqiLevel;
     private TextView tvDetailAqiDes;
+    private LinearLayout aqiDescriptionLayout;
+    private ImageView icAqiInfo;
+    private TextView tvAqiProvidedBy;
+    private SlideUp aqiMoreDetailSlideUp;
+    private ConstraintLayout aqiMoreDetailsLayout;
+    private ImageView btnCloseAqiMoreDetails;
+    public Boolean aqiMoreDeatailsShowing = false;
     private TextView tvCloudCover;
     private TextView tvVisibility;
 
@@ -121,7 +135,40 @@ public class DetailsFragment extends Fragment {
         tvDetailAqiIndex = v.findViewById(R.id.tv_aqi_index);
         tvDetailAqiLevel = v.findViewById(R.id.tv_aqi_level);
         tvDetailAqiDes = v.findViewById(R.id.tv_aqi_des);
+        tvAqiProvidedBy = v.findViewById(R.id.provideBy);
+        aqiDescriptionLayout = v.findViewById(R.id.aqiDesLayout);
         aqiIndexIndicator = v.findViewById(R.id.aqi_index_indicator);
+        tvAqiMoreIndex = v.findViewById(R.id.aqiMoreIndex);
+        aqiMoreDetailsLayout = v.findViewById(R.id.aqiMoreLayout);
+        aqiMoreDetailSlideUp = new SlideUpBuilder(aqiMoreDetailsLayout)
+                .withStartState(SlideUp.State.HIDDEN)
+                .withStartGravity(Gravity.BOTTOM)
+                .withListeners(new SlideUp.Listener.Events() {
+                    @Override
+                    public void onSlide(float percent) {
+                        aqiMoreDeatailsShowing = percent != 100;
+                    }
+
+                    @Override
+                    public void onVisibilityChanged(int visibility) {
+
+                    }
+                })
+                .build();
+        icAqiInfo = v.findViewById(R.id.iconAqiInfo);
+        icAqiInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAqiMoreDetailsDialog();
+            }
+        });
+        btnCloseAqiMoreDetails = v.findViewById(R.id.btn_close_aqi_details);
+        btnCloseAqiMoreDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeAqiMoreDetailsDialog();
+            }
+        });
         airQualityIndexScale = v.findViewById(R.id.index_scale);
         tvCloudCover = v.findViewById(R.id.cloudCover_value);
         tvVisibility = v.findViewById(R.id.tv_visibility);
@@ -342,33 +389,10 @@ public class DetailsFragment extends Fragment {
     public void updateAqi(AirQuality air) {
         final float aqi = air.getData().aqi;
         tvDetailAqiIndex.setText(String.valueOf((int) aqi));
-        Context context = getActivity();
-        assert context != null;
-        if (aqi <= 50) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_good));
-            tvDetailAqiLevel.setText(getString(R.string.aqi_good));
-            tvDetailAqiDes.setText(getString(R.string.aqi_good_des));
-        } else if (aqi <= 100) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_moderate));
-            tvDetailAqiLevel.setText(getString(R.string.aqi_moderate));
-            tvDetailAqiDes.setText(getString(R.string.aqi_moderate_des));
-        } else if (aqi <= 150) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_unhealthy_sensitive));
-            tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
-            tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_sensitive_des));
-        } else if (aqi <= 200) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_unhealthy));
-            tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy));
-            tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_des));
-        } else if (aqi <= 300) {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_very_unhealthy));
-            tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
-            tvDetailAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
-        } else {
-            tvDetailAqiIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_hazardous));
-            tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
-            tvDetailAqiDes.setText(getString(R.string.aqi_hazardous_des));
-        }
+        tvAqiMoreIndex.setText(String.valueOf((int) aqi));
+        updateAqiUI(aqi);
+        updateAqiDescription(aqi);
+
         airQualityIndexScale.post(new Runnable() {
             public void run() {
                 try {
@@ -389,4 +413,103 @@ public class DetailsFragment extends Fragment {
         });
     }
 
+    private void updateAqiUI(float aqi){
+        Context context = getActivity();
+        assert context != null;
+        GradientDrawable aqiDesBackgroundDrawable = (GradientDrawable) getResources().getDrawable(R.drawable.aqi_des_background);
+        if (aqi <= 50) {
+            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_good));
+            aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
+            tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_good));
+            tvDetailAqiIndex.setTextColor(MyColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_good)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_good));
+        } else if (aqi <= 100) {
+            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_moderate));
+            aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
+            tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_moderate));
+            tvDetailAqiIndex.setTextColor(MyColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_moderate)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_moderate));
+        } else if (aqi <= 150) {
+            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive));
+            aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
+            tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_unhealthy_sensitive));
+            tvDetailAqiIndex.setTextColor(MyColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive));
+        } else if (aqi <= 200) {
+            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_unhealthy));
+            aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
+            tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_unhealthy));
+            tvDetailAqiIndex.setTextColor(MyColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_unhealthy)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy));
+        } else if (aqi <= 300) {
+            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_very_unhealthy));
+            aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
+            tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_very_unhealthy));
+            tvDetailAqiIndex.setTextColor(MyColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_very_unhealthy)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_very_unhealthy));
+        } else {
+            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_hazardous));
+            aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
+            tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_hazardous));
+            tvDetailAqiIndex.setTextColor(MyColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_hazardous)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_hazardous));
+        }
+    }
+
+    private void updateAqiDescription(float aqi){
+        if(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()))){
+            tvAqiProvidedBy.setVisibility(View.VISIBLE);
+            if (aqi <= 50) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_good));
+                tvDetailAqiDes.setText(getString(R.string.aqi_good_des));
+            } else if (aqi <= 100) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_moderate));
+                tvDetailAqiDes.setText(getString(R.string.aqi_moderate_des));
+            } else if (aqi <= 150) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
+                tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_sensitive_des));
+            } else if (aqi <= 200) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy));
+                tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_des));
+            } else if (aqi <= 300) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
+                tvDetailAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
+            } else {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
+                tvDetailAqiDes.setText(getString(R.string.aqi_hazardous_des));
+            }
+        } else {
+            tvAqiProvidedBy.setVisibility(View.INVISIBLE);
+            if (aqi <= 50) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_good));
+                tvDetailAqiDes.setText(getString(R.string.r_aqi_good_des));
+            } else if (aqi <= 100) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_moderate));
+                tvDetailAqiDes.setText(getString(R.string.r_aqi_moderate_des));
+            } else if (aqi <= 150) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
+                tvDetailAqiDes.setText(getString(R.string.r_aqi_unhealthy_sensitive_des));
+            } else if (aqi <= 200) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy));
+                tvDetailAqiDes.setText(getString(R.string.r_aqi_unhealthy_des));
+            } else if (aqi <= 300) {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
+                tvDetailAqiDes.setText(getString(R.string.r_aqi_very_unhealthy_des));
+            } else {
+                tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
+                tvDetailAqiDes.setText(getString(R.string.r_aqi_hazardous_des));
+            }
+        }
+
+    }
+
+    private void showAqiMoreDetailsDialog() {
+        aqiMoreDetailSlideUp.show();
+        aqiMoreDeatailsShowing = true;
+    }
+
+    public void closeAqiMoreDetailsDialog() {
+        aqiMoreDetailSlideUp.hide();
+        aqiMoreDeatailsShowing = false;
+    }
 }

@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pureWhite"
+    android:id="@+id/aqiMoreLayout">
+
+    <TextView
+        android:id="@+id/aqiMoreTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/air_quality_levels"
+        android:textColor="@color/absoluteBlack"
+        android:textSize="@dimen/text_view_24sp"
+        android:padding="@dimen/margin_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/btn_close_aqi_details"
+        android:layout_width="@dimen/icon_30dp"
+        android:layout_height="@dimen/icon_30dp"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:src="@drawable/ic_round_close_b"
+        app:layout_constraintBottom_toBottomOf="@id/aqiMoreTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/aqiMoreTitle"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/aqiMoreIndex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_8"
+        android:paddingEnd="0dp"
+        android:paddingTop="@dimen/margin_8"
+        android:paddingBottom="@dimen/margin_8"
+        android:textSize="@dimen/text_view_40sp"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/absoluteBlack"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aqiMoreTitle"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/aqi_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/aqiMoreIndex"
+        app:layout_constraintTop_toTopOf="@id/aqiMoreIndex"
+        app:layout_constraintBottom_toBottomOf="@id/aqiMoreIndex">
+
+        <LinearLayout
+            android:id="@+id/index_number_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="50"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="100"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="150"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="200"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="300"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="500"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat"
+                tools:ignore="RtlHardcoded,HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/index_scale"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/aqi_scale_height"
+            android:layout_marginTop="@dimen/margin_4"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/index_number_layout">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_good"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_moderate"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_unhealthy_sensitive"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/aqi_unhealthy"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/aqi_very_unhealthy"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@color/aqi_hazardous"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/aqi_index_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/circle_indicator"
+            app:layout_constraintBottom_toBottomOf="@id/index_scale"
+            app:layout_constraintStart_toStartOf="@id/index_scale"
+            app:layout_constraintTop_toTopOf="@id/index_scale"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/index_scale">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/aqi_good"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="@string/aqi_hazardous"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12sp"
+                app:fontFamily="@font/montserrat" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@id/aqiMoreIndex"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/aqiColorLegendTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/color_legend"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_18sp"
+                android:paddingTop="@dimen/margin_8"
+                android:paddingStart="@dimen/margin_16"
+                android:paddingEnd="@dimen/margin_16" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_8"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:background="@color/aqi_good"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_good"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_good_des_full"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_moderate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_moderate"
+                        android:textColor="@color/absoluteBlack"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_moderate_des_full"
+                        android:textColor="@color/absoluteBlack"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_unhealthy_sensitive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy_sensitive"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy_sensitive_des_full"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_unhealthy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy_des_full"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_very_unhealthy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_very_unhealthy"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_very_unhealthy_des_full"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_hazardous"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_hazardous"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_hazardous_des_full"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/cautionary_statement"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_18sp"
+                android:paddingTop="@dimen/margin_16"
+                android:paddingStart="@dimen/margin_16"
+                android:paddingEnd="@dimen/margin_16" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_8"
+                android:paddingStart="@dimen/margin_8"
+                android:paddingEnd="@dimen/margin_8"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:background="@color/aqi_good"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_good"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_good_cs"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_moderate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_moderate"
+                        android:textColor="@color/absoluteBlack"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_moderate_cs"
+                        android:textColor="@color/absoluteBlack"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_unhealthy_sensitive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy_sensitive"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy_sensitive_cs"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_unhealthy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_unhealthy_cs"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_very_unhealthy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_very_unhealthy"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_very_unhealthy_cs"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/aqi_hazardous"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_hazardous"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                    <TextView
+                        android:padding="@dimen/margin_8"
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/aqi_hazardous_cs"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/text_view_14sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/aqi_source_standard"
+                android:padding="@dimen/margin_8"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_14sp"
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_light"/>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
