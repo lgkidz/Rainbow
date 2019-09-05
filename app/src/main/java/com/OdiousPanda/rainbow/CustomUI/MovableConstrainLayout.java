@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class MovableConstrainLayout extends ConstraintLayout implements View.OnTouchListener {
     private float downRawY;
     private float dY;
+    private OnPositionChangedCallback callback;
 
     public MovableConstrainLayout(Context context) {
         super(context);
@@ -30,6 +32,10 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
 
     private void init() {
         setOnTouchListener(this);
+    }
+
+    public void setCallback(OnPositionChangedCallback callback){
+        this.callback = callback;
     }
 
     @Override
@@ -55,7 +61,6 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
                     .y(newY)
                     .setDuration(0)
                     .start();
-
             return true;
 
         } else if (action == MotionEvent.ACTION_UP) {
@@ -65,7 +70,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
             Log.d("movable layout", "onTouch: " + upDY);
             float restY = (float) parentHeight / 2;
             if (Math.abs(upDY) < bottomBoundary / 2) {
-                if (upRawY > parentHeight / 2 + bottomBoundary / 2) {
+                if (upRawY > (float)parentHeight / 2 + bottomBoundary / 2) {
                     restY = parentHeight - bottomBoundary - layoutParams.bottomMargin;
                 }
             } else {
@@ -78,8 +83,13 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
                     .setInterpolator(new DecelerateInterpolator())
                     .setDuration(150)
                     .start();
+            callback.onMoved(restY);
         }
 
         return super.onTouchEvent(motionEvent);
+    }
+
+    public interface OnPositionChangedCallback{
+        void onMoved(float y);
     }
 }

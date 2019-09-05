@@ -78,7 +78,7 @@
     <string name="no_connection_tv1">Cloud not found</string>
     <string name="no_connection_tv2">Yeah clear sky is cool but have you tried connecting to the internet?</string>
     <string name="no_connection_tv3">Do you really want me to cry?</string>
-    <string name="air_quality_dialog_heading">Air Quality</string>
+    <string name="air_quality_dialog_heading">Air Quality Index</string>
 
     <string name="aqi_good" translatable="true">Good</string>
     <string name="aqi_moderate" translatable="true">Moderate</string>

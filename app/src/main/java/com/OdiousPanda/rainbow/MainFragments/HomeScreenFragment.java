@@ -16,6 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -43,7 +44,7 @@ import com.OdiousPanda.rainbow.Utilities.UnitConverter;
 
 import java.util.Objects;
 
-public class HomeScreenFragment extends Fragment {
+public class HomeScreenFragment extends Fragment implements MovableConstrainLayout.OnPositionChangedCallback {
 
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
@@ -113,6 +114,7 @@ public class HomeScreenFragment extends Fragment {
 
     private void initViews(View v) {
         layoutData = v.findViewById(R.id.layout_data);
+        layoutData.setCallback(this);
         tvBigText = v.findViewById(R.id.big_text);
         tvDescription = v.findViewById(R.id.tv_description);
         tvSmallText = v.findViewById(R.id.small_text);
@@ -448,6 +450,17 @@ public class HomeScreenFragment extends Fragment {
         });
         ExpandCollapseAnimation.collapse(photoDetailsLayout);
         photoDetailsShowing = false;
+    }
+
+    @Override
+    public void onMoved(float y) {
+        float margin = getResources().getDimension(R.dimen.margin_8);
+        tvSmallText.animate()
+                .y(y-margin-tvSmallText.getHeight())
+                .setInterpolator(new DecelerateInterpolator())
+                .setDuration(250)
+                .start();
+
     }
 
     public interface OnLayoutRefreshListener {
