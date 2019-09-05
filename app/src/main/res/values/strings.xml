@@ -198,4 +198,64 @@
         <item>@string/depress_val_11</item>
         <item>@string/depress_val_12</item>
     </string-array>
+    <string-array name="random_notification_comment">
+        <item>Have a good day!</item>
+        <item>Rainbow at your service!</item>
+        <item>Today seems okay, so go forth and have fun!</item>
+        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &gt;3</item>
+        <item>You can click this notification to see more.</item>
+        <item>More information like air quality index is available in Rainbow\'s app</item>
+        <item>That\'s today report! Sir!</item>
+        <item>Rainbow\'s forecast also says today\'s gonna be an awesome day! Let\'s Do your best in everything!</item>
+        <item>My crystal ball never lies, trust me.</item>
+        <item>How are you feeling today?</item>
+        <item>Somehow I just wan\'t to laze around at home today…</item>
+        <item>It\'s a good day to hang out with friends. If your friends are busy or you don\'t have any, well, bad for you…</item>
+        <item>Hey do you see my friend Cloud on the sky, tell her I said Hi!</item>
+    </string-array>
+
+    <string-array name="cold_notification_comment">
+        <item>Have a good day!</item>
+        <item>Rainbow at your service!</item>
+        <item>And it\'s cold, you should keep yourself warm. Don\'t get sick or I\'ll be really worried!</item>
+        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &gt;3</item>
+        <item>You can click this notification to see more.</item>
+        <item>More information like air quality index is available in Rainbow\'s app</item>
+        <item>That\'s today report! Sir!</item>
+        <item>The temperature is kinda low, so stay warm, don\'t catch a cold, alright?</item>
+        <item>My crystal ball never lies, trust me.</item>
+        <item>Can you feel the cold.. I mean love tonight?</item>
+        <item>Somehow I just wan\'t to laze around at home today…</item>
+        <item>Find your pet, or your partner and have a cuddle. It\'s cold.</item>
+        <item>Hey do you see my friend Cloud on the sky, tell her I said Hi!</item>
+        <item>I\'m sure it\'s snowing somewhere… </item>
+        <item>it\'s cold, I\'m starting to miss the summer already.</item>
+        <item>And it\'s a good day for a hot chocolate.</item>
+        <item>A scarf would be helpful in this weather.</item>
+        <item>Is it winter yet?</item>
+        <item>Cold huh? I think I\'ll stay home and watch anime.</item>
+        <item>Hah! Good weather for netflix and chill!</item>
+    </string-array>
+
+    <string-array name="hot_notification_comment">
+        <item>Have a good day!</item>
+        <item>Rainbow at your service!</item>
+        <item>I\'s also really hot, so remember to drink water regularly. 2 liters a day is recommended.</item>
+        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &gt;3</item>
+        <item>You can click this notification to see more.</item>
+        <item>More information like air quality index is available in Rainbow\'s app</item>
+        <item>That\'s today report! Sir!</item>
+        <item>The temperature is high, so stay cool, don\'t die from heatstroke, alright?</item>
+        <item>My crystal ball never lies, trust me.</item>
+        <item>Can you feel the heat.. I mean love tonight?</item>
+        <item>It\'s so hot, I wan\'t to go swimming…</item>
+        <item>Well I know it\'s hot, but don\'t wear your bikini to school or work, okay?</item>
+        <item>Hey do you see my friend Cloud on the sky, tell her I said Hi!</item>
+        <item>I\'m 100% sure it\'s snowing somewhere… Just not here.</item>
+        <item>it\'s hot, I\'m starting to miss the winter already.</item>
+        <item>And it\'s a good day for an ice cold drink.</item>
+        <item>An air conditioner would be helpful in this weather.</item>
+        <item>"Do you wanna build a snowman?" Are you stupid Anna? It\'s scorching hot right now!</item>
+        <item>Let\'s have some ice cream, it\'s hot today.</item>
+    </string-array>
 </resources>

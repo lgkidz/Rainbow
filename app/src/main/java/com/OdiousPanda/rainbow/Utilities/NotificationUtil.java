@@ -14,6 +14,7 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.PermissionChecker;
 
 import com.OdiousPanda.rainbow.API.RetrofitService;
 import com.OdiousPanda.rainbow.Activities.MainActivity;
@@ -66,7 +67,7 @@ public class NotificationUtil {
     }
 
     void createNotification() {
-        if (checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PermissionChecker.PERMISSION_GRANTED && checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PermissionChecker.PERMISSION_GRANTED) {
             return;
         }
 
@@ -85,27 +86,10 @@ public class NotificationUtil {
                             String tempString = UnitConverter.convertToTemperatureUnit(temp, PreferencesUtil.getTemperatureUnit(context));
                             String currentSummary = weather.getCurrently().getSummary();
                             String summary = today.getSummary();
-                            String precipitationProb = (int) (100 * today.getPrecipProbability()) + "%";
-                            String precipitationProbType = today.getPrecipType();
                             String iconName = today.getIcon().replace("-", "_");
-                            String additionalComment = ".";
                             int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_b", null, context.getPackageName());
-                            String contentText = summary;
-                            if (precipitationProbType != null) {
-                                contentText += " There will be " + precipitationProb + " chance of " + precipitationProbType.toLowerCase();
-                                if (precipitationProbType.equals("rain")) {
-                                    additionalComment = today.getPrecipProbability() < 0.6 ? "." : ". Bring an umbrella just in case.";
-                                } else {
-                                    if (temp < 15) {
-                                        additionalComment = ". It's cold, you should put on your jacket.";
-                                    } else if (temp > 27) {
-                                        additionalComment = ". The weather is hot, so stay hydrated.";
-                                    }
-                                }
-                            }
-                            contentText += additionalComment;
+                            String contentText = MyTextUtil.getNotificationText(context,temp, summary,today.getPrecipType(), today.getPrecipProbability());
                             String contentTitle = tempString + " - " + currentSummary;
-
                             Intent notificationIntent = new Intent(context, MainActivity.class);
                             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);

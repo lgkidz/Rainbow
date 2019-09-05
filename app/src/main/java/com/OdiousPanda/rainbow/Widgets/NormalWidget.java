@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.PermissionChecker;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.OdiousPanda.rainbow.API.RetrofitService;
@@ -108,29 +109,23 @@ public class NormalWidget extends AppWidgetProvider {
     public static Bitmap textAsBitmap(Context context, String text, String bitmapType) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         switch (bitmapType) {
-            case TEMP_BITMAP: {
+            case TEMP_BITMAP:
+            case MAIN_BITMAP: {
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36sp));
                 break;
             }
-            case RF_BITMAP: {
+            case RF_BITMAP:
+            case LOCATION_BITMAP:{
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
-                break;
-            }
-            case MAIN_BITMAP: {
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_40sp));
                 break;
             }
             case SUB_BITMAP: {
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_24sp));
                 break;
             }
-            case LOCATION_BITMAP: {
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
-                break;
-            }
         }
-        Typeface nunito = ResourcesCompat.getFont(context, R.font.montserrat);
-        paint.setTypeface(nunito);
+        Typeface typeFace = ResourcesCompat.getFont(context, R.font.montserrat);
+        paint.setTypeface(typeFace);
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.LEFT);
         if (bitmapType.equals(MAIN_BITMAP)) {
@@ -143,12 +138,12 @@ public class NormalWidget extends AppWidgetProvider {
             int mWidgetPortWidth = mAppWidgetOptions
                     .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
             TextPaint textPaint = new TextPaint();
-            textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_54sp));
+            textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48sp));
             if (mWidgetPortHeight * context.getResources().getDisplayMetrics().density + 0.5f < context.getResources().getDimension(R.dimen.widget_height) * 3) {
                 textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36sp));
             }
             textPaint.setColor(Color.WHITE);
-            textPaint.setTypeface(nunito);
+            textPaint.setTypeface(typeFace);
             int width = (int) (mWidgetPortWidth * context.getResources().getDisplayMetrics().density + 0.5f);
             if (width <= 0) {
                 width = (int) context.getResources().getDimension(R.dimen.widget_width);
@@ -183,7 +178,7 @@ public class NormalWidget extends AppWidgetProvider {
     private static void updateData(final Context context) {
         final String currentTempUnit = PreferencesUtil.getTemperatureUnit(context);
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-        if (checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PermissionChecker.PERMISSION_GRANTED && checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PermissionChecker.PERMISSION_GRANTED) {
             return;
         }
 
@@ -277,7 +272,7 @@ public class NormalWidget extends AppWidgetProvider {
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         List<String> criteria = new ArrayList<>();
-        if (temp > 27) {
+        if (temp > 30) {
             criteria.add("hot");
         } else if (temp < 15) {
             criteria.add("cold");

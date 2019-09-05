@@ -15,6 +15,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.OdiousPanda.rainbow.API.Constant;
+import com.OdiousPanda.rainbow.R;
+
+import java.util.Random;
 
 public class MyTextUtil {
     private static final String referralString = "?utm_source=rainbow&utm_medium=referral";
@@ -74,5 +77,34 @@ public class MyTextUtil {
 
     public static String locationStringForNearbySearch(String lat, String lon) {
         return lat + "," + lon;
+    }
+
+    static String getNotificationText(Context context,float temp, String summary, String precipitationType, float precipitationProb){
+        String notificationText = summary;
+        String precipitationProbText = (int) (100 * precipitationProb) + "%";
+        String additionalComment;
+        String precipitationText = " There will be ";
+        if(precipitationType!= null){
+            precipitationText += precipitationProbText + " chance of " + precipitationType + ".";
+            if(precipitationType.equals("rain")){
+                precipitationText += precipitationProb < 0.5 ? "" : " Bring an umbrella, or a raincoat.";
+            }
+        } else {
+            precipitationText = "";
+        }
+
+        if (temp < 16) {
+            String[] coldComments = context.getResources().getStringArray(R.array.cold_notification_comment);
+            additionalComment = " " + coldComments[new Random().nextInt(coldComments.length)];
+        } else if (temp > 30) {
+            String[] hotComments = context.getResources().getStringArray(R.array.hot_notification_comment);
+            additionalComment = " " + hotComments[new Random().nextInt(hotComments.length)];
+        } else {
+            String[] randomComments = context.getResources().getStringArray(R.array.random_notification_comment);
+            additionalComment = " " + randomComments[new Random().nextInt(randomComments.length)];
+        }
+
+        notificationText += precipitationText + additionalComment;
+        return notificationText;
     }
 }
