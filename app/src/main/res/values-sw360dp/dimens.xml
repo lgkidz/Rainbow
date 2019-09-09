@@ -192,6 +192,6 @@
     -2dp
   </dimen>
   <dimen name="aqi_Index_size">
-    72dp
+    74dp
   </dimen>
 </resources>

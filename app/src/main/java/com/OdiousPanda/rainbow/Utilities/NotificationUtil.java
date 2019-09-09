@@ -94,8 +94,8 @@ public class NotificationUtil {
                             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
-                                    .setSmallIcon(R.drawable.logo_rainbow)
-                                    .setBadgeIconType(iconResourceId)
+                                    .setSmallIcon(iconResourceId)
+                                    .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
                                     .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), iconResourceId))
                                     .setContentTitle(contentTitle)
                                     .setContentText(contentText)

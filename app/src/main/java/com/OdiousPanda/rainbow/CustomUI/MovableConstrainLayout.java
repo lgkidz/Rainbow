@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -14,6 +13,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
     private float downRawY;
     private float dY;
     private OnPositionChangedCallback callback;
+    public static final int SNAP_DURATION = 150;
 
     public MovableConstrainLayout(Context context) {
         super(context);
@@ -81,7 +81,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
             view.animate()
                     .y(restY)
                     .setInterpolator(new DecelerateInterpolator())
-                    .setDuration(150)
+                    .setDuration(SNAP_DURATION)
                     .start();
             callback.onMoved(restY);
         }

@@ -64,5 +64,5 @@
     <dimen name="sun_bar_width">0.5dp</dimen>
     <dimen name="aqi_stroke_width">2dp</dimen>
     <dimen name="aqi_translation_X">-2dp</dimen>
-    <dimen name="aqi_Index_size">72dp</dimen>
+    <dimen name="aqi_Index_size">74dp</dimen>
 </resources>

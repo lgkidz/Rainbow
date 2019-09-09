@@ -170,6 +170,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             NotificationUtil notificationUtil = new NotificationUtil(this);
             notificationUtil.startDailyNotification();
         }
+
+        PreferencesUtil.increaseAppOpenCount(this);
     }
 
     private void showNoConnection() {
@@ -292,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
         Intent intent = new Autocomplete.IntentBuilder(
                 AutocompleteActivityMode.FULLSCREEN, fields)
-                .setTypeFilter(TypeFilter.CITIES)
+                .setTypeFilter(TypeFilter.REGIONS)
                 .build(this);
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
 
@@ -317,7 +319,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void showFabToolTips() {
-        if (!toolTipShown) {
+        //Show fab tool tips only on the first 3 times user opens the app
+        if (!toolTipShown && PreferencesUtil.getAppOpenCount(this) < 4) {
             fabTooltip.show();
             toolTipShown = true;
         }

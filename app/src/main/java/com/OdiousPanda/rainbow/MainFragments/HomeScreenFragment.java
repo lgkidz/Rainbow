@@ -16,7 +16,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -458,7 +457,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         tvSmallText.animate()
                 .y(y-margin-tvSmallText.getHeight())
                 .setInterpolator(new DecelerateInterpolator())
-                .setDuration(250)
+                .setDuration(2 * MovableConstrainLayout.SNAP_DURATION)
                 .start();
 
     }

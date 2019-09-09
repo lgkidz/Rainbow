@@ -34,10 +34,10 @@
 
     <TextView
         android:id="@+id/aqiMoreIndex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/margin_8"
-        android:paddingEnd="0dp"
+        android:layout_width="@dimen/aqi_Index_size"
+        android:layout_height="@dimen/aqi_Index_size"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="0dp"
         android:paddingTop="@dimen/margin_8"
         android:paddingBottom="@dimen/margin_8"
         android:textSize="@dimen/text_view_40sp"

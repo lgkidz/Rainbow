@@ -32,6 +32,19 @@ public class PreferencesUtil {
     private static final String NOTIFICATION_SETTING = "notification";
     private static final String NOTIFICATION_TIME = "notificationTime";
     private static final String NOTIFICATION_TIME_DEFAULT = "8:00";
+    private static final String APP_OPEN_COUNT = "App_open_count";
+
+    public static int getAppOpenCount(Context context){
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return pref.getInt(APP_OPEN_COUNT, 0);
+    }
+
+    public static void increaseAppOpenCount(Context context){
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(APP_OPEN_COUNT,(getAppOpenCount(context)+1));
+        editor.apply();
+    }
 
     public static Calendar getNotificationTime(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

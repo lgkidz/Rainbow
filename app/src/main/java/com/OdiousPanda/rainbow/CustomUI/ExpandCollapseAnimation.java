@@ -39,7 +39,6 @@ public class ExpandCollapseAnimation {
             }
         };
 
-        // Expansion speed of 1dp/ms
         a.setDuration(250);
         a.setInterpolator(new DecelerateInterpolator());
         v.startAnimation(a);

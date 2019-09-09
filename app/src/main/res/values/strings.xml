@@ -183,6 +183,7 @@
     <string name="color_legend">Color legend</string>
     <string name="cautionary_statement">Cautionary Statement</string>
     <string name="aqi_source_standard">The tables above defines the Air Quality Index scale as defined by the US-EPA 2016 standard.</string>
+    <string name="now">Now</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>
@@ -202,7 +203,7 @@
         <item>Have a good day!</item>
         <item>Rainbow at your service!</item>
         <item>Today seems okay, so go forth and have fun!</item>
-        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &gt;3</item>
+        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &lt;3</item>
         <item>You can click this notification to see more.</item>
         <item>More information like air quality index is available in Rainbow\'s app</item>
         <item>That\'s today report! Sir!</item>
@@ -218,7 +219,7 @@
         <item>Have a good day!</item>
         <item>Rainbow at your service!</item>
         <item>And it\'s cold, you should keep yourself warm. Don\'t get sick or I\'ll be really worried!</item>
-        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &gt;3</item>
+        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &lt;3</item>
         <item>You can click this notification to see more.</item>
         <item>More information like air quality index is available in Rainbow\'s app</item>
         <item>That\'s today report! Sir!</item>
@@ -241,7 +242,7 @@
         <item>Have a good day!</item>
         <item>Rainbow at your service!</item>
         <item>I\'s also really hot, so remember to drink water regularly. 2 liters a day is recommended.</item>
-        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &gt;3</item>
+        <item>A-hem, in case you don\'t have anyone to tell you this,… have a good day sweetie &lt;3</item>
         <item>You can click this notification to see more.</item>
         <item>More information like air quality index is available in Rainbow\'s app</item>
         <item>That\'s today report! Sir!</item>
