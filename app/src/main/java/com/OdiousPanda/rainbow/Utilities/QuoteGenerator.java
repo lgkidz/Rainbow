@@ -124,7 +124,8 @@ public class QuoteGenerator {
     }
 
     private String censorStrongWords(String text) {
-        String textNoStrongWords = text.toLowerCase().replace("fucking ", "").trim();
+        String[] notSoOffensiveWords = {"frickin’ ","freakin’ ","freaking ","effin’ ","flippin’ ","flipping", "beeping ","fricking ", "bleeping ", "****ing "};
+        String textNoStrongWords = text.toLowerCase().replace("fucking ", notSoOffensiveWords[new Random().nextInt(notSoOffensiveWords.length)]).trim();
         if (textNoStrongWords.length() > 0) {
             return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
         }
