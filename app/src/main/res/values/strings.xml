@@ -144,19 +144,6 @@
     <string name="uv_summary_11">Very high</string>
     <string name="uv_summary_11_above">Extreme</string>
 
-    <string name="depress_val_0">Mild</string>
-    <string name="depress_val_1">Depressed</string>
-    <string name="depress_val_2">Crippling</string>
-    <string name="depress_val_3">A little</string>
-    <string name="depress_val_4">Enough to die</string>
-    <string name="depress_val_5">Oof</string>
-    <string name="depress_val_6">Somewhat</string>
-    <string name="depress_val_7">Not at all</string>
-    <string name="depress_val_8">Aaaargghhh!!</string>
-    <string name="depress_val_9">42?</string>
-    <string name="depress_val_10">Unbearable</string>
-    <string name="depress_val_11">Nein</string>
-    <string name="depress_val_12">Chuck Norris</string>
     <string name="what_to_eat_title">Any places to eat nearby?</string>
     <string name="food_to_eat_placeholder">Rainbow said:</string>
     <string name="details_info_title">Other useful information</string>
@@ -184,6 +171,19 @@
     <string name="cautionary_statement">Cautionary Statement</string>
     <string name="aqi_source_standard">The tables above defines the Air Quality Index scale as defined by the US-EPA 2016 standard.</string>
     <string name="now">Now</string>
+    <string name="depress_val_0">Mild</string>
+    <string name="depress_val_1">Depressed</string>
+    <string name="depress_val_2">Crippling</string>
+    <string name="depress_val_3">A little</string>
+    <string name="depress_val_4">Enough to die</string>
+    <string name="depress_val_5">Oof</string>
+    <string name="depress_val_6">Somewhat</string>
+    <string name="depress_val_7">Not at all</string>
+    <string name="depress_val_8">Aaargghhh!!</string>
+    <string name="depress_val_9">42?</string>
+    <string name="depress_val_10">Unbearable</string>
+    <string name="depress_val_11">Nein</string>
+    <string name="depress_val_12">Chuck Norris</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>
@@ -233,7 +233,7 @@
         <item>it\'s cold, I\'m starting to miss the summer already.</item>
         <item>And it\'s a good day for a hot chocolate.</item>
         <item>A scarf would be helpful in this weather.</item>
-        <item>Is it winter yet?</item>
+        <item>Hmm, Is it winter yet?</item>
         <item>Cold huh? I think I\'ll stay home and watch anime.</item>
         <item>Hah! Good weather for netflix and chill!</item>
     </string-array>
@@ -256,7 +256,7 @@
         <item>it\'s hot, I\'m starting to miss the winter already.</item>
         <item>And it\'s a good day for an ice cold drink.</item>
         <item>An air conditioner would be helpful in this weather.</item>
-        <item>\"Do you wanna build a snowman?\" Are you stupid Anna? It\'s scorching hot right now!</item>
+        <item>\"Do you wanna build a snowman?\" Anna, are you stupid? It\'s scorching hot right now!</item>
         <item>Let\'s have some ice cream, it\'s hot today.</item>
     </string-array>
 </resources>

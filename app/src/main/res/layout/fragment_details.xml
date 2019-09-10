@@ -222,7 +222,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--        <include layout="@layout/aqi_detail_layout" />-->
-            <include layout="@layout/aqi_detail_layout_new" />
+            <include layout="@layout/aqi_detail_layout" />
             <include layout="@layout/wind_detail_layout" />
 
             <include layout="@layout/sun_detail_layout" />
