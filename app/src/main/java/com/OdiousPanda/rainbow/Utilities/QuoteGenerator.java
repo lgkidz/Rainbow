@@ -23,10 +23,9 @@ public class QuoteGenerator {
     private static final String TAG = "WeatherA";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private List<Quote> quotes = new ArrayList<>();
-    private Weather weather;
     private Context mContext;
+    private Weather weather;
 
-    private List<Quote> weatherQuotes = new ArrayList<>();
 
     public QuoteGenerator(Context context) {
         this.mContext = context;
@@ -58,7 +57,8 @@ public class QuoteGenerator {
             queryQuotes();
             return;
         }
-        filterQuotes();
+        boolean isExplicit = PreferencesUtil.isExplicit(mContext);
+        List<Quote> weatherQuotes = filterQuotes(weather, quotes, isExplicit,false);
         Quote randomQuote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
         if (randomQuote.getMain() == null && randomQuote.getSub() == null) {
             randomQuote.setDefaultQuote();
@@ -66,11 +66,11 @@ public class QuoteGenerator {
         HomeScreenFragment.getInstance().updateQuote(randomQuote);
     }
 
-    private void filterQuotes() {
+    public static List<Quote> filterQuotes(Weather weather,List<Quote> allQuotes, boolean isExplicit, boolean forWidget) {
+        List<Quote> weatherQuotes = new ArrayList<>();
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         List<String> criteria = new ArrayList<>();
-        weatherQuotes.clear();
         if (temp > 30) {
             criteria.add("hot");
         } else if (temp < 15) {
@@ -97,35 +97,47 @@ public class QuoteGenerator {
                 criteria.add("clear");
             }
         }
-
-        boolean isExplicit = PreferencesUtil.isExplicit(mContext);
-        for (Quote q : quotes) {
+        for (Quote q : allQuotes) {
+            // att * means quotes unrelated to weather (jokes / inspiring quotes,...)
             if (q.getAtt().contains("*")) {
-                if (!q.getAtt().contains("widget")) {
+                if(!forWidget && q.getAtt().contains("widget")){
+                    continue;
+                } else {
                     if (isExplicit) {
-                        q.setMain(censorStrongWords(q.getMain()));
-                        q.setSub(censorStrongWords(q.getSub()));
+                        q.setMain(censorOffensiveWords(q.getMain()));
+                        q.setSub(censorOffensiveWords(q.getSub()));
                     }
                     weatherQuotes.add(q);
                 }
                 continue;
             }
+            // Quotes related to weather
             for (String s : criteria) {
+                //if match one of the criteria
                 if (q.getAtt().contains(s)) {
                     if (isExplicit) {
-                        q.setMain(censorStrongWords(q.getMain()));
-                        q.setSub(censorStrongWords(q.getSub()));
+                        q.setMain(censorOffensiveWords(q.getMain()));
+                        q.setSub(censorOffensiveWords(q.getSub()));
                     }
                     weatherQuotes.add(q);
                     break;
                 }
             }
         }
+        return weatherQuotes;
     }
 
-    private String censorStrongWords(String text) {
-        String[] notSoOffensiveWords = {"frickin’ ","freakin’ ","freaking ","effin’ ","flippin’ ","flipping", "beeping ","fricking ", "bleeping ", "****ing "};
-        String textNoStrongWords = text.toLowerCase().replace("fucking ", notSoOffensiveWords[new Random().nextInt(notSoOffensiveWords.length)]).trim();
+    private static String censorOffensiveWords(String text) {
+        String[] alternativesForFucking = {"frickin’ ","freakin’ ","freaking ","effin’ ","flippin’ ","flipping ", "beeping ","fricking ", "bleeping ", ""};
+        String[] alternativesForDamn = {"darn","dang"};
+        String[] alternativesForShit = {"crap","crud"};
+        String[] alternativesForHell = {"heck"};
+        String[] alternativesForAss = {"arse","butt", "bum"};
+        text = text.toLowerCase().replace("damn", alternativesForDamn[new Random().nextInt(alternativesForDamn.length)]);
+        text = text.replace("shit", alternativesForShit[new Random().nextInt(alternativesForShit.length)]);
+        text = text.replace("hell", alternativesForHell[new Random().nextInt(alternativesForHell.length)]);
+        text = text.replace("ass", alternativesForAss[new Random().nextInt(alternativesForAss.length)]);
+        String textNoStrongWords = text.replace("fucking ", alternativesForFucking[new Random().nextInt(alternativesForFucking.length)]).trim();
         if (textNoStrongWords.length() > 0) {
             return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
         }

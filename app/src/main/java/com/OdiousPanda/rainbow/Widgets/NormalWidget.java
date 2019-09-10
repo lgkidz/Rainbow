@@ -39,6 +39,7 @@ import com.OdiousPanda.rainbow.DataModel.Quote;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
+import com.OdiousPanda.rainbow.Utilities.QuoteGenerator;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -76,7 +77,6 @@ public class NormalWidget extends AppWidgetProvider {
     private static final String LOCATION_BITMAP = "locationBitmap";
     private static final int DOUBLE_CLICK_DELAY = 500;
     private static Weather weather;
-    private static List<Quote> weatherQuotes = new ArrayList<>();
     private static List<Quote> quotes = new ArrayList<>();
     private static Quote quote;
     private static int widgetId;
@@ -268,60 +268,8 @@ public class NormalWidget extends AppWidgetProvider {
             queryQuotes(context);
             return;
         }
-
-        float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
-        String summary = weather.getCurrently().getIcon();
-        List<String> criteria = new ArrayList<>();
-        if (temp > 30) {
-            criteria.add("hot");
-        } else if (temp < 15) {
-            criteria.add("cold");
-        } else {
-            criteria.add("clear");
-        }
-
-        if (summary.contains("rain")) {
-            criteria.add("rain");
-        } else if (summary.contains("cloudy")) {
-            criteria.add("cloudy");
-        } else if (summary.contains("fog")) {
-            criteria.add("fog");
-        } else if (summary.contains("snow") || summary.contains("sleet")) {
-            criteria.add("snow");
-        } else if (summary.contains("hail")) {
-            criteria.add("hail");
-        } else if (summary.contains("thunderstorm")) {
-            criteria.add("thunderstorm");
-        } else if (summary.contains("tornado")) {
-            criteria.add("tornado");
-        } else if (summary.contains("clear")) {
-            if (!criteria.contains("clear")) {
-                criteria.add("clear");
-            }
-        }
-        weatherQuotes.clear();
         boolean isExplicit = PreferencesUtil.isExplicit(context);
-        for (Quote q : quotes) {
-            for (String s : criteria) {
-                if (q.getAtt().contains("*")) {
-                    if (isExplicit) {
-                        q.setMain(censorStrongWords(q.getMain()));
-                        q.setSub(censorStrongWords(q.getSub()));
-                    }
-                    weatherQuotes.add(q);
-                    break;
-                }
-                if (q.getAtt().contains(s)) {
-                    if (isExplicit) {
-                        q.setMain(censorStrongWords(q.getMain()));
-                        q.setSub(censorStrongWords(q.getSub()));
-                    }
-                    weatherQuotes.add(q);
-                    break;
-                }
-            }
-        }
-
+        List<Quote> weatherQuotes = QuoteGenerator.filterQuotes(weather,quotes,isExplicit,true);
         quote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
         if (quote.getMain() == null && quote.getSub() == null) {
             quote.setDefaultQuote();
@@ -333,19 +281,8 @@ public class NormalWidget extends AppWidgetProvider {
         aWm.updateAppWidget(widgetId, remoteViews);
     }
 
-    private static String censorStrongWords(String text) {
-        String[] notSoOffensiveWords = {"frickin’ ","freakin’ ","freaking ","effin’ ","flippin’ ","flipping", "beeping ","fricking ", "bleeping ", "****ing "};
-        String textNoStrongWords = text.toLowerCase().replace("fucking ", notSoOffensiveWords[new Random().nextInt(notSoOffensiveWords.length)]).trim();
-        if (textNoStrongWords.length() > 0) {
-            return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
-        }
-
-        return text;
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }

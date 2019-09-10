@@ -57,8 +57,8 @@ import com.OdiousPanda.rainbow.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.rainbow.MainFragments.SettingFragment;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Repositories.WeatherRepository;
-import com.OdiousPanda.rainbow.Utilities.MyColorUtil;
-import com.OdiousPanda.rainbow.Utilities.MyTextUtil;
+import com.OdiousPanda.rainbow.Utilities.ColorUtil;
+import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.ViewModels.WeatherViewModel;
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void searchNearbyPlaceToEat(String lat, String lon) {
-        String locationString = MyTextUtil.locationStringForNearbySearch(lat, lon);
+        String locationString = TextUtil.locationStringForNearbySearch(lat, lon);
         int radius = Constant.NEARBY_SEARCH_RADIUS_DEFAULT;
         String keyword = Constant.NEARBY_SEARCH_KEYWORD;
         String apiKey = Constant.GOOGLE_API_KEY;
@@ -493,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                                     Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
                                     Palette p = Palette.from(bitmap).generate();
                                     int backgroundColor = p.getDominantColor(Color.BLACK);
-                                    int textColor = MyColorUtil.blackOrWhiteOf(backgroundColor);
+                                    int textColor = ColorUtil.blackOrWhiteOf(backgroundColor);
                                     HomeScreenFragment.getInstance().setColorTheme(textColor);
                                     return false;
                                 }
@@ -525,8 +525,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateBackgroundColor() {
         background.setImageResource(android.R.color.transparent);
-        final int[] argb = MyColorUtil.randomColorCode();
-        int textColorCode = MyColorUtil.blackOrWhiteOf(argb);
+        final int[] argb = ColorUtil.randomColorCode();
+        int textColorCode = ColorUtil.blackOrWhiteOf(argb);
         ObjectAnimator colorFade = ObjectAnimator.ofObject(background
                 , "backgroundColor"
                 , new ArgbEvaluator()

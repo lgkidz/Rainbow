@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.rainbow.R;
-import com.OdiousPanda.rainbow.Utilities.MyTextUtil;
+import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Widgets.NormalWidget;
@@ -212,12 +212,12 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         Calendar calendar = PreferencesUtil.getNotificationTime(getActivity());
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute = calendar.get(Calendar.MINUTE);
-        String timeString = getString(R.string.time_place_holder) + " " + MyTextUtil.getTimeStringPretty(hour, minute);
+        String timeString = getString(R.string.time_place_holder) + " " + TextUtil.getTimeStringPretty(hour, minute);
         dailyNotificationTime.setText(timeString);
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int min) {
-                String time = getString(R.string.time_place_holder) + " " + MyTextUtil.getTimeStringPretty(hourOfDay, min);
+                String time = getString(R.string.time_place_holder) + " " + TextUtil.getTimeStringPretty(hourOfDay, min);
                 dailyNotificationTime.setText(time);
                 PreferencesUtil.setNotificationTime(Objects.requireNonNull(getActivity()), hourOfDay, min);
                 notificationUtil.cancelDailyNotification();

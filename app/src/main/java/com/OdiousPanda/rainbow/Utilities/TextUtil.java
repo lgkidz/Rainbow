@@ -19,7 +19,7 @@ import com.OdiousPanda.rainbow.R;
 
 import java.util.Random;
 
-public class MyTextUtil {
+public class TextUtil {
     private static final String referralString = "?utm_source=rainbow&utm_medium=referral";
 
     public static SpannableStringBuilder getReferralHtml(Context context, String profileUrl, String profileName) {

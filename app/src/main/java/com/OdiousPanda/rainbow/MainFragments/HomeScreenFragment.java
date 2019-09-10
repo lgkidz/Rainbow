@@ -35,8 +35,8 @@ import com.OdiousPanda.rainbow.DataModel.Quote;
 import com.OdiousPanda.rainbow.DataModel.Unsplash.Unsplash;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
-import com.OdiousPanda.rainbow.Utilities.MyColorUtil;
-import com.OdiousPanda.rainbow.Utilities.MyTextUtil;
+import com.OdiousPanda.rainbow.Utilities.ColorUtil;
+import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.QuoteGenerator;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
@@ -263,7 +263,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
                     if (pointerPreviousX == 0) {
                         pointerPreviousX = pointerParams.leftMargin;
                     }
-                    final int newTempColor = MyColorUtil.getTemperaturePointerColor(Objects.requireNonNull(getActivity()), (finalCurrentTemp - minTemp) / (maxTemp - minTemp));
+                    final int newTempColor = ColorUtil.getTemperaturePointerColor(Objects.requireNonNull(getActivity()), (finalCurrentTemp - minTemp) / (maxTemp - minTemp));
                     Animation pointerSlideAnimation = new TranslateAnimation(pointerPreviousX, leftMargin, 0, 0);
                     pointerSlideAnimation.setInterpolator(new DecelerateInterpolator());
                     pointerSlideAnimation.setDuration(pointerAnimationDuration);
@@ -406,7 +406,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
 
         tvPhotoTitle.setText(photoTitle);
 
-        tvPhotoBy.setText(MyTextUtil.getReferralHtml(getActivity(), userProfileLink, userName));
+        tvPhotoBy.setText(TextUtil.getReferralHtml(getActivity(), userProfileLink, userName));
         tvCamera.setText(camera);
         tvAperture.setText(aperture);
         tvFocalLength.setText(focalLength);

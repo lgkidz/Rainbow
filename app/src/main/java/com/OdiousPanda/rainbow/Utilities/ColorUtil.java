@@ -9,7 +9,7 @@ import com.OdiousPanda.rainbow.R;
 
 import java.util.Random;
 
-public class MyColorUtil {
+public class ColorUtil {
 
     public static int[] randomColorCode() {
         return new int[]{255, new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)};
