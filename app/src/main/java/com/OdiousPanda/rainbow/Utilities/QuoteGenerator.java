@@ -128,19 +128,42 @@ public class QuoteGenerator {
     }
 
     private static String censorOffensiveWords(String text) {
-        String[] alternativesForFucking = {"frickin’ ","freakin’ ","freaking ","effin’ ","flippin’ ","flipping ", "beeping ","fricking ", "bleeping ", ""};
+        String[] alternativesForFucking = {"frickin’ ","freakin’ ","freaking ","effin’ ","flippin’ ","flipping ","fricking ", ""};
         String[] alternativesForDamn = {"darn","dang"};
         String[] alternativesForShit = {"crap","crud"};
         String[] alternativesForHell = {"heck"};
-        String[] alternativesForAss = {"arse","butt", "bum"};
+        String[] alternativesForAss = {"arse ","butt ", "bum "};
         text = text.toLowerCase().replace("damn", alternativesForDamn[new Random().nextInt(alternativesForDamn.length)]);
         text = text.replace("shit", alternativesForShit[new Random().nextInt(alternativesForShit.length)]);
         text = text.replace("hell", alternativesForHell[new Random().nextInt(alternativesForHell.length)]);
-        text = text.replace("ass", alternativesForAss[new Random().nextInt(alternativesForAss.length)]);
-        String textNoStrongWords = text.replace("fucking ", alternativesForFucking[new Random().nextInt(alternativesForFucking.length)]).trim();
+        text = text.replace("ass ", alternativesForAss[new Random().nextInt(alternativesForAss.length)]);
+        text = text.replace("fucking ", alternativesForFucking[new Random().nextInt(alternativesForFucking.length)]);
+        String textNoStrongWords = text.replace("i ", "I ").trim();
         if (textNoStrongWords.length() > 0) {
-            return textNoStrongWords.substring(0, 1).toUpperCase() + textNoStrongWords.substring(1);
+            return capitalizeSentence(textNoStrongWords);
         }
         return text;
     }
+
+    private static String capitalizeSentence(String sentence) {
+        StringBuilder result = new StringBuilder();
+        boolean capitalize = true; //state
+        for(char c : sentence.toCharArray()) {
+            if (capitalize) {
+                //this is the capitalize state
+                result.append(Character.toUpperCase(c));
+                if (!Character.isWhitespace(c) && c != '.') {
+                    capitalize = false; //change state
+                }
+            } else {
+                //this is the don't capitalize state
+                result.append(c);
+                if (c == '.') {
+                    capitalize = true; //change state
+                }
+            }
+        }
+        return result.toString();
+    }
+
 }
