@@ -95,6 +95,8 @@ public class DetailsFragment extends Fragment {
     private TextView tvSunset;
     private RecyclerView hourlyForecastRv;
 
+    private TextView tvPoweredByDarkSky;
+
     private NearbySearch nearbySearchData = new NearbySearch();
 
     public DetailsFragment() {
@@ -204,6 +206,15 @@ public class DetailsFragment extends Fragment {
         if (currentWeather != null) {
             updateUnit();
         }
+
+        tvPoweredByDarkSky = v.findViewById(R.id.poweredByDarkSky);
+        tvPoweredByDarkSky.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.powered_dark_sky_link)));
+                startActivity(browserIntent);
+            }
+        });
 
         MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
             @Override

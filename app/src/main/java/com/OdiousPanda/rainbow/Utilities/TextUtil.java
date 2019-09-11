@@ -45,7 +45,6 @@ public class TextUtil {
         int flags = strBuilder.getSpanFlags(span);
         ClickableSpan clickable = new ClickableSpan() {
             public void onClick(@NonNull View view) {
-                Log.d("loglog", span.getURL());
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(span.getURL()));
                 context.startActivity(browserIntent);
             }

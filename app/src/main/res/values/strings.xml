@@ -42,7 +42,7 @@
     <string name="speed_setting_title">Speed Unit</string>
     <string name="pressure_setting_title">Pressure Unit</string>
     <string name="rate_setting_title">Rate this super friendly app</string>
-    <string name="about_setting_title">About me</string>
+    <string name="about_setting_title">About</string>
     <string name="help_setting_title">Help</string>
     <string name="temp_setting_degree_f">°F</string>
     <string name="temp_setting_degree_c">°C</string>
@@ -184,6 +184,8 @@
     <string name="depress_val_10">Unbearable</string>
     <string name="depress_val_11">Nein</string>
     <string name="depress_val_12">Chuck Norris</string>
+    <string name="powered_by_dark_sky">Powered by Dark Sky</string>
+    <string name="powered_dark_sky_link">https://darksky.net/poweredby/</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>
