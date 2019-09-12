@@ -36,23 +36,36 @@
 
                 <TextView
                     android:id="@+id/tv_location"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_20sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginEnd="@dimen/margin_8"
                     app:fontFamily="@font/montserrat"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/shareButton"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/shareButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_12"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_location"
+                    app:layout_constraintTop_toTopOf="@id/tv_location"
+                    app:layout_constraintEnd_toStartOf="@id/icon"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/icon"
                     android:layout_width="@dimen/icon_18dp"
                     android:layout_height="@dimen/icon_18dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/margin_4"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_location"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_location"
                     app:layout_constraintTop_toTopOf="@id/tv_location"
                     tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,6 +97,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                layout="@layout/photo_details_layout"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="15dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -328,5 +346,4 @@
         </androidx.recyclerview.widget.RecyclerView>
     </com.OdiousPanda.rainbow.CustomUI.MovableConstrainLayout>
 
-    <include layout="@layout/photo_details_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

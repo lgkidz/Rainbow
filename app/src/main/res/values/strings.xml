@@ -4,8 +4,8 @@
     <string name="temp_unit_setting">temp_unit_setting</string>
     <string name="temp_unit_f">F</string>
     <string name="temp_unit_c">C</string>
-    <string name="message_need_permission">I need your permission</string>
-    <string name="message_grant_permission">I need these permission to work properly. You can allow them in app settings.</string>
+    <string name="message_need_permission">Permission needed</string>
+    <string name="message_grant_permission">I need this permission to work properly. You can allow it in your phone\'s settings.</string>
     <string name="label_setting">OPEN SETTINGS</string>
     <string name="cancel">Cancel</string>
 
@@ -186,6 +186,10 @@
     <string name="depress_val_12">Chuck Norris</string>
     <string name="powered_by_dark_sky">Powered by Dark Sky</string>
     <string name="powered_dark_sky_link">https://darksky.net/poweredby/</string>
+    <string name="rainbow_need_permission">Rainbow needs this permission for this feature to work.</string>
+    <string name="okay">Okay</string>
+    <string name="share_this_to">Sharing is caring. Send this to…</string>
+    <string name="something_went_wrong">Something went wrong, please try again!</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>

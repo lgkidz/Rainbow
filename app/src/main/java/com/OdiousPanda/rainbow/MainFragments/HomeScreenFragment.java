@@ -3,6 +3,7 @@ package com.OdiousPanda.rainbow.MainFragments;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
 
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
+    public static final String ACTION_SHARE_RAINBOW = "com.OdiousPanda.Rainbow.Share";
     private final int pointerAnimationDuration = 1000;
     public boolean photoDetailsShowing = false;
     private MovableConstrainLayout layoutData;
@@ -77,6 +79,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     private TextView tvExposureTime;
     private TextView tvIso;
     private TextView tvFocalLength;
+    private ImageView btnShare;
     private QuoteGenerator quoteGenerator;
     private Weather currentWeather;
     private float pointerPreviousX = 0;
@@ -119,6 +122,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         tvSmallText = v.findViewById(R.id.small_text);
         tvTemp = v.findViewById(R.id.tv_temp);
         iconInfo = v.findViewById(R.id.icon);
+        btnShare = v.findViewById(R.id.shareButton);
         tvLocation = v.findViewById(R.id.tv_location);
         tempBar = v.findViewById(R.id.temperature_bar);
         tempPointer = v.findViewById(R.id.temperature_pointer);
@@ -153,7 +157,13 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
                 openPhotoDetailBox();
             }
         });
-
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takeScreenShotIntent = new Intent(ACTION_SHARE_RAINBOW);
+                Objects.requireNonNull(getActivity()).sendBroadcast(takeScreenShotIntent);
+            }
+        });
         btnClosePhotoDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,16 +200,23 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
             }
 
         });
+        ConstraintLayout.LayoutParams shareParam = (ConstraintLayout.LayoutParams) btnShare.getLayoutParams();
         if (PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)) {
             iconInfo.setVisibility(View.VISIBLE);
+            shareParam.setMarginEnd( (int) getResources().getDimension(R.dimen.margin_16));
+            btnShare.setLayoutParams(shareParam);
         } else {
             iconInfo.setVisibility(View.GONE);
+            shareParam.setMarginEnd(0);
+            btnShare.setLayoutParams(shareParam);
         }
         colorAnimation.start();
         if (textColor == Color.WHITE) {
             iconInfo.setImageResource(R.drawable.ic_info_w);
+            btnShare.setImageResource(R.drawable.ic_share_w);
         } else {
             iconInfo.setImageResource(R.drawable.ic_info_b);
+            btnShare.setImageResource(R.drawable.ic_share_b);
         }
     }
 
@@ -449,6 +466,20 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         });
         ExpandCollapseAnimation.collapse(photoDetailsLayout);
         photoDetailsShowing = false;
+    }
+
+    public void hideShareIcon(){
+        btnShare.setVisibility(View.INVISIBLE);
+        iconInfo.setVisibility(View.INVISIBLE);
+    }
+
+    public void showShareIcon(){
+        btnShare.setVisibility(View.VISIBLE);
+        if (PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)) {
+            iconInfo.setVisibility(View.VISIBLE);
+        } else {
+            iconInfo.setVisibility(View.GONE);
+        }
     }
 
     @Override

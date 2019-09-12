@@ -220,6 +220,7 @@ public class WelcomeActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.message_need_permission));
         builder.setMessage(getString(R.string.app_need_permissions_to_run));
+        builder.setCancelable(false);
         builder.setPositiveButton(getString(R.string.exit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -233,17 +234,12 @@ public class WelcomeActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.message_need_permission));
         builder.setMessage(getString(R.string.message_grant_permission));
-        builder.setPositiveButton(getString(R.string.label_setting), new DialogInterface.OnClickListener() {
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.exit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                WelcomeActivity.this.openSettings();
-            }
-        });
-        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+                openSettings();
             }
         });
         builder.show();

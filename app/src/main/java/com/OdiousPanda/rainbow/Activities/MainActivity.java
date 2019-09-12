@@ -1,10 +1,13 @@
 package com.OdiousPanda.rainbow.Activities;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -16,7 +19,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,9 +30,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -79,10 +87,17 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.snackbar.Snackbar;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
 import com.tooltip.Tooltip;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -147,6 +162,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             if (screenInitialized) {
                 updateBackground();
             }
+        }
+    };
+
+    BroadcastReceiver shareReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            takeScreenShot();
         }
     };
 
@@ -581,6 +603,107 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 activeNetwork.isConnected();
     }
 
+    @SuppressLint("RestrictedApi")
+    private void share(){
+        Log.d(TAG, "takeScreenShot: ");
+        HomeScreenFragment.getInstance().hideShareIcon();
+        fab.setVisibility(View.INVISIBLE);
+        long now = System.currentTimeMillis();
+        File directory = new File(Environment.getExternalStorageDirectory().toString() + "/Rainbow/");
+        directory.mkdirs();
+        try{
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(directory,now + ".jpg");
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));
+            shareIntent.setType("image/jpeg");
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_this_to)));
+        } catch (Throwable e){
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+        }
+
+        HomeScreenFragment.getInstance().showShareIcon();
+        fab.setVisibility(View.VISIBLE);
+    }
+
+    private void takeScreenShot(){
+        Log.d(TAG, "takeScreenShot: ");
+        Dexter.withActivity(MainActivity.this)
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            showSettingDialog();
+                        } else {
+                            if (!report.areAllPermissionsGranted()) {
+                                showNeededPermissionDialog();
+                            } else {
+                                share();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).onSameThread().check();
+    }
+
+    private void showNeededPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.message_need_permission));
+        builder.setMessage(getString(R.string.rainbow_need_permission));
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                takeScreenShot();
+            }
+        });
+        builder.show();
+    }
+
+    private void showSettingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.message_need_permission));
+        builder.setMessage(getString(R.string.message_grant_permission));
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.label_setting), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                openSettings();
+            }
+        });
+        builder.show();
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -588,6 +711,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         registerReceiver(connectionChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         registerReceiver(unitUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_UNIT));
         registerReceiver(backgroundUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_BACKGROUND));
+        registerReceiver(shareReceiver,new IntentFilter(HomeScreenFragment.ACTION_SHARE_RAINBOW));
         Log.d(TAG, "onResume: ");
     }
 
@@ -597,6 +721,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         unregisterReceiver(connectionChangeReceiver);
         unregisterReceiver(unitUpdateReceiver);
         unregisterReceiver(backgroundUpdateReceiver);
+        unregisterReceiver(shareReceiver);
         Log.d(TAG, "onPause: ");
     }
 
