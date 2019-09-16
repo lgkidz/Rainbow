@@ -38,8 +38,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.palette.graphics.Palette;
@@ -66,13 +64,12 @@ import com.OdiousPanda.rainbow.MainFragments.SettingFragment;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Repositories.WeatherRepository;
 import com.OdiousPanda.rainbow.Utilities.ColorUtil;
-import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
+import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.ViewModels.WeatherViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
@@ -94,7 +91,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
-import com.tooltip.Tooltip;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -111,7 +107,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements HomeScreenFragment.OnLayoutRefreshListener, LocationListAdapter.OnItemClickListener {
 
     private static final String TAG = "weatherA";
-    private Tooltip fabTooltip;
     private ImageView background;
     private WeatherViewModel weatherViewModel;
     private boolean firstTimeObserve = true;
@@ -121,6 +116,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private RelativeLayout loadingLayout;
     private ConstraintLayout noConnectionLayout;
     private MovableFAB fab;
+    BroadcastReceiver shareReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            takeScreenShot();
+        }
+    };
     private RecyclerView rvLocations;
     private SlideUp slideUp;
     private boolean locationListShowing = false;
@@ -153,22 +154,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         }
     };
     private int AUTOCOMPLETE_REQUEST_CODE = 1201;
-    private boolean toolTipShown = false;
     private int currentBackgroundColor = Color.argb(255, 255, 255, 255);
-    private int c = 0;
     BroadcastReceiver backgroundUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (screenInitialized) {
                 updateBackground();
             }
-        }
-    };
-
-    BroadcastReceiver shareReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            takeScreenShot();
         }
     };
 
@@ -291,17 +283,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 Snackbar.make(v, "This feature is still under development.", Snackbar.LENGTH_SHORT).show();
             }
         });
-        fabTooltip = new Tooltip.Builder(fab)
-                .setText("Drag me to your heart's content")
-                .setTextColor(Color.WHITE)
-                .setBackgroundColor(ContextCompat.getColor(this, R.color.bg_screen1))
-                .setCornerRadius(10f)
-                .setTextSize(R.dimen.text_view_14sp)
-                .setGravity(Gravity.TOP)
-                .setDismissOnClick(true)
-                .setCancelable(true)
-                .setTypeface(ResourcesCompat.getFont(this, R.font.montserrat))
-                .build();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
         rvLocations.setLayoutManager(layoutManager);
@@ -338,14 +319,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         searchNearbyPlaceToEat(locations.get(currentLocationPosition).getCoordinate().getLat(), locations.get(currentLocationPosition).getCoordinate().getLon());
         updateBackground();
         hideLocationList();
-    }
-
-    private void showFabToolTips() {
-        //Show fab tool tips only on the first 3 times user opens the app
-        if (!toolTipShown && PreferencesUtil.getAppOpenCount(this) < 4) {
-            fabTooltip.show();
-            toolTipShown = true;
-        }
     }
 
     private void setupLocationObservers() {
@@ -404,7 +377,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 loadingLayout.setVisibility(View.INVISIBLE);
                 if (mViewPager.getCurrentItem() == 1 && !locationListShowing) {
                     fab.show();
-                    showFabToolTips();
                 }
 
             }
@@ -492,8 +464,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void updateBackgroundRandomPicture() {
-        c++;
-        Log.d(TAG, "updateBackgroundRandomPicture: " + c);
         RetrofitService.createUnsplashCall().getRandomPotrait().enqueue(new Callback<Unsplash>() {
             @Override
             public void onResponse(@NonNull Call<Unsplash> call, @NonNull Response<Unsplash> response) {
@@ -541,7 +511,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 .transition(DrawableTransitionOptions.withCrossFade(200))
                 .centerCrop()
                 .into(background);
-        Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(imageResourceId)).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(imageResourceId)).getBitmap();
         Palette p = Palette.from(bitmap).generate();
         int backgroundColor = p.getDominantColor(Color.BLACK);
         int textColor = ColorUtil.blackOrWhiteOf(backgroundColor);
@@ -607,21 +577,21 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     @SuppressLint("RestrictedApi")
-    private void share(){
+    private void share() {
         Log.d(TAG, "takeScreenShot: ");
         HomeScreenFragment.getInstance().hideShareIcon();
         fab.setVisibility(View.INVISIBLE);
         long now = System.currentTimeMillis();
         File directory = new File(Environment.getExternalStorageDirectory().toString() + "/Rainbow/");
         directory.mkdirs();
-        try{
+        try {
             // create bitmap screen capture
             View v1 = getWindow().getDecorView().getRootView();
             v1.setDrawingCacheEnabled(true);
             Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
             v1.setDrawingCacheEnabled(false);
 
-            File imageFile = new File(directory,now + ".jpg");
+            File imageFile = new File(directory, now + ".jpg");
 
             FileOutputStream outputStream = new FileOutputStream(imageFile);
             int quality = 100;
@@ -633,7 +603,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));
             shareIntent.setType("image/jpeg");
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_this_to)));
-        } catch (Throwable e){
+        } catch (Throwable e) {
             e.printStackTrace();
             Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
         }
@@ -642,7 +612,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         fab.setVisibility(View.VISIBLE);
     }
 
-    private void takeScreenShot(){
+    private void takeScreenShot() {
         Log.d(TAG, "takeScreenShot: ");
         Dexter.withActivity(MainActivity.this)
                 .withPermissions(
@@ -714,7 +684,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         registerReceiver(connectionChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         registerReceiver(unitUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_UNIT));
         registerReceiver(backgroundUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_BACKGROUND));
-        registerReceiver(shareReceiver,new IntentFilter(HomeScreenFragment.ACTION_SHARE_RAINBOW));
+        registerReceiver(shareReceiver, new IntentFilter(HomeScreenFragment.ACTION_SHARE_RAINBOW));
         Log.d(TAG, "onResume: ");
     }
 
@@ -738,7 +708,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             SettingFragment.getInstance().closeAboutMeDialog();
             return;
         }
-        if(DetailsFragment.getInstance().aqiMoreDeatailsShowing){
+        if (DetailsFragment.getInstance().aqiMoreDeatailsShowing) {
             DetailsFragment.getInstance().closeAqiMoreDetailsDialog();
             return;
         }
