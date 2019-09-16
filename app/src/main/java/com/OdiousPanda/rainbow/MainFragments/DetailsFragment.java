@@ -121,7 +121,6 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_details, container, false);
         initViews(v);
-        foodIconUtil = new FoodIconUtil();
         return v;
     }
 
@@ -276,7 +275,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void updateFoodData() {
-        icFoodType.setImageResource(foodIconUtil.getRandomIcons());
+        icFoodType.setImageResource(new FoodIconUtil().getRandomIcons());
         String currentPlaceName = tvFood.getText().toString();
         String placeName;
         while (true) {

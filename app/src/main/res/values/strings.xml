@@ -190,6 +190,7 @@
     <string name="okay">Okay</string>
     <string name="share_this_to">Sharing is caring. Send this to…</string>
     <string name="something_went_wrong">Something went wrong, please try again!</string>
+    <string name="widget_feel_like">Feels like: </string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>

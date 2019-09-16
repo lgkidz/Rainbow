@@ -98,10 +98,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <include
-                layout="@layout/photo_details_layout"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="15dp" />
+            <include layout="@layout/photo_details_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

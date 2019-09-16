@@ -215,7 +215,7 @@ public class NormalWidget extends AppWidgetProvider {
                             weather = response.body();
                             assert weather != null;
                             String temp = UnitConverter.convertToTemperatureUnit(weather.getCurrently().getTemperature(), currentTempUnit);
-                            String realFeelTemp = "Feels more like: " + UnitConverter.convertToTemperatureUnit(weather.getCurrently().getApparentTemperature(), currentTempUnit);
+                            String realFeelTemp = context.getString(R.string.widget_feel_like) + " " + UnitConverter.convertToTemperatureUnit(weather.getCurrently().getApparentTemperature(), currentTempUnit);
                             remoteViews.setImageViewBitmap(R.id.tv_temp_widget, textAsBitmap(context, temp, TEMP_BITMAP));
                             remoteViews.setImageViewBitmap(R.id.tv_reaFeel_widget, textAsBitmap(context, realFeelTemp, RF_BITMAP));
                             String iconName = weather.getCurrently().getIcon().replace("-", "_");
@@ -304,7 +304,6 @@ public class NormalWidget extends AppWidgetProvider {
         int[] ids = aWm.getAppWidgetIds(new ComponentName(context, NormalWidget.class));
         if (ids.length > 0) {
             widgetId = ids[ids.length - 1];
-            Log.d("widgetTime", "onReceive: " + intent.getAction());
             remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
             super.onReceive(context, intent);
 

@@ -539,10 +539,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         Glide.with(MainActivity.this).load(imageResourceId)
                 .placeholder(background.getDrawable())
                 .transition(DrawableTransitionOptions.withCrossFade(200))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .into(background);
-        HomeScreenFragment.getInstance().setColorTheme(Color.WHITE);
+        Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(imageResourceId)).getBitmap();
+        Palette p = Palette.from(bitmap).generate();
+        int backgroundColor = p.getDominantColor(Color.BLACK);
+        int textColor = ColorUtil.blackOrWhiteOf(backgroundColor);
+        HomeScreenFragment.getInstance().setColorTheme(textColor);
     }
 
     private void updateBackgroundColor() {
