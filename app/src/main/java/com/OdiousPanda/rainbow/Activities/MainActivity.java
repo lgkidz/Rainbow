@@ -180,12 +180,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             showNoConnection();
         }
         Log.d(TAG, "onCreate: ");
-        if (PreferencesUtil.getNotificationSetting(this).equals(PreferencesUtil.NOTIFICATION_SETTING_ON)) {
+        PreferencesUtil.increaseAppOpenCount(this);
+
+        //Start notification for the first time on the first time user open app
+        if (PreferencesUtil.getNotificationSetting(this).equals(PreferencesUtil.NOTIFICATION_SETTING_ON) && PreferencesUtil.getAppOpenCount(this) == 1) {
             NotificationUtil notificationUtil = new NotificationUtil(this);
             notificationUtil.startDailyNotification();
         }
-
-        PreferencesUtil.increaseAppOpenCount(this);
     }
 
     private void showNoConnection() {
