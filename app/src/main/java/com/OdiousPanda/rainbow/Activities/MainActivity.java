@@ -281,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             @Override
             public void onClick(View v) {
                 openLocationSearch();
-                Snackbar.make(v, "This feature is still under development.", Snackbar.LENGTH_SHORT).show();
             }
         });
 

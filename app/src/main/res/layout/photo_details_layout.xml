@@ -30,6 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24"
         android:autoLink="web"
+        android:maxLines="4"
+        android:ellipsize="end"
         android:fontFamily="@font/montserrat"
         android:linksClickable="true"
         android:textColor="@color/absoluteBlack"
@@ -67,7 +69,7 @@
         android:layout_width="@dimen/icon_36dp"
         android:layout_height="@dimen/icon_36dp"
         android:layout_marginTop="@dimen/margin_16"
-        android:src="@drawable/ic_camera"
+        android:src="@drawable/ic_drone_b"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/photo_by"
         tools:ignore="ContentDescription" />

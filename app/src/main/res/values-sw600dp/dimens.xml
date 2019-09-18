@@ -41,6 +41,9 @@
   <dimen name="indicator_size">
     13.33dp
   </dimen>
+  <dimen name="margin_2">
+    3.33dp
+  </dimen>
   <dimen name="margin_4">
     6.67dp
   </dimen>
@@ -97,6 +100,9 @@
   </dimen>
   <dimen name="icon_72dp">
     120.0dp
+  </dimen>
+  <dimen name="icon_60dp">
+    100.0dp
   </dimen>
   <dimen name="icon_24dp">
     40.0dp

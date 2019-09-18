@@ -75,6 +75,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     private TextView tvPhotoTitle;
     private TextView tvPhotoBy;
     private TextView tvCamera;
+    private ImageView icCamera;
     private TextView tvAperture;
     private TextView tvExposureTime;
     private TextView tvIso;
@@ -144,6 +145,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         tvPhotoBy = v.findViewById(R.id.photo_by);
         btnClosePhotoDetails = v.findViewById(R.id.close_photo_detail);
         tvCamera = v.findViewById(R.id.camera_name);
+        icCamera = v.findViewById(R.id.ic_camera);
         tvAperture = v.findViewById(R.id.tvAperture);
         tvExposureTime = v.findViewById(R.id.tvExposureTime);
         tvFocalLength = v.findViewById(R.id.tvFocalLength);
@@ -429,6 +431,38 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         tvFocalLength.setText(focalLength);
         tvIso.setText(iso);
         tvExposureTime.setText(exposureTIme);
+        icCamera.setImageResource(getCameraIcon(cameraMaker));
+    }
+
+    private int getCameraIcon(String maker){
+        if (maker.equals("")){
+            return R.drawable.ic_camera;
+        }
+        String[] dslrMakers = {"Blackmagic Design","VisionTek","Algo","Advert Tech","Foscam",
+                "Phase One","Thomson","AgfaPhoto","Leica","Medion","Minox","Praktica","Rollei",
+                "Tevion","Traveler","Vageeswari","Canon","Casio","Epson","Fujifilm","Nikon",
+                "Olympus","Ricoh","Panasonic","Pentax","Sigma","Sony","Hasselblad",
+                "Memoto","BenQ","Genius","Bell & Howell","GE","GoPro","HP","Kodak","Lytro","Polaroid","Vivitar"};
+
+        String[] droneMakers = {"DJI","Yuneec","UVify","Hubsan","Parrot","Kespry","Autel Robotics",
+                "Air Hogs","Walkera","insitu","Delair","Ehang","Cyphy","Ryze","Skydio","PowerVision"};
+
+        for(String brand: dslrMakers){
+            if(maker.toLowerCase().contains(brand.toLowerCase())){
+                return R.drawable.ic_camera;
+            }
+        }
+
+        for(String brand: droneMakers){
+            if(maker.toLowerCase().contains(brand.toLowerCase())){
+                return R.drawable.ic_drone_b;
+            }
+        }
+
+        if(maker.equalsIgnoreCase("Apple")){
+            return R.drawable.ic_iphone_b;
+        }
+        return R.drawable.ic_android_phone_b;
     }
 
     @SuppressLint("ClickableViewAccessibility")
