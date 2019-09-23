@@ -26,7 +26,7 @@ public class WelcomeFragment1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.welcome_slide1, container, false);
+        return inflater.inflate(R.layout.greeting_slide, container, false);
     }
 
 }

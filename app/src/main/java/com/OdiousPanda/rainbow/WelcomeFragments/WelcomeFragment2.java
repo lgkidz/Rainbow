@@ -27,7 +27,7 @@ public class WelcomeFragment2 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.welcome_slide2, container, false);
+        View v = inflater.inflate(R.layout.welcome_slide_video, container, false);
         VideoView videoView = v.findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://" + Objects.requireNonNull(getActivity()).getPackageName() + "/" + R.raw.slide2);
         videoView.setVideoURI(uri);

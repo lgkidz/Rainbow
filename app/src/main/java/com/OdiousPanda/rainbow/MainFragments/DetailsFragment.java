@@ -88,8 +88,6 @@ public class DetailsFragment extends Fragment {
     private ImageView icFoodType;
     private TextView tvFood;
     private ImageView icRefreshFood;
-    private FoodIconUtil foodIconUtil;
-
     private TextView tvSunrise;
     private TextView tvMidday;
     private TextView tvSunset;

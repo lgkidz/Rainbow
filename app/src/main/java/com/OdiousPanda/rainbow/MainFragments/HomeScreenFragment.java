@@ -37,6 +37,7 @@ import com.OdiousPanda.rainbow.DataModel.Unsplash.Unsplash;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.ColorUtil;
+import com.OdiousPanda.rainbow.Utilities.Constants;
 import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.QuoteGenerator;
@@ -48,7 +49,6 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
 
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
-    public static final String ACTION_SHARE_RAINBOW = "com.OdiousPanda.Rainbow.Share";
     private final int pointerAnimationDuration = 1000;
     public boolean photoDetailsShowing = false;
     private MovableConstrainLayout layoutData;
@@ -162,7 +162,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takeScreenShotIntent = new Intent(ACTION_SHARE_RAINBOW);
+                Intent takeScreenShotIntent = new Intent(Constants.ACTION_SHARE_RAINBOW);
                 Objects.requireNonNull(getActivity()).sendBroadcast(takeScreenShotIntent);
             }
         });
@@ -411,15 +411,16 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         String cameraMaker = unsplash.exif.make;
         String cameraModel = unsplash.exif.model != null ? unsplash.exif.model : getString(R.string.not_available);
         if (cameraMaker != null) {
-            if (cameraMaker.toLowerCase().contains("canon") || cameraMaker.toLowerCase().contains("nikon")) {
+            if (cameraMaker.toLowerCase().contains(Constants.DUPLICATE_NAME_CAMERA_MAKER[0].toLowerCase())
+                    || cameraMaker.toLowerCase().contains(Constants.DUPLICATE_NAME_CAMERA_MAKER[1].toLowerCase())) {
                 cameraMaker = "";
             }
         } else {
             cameraMaker = "";
         }
         String camera = cameraMaker + " " + cameraModel;
-        String aperture = unsplash.exif.aperture != null ? "f/" + unsplash.exif.aperture : getString(R.string.not_available);
-        String focalLength = unsplash.exif.focalLength != null ? unsplash.exif.focalLength + " mm" : getString(R.string.not_available);
+        String aperture = unsplash.exif.aperture != null ? Constants.APERTURE_PREFIX + unsplash.exif.aperture : getString(R.string.not_available);
+        String focalLength = unsplash.exif.focalLength != null ? unsplash.exif.focalLength + Constants.FOCAL_LENGTH_SUFFIX : getString(R.string.not_available);
         String iso = unsplash.exif.iso != null ? String.valueOf(unsplash.exif.iso) : getString(R.string.not_available);
         String exposureTIme = unsplash.exif.exposureTime != null ? unsplash.exif.exposureTime : getString(R.string.not_available);
 
@@ -438,28 +439,20 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         if (maker.equals("")){
             return R.drawable.ic_camera;
         }
-        String[] dslrMakers = {"Blackmagic Design","VisionTek","Algo","Advert Tech","Foscam",
-                "Phase One","Thomson","AgfaPhoto","Leica","Medion","Minox","Praktica","Rollei",
-                "Tevion","Traveler","Vageeswari","Canon","Casio","Epson","Fujifilm","Nikon",
-                "Olympus","Ricoh","Panasonic","Pentax","Sigma","Sony","Hasselblad",
-                "Memoto","BenQ","Genius","Bell & Howell","GE","GoPro","HP","Kodak","Lytro","Polaroid","Vivitar"};
 
-        String[] droneMakers = {"DJI","Yuneec","UVify","Hubsan","Parrot","Kespry","Autel Robotics",
-                "Air Hogs","Walkera","insitu","Delair","Ehang","Cyphy","Ryze","Skydio","PowerVision"};
-
-        for(String brand: dslrMakers){
+        for(String brand: Constants.DSLR_MAKERS){
             if(maker.toLowerCase().contains(brand.toLowerCase())){
                 return R.drawable.ic_camera;
             }
         }
 
-        for(String brand: droneMakers){
+        for(String brand: Constants.DRONE_MAKERS){
             if(maker.toLowerCase().contains(brand.toLowerCase())){
                 return R.drawable.ic_drone_b;
             }
         }
 
-        if(maker.equalsIgnoreCase("Apple")){
+        if(maker.equalsIgnoreCase(Constants.APPLE_CAMERA)){
             return R.drawable.ic_iphone_b;
         }
         return R.drawable.ic_android_phone_b;

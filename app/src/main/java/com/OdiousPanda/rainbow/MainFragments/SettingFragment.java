@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.OdiousPanda.rainbow.R;
+import com.OdiousPanda.rainbow.Utilities.Constants;
 import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
@@ -37,8 +38,7 @@ import java.util.Objects;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
-    public static final String ACTION_UPDATE_UNIT = "Rainbow.update.unit";
-    public static final String ACTION_UPDATE_BACKGROUND = "Rainbow.update.background";
+
     @SuppressLint("StaticFieldLeak")
     private static SettingFragment instance;
     public boolean aboutMeShowing = false;
@@ -355,7 +355,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         updateTempButtonColor(id);
         currentTempUnit = PreferencesUtil.getTemperatureUnit(getActivity());
         Intent updateUnitBroadcast = new Intent();
-        updateUnitBroadcast.setAction(ACTION_UPDATE_UNIT);
+        updateUnitBroadcast.setAction(Constants.ACTION_UPDATE_UNIT);
         getActivity().sendBroadcast(updateUnitBroadcast);
     }
 
@@ -396,7 +396,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         updateDistanceButtonColor(id);
         Intent updateUnitBroadcast = new Intent();
-        updateUnitBroadcast.setAction(ACTION_UPDATE_UNIT);
+        updateUnitBroadcast.setAction(Constants.ACTION_UPDATE_UNIT);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateUnitBroadcast);
         currentDistanceUnit = PreferencesUtil.getDistanceUnit(Objects.requireNonNull(getActivity()));
     }
@@ -564,7 +564,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
         updateBackgroundSettingButtonColor(id);
         Intent updateBackgroundBroadcast = new Intent();
-        updateBackgroundBroadcast.setAction(ACTION_UPDATE_BACKGROUND);
+        updateBackgroundBroadcast.setAction(Constants.ACTION_UPDATE_BACKGROUND);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateBackgroundBroadcast);
         currentBackgroundSetting = PreferencesUtil.getBackgroundSetting(getActivity());
     }

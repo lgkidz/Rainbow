@@ -28,6 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
         android:layout_margin="@dimen/margin_16"
+        android:visibility="invisible"
+        app:elevation="@dimen/margin_2"
         android:backgroundTint="@color/pureWhite"
         android:src="@drawable/ic_round_location_b"
         app:rippleColor="@color/bg_screen1" />

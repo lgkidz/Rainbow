@@ -64,6 +64,7 @@ import com.OdiousPanda.rainbow.MainFragments.SettingFragment;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Repositories.WeatherRepository;
 import com.OdiousPanda.rainbow.Utilities.ColorUtil;
+import com.OdiousPanda.rainbow.Utilities.Constants;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.TextUtil;
@@ -83,7 +84,6 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -682,9 +682,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         super.onResume();
         loadingLayout.setVisibility(View.INVISIBLE);
         registerReceiver(connectionChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
-        registerReceiver(unitUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_UNIT));
-        registerReceiver(backgroundUpdateReceiver, new IntentFilter(SettingFragment.ACTION_UPDATE_BACKGROUND));
-        registerReceiver(shareReceiver, new IntentFilter(HomeScreenFragment.ACTION_SHARE_RAINBOW));
+        registerReceiver(unitUpdateReceiver, new IntentFilter(Constants.ACTION_UPDATE_UNIT));
+        registerReceiver(backgroundUpdateReceiver, new IntentFilter(Constants.ACTION_UPDATE_BACKGROUND));
+        registerReceiver(shareReceiver, new IntentFilter(Constants.ACTION_SHARE_RAINBOW));
         Log.d(TAG, "onResume: ");
     }
 

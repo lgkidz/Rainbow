@@ -56,6 +56,9 @@
   <dimen name="margin_12">
     14.0dp
   </dimen>
+  <dimen name="margin_14">
+    16.33dp
+  </dimen>
   <dimen name="margin_n_8">
     -9.33dp
   </dimen>
