@@ -46,7 +46,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.OdiousPanda.rainbow.API.Constant;
+import com.OdiousPanda.rainbow.API.APIConstants;
 import com.OdiousPanda.rainbow.API.RetrofitService;
 import com.OdiousPanda.rainbow.Adapters.LocationListAdapter;
 import com.OdiousPanda.rainbow.Adapters.SectionsPagerAdapter;
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Places.initialize(getApplicationContext(), Constant.GOOGLE_API_KEY);
+        Places.initialize(getApplicationContext(), APIConstants.GOOGLE_API_KEY);
         PlacesClient placesClient = Places.createClient(this);
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
@@ -385,9 +385,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void searchNearbyPlaceToEat(String lat, String lon) {
         String locationString = TextUtil.locationStringForNearbySearch(lat, lon);
-        int radius = Constant.NEARBY_SEARCH_RADIUS_DEFAULT;
-        String keyword = Constant.NEARBY_SEARCH_KEYWORD;
-        String apiKey = Constant.GOOGLE_API_KEY;
+        int radius = APIConstants.NEARBY_SEARCH_RADIUS_DEFAULT;
+        String keyword = APIConstants.NEARBY_SEARCH_KEYWORD;
+        String apiKey = APIConstants.GOOGLE_API_KEY;
         RetrofitService.createNearbySearchCall().searchNearby(locationString, radius, keyword, apiKey).enqueue(new Callback<NearbySearch>() {
             @Override
             public void onResponse(@NonNull Call<NearbySearch> call, @NonNull Response<NearbySearch> response) {
@@ -464,7 +464,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void updateBackgroundRandomPicture() {
-        RetrofitService.createUnsplashCall().getRandomPotrait().enqueue(new Callback<Unsplash>() {
+        RetrofitService.createUnsplashCall().getRandom(APIConstants.UNSPLASH_KEY, APIConstants.UNSPLASH_ORIENTATION_PORTRAIT).enqueue(new Callback<Unsplash>() {
             @Override
             public void onResponse(@NonNull Call<Unsplash> call, @NonNull Response<Unsplash> response) {
                 if (response.isSuccessful()) {
@@ -472,7 +472,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     assert unsplash != null;
                     Glide.with(MainActivity.this).load(unsplash.urls.regular)
                             .placeholder(background.getDrawable())
-                            .transition(DrawableTransitionOptions.withCrossFade(200))
+                            .transition(DrawableTransitionOptions.withCrossFade(Constants.BACKGROUND_FADE_DURATION))
                             .centerCrop()
                             .addListener(new RequestListener<Drawable>() {
                                 @Override
@@ -504,18 +504,44 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateBackgroundWeatherPicture() {
         String iconRaw = locations.get(currentLocationPosition).getWeather().getCurrently().getIcon();
-        String iconName = iconRaw.replace("-", "_");
-        int imageResourceId = getResources().getIdentifier("drawable/" + iconName + "_picture", null, getPackageName());
-        Glide.with(MainActivity.this).load(imageResourceId)
-                .placeholder(background.getDrawable())
-                .transition(DrawableTransitionOptions.withCrossFade(200))
-                .centerCrop()
-                .into(background);
-        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(imageResourceId)).getBitmap();
-        Palette p = Palette.from(bitmap).generate();
-        int backgroundColor = p.getDominantColor(Color.BLACK);
-        int textColor = ColorUtil.blackOrWhiteOf(backgroundColor);
-        HomeScreenFragment.getInstance().setColorTheme(textColor);
+        String query = iconRaw.replace("-", " ");
+
+        RetrofitService.createUnsplashCall().getRandomWeather(APIConstants.UNSPLASH_KEY, APIConstants.UNSPLASH_ORIENTATION_PORTRAIT,query).enqueue(new Callback<Unsplash>() {
+            @Override
+            public void onResponse(@NonNull Call<Unsplash> call, @NonNull Response<Unsplash> response) {
+                if (response.isSuccessful()) {
+                    Unsplash unsplash = response.body();
+                    assert unsplash != null;
+                    Glide.with(MainActivity.this).load(unsplash.urls.regular)
+                            .placeholder(background.getDrawable())
+                            .transition(DrawableTransitionOptions.withCrossFade(Constants.BACKGROUND_FADE_DURATION))
+                            .centerCrop()
+                            .addListener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                                    Palette p = Palette.from(bitmap).generate();
+                                    int backgroundColor = p.getDominantColor(Color.BLACK);
+                                    int textColor = ColorUtil.blackOrWhiteOf(backgroundColor);
+                                    HomeScreenFragment.getInstance().setColorTheme(textColor);
+                                    return false;
+                                }
+                            })
+                            .into(background);
+                    HomeScreenFragment.getInstance().updatePhotoDetail(unsplash);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Unsplash> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     private void updateBackgroundColor() {
@@ -527,7 +553,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 , new ArgbEvaluator()
                 , currentBackgroundColor
                 , Color.argb(argb[0], argb[1], argb[2], argb[3]));
-        colorFade.setDuration(200);
+        colorFade.setDuration(Constants.BACKGROUND_FADE_DURATION);
         colorFade.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {

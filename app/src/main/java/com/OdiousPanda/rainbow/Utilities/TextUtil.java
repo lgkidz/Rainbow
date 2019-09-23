@@ -9,12 +9,11 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.OdiousPanda.rainbow.API.Constant;
+import com.OdiousPanda.rainbow.API.APIConstants;
 import com.OdiousPanda.rainbow.R;
 
 import java.util.Random;
@@ -28,7 +27,7 @@ public class TextUtil {
         html += "'>";
         html += profileName;
         html += "</a> on <a href='";
-        html += Constant.UNSPLASH_HOME_URL + referralString;
+        html += APIConstants.UNSPLASH_HOME_URL + referralString;
         html += "'> Unsplash</a>";
         CharSequence sequence = Html.fromHtml(html);
         SpannableStringBuilder strBuilder = new SpannableStringBuilder(sequence);

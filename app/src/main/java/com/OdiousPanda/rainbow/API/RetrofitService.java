@@ -11,25 +11,25 @@ public class RetrofitService {
     private static OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
     private static Retrofit retrofitNearbySearch = new Retrofit.Builder()
-            .baseUrl(Constant.GOOGLE_MAP_API_BASE_URL)
+            .baseUrl(APIConstants.GOOGLE_MAP_API_BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
     private static Retrofit retrofitWeather = new Retrofit.Builder()
-            .baseUrl(Constant.BASE_URL)
+            .baseUrl(APIConstants.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
     private static Retrofit retrofitAQI = new Retrofit.Builder()
-            .baseUrl(Constant.AQI_BASE_URL)
+            .baseUrl(APIConstants.AQI_BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
     private static Retrofit retrofitUnSplash = new Retrofit.Builder()
-            .baseUrl(Constant.UNPLASH_BASE_URL)
+            .baseUrl(APIConstants.UNPLASH_BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build();

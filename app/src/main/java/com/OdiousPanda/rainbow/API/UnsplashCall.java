@@ -4,11 +4,13 @@ import com.OdiousPanda.rainbow.DataModel.Unsplash.Unsplash;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface UnsplashCall {
-    @GET("photos/random/?client_id=" + Constant.UNSPLASH_KEY + "&orientation=" + Constant.UNSPLASH_ORIENTATION_POTRAIT)
-    Call<Unsplash> getRandomPotrait();
+    @GET("photos/random/")
+    Call<Unsplash> getRandom(@Query("client_id") String key, @Query("orientation") String orientation);
 
-    @GET("photos/random/?client_id=" + Constant.UNSPLASH_KEY + "&orientation=" + Constant.UNSPLASH_ORIENTATION_LANDSCAPE)
-    Call<Unsplash> getRandomLandscape();
+    @GET("photos/random/")
+    Call<Unsplash> getRandomWeather(@Query("client_id") String key, @Query("orientation") String orientation, @Query("query") String query);
+
 }

@@ -49,7 +49,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
 
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
-    private final int pointerAnimationDuration = 1000;
+
     public boolean photoDetailsShowing = false;
     private MovableConstrainLayout layoutData;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -191,7 +191,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     public void setColorTheme(int textColor) {
         int colorFrom = tvTemp.getCurrentTextColor();
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, textColor);
-        colorAnimation.setDuration(200); // milliseconds
+        colorAnimation.setDuration(Constants.BACKGROUND_FADE_DURATION);
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
             @Override
@@ -203,7 +203,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
 
         });
         ConstraintLayout.LayoutParams shareParam = (ConstraintLayout.LayoutParams) btnShare.getLayoutParams();
-        if (PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)) {
+        if (!PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_COLOR)) {
             iconInfo.setVisibility(View.VISIBLE);
             shareParam.setMarginEnd( (int) getResources().getDimension(R.dimen.margin_16));
             btnShare.setLayoutParams(shareParam);
@@ -285,7 +285,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
                     final int newTempColor = ColorUtil.getTemperaturePointerColor(Objects.requireNonNull(getActivity()), (finalCurrentTemp - minTemp) / (maxTemp - minTemp));
                     Animation pointerSlideAnimation = new TranslateAnimation(pointerPreviousX, leftMargin, 0, 0);
                     pointerSlideAnimation.setInterpolator(new DecelerateInterpolator());
-                    pointerSlideAnimation.setDuration(pointerAnimationDuration);
+                    pointerSlideAnimation.setDuration(Constants.TEMPERATURE_ANIMATION_DURATION);
                     pointerSlideAnimation.setFillAfter(true);
                     final float finalLeftMargin = leftMargin;
                     final float finalTempLeftMargin = tempLeftMargin;
@@ -310,10 +310,10 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
                     });
                     Animation tempSlideAnimation = new TranslateAnimation(tempPreviousX, tempLeftMargin, 0, 0);
                     tempSlideAnimation.setInterpolator(new DecelerateInterpolator());
-                    tempSlideAnimation.setDuration(pointerAnimationDuration);
+                    tempSlideAnimation.setDuration(Constants.TEMPERATURE_ANIMATION_DURATION);
                     tempSlideAnimation.setFillAfter(true);
                     ValueAnimator tempChange = ValueAnimator.ofFloat(previousTemp, finalCurrentTemp);
-                    tempChange.setDuration(pointerAnimationDuration);
+                    tempChange.setDuration(Constants.TEMPERATURE_ANIMATION_DURATION);
                     tempChange.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
@@ -322,7 +322,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
                     });
 
                     ValueAnimator tempColorChange = ValueAnimator.ofObject(new ArgbEvaluator(), previousTempColor, newTempColor);
-                    tempColorChange.setDuration(pointerAnimationDuration);
+                    tempColorChange.setDuration(Constants.TEMPERATURE_ANIMATION_DURATION);
                     tempColorChange.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {

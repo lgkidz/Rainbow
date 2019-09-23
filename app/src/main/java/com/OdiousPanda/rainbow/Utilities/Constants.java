@@ -23,5 +23,7 @@ public class Constants {
 
     public static final String FOCAL_LENGTH_SUFFIX = " mm";
 
-    public static final String EXPOSURE_TIME_SUFFIX = " s";
+    public static final int BACKGROUND_FADE_DURATION = 400;
+
+    public static final int TEMPERATURE_ANIMATION_DURATION = 1000;
 }
