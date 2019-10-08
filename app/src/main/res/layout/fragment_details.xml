@@ -22,9 +22,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_16"
+                android:paddingStart="@dimen/margin_8"
                 android:paddingTop="@dimen/margin_8"
-                android:paddingEnd="@dimen/margin_16"
+                android:paddingEnd="@dimen/margin_8"
                 android:paddingBottom="@dimen/margin_16"
                 android:text="@string/details_heading"
                 android:textColor="@color/absoluteBlack"
@@ -129,9 +129,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_16"
+                android:paddingStart="@dimen/margin_8"
                 android:paddingTop="@dimen/margin_8"
-                android:paddingEnd="@dimen/margin_16"
+                android:paddingEnd="@dimen/margin_8"
                 android:paddingBottom="@dimen/margin_8"
                 android:text="@string/what_to_eat_title"
                 android:textColor="@color/absoluteBlack"
@@ -185,8 +185,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider_height"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_8"
                 android:background="@color/halfSnappedBlack" />
 
             <include layout="@layout/cloud_pressure_visibility_detail_layout" />
@@ -200,9 +200,9 @@
                     android:id="@+id/hourlyForecastTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/margin_16"
-                    android:paddingEnd="@dimen/margin_16"
-                    android:layout_marginTop="@dimen/margin_8"
+                    android:paddingStart="@dimen/margin_8"
+                    android:paddingTop="@dimen/margin_8"
+                    android:paddingEnd="@dimen/margin_8"
 
                     android:text="@string/hourly_forecast_title"
                     android:textColor="@color/absoluteBlack"
@@ -250,9 +250,7 @@
                     android:id="@+id/adTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/margin_8"
                     android:paddingTop="@dimen/margin_16"
-                    android:paddingEnd="@dimen/margin_8"
                     android:text="@string/sponsor"
                     android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_20sp"

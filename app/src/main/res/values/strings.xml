@@ -67,7 +67,7 @@
     <string name="pressure_title">Pressure</string>
     <string name="forecast_title">The next 7 days</string>
     <string name="air_quality_index_title">Air Quality Index</string>
-    <string name="pressure_title_alt">Depression level</string>
+    <string name="pressure_title_alt">Depression</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
     <string name="about_dialog_heading">About me</string>
@@ -130,7 +130,7 @@
     <string name="default_location">I have no idea where are you</string>
     <string name="location_list_title">Locations</string>
     <string name="quote_placeholder">…</string>
-    <string name="depression_level_title">Depression level</string>
+    <string name="depression_level_title">Depression </string>
     <string name="air_quality_dialog_description">Here are some scientific information</string>
     <string name="provided_by_aqi_cn_org">Provided by aqicn.org</string>
     <string name="explicit_setting_title">Are you okay with offensive words?</string>

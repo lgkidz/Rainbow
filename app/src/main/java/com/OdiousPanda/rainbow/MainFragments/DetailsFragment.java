@@ -94,7 +94,6 @@ public class DetailsFragment extends Fragment {
     private RecyclerView hourlyForecastRv;
 
     private TextView tvPoweredByDarkSky;
-
     private NearbySearch nearbySearchData = new NearbySearch();
 
     public DetailsFragment() {

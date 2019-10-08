@@ -53,6 +53,9 @@
   <dimen name="margin_8">
     9.13dp
   </dimen>
+  <dimen name="margin_10">
+    11.42dp
+  </dimen>
   <dimen name="margin_12">
     13.7dp
   </dimen>
@@ -174,7 +177,7 @@
     9.13dp
   </dimen>
   <dimen name="divider_height">
-    1.14dp
+    0.57dp
   </dimen>
   <dimen name="hourly_forecast_item_height">
     118.73dp

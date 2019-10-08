@@ -502,7 +502,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
 
     public void showShareIcon(){
         btnShare.setVisibility(View.VISIBLE);
-        if (PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_PICTURE_RANDOM)) {
+        if (!PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_COLOR)) {
             iconInfo.setVisibility(View.VISIBLE);
         } else {
             iconInfo.setVisibility(View.GONE);

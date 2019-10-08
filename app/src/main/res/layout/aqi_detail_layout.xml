@@ -14,7 +14,7 @@
         android:textColor="@color/absoluteBlack"
         android:textSize="@dimen/text_view_20sp"
         app:fontFamily="@font/montserrat"
-        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginStart="@dimen/margin_8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,8 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/aqi_unhealthy_sensitive"
+                android:gravity="top"
+                android:layout_marginTop="@dimen/margin_2"
                 android:layout_marginEnd="@dimen/margin_24"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_16sp"
@@ -76,6 +76,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/margin_2"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_14sp"
                 app:fontFamily="@font/montserrat" />
@@ -88,7 +89,10 @@
             android:src="@drawable/ic_info_b"
             app:layout_constraintEnd_toEndOf="@+id/aqiDesLayout"
             app:layout_constraintTop_toTopOf="@+id/aqiDesLayout"
-            android:layout_margin="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_10"
             tools:ignore="ContentDescription" />
         <TextView
             android:id="@+id/provideBy"
