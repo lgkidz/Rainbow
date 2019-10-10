@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     private SlideUp slideUp;
     private boolean locationListShowing = false;
     private boolean screenInitialized = false;
+    private Drawable oldBackgroundDrawable;
     private LocationListAdapter locationListAdapter;
     private List<LocationData> locations = new ArrayList<>();
     BroadcastReceiver unitUpdateReceiver = new BroadcastReceiver() {
@@ -203,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     }
 
     private void initViews() {
+        oldBackgroundDrawable = getDrawable(R.drawable.background_placeholder);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         background = findViewById(R.id.background);
         mViewPager = findViewById(R.id.container);
@@ -471,7 +473,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     Unsplash unsplash = response.body();
                     assert unsplash != null;
                     Glide.with(MainActivity.this).load(unsplash.urls.regular)
-                            .placeholder(background.getDrawable())
+                            .placeholder(oldBackgroundDrawable)
                             .transition(DrawableTransitionOptions.withCrossFade(Constants.BACKGROUND_FADE_DURATION))
                             .centerCrop()
                             .addListener(new RequestListener<Drawable>() {
@@ -487,6 +489,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                                     int backgroundColor = p.getDominantColor(Color.BLACK);
                                     int textColor = ColorUtil.blackOrWhiteOf(backgroundColor);
                                     HomeScreenFragment.getInstance().setColorTheme(textColor);
+                                    oldBackgroundDrawable = resource;
                                     return false;
                                 }
                             })
@@ -513,7 +516,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                     Unsplash unsplash = response.body();
                     assert unsplash != null;
                     Glide.with(MainActivity.this).load(unsplash.urls.regular)
-                            .placeholder(background.getDrawable())
+                            .placeholder(oldBackgroundDrawable)
                             .transition(DrawableTransitionOptions.withCrossFade(Constants.BACKGROUND_FADE_DURATION))
                             .centerCrop()
                             .addListener(new RequestListener<Drawable>() {
@@ -529,6 +532,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                                     int backgroundColor = p.getDominantColor(Color.BLACK);
                                     int textColor = ColorUtil.blackOrWhiteOf(backgroundColor);
                                     HomeScreenFragment.getInstance().setColorTheme(textColor);
+                                    oldBackgroundDrawable = resource;
                                     return false;
                                 }
                             })
