@@ -714,6 +714,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
     protected void onResume() {
         super.onResume();
         loadingLayout.setVisibility(View.INVISIBLE);
+        if(oldBackgroundDrawable != null && background != null){
+            background.setImageDrawable(oldBackgroundDrawable);
+        }
         registerReceiver(connectionChangeReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         registerReceiver(unitUpdateReceiver, new IntentFilter(Constants.ACTION_UPDATE_UNIT));
         registerReceiver(backgroundUpdateReceiver, new IntentFilter(Constants.ACTION_UPDATE_BACKGROUND));
