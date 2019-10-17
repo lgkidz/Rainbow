@@ -38,6 +38,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.palette.graphics.Palette;
@@ -612,7 +613,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         HomeScreenFragment.getInstance().hideShareIcon();
         fab.setVisibility(View.INVISIBLE);
         long now = System.currentTimeMillis();
-        File directory = new File(Environment.getExternalStorageDirectory().toString() + "/Rainbow/");
+        File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Rainbow/");
         directory.mkdirs();
         try {
             // create bitmap screen capture
@@ -622,7 +623,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             v1.setDrawingCacheEnabled(false);
 
             File imageFile = new File(directory, now + ".jpg");
-
+            Uri imageUri = FileProvider.getUriForFile(this,"com.OdiousPanda.rainbow.provider",imageFile);
             FileOutputStream outputStream = new FileOutputStream(imageFile);
             int quality = 100;
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
@@ -630,12 +631,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             outputStream.close();
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
             shareIntent.setType("image/jpeg");
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_this_to)));
         } catch (Throwable e) {
             e.printStackTrace();
+
             Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "share: " + e.getMessage());
         }
 
         HomeScreenFragment.getInstance().showShareIcon();
