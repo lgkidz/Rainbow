@@ -76,7 +76,7 @@ public class QuoteGenerator {
         } else if (temp < 15) {
             criteria.add("cold");
         } else {
-            criteria.add("clear");
+            criteria.add("cool");
         }
         if (summary.contains("rain")) {
             criteria.add("rain");
@@ -93,9 +93,7 @@ public class QuoteGenerator {
         } else if (summary.contains("tornado")) {
             criteria.add("tornado");
         } else if (summary.contains("clear")) {
-            if (!criteria.contains("clear")) {
-                criteria.add("clear");
-            }
+            criteria.add("clear");
         }
         for (Quote q : allQuotes) {
             // att * means quotes unrelated to weather (jokes / inspiring quotes,...)
@@ -128,7 +126,7 @@ public class QuoteGenerator {
     }
 
     private static String censorOffensiveWords(String text) {
-        String[] alternativesForFucking = {"frickin’ ","freakin’ ","freaking ","effin’ ","flippin’ ","flipping ","fricking ", ""};
+        String[] alternativesForFucking = {"frickin’ ","freakin’ ","freaking ","flippin’ ","flipping ","fricking ", ""};
         String[] alternativesForDamn = {"darn","dang"};
         String[] alternativesForShit = {"crap","crud"};
         String[] alternativesForHell = {"heck"};
@@ -147,19 +145,17 @@ public class QuoteGenerator {
 
     private static String capitalizeSentence(String sentence) {
         StringBuilder result = new StringBuilder();
-        boolean capitalize = true; //state
+        boolean capitalize = true;
         for(char c : sentence.toCharArray()) {
             if (capitalize) {
-                //this is the capitalize state
                 result.append(Character.toUpperCase(c));
                 if (!Character.isWhitespace(c) && c != '.') {
-                    capitalize = false; //change state
+                    capitalize = false;
                 }
             } else {
-                //this is the don't capitalize state
                 result.append(c);
                 if (c == '.') {
-                    capitalize = true; //change state
+                    capitalize = true;
                 }
             }
         }
