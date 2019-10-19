@@ -38,7 +38,7 @@
             android:paddingEnd="@dimen/margin_16"
             android:paddingBottom="@dimen/margin_16"
             android:textColor="@color/absoluteBlack"
-            android:textSize="@dimen/text_view_20sp"
+            android:textSize="@dimen/text_view_20dp"
             app:fontFamily="@font/montserrat"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_18sp"
+                android:textSize="@dimen/text_view_18dp"
                 app:fontFamily="@font/montserrat" />
         </LinearLayout>
     </RelativeLayout>

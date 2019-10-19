@@ -35,7 +35,7 @@
             android:gravity="center_horizontal"
             android:text="@string/slide_2_desc"
             android:textColor="@color/pureWhite"
-            android:textSize="@dimen/text_view_18sp"
+            android:textSize="@dimen/text_view_18dp"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

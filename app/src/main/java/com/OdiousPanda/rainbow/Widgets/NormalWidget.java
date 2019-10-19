@@ -109,16 +109,16 @@ public class NormalWidget extends AppWidgetProvider {
         switch (bitmapType) {
             case TEMP_BITMAP:
             case MAIN_BITMAP: {
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36dp));
                 break;
             }
             case RF_BITMAP:
             case LOCATION_BITMAP: {
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18dp));
                 break;
             }
             case SUB_BITMAP: {
-                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_24sp));
+                paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_24dp));
                 break;
             }
         }
@@ -136,9 +136,9 @@ public class NormalWidget extends AppWidgetProvider {
             int mWidgetPortWidth = mAppWidgetOptions
                     .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
             TextPaint textPaint = new TextPaint();
-            textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48sp));
+            textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_48dp));
             if (mWidgetPortHeight * context.getResources().getDisplayMetrics().density + 0.5f < context.getResources().getDimension(R.dimen.widget_height) * 3) {
-                textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36sp));
+                textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_36dp));
             }
             textPaint.setColor(Color.WHITE);
             textPaint.setTypeface(typeFace);

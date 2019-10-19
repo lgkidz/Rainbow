@@ -16,7 +16,7 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/air_quality_levels"
         android:textColor="@color/absoluteBlack"
-        android:textSize="@dimen/text_view_24sp"
+        android:textSize="@dimen/text_view_24dp"
         android:padding="@dimen/margin_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
         android:layout_marginEnd="0dp"
         android:paddingTop="@dimen/margin_8"
         android:paddingBottom="@dimen/margin_8"
-        android:textSize="@dimen/text_view_40sp"
+        android:textSize="@dimen/text_view_40dp"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/absoluteBlack"
         android:gravity="center"
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:text="0"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat"
                 tools:ignore="HardcodedText" />
 
@@ -84,7 +84,7 @@
                 android:layout_weight="1"
                 android:text="50"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat"
                 tools:ignore="HardcodedText" />
 
@@ -94,7 +94,7 @@
                 android:layout_weight="1"
                 android:text="100"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat"
                 tools:ignore="HardcodedText" />
 
@@ -104,7 +104,7 @@
                 android:layout_weight="1"
                 android:text="150"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat"
                 tools:ignore="HardcodedText" />
 
@@ -114,7 +114,7 @@
                 android:layout_weight="2"
                 android:text="200"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat"
                 tools:ignore="HardcodedText" />
 
@@ -124,7 +124,7 @@
                 android:layout_weight="3"
                 android:text="300"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat"
                 tools:ignore="HardcodedText" />
 
@@ -135,7 +135,7 @@
                 android:gravity="right"
                 android:text="500"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat"
                 tools:ignore="RtlHardcoded,HardcodedText" />
         </LinearLayout>
@@ -224,7 +224,7 @@
                 android:layout_weight="1"
                 android:text="@string/aqi_good"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat" />
 
             <TextView
@@ -234,7 +234,7 @@
                 android:gravity="end"
                 android:text="@string/aqi_hazardous"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12sp"
+                android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -255,7 +255,7 @@
                 android:fontFamily="@font/montserrat"
                 android:text="@string/color_legend"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_18sp"
+                android:textSize="@dimen/text_view_18dp"
                 android:paddingTop="@dimen/margin_8"
                 android:paddingStart="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_16" />
@@ -280,7 +280,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_good"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -290,7 +290,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_good_des_full"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_moderate"
@@ -308,7 +308,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_moderate"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -318,7 +318,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_moderate_des_full"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_unhealthy_sensitive"
@@ -336,7 +336,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy_sensitive"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -346,7 +346,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy_sensitive_des_full"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_unhealthy"
@@ -364,7 +364,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -374,7 +374,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy_des_full"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_very_unhealthy"
@@ -392,7 +392,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_very_unhealthy"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -402,7 +402,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_very_unhealthy_des_full"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_hazardous"
@@ -420,7 +420,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_hazardous"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -430,7 +430,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_hazardous_des_full"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -440,7 +440,7 @@
                 android:fontFamily="@font/montserrat"
                 android:text="@string/cautionary_statement"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_18sp"
+                android:textSize="@dimen/text_view_18dp"
                 android:paddingTop="@dimen/margin_16"
                 android:paddingStart="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_16" />
@@ -467,7 +467,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_good"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -477,7 +477,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_good_cs"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_moderate"
@@ -495,7 +495,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_moderate"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -505,7 +505,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_moderate_cs"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_unhealthy_sensitive"
@@ -523,7 +523,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy_sensitive"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -533,7 +533,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy_sensitive_cs"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_unhealthy"
@@ -551,7 +551,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -561,7 +561,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_unhealthy_cs"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_very_unhealthy"
@@ -579,7 +579,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_very_unhealthy"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -589,7 +589,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_very_unhealthy_cs"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@color/aqi_hazardous"
@@ -607,7 +607,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_hazardous"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                     <TextView
                         android:padding="@dimen/margin_8"
                         android:layout_weight="3"
@@ -617,7 +617,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="@string/aqi_hazardous_cs"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp" />
+                        android:textSize="@dimen/text_view_14dp" />
                 </LinearLayout>
             </LinearLayout>
             <TextView
@@ -626,7 +626,7 @@
                 android:text="@string/aqi_source_standard"
                 android:padding="@dimen/margin_8"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_14sp"
+                android:textSize="@dimen/text_view_14dp"
                 android:gravity="center"
                 android:fontFamily="@font/montserrat_light"/>
         </LinearLayout>

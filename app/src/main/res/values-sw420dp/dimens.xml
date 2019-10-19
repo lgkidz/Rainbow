@@ -131,41 +131,41 @@
   <dimen name="big_text">
     84.0sp
   </dimen>
-  <dimen name="text_view_12sp">
-    14.0sp
+  <dimen name="text_view_12dp">
+    14.0dp
   </dimen>
-  <dimen name="text_view_14sp">
-    16.33sp
+  <dimen name="text_view_14dp">
+    16.33dp
   </dimen>
-  <dimen name="text_view_16sp">
-    18.67sp
+  <dimen name="text_view_16dp">
+    18.67dp
   </dimen>
-  <dimen name="text_view_18sp">
-    21.0sp
+  <dimen name="text_view_18dp">
+    21.0dp
   </dimen>
-  <dimen name="text_view_20sp">
-    23.33sp
+  <dimen name="text_view_20dp">
+    23.33dp
   </dimen>
-  <dimen name="text_view_24sp">
-    28.0sp
+  <dimen name="text_view_24dp">
+    28.0dp
   </dimen>
-  <dimen name="text_view_30sp">
-    35.0sp
+  <dimen name="text_view_30dp">
+    35.0dp
   </dimen>
-  <dimen name="text_view_36sp">
-    42.0sp
+  <dimen name="text_view_36dp">
+    42.0dp
   </dimen>
-  <dimen name="text_view_40sp">
-    46.67sp
+  <dimen name="text_view_40dp">
+    46.67dp
   </dimen>
-  <dimen name="text_view_48sp">
-    56.0sp
+  <dimen name="text_view_48dp">
+    56.0dp
   </dimen>
-  <dimen name="text_view_54sp">
-    63.0sp
+  <dimen name="text_view_54dp">
+    63.0dp
   </dimen>
-  <dimen name="text_view_62sp">
-    72.33sp
+  <dimen name="text_view_62dp">
+    72.33dp
   </dimen>
   <dimen name="widget_height">
     124.83dp

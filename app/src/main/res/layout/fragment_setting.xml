@@ -29,7 +29,7 @@
                 android:paddingBottom="@dimen/margin_8"
                 android:text="@string/setting"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_24sp"
+                android:textSize="@dimen/text_view_24dp"
                 app:fontFamily="@font/montserrat" />
 
             <LinearLayout
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/temperature_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
 
                 <LinearLayout
@@ -64,7 +64,7 @@
                         android:text="@string/temp_setting_degree_c"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -77,7 +77,7 @@
                         android:text="@string/temp_setting_degree_f"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -90,7 +90,7 @@
                         android:text="@string/scientist"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/distance_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
 
                 <LinearLayout
@@ -127,7 +127,7 @@
                         android:text="@string/km"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -140,7 +140,7 @@
                         android:text="@string/mi"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -153,7 +153,7 @@
                         android:text="@string/bananas"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/speed_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
 
                 <LinearLayout
@@ -190,7 +190,7 @@
                         android:text="@string/kmph"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -203,7 +203,7 @@
                         android:text="@string/miph"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -216,7 +216,7 @@
                         android:text="@string/banana_h"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -233,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/pressure_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
 
                 <LinearLayout
@@ -253,7 +253,7 @@
                         android:text="@string/psi"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -266,7 +266,7 @@
                         android:text="@string/mmhg"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -279,7 +279,7 @@
                         android:text="@string/your_depression"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -296,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/background_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
 
                 <LinearLayout
@@ -316,7 +316,7 @@
                         android:text="@string/random_color"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -329,7 +329,7 @@
                         android:text="@string/picture"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -342,7 +342,7 @@
                         android:text="@string/random_picture"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -359,7 +359,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/explicit_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
 
                 <LinearLayout
@@ -379,7 +379,7 @@
                         android:text="@string/im_not"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <Button
@@ -392,7 +392,7 @@
                         android:text="@string/hell_yeah"
                         android:textAllCaps="false"
                         android:textColor="@color/pureWhite"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -408,7 +408,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/daily_notification_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -431,7 +431,7 @@
                     android:paddingBottom="@dimen/margin_8"
                     android:text="@string/time_place_holder"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_16sp"
+                    android:textSize="@dimen/text_view_16dp"
                     app:fontFamily="@font/montserrat"
                     app:layout_constraintEnd_toStartOf="@id/daily_notification_switch"
                     app:layout_constraintStart_toStartOf="parent"
@@ -451,7 +451,7 @@
                     android:layout_marginTop="@dimen/margin_32"
                     android:text="@string/rate_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
 
                 <TextView
@@ -461,7 +461,7 @@
                     android:layout_marginTop="@dimen/margin_32"
                     android:text="@string/about_setting_title"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_18sp"
+                    android:textSize="@dimen/text_view_18dp"
                     app:fontFamily="@font/montserrat" />
             </LinearLayout>
         </LinearLayout>

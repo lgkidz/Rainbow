@@ -39,7 +39,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_20sp"
+                    android:textSize="@dimen/text_view_20dp"
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:layout_marginEnd="@dimen/margin_8"
@@ -79,7 +79,7 @@
                 android:layout_marginEnd="@dimen/margin_8"
                 android:text="@string/quote_placeholder"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_40sp"
+                android:textSize="@dimen/text_view_40dp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
                 android:layout_marginEnd="@dimen/margin_8"
                 android:layout_marginBottom="@dimen/margin_8"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_18sp"
+                android:textSize="@dimen/text_view_18dp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_14sp"
+                android:textSize="@dimen/text_view_14dp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_30sp"
+                android:textSize="@dimen/text_view_30dp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toTopOf="@id/temperature_pointer"
                 app:layout_constraintEnd_toEndOf="@id/temperature_pointer"
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_4"
                 android:textColor="@color/coldBlue"
-                android:textSize="@dimen/text_view_14sp"
+                android:textSize="@dimen/text_view_14dp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toTopOf="@id/temperature_bar"
                 app:layout_constraintStart_toStartOf="@id/temperature_bar" />
@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/hotPink"
-                android:textSize="@dimen/text_view_14sp"
+                android:textSize="@dimen/text_view_14dp"
                 app:fontFamily="@font/montserrat"
                 app:layout_constraintBottom_toTopOf="@id/temperature_bar"
                 app:layout_constraintEnd_toEndOf="@id/temperature_bar" />
@@ -238,7 +238,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <TextView
@@ -247,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/uv_index_title"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -277,7 +277,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <TextView
@@ -285,7 +285,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/humidity_title"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
@@ -316,7 +316,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
 
                     <TextView
@@ -324,7 +324,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/chance"
                         android:textColor="@color/absoluteBlack"
-                        android:textSize="@dimen/text_view_14sp"
+                        android:textSize="@dimen/text_view_14dp"
                         app:fontFamily="@font/montserrat" />
                 </LinearLayout>
             </LinearLayout>
