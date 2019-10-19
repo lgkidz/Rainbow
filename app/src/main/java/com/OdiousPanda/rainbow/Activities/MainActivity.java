@@ -77,7 +77,10 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
@@ -100,7 +103,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import mumayank.com.airlocationlibrary.AirLocation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -419,9 +421,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void updateCurrentLocation() {
         Log.d(TAG, "updateCurrentLocation: update Current Location");
-        new AirLocation(this, false, false, new AirLocation.Callbacks() {
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void onSuccess(@NonNull final Location location) {
+            public void onSuccess(final Location location) {
                 Coordinate currentLocation = new Coordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
@@ -457,11 +461,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         }
                     }
                 }.start();
-            }
-
-            @Override
-            public void onFailed(@NonNull AirLocation.LocationFailedEnum locationFailedEnum) {
-
             }
         });
     }

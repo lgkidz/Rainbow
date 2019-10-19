@@ -13,10 +13,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -26,6 +24,9 @@ import com.OdiousPanda.rainbow.DataModel.Coordinate;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.ViewModels.WeatherViewModel;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -33,8 +34,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
-
-import mumayank.com.airlocationlibrary.AirLocation;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -154,18 +153,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void updateCurrentLocation() {
         Log.d(TAG, "updateCurrentLocation: update Current Location");
-        new AirLocation(this, false, false, new AirLocation.Callbacks() {
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void onSuccess(@NonNull Location location) {
+            public void onSuccess(Location location) {
                 Coordinate currentLocation = new Coordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
                 weatherViewModel.insert(currentLocation);
-            }
-
-            @Override
-            public void onFailed(@NonNull AirLocation.LocationFailedEnum locationFailedEnum) {
-
             }
         });
     }
@@ -198,7 +194,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 }).onSameThread().check();
     }
 
-    private void showAskPermissionDialog(){
+    private void showAskPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.askPermissionTitle));
         builder.setMessage(getString(R.string.askPermissionDescription));
