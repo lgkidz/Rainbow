@@ -47,9 +47,6 @@ import java.util.Objects;
 
 public class HomeScreenFragment extends Fragment implements MovableConstrainLayout.OnPositionChangedCallback, QuoteGenerator.UpdateScreenQuoteListener {
 
-    @SuppressLint("StaticFieldLeak")
-    private static HomeScreenFragment instance;
-
     public boolean photoDetailsShowing = false;
     private MovableConstrainLayout layoutData;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -92,14 +89,6 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     public HomeScreenFragment() {
         // Required empty public constructor
     }
-
-//    public static HomeScreenFragment getInstance() {
-//        if (instance == null) {
-//            instance = new HomeScreenFragment();
-//        }
-//
-//        return instance;
-//    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -459,41 +448,18 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         return R.drawable.ic_android_phone_b;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+
     private void openPhotoDetailBox() {
-        iconInfo.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-        btnClosePhotoDetails.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
         ExpandCollapseAnimation.expand(photoDetailsLayout);
         photoDetailsShowing = true;
+        iconInfo.setVisibility(View.INVISIBLE);
     }
 
 
-    @SuppressLint("ClickableViewAccessibility")
     public void closePhotoDetailBox() {
-        btnClosePhotoDetails.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-        iconInfo.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
         ExpandCollapseAnimation.collapse(photoDetailsLayout);
         photoDetailsShowing = false;
+        iconInfo.setVisibility(View.VISIBLE);
     }
 
     public void hideShareIcon() {

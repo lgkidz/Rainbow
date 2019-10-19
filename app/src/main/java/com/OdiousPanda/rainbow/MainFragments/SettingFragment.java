@@ -1,6 +1,5 @@
 package com.OdiousPanda.rainbow.MainFragments;
 
-import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,7 +21,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.OdiousPanda.rainbow.Activities.WelcomeActivity;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.Constants;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
@@ -39,9 +37,6 @@ import java.util.Objects;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
-
-    @SuppressLint("StaticFieldLeak")
-    private static SettingFragment instance;
     public boolean aboutMeShowing = false;
     private String currentTempUnit;
     private String currentDistanceUnit;
@@ -93,13 +88,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         getSetting();
         return v;
     }
-
-//    public static SettingFragment getInstance() {
-//        if (instance == null) {
-//            instance = new SettingFragment();
-//        }
-//        return instance;
-//    }
 
     private void initViews(View v) {
         CoordinatorLayout settingScreenLayout = v.findViewById(R.id.setting_layout);

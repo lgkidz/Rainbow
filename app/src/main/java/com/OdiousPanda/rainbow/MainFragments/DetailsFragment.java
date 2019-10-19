@@ -1,6 +1,5 @@
 package com.OdiousPanda.rainbow.MainFragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
@@ -52,8 +51,6 @@ import java.util.Objects;
 import java.util.Random;
 
 public class DetailsFragment extends Fragment {
-    @SuppressLint("StaticFieldLeak")
-    private static DetailsFragment instance;
     public Boolean aqiMoreDeatailsShowing = false;
     private Weather currentWeather;
     private TextView tvSunTitle;
@@ -99,13 +96,6 @@ public class DetailsFragment extends Fragment {
     public DetailsFragment() {
         // Required empty public constructor
     }
-
-//    public static DetailsFragment getInstance() {
-//        if (instance == null) {
-//            instance = new DetailsFragment();
-//        }
-//        return instance;
-//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
