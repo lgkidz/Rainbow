@@ -120,7 +120,7 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
-        requestPermission();
+        showAskPermissionDialog();
     }
 
     private void addBottomDots(int currentPage) {
@@ -196,6 +196,20 @@ public class WelcomeActivity extends AppCompatActivity {
                         token.continuePermissionRequest();
                     }
                 }).onSameThread().check();
+    }
+
+    private void showAskPermissionDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.askPermissionTitle));
+        builder.setMessage(getString(R.string.askPermissionDescription));
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                requestPermission();
+            }
+        });
+        builder.show();
     }
 
     private void showNeededPermissionDialog() {

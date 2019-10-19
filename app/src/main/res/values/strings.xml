@@ -192,6 +192,8 @@
     <string name="something_went_wrong">Something went wrong, please try again!</string>
     <string name="widget_feel_like">Feels like: </string>
     <string name="currentLocation">Current location</string>
+    <string name="askPermissionDescription">Rainbow uses your location to provide weather information and find restaurants near you.</string>
+    <string name="askPermissionTitle">Allow Rainbow to access your location</string>
     <string-array name="depression_levels">
         <item>@string/depress_val_0</item>
         <item>@string/depress_val_1</item>
