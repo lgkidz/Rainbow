@@ -3,8 +3,6 @@ package com.OdiousPanda.rainbow.Activities;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,7 +33,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
-import java.util.Locale;
 
 import mumayank.com.airlocationlibrary.AirLocation;
 
@@ -78,13 +75,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         }
     };
-    private ConstraintLayout dotsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Checking for first time launch - before calling setContentView()
-        if (PreferencesUtil.isNotFirstTimeLaunch(this)) {
+        Log.d(TAG, "Get app Open Count: " + PreferencesUtil.getAppOpenCount(this));
+        if (PreferencesUtil.getAppOpenCount(this) > 0) {
             launchHomeScreen();
             finish();
         }
@@ -95,7 +92,6 @@ public class WelcomeActivity extends AppCompatActivity {
         dotsLayout = findViewById(R.id.layoutDots);
         btnNext = findViewById(R.id.btn_next);
         viewPager.setOffscreenPageLimit(3);
-        dotsContainer = findViewById(R.id.dotsContainer);
 
         // adding bottom dots
         addBottomDots(0);
@@ -151,7 +147,6 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        PreferencesUtil.setNotFirstTimeLaunch(this, true);
         Intent mainActivityIntent = new Intent(WelcomeActivity.this, MainActivity.class);
         startActivity(mainActivityIntent);
         finish();
@@ -159,30 +154,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void updateCurrentLocation() {
         Log.d(TAG, "updateCurrentLocation: update Current Location");
-        AirLocation airLocation = new AirLocation(this, false, false, new AirLocation.Callbacks() {
+        new AirLocation(this, false, false, new AirLocation.Callbacks() {
             @Override
             public void onSuccess(@NonNull Location location) {
                 Coordinate currentLocation = new Coordinate(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
                 currentLocation.setId(1); // default ID for current Location
                 Log.d(TAG, "onSuccess: new coordinate recorded, update db now");
-                try {
-                    Geocoder geo = new Geocoder(WelcomeActivity.this, Locale.getDefault());
-                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    if (!addresses.isEmpty()) {
-                        String address = addresses.get(0).getAddressLine(0);
-                        String[] addressPieces = address.split(",");
-                        String locationName;
-                        if (addressPieces.length >= 3) {
-                            locationName = addressPieces[addressPieces.length - 3].trim();
-                        } else {
-                            locationName = addressPieces[addressPieces.length - 2].trim();
-                        }
-                        currentLocation.setName(locationName);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                weatherViewModel.update(currentLocation);
+                weatherViewModel.insert(currentLocation);
             }
 
             @Override
@@ -201,11 +179,15 @@ public class WelcomeActivity extends AppCompatActivity {
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (!report.areAllPermissionsGranted()) {
-                            showNeededPermissionDialog();
-                        }
                         if (report.isAnyPermissionPermanentlyDenied()) {
                             showSettingDialog();
+                        } else {
+                            if (!report.areAllPermissionsGranted()) {
+                                showNeededPermissionDialog();
+                            } else {
+                                updateCurrentLocation();
+                                locationUpdated = true;
+                            }
                         }
                     }
 

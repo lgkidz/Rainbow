@@ -22,11 +22,12 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.OdiousPanda.rainbow.Activities.WelcomeActivity;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.Constants;
-import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.NotificationUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
+import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Widgets.NormalWidget;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.slideup.SlideUp;
@@ -74,16 +75,14 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private NotificationUtil notificationUtil;
     private int buttonTextColor = Color.argb(255, 255, 255, 255);
     private int activeButtonTextColor = Color.argb(255, 255, 255, 255);
+    private OnSettingChangedListener listener;
 
     public SettingFragment() {
         // Required empty public constructor
     }
 
-    public static SettingFragment getInstance() {
-        if (instance == null) {
-            instance = new SettingFragment();
-        }
-        return instance;
+    public void setOnSettingChangedListener(OnSettingChangedListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -94,6 +93,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         getSetting();
         return v;
     }
+
+//    public static SettingFragment getInstance() {
+//        if (instance == null) {
+//            instance = new SettingFragment();
+//        }
+//        return instance;
+//    }
 
     private void initViews(View v) {
         CoordinatorLayout settingScreenLayout = v.findViewById(R.id.setting_layout);
@@ -349,7 +355,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         } else {
             updateSharedPref(pref, getString(R.string.temp_setting_degree_k));
         }
-        HomeScreenFragment.getInstance().updateUnit();
         Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateWidgetIntent);
         updateTempButtonColor(id);
@@ -395,9 +400,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         }
 
         updateDistanceButtonColor(id);
-        Intent updateUnitBroadcast = new Intent();
-        updateUnitBroadcast.setAction(Constants.ACTION_UPDATE_UNIT);
-        Objects.requireNonNull(getActivity()).sendBroadcast(updateUnitBroadcast);
         currentDistanceUnit = PreferencesUtil.getDistanceUnit(Objects.requireNonNull(getActivity()));
     }
 
@@ -535,7 +537,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             updateSharedPref(pref, getString(R.string.hell_yeah));
         }
         updateExplicitButtonColor(id);
-        HomeScreenFragment.getInstance().updateExplicitSetting();
+        listener.onSettingChanged(Constants.ACTION_UPDATE_EXPLICIT);
         Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateWidgetIntent);
     }
@@ -579,7 +581,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         } else {
             PreferencesUtil.setUnitSetting(Objects.requireNonNull(getActivity()), pref, value);
         }
-        DetailsFragment.getInstance().updateUnit();
+        listener.onSettingChanged(Constants.ACTION_UPDATE_UNIT);
+    }
+
+    public interface OnSettingChangedListener {
+        void onSettingChanged(String action);
     }
 
 }

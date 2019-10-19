@@ -9,31 +9,31 @@ import com.OdiousPanda.rainbow.MainFragments.HomeScreenFragment;
 import com.OdiousPanda.rainbow.MainFragments.SettingFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
-    public SectionsPagerAdapter(FragmentManager fm) {
+    private HomeScreenFragment homeScreenFragment;
+    private SettingFragment settingFragment;
+    private DetailsFragment detailsFragment;
+
+    public SectionsPagerAdapter(FragmentManager fm, HomeScreenFragment hf, SettingFragment sf, DetailsFragment df) {
         super(fm);
+        homeScreenFragment = hf;
+        settingFragment = sf;
+        detailsFragment = df;
+
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment f;
         switch (position) {
             case 0:
-                f = SettingFragment.getInstance();
-                break;
-
-            case 1:
-                f = HomeScreenFragment.getInstance();
-                break;
+                return settingFragment;
 
             case 2:
-                f = DetailsFragment.getInstance();
-                break;
+                return detailsFragment;
 
+            case 1:
             default:
-                f = new HomeScreenFragment();
-                break;
+                return homeScreenFragment;
         }
-        return f;
     }
 
     @Override

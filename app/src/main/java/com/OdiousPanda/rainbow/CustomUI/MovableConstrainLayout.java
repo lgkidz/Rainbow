@@ -10,10 +10,10 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class MovableConstrainLayout extends ConstraintLayout implements View.OnTouchListener {
+    public static final int SNAP_DURATION = 150;
     private float downRawY;
     private float dY;
     private OnPositionChangedCallback callback;
-    public static final int SNAP_DURATION = 150;
 
     public MovableConstrainLayout(Context context) {
         super(context);
@@ -34,7 +34,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
         setOnTouchListener(this);
     }
 
-    public void setCallback(OnPositionChangedCallback callback){
+    public void setCallback(OnPositionChangedCallback callback) {
         this.callback = callback;
     }
 
@@ -70,7 +70,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
             Log.d("movable layout", "onTouch: " + upDY);
             float restY = (float) parentHeight / 2;
             if (Math.abs(upDY) < bottomBoundary / 2) {
-                if (upRawY > (float)parentHeight / 2 + bottomBoundary / 2) {
+                if (upRawY > (float) parentHeight / 2 + bottomBoundary / 2) {
                     restY = parentHeight - bottomBoundary - layoutParams.bottomMargin;
                 }
             } else {
@@ -89,7 +89,7 @@ public class MovableConstrainLayout extends ConstraintLayout implements View.OnT
         return super.onTouchEvent(motionEvent);
     }
 
-    public interface OnPositionChangedCallback{
+    public interface OnPositionChangedCallback {
         void onMoved(float y);
     }
 }

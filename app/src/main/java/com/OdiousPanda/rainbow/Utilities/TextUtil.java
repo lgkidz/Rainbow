@@ -77,14 +77,14 @@ public class TextUtil {
         return lat + "," + lon;
     }
 
-    static String getNotificationText(Context context,float temp, String summary, String precipitationType, float precipitationProb){
+    static String getNotificationText(Context context, float temp, String summary, String precipitationType, float precipitationProb) {
         String notificationText = summary;
         String precipitationProbText = (int) (100 * precipitationProb) + "%";
         String additionalComment;
         String precipitationText = " There will be ";
-        if(precipitationType!= null){
+        if (precipitationType != null) {
             precipitationText += precipitationProbText + " chance of " + precipitationType + ".";
-            if(precipitationType.equals("rain")){
+            if (precipitationType.equals("rain")) {
                 precipitationText += precipitationProb < 0.5 ? "" : " Bring an umbrella, or a raincoat.";
             }
         } else {

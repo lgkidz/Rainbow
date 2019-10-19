@@ -20,7 +20,6 @@ public class PreferencesUtil {
     private static final String BACKGROUND_SETTING = "backgroundType";
     // Shared preferences file name
     private static final String PREF_NAME = "RainbowPreferencesName";
-    private static final String IS_NOT_FIRST_TIME_LAUNCH = "IsAppFirstTimeLaunch";
     private static final String WIDGET_ACTION_TAP = "widgetTap";
     private static final String DEFAULT_TEMPERATURE_UNIT = "°C";
     private static final String DEFAULT_DISTANCE_UNIT = "km";
@@ -28,21 +27,20 @@ public class PreferencesUtil {
     private static final String DEFAULT_PRESSURE_UNIT = "psi";
     private static final String DEFAULT_BACKGROUND_SETTING = BACKGROUND_COLOR;
     private static final boolean DEFAULT_EXPLICIT_SETTING = true;
-    private static final boolean DEFAULT_NOT_FIRST_TIME_LAUNCH_VALUE = false;
     private static final String NOTIFICATION_SETTING = "notification";
     private static final String NOTIFICATION_TIME = "notificationTime";
     private static final String NOTIFICATION_TIME_DEFAULT = "8:00";
     private static final String APP_OPEN_COUNT = "App_open_count";
 
-    public static int getAppOpenCount(Context context){
+    public static int getAppOpenCount(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return pref.getInt(APP_OPEN_COUNT, 0);
     }
 
-    public static void increaseAppOpenCount(Context context){
+    public static void increaseAppOpenCount(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt(APP_OPEN_COUNT,(getAppOpenCount(context)+1));
+        editor.putInt(APP_OPEN_COUNT, (getAppOpenCount(context) + 1));
         editor.apply();
     }
 
@@ -87,18 +85,6 @@ public class PreferencesUtil {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(BACKGROUND_SETTING, value);
-        editor.apply();
-    }
-
-    public static boolean isNotFirstTimeLaunch(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        return pref.getBoolean(IS_NOT_FIRST_TIME_LAUNCH, DEFAULT_NOT_FIRST_TIME_LAUNCH_VALUE);
-    }
-
-    public static void setNotFirstTimeLaunch(Context context, boolean notFirstTime) {
-        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(IS_NOT_FIRST_TIME_LAUNCH, notFirstTime);
         editor.apply();
     }
 

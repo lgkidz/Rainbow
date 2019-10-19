@@ -88,13 +88,13 @@ public class NormalWidget extends AppWidgetProvider {
         remoteViews = views;
         aWm = appWidgetManager;
 
-        if (PreferencesUtil.isNotFirstTimeLaunch(context)) {
+        if (PreferencesUtil.getAppOpenCount(context) > 0) {
             Intent tapIntent = new Intent(context, NormalWidget.class);
             tapIntent.setAction(ACTION_TAP);
             PendingIntent tapPending = PendingIntent.getBroadcast(context, 0, tapIntent, 0);
             remoteViews.setOnClickPendingIntent(R.id.widget_quote_layout, tapPending);
             Intent toDetailsScreenIntent = new Intent(context, MainActivity.class);
-            toDetailsScreenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            toDetailsScreenIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, widgetId, toDetailsScreenIntent, 0);
             remoteViews.setOnClickPendingIntent(R.id.layout_data, pendingIntent);
             PreferencesUtil.setWidgetTapCount(context, 0);
@@ -113,7 +113,7 @@ public class NormalWidget extends AppWidgetProvider {
                 break;
             }
             case RF_BITMAP:
-            case LOCATION_BITMAP:{
+            case LOCATION_BITMAP: {
                 paint.setTextSize(context.getResources().getDimension(R.dimen.text_view_18sp));
                 break;
             }
@@ -188,23 +188,6 @@ public class NormalWidget extends AppWidgetProvider {
                 if (location == null) {
                     return;
                 }
-                try {
-                    Geocoder geo = new Geocoder(context, Locale.getDefault());
-                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    if (!addresses.isEmpty()) {
-                        String address = addresses.get(0).getAddressLine(0);
-                        String[] addressPieces = address.split(",");
-                        String locationName;
-                        if (addressPieces.length >= 3) {
-                            locationName = addressPieces[addressPieces.length - 3].trim();
-                        } else {
-                            locationName = addressPieces[addressPieces.length - 2].trim();
-                        }
-                        remoteViews.setImageViewBitmap(R.id.widget_location, textAsBitmap(context, locationName, LOCATION_BITMAP));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
                 call.getWeather(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude())).enqueue(new Callback<Weather>() {
                     @Override
@@ -229,6 +212,25 @@ public class NormalWidget extends AppWidgetProvider {
                         aWm.updateAppWidget(widgetId, remoteViews);
                     }
                 });
+
+                try {
+                    Geocoder geo = new Geocoder(context, Locale.getDefault());
+                    List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if (!addresses.isEmpty()) {
+                        String address = addresses.get(0).getAddressLine(0);
+                        String[] addressPieces = address.split(",");
+                        String locationName;
+                        if (addressPieces.length >= 3) {
+                            locationName = addressPieces[addressPieces.length - 3].trim();
+                        } else {
+                            locationName = addressPieces[addressPieces.length - 2].trim();
+                        }
+                        remoteViews.setImageViewBitmap(R.id.widget_location, textAsBitmap(context, locationName, LOCATION_BITMAP));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    remoteViews.setImageViewBitmap(R.id.widget_location, textAsBitmap(context, context.getString(R.string.currentLocation), LOCATION_BITMAP));
+                }
             }
         });
 
@@ -267,7 +269,7 @@ public class NormalWidget extends AppWidgetProvider {
             return;
         }
         boolean isExplicit = PreferencesUtil.isExplicit(context);
-        List<Quote> weatherQuotes = QuoteGenerator.filterQuotes(weather,quotes,isExplicit,true);
+        List<Quote> weatherQuotes = QuoteGenerator.filterQuotes(weather, quotes, isExplicit, true);
         quote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
         if (quote.getMain() == null && quote.getSub() == null) {
             quote.setDefaultQuote();

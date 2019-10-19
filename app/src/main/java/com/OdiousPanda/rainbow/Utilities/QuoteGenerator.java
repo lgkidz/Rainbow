@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 
 import com.OdiousPanda.rainbow.DataModel.Quote;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
-import com.OdiousPanda.rainbow.MainFragments.HomeScreenFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,48 +24,13 @@ public class QuoteGenerator {
     private List<Quote> quotes = new ArrayList<>();
     private Context mContext;
     private Weather weather;
-
+    private UpdateScreenQuoteListener listener;
 
     public QuoteGenerator(Context context) {
         this.mContext = context;
     }
 
-    private void queryQuotes() {
-        db.collection("quotes")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                Quote q = document.toObject(Quote.class);
-                                quotes.add(q);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-
-                        updateHomeScreenQuote(weather);
-                    }
-                });
-    }
-
-    public void updateHomeScreenQuote(Weather weather) {
-        this.weather = weather;
-        if (quotes.size() == 0) {
-            queryQuotes();
-            return;
-        }
-        boolean isExplicit = PreferencesUtil.isExplicit(mContext);
-        List<Quote> weatherQuotes = filterQuotes(weather, quotes, isExplicit,false);
-        Quote randomQuote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
-        if (randomQuote.getMain() == null && randomQuote.getSub() == null) {
-            randomQuote.setDefaultQuote();
-        }
-        HomeScreenFragment.getInstance().updateQuote(randomQuote);
-    }
-
-    public static List<Quote> filterQuotes(Weather weather,List<Quote> allQuotes, boolean isExplicit, boolean forWidget) {
+    public static List<Quote> filterQuotes(Weather weather, List<Quote> allQuotes, boolean isExplicit, boolean forWidget) {
         List<Quote> weatherQuotes = new ArrayList<>();
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
@@ -98,7 +62,7 @@ public class QuoteGenerator {
         for (Quote q : allQuotes) {
             // att * means quotes unrelated to weather (jokes / inspiring quotes,...)
             if (q.getAtt().contains("*")) {
-                if(!forWidget && q.getAtt().contains("widget")){
+                if (!forWidget && q.getAtt().contains("widget")) {
                     continue;
                 } else {
                     if (isExplicit) {
@@ -126,11 +90,11 @@ public class QuoteGenerator {
     }
 
     private static String censorOffensiveWords(String text) {
-        String[] alternativesForFucking = {"frickin’ ","freakin’ ","freaking ","flippin’ ","flipping ","fricking ", ""};
-        String[] alternativesForDamn = {"darn","dang"};
-        String[] alternativesForShit = {"crap","crud"};
+        String[] alternativesForFucking = {"frickin’ ", "freakin’ ", "freaking ", "flippin’ ", "flipping ", "fricking ", ""};
+        String[] alternativesForDamn = {"darn", "dang"};
+        String[] alternativesForShit = {"crap", "crud"};
         String[] alternativesForHell = {"heck"};
-        String[] alternativesForAss = {"arse ","butt ", "bum "};
+        String[] alternativesForAss = {"arse ", "butt ", "bum "};
         text = text.toLowerCase().replace("damn", alternativesForDamn[new Random().nextInt(alternativesForDamn.length)]);
         text = text.replace("shit", alternativesForShit[new Random().nextInt(alternativesForShit.length)]);
         text = text.replace("hell", alternativesForHell[new Random().nextInt(alternativesForHell.length)]);
@@ -146,7 +110,7 @@ public class QuoteGenerator {
     private static String capitalizeSentence(String sentence) {
         StringBuilder result = new StringBuilder();
         boolean capitalize = true;
-        for(char c : sentence.toCharArray()) {
+        for (char c : sentence.toCharArray()) {
             if (capitalize) {
                 result.append(Character.toUpperCase(c));
                 if (!Character.isWhitespace(c) && c != '.') {
@@ -160,6 +124,49 @@ public class QuoteGenerator {
             }
         }
         return result.toString();
+    }
+
+    public void setUpdateScreenQuoteListener(UpdateScreenQuoteListener listener) {
+        this.listener = listener;
+    }
+
+    private void queryQuotes() {
+        db.collection("quotes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Quote q = document.toObject(Quote.class);
+                                quotes.add(q);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+                        updateHomeScreenQuote(weather);
+                    }
+                });
+    }
+
+    public void updateHomeScreenQuote(Weather weather) {
+        this.weather = weather;
+        if (quotes.size() == 0) {
+            queryQuotes();
+            return;
+        }
+        boolean isExplicit = PreferencesUtil.isExplicit(mContext);
+        List<Quote> weatherQuotes = filterQuotes(weather, quotes, isExplicit, false);
+        Quote randomQuote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
+        if (randomQuote.getMain() == null && randomQuote.getSub() == null) {
+            randomQuote.setDefaultQuote();
+        }
+        listener.updateScreenQuote(randomQuote);
+    }
+
+    public interface UpdateScreenQuoteListener {
+        void updateScreenQuote(Quote randomQuote);
     }
 
 }

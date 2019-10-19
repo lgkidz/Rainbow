@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +35,8 @@ import com.OdiousPanda.rainbow.DataModel.Nearby.NearbySearch;
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.ClothesIconUtil;
-import com.OdiousPanda.rainbow.Utilities.FoodIconUtil;
 import com.OdiousPanda.rainbow.Utilities.ColorUtil;
+import com.OdiousPanda.rainbow.Utilities.FoodIconUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
 import com.google.android.gms.ads.AdRequest;
@@ -53,7 +54,7 @@ import java.util.Random;
 public class DetailsFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static DetailsFragment instance;
-
+    public Boolean aqiMoreDeatailsShowing = false;
     private Weather currentWeather;
     private TextView tvSunTitle;
     private TextView tvRealFeel;
@@ -74,7 +75,6 @@ public class DetailsFragment extends Fragment {
     private SlideUp aqiMoreDetailSlideUp;
     private ConstraintLayout aqiMoreDetailsLayout;
     private ImageView btnCloseAqiMoreDetails;
-    public Boolean aqiMoreDeatailsShowing = false;
     private TextView tvCloudCover;
     private TextView tvVisibility;
 
@@ -100,12 +100,12 @@ public class DetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetailsFragment getInstance() {
-        if (instance == null) {
-            instance = new DetailsFragment();
-        }
-        return instance;
-    }
+//    public static DetailsFragment getInstance() {
+//        if (instance == null) {
+//            instance = new DetailsFragment();
+//        }
+//        return instance;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -217,12 +217,15 @@ public class DetailsFragment extends Fragment {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+
+        Log.d("weatherA", "DetailsFrag initViews: done");
+
         AdRequest adRequest = new AdRequest.Builder().build();
         AdView adView = v.findViewById(R.id.adView);
         adView.loadAd(adRequest);
     }
 
-    void updateUnit() {
+    public void updateUnit() {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         String currentSpeedUnit = PreferencesUtil.getSpeedUnit(getActivity());
         String currentPressureUnit = PreferencesUtil.getPressureUnit(getActivity());
@@ -405,10 +408,10 @@ public class DetailsFragment extends Fragment {
                     ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) aqiIndexIndicator.getLayoutParams();
                     float scaleWidth = (float) airQualityIndexScale.getWidth();
                     float leftMargin = aqi / 500 * scaleWidth;
-                    if(aqi > 500){
+                    if (aqi > 500) {
                         leftMargin = scaleWidth;
                     }
-                    params.leftMargin = (int) leftMargin - aqiIndexIndicator.getWidth()/2;
+                    params.leftMargin = (int) leftMargin - aqiIndexIndicator.getWidth() / 2;
 
                     aqiIndexIndicator.setLayoutParams(params);
                 } catch (Exception e) {
@@ -419,51 +422,51 @@ public class DetailsFragment extends Fragment {
         });
     }
 
-    private void updateAqiUI(float aqi){
+    private void updateAqiUI(float aqi) {
         Context context = getActivity();
         assert context != null;
         GradientDrawable aqiDesBackgroundDrawable = (GradientDrawable) getResources().getDrawable(R.drawable.aqi_des_background);
         if (aqi <= 50) {
-            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_good));
+            aqiDesBackgroundDrawable.setStroke((int) getResources().getDimension(R.dimen.aqi_stroke_width), ContextCompat.getColor(context, R.color.aqi_good));
             aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
             tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_good));
-            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_good)));
-            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_good));
+            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context, R.color.aqi_good)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_good));
         } else if (aqi <= 100) {
-            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_moderate));
+            aqiDesBackgroundDrawable.setStroke((int) getResources().getDimension(R.dimen.aqi_stroke_width), ContextCompat.getColor(context, R.color.aqi_moderate));
             aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
             tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_moderate));
-            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_moderate)));
-            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_moderate));
+            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context, R.color.aqi_moderate)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_moderate));
         } else if (aqi <= 150) {
-            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive));
+            aqiDesBackgroundDrawable.setStroke((int) getResources().getDimension(R.dimen.aqi_stroke_width), ContextCompat.getColor(context, R.color.aqi_unhealthy_sensitive));
             aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
             tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_unhealthy_sensitive));
-            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive)));
-            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy_sensitive));
+            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context, R.color.aqi_unhealthy_sensitive)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_unhealthy_sensitive));
         } else if (aqi <= 200) {
-            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_unhealthy));
+            aqiDesBackgroundDrawable.setStroke((int) getResources().getDimension(R.dimen.aqi_stroke_width), ContextCompat.getColor(context, R.color.aqi_unhealthy));
             aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
             tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_unhealthy));
-            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_unhealthy)));
-            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_unhealthy));
+            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context, R.color.aqi_unhealthy)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_unhealthy));
         } else if (aqi <= 300) {
-            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_very_unhealthy));
+            aqiDesBackgroundDrawable.setStroke((int) getResources().getDimension(R.dimen.aqi_stroke_width), ContextCompat.getColor(context, R.color.aqi_very_unhealthy));
             aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
             tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_very_unhealthy));
-            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_very_unhealthy)));
-            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_very_unhealthy));
+            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context, R.color.aqi_very_unhealthy)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_very_unhealthy));
         } else {
-            aqiDesBackgroundDrawable.setStroke((int)getResources().getDimension(R.dimen.aqi_stroke_width),ContextCompat.getColor(context,R.color.aqi_hazardous));
+            aqiDesBackgroundDrawable.setStroke((int) getResources().getDimension(R.dimen.aqi_stroke_width), ContextCompat.getColor(context, R.color.aqi_hazardous));
             aqiDescriptionLayout.setBackground(aqiDesBackgroundDrawable);
             tvDetailAqiIndex.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.aqi_hazardous));
-            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context,R.color.aqi_hazardous)));
-            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context,R.color.aqi_hazardous));
+            tvDetailAqiIndex.setTextColor(ColorUtil.blackOrWhiteOf(ContextCompat.getColor(context, R.color.aqi_hazardous)));
+            tvAqiMoreIndex.setTextColor(ContextCompat.getColor(context, R.color.aqi_hazardous));
         }
     }
 
-    private void updateAqiDescription(float aqi){
-        if(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()))){
+    private void updateAqiDescription(float aqi) {
+        if (PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()))) {
             tvAqiProvidedBy.setVisibility(View.VISIBLE);
             if (aqi <= 50) {
                 tvDetailAqiLevel.setText(getString(R.string.aqi_good));

@@ -86,7 +86,7 @@ public class NotificationUtil {
                             String summary = today.getSummary();
                             String iconName = today.getIcon().replace("-", "_");
                             int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_b", null, context.getPackageName());
-                            String contentText = TextUtil.getNotificationText(context,temp, summary,today.getPrecipType(), today.getPrecipProbability());
+                            String contentText = TextUtil.getNotificationText(context, temp, summary, today.getPrecipType(), today.getPrecipProbability());
                             String contentTitle = tempString + " - " + currentSummary;
                             Intent notificationIntent = new Intent(context, MainActivity.class);
                             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

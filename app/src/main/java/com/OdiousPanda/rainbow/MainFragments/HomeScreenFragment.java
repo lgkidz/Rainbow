@@ -38,14 +38,14 @@ import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
 import com.OdiousPanda.rainbow.Utilities.ColorUtil;
 import com.OdiousPanda.rainbow.Utilities.Constants;
-import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.PreferencesUtil;
 import com.OdiousPanda.rainbow.Utilities.QuoteGenerator;
+import com.OdiousPanda.rainbow.Utilities.TextUtil;
 import com.OdiousPanda.rainbow.Utilities.UnitConverter;
 
 import java.util.Objects;
 
-public class HomeScreenFragment extends Fragment implements MovableConstrainLayout.OnPositionChangedCallback {
+public class HomeScreenFragment extends Fragment implements MovableConstrainLayout.OnPositionChangedCallback, QuoteGenerator.UpdateScreenQuoteListener {
 
     @SuppressLint("StaticFieldLeak")
     private static HomeScreenFragment instance;
@@ -93,13 +93,13 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         // Required empty public constructor
     }
 
-    public static HomeScreenFragment getInstance() {
-        if (instance == null) {
-            instance = new HomeScreenFragment();
-        }
-
-        return instance;
-    }
+//    public static HomeScreenFragment getInstance() {
+//        if (instance == null) {
+//            instance = new HomeScreenFragment();
+//        }
+//
+//        return instance;
+//    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -107,6 +107,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         View v = inflater.inflate(R.layout.fragment_home_screen, container, false);
         initViews(v);
         quoteGenerator = new QuoteGenerator(getActivity());
+        quoteGenerator.setUpdateScreenQuoteListener(this);
         return v;
     }
 
@@ -205,7 +206,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         ConstraintLayout.LayoutParams shareParam = (ConstraintLayout.LayoutParams) btnShare.getLayoutParams();
         if (!PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_COLOR)) {
             iconInfo.setVisibility(View.VISIBLE);
-            shareParam.setMarginEnd( (int) getResources().getDimension(R.dimen.margin_16));
+            shareParam.setMarginEnd((int) getResources().getDimension(R.dimen.margin_16));
             btnShare.setLayoutParams(shareParam);
         } else {
             iconInfo.setVisibility(View.GONE);
@@ -222,7 +223,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         }
     }
 
-    void updateUnit() {
+    public void updateUnit() {
         String currentTempUnit = PreferencesUtil.getTemperatureUnit(Objects.requireNonNull(getActivity()));
         tvTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getCurrently().getTemperature(), currentTempUnit));
         tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(currentWeather.getDaily().getData().get(0).getTemperatureLow(), currentTempUnit));
@@ -391,7 +392,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         }
     }
 
-    void updateExplicitSetting() {
+    public void updateExplicitSetting() {
         quoteGenerator.updateHomeScreenQuote(currentWeather);
     }
 
@@ -399,7 +400,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         this.callback = callback;
     }
 
-    public void updateQuote(Quote quote) {
+    private void updateQuote(Quote quote) {
         tvBigText.setText(quote.getMain());
         tvSmallText.setText(quote.getSub());
     }
@@ -435,24 +436,24 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         icCamera.setImageResource(getCameraIcon(cameraMaker));
     }
 
-    private int getCameraIcon(String maker){
-        if (maker.equals("")){
+    private int getCameraIcon(String maker) {
+        if (maker.equals("")) {
             return R.drawable.ic_camera;
         }
 
-        for(String brand: Constants.DSLR_MAKERS){
-            if(maker.toLowerCase().contains(brand.toLowerCase())){
+        for (String brand : Constants.DSLR_MAKERS) {
+            if (maker.toLowerCase().contains(brand.toLowerCase())) {
                 return R.drawable.ic_camera;
             }
         }
 
-        for(String brand: Constants.DRONE_MAKERS){
-            if(maker.toLowerCase().contains(brand.toLowerCase())){
+        for (String brand : Constants.DRONE_MAKERS) {
+            if (maker.toLowerCase().contains(brand.toLowerCase())) {
                 return R.drawable.ic_drone_b;
             }
         }
 
-        if(maker.equalsIgnoreCase(Constants.APPLE_CAMERA)){
+        if (maker.equalsIgnoreCase(Constants.APPLE_CAMERA)) {
             return R.drawable.ic_iphone_b;
         }
         return R.drawable.ic_android_phone_b;
@@ -495,12 +496,12 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         photoDetailsShowing = false;
     }
 
-    public void hideShareIcon(){
+    public void hideShareIcon() {
         btnShare.setVisibility(View.INVISIBLE);
         iconInfo.setVisibility(View.INVISIBLE);
     }
 
-    public void showShareIcon(){
+    public void showShareIcon() {
         btnShare.setVisibility(View.VISIBLE);
         if (!PreferencesUtil.getBackgroundSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.BACKGROUND_COLOR)) {
             iconInfo.setVisibility(View.VISIBLE);
@@ -513,11 +514,16 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     public void onMoved(float y) {
         float margin = getResources().getDimension(R.dimen.margin_8);
         tvSmallText.animate()
-                .y(y-margin-tvSmallText.getHeight())
+                .y(y - margin - tvSmallText.getHeight())
                 .setInterpolator(new DecelerateInterpolator())
                 .setDuration(2 * MovableConstrainLayout.SNAP_DURATION)
                 .start();
 
+    }
+
+    @Override
+    public void updateScreenQuote(Quote randomQuote) {
+        updateQuote(randomQuote);
     }
 
     public interface OnLayoutRefreshListener {
