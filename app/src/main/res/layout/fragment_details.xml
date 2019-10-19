@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pureWhite"
-    tools:context=".MainFragments.DetailsFragment">
+    tools:context=".MainFragments.DetailsFragment"
+    tools:ignore="SpUsage">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

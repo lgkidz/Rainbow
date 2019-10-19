@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Rainbow</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="temp_unit_setting">temp_unit_setting</string>
     <string name="temp_unit_f">F</string>
     <string name="temp_unit_c">C</string>
@@ -27,7 +26,6 @@
     <string name="app_need_permissions_to_run">This app cannot run without the permissions to use this feature</string>
     <string name="exit">Exit</string>
     <string name="icon_content_description">icon</string>
-    <string name="widget_update_time_pref">widgetUpdateTime</string>
 
     <string name="pref_temp">tempUnit</string>
     <string name="pref_distance">distanceUnit</string>
@@ -47,7 +45,7 @@
     <string name="temp_setting_degree_f">°F</string>
     <string name="temp_setting_degree_c">°C</string>
     <string name="temp_setting_degree_k">°K</string>
-    <string name="your_depression">your depression</string>
+    <string name="your_depression">Your depression</string>
     <string name="depression_unit">depressions</string>
     <string name="mmhg">mmHg</string>
     <string name="psi">psi</string>
@@ -65,15 +63,11 @@
     <string name="humidity_title">Humidity</string>
     <string name="visibility_title">Visibility</string>
     <string name="pressure_title">Pressure</string>
-    <string name="forecast_title">The next 7 days</string>
     <string name="air_quality_index_title">Air Quality Index</string>
     <string name="pressure_title_alt">Depression</string>
-    <string name="configure">Configure</string>
-    <string name="add_widget">Add widget</string>
     <string name="about_dialog_heading">About me</string>
     <string name="about_dialog_intro">Hi! I\'m Rainbow, a super friendly weather app. I was born with a mission of bringing smiles and useful weather information to your daily life, definitely not because someone has too much free time on his hands.</string>
     <string name="about_dialog_outro">If you find me interesting, go ahead and give me a 5-star on PlayStore. Love ya!</string>
-    <string name="about_dialog_close_text">Nice!</string>
     <string name="loading_text">Calling my cloud buddy…</string>
     <string name="no_connection_tv1">Cloud not found</string>
     <string name="no_connection_tv2">Yeah clear sky is cool but have you tried connecting to the internet?</string>
@@ -127,10 +121,9 @@
     <string name="wind_south_west" translatable="true">Southwest</string>
     <string name="wind_west" translatable="true">West</string>
     <string name="the_next_hours_title">The next hours</string>
-    <string name="default_location">I have no idea where are you</string>
     <string name="location_list_title">Locations</string>
     <string name="quote_placeholder">…</string>
-    <string name="depression_level_title">Depression </string>
+    <string name="depression_level_title">Depression</string>
     <string name="air_quality_dialog_description">Here are some scientific information</string>
     <string name="provided_by_aqi_cn_org">Provided by aqicn.org</string>
     <string name="explicit_setting_title">Are you okay with offensive words?</string>
@@ -145,13 +138,11 @@
     <string name="uv_summary_11_above">Extreme</string>
 
     <string name="what_to_eat_title">Any places to eat nearby?</string>
-    <string name="food_to_eat_placeholder">Rainbow said:</string>
-    <string name="details_info_title">Other useful information</string>
     <string name="cloud_cover_title">Cloud</string>
     <string name="why_this_pack">Why this pack?</string>
     <string name="cause_it_s">Because it\'s</string>
     <string name="random_color">Colors</string>
-    <string name="picture">Weather photo</string>
+    <string name="weatherPhoto">Weather photo</string>
     <string name="background_setting_title">Home Background</string>
     <string name="random_picture">Random photo</string>
     <string name="photo_details_title">Photo details</string>
@@ -175,15 +166,13 @@
     <string name="depress_val_1">Depressed</string>
     <string name="depress_val_2">Crippling</string>
     <string name="depress_val_3">A little</string>
-    <string name="depress_val_4">Enough to die</string>
     <string name="depress_val_5">Oof</string>
     <string name="depress_val_6">Somewhat</string>
     <string name="depress_val_7">Not at all</string>
     <string name="depress_val_8">Aaargghhh!!</string>
     <string name="depress_val_9">42?</string>
     <string name="depress_val_10">Unbearable</string>
-    <string name="depress_val_11">Nein</string>
-    <string name="depress_val_12">Chuck Norris</string>
+    <string name="depress_val_11">Neh</string>
     <string name="powered_by_dark_sky">Powered by Dark Sky</string>
     <string name="powered_dark_sky_link">https://darksky.net/poweredby/</string>
     <string name="rainbow_need_permission">Rainbow needs this permission for this feature to work.</string>
@@ -199,7 +188,6 @@
         <item>@string/depress_val_1</item>
         <item>@string/depress_val_2</item>
         <item>@string/depress_val_3</item>
-        <item>@string/depress_val_4</item>
         <item>@string/depress_val_5</item>
         <item>@string/depress_val_6</item>
         <item>@string/depress_val_7</item>
@@ -207,7 +195,6 @@
         <item>@string/depress_val_9</item>
         <item>@string/depress_val_10</item>
         <item>@string/depress_val_11</item>
-        <item>@string/depress_val_12</item>
     </string-array>
     <string-array name="random_notification_comment">
         <item>Have a good day!</item>

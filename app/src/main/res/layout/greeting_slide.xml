@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/bg_screen1"
     android:orientation="vertical"
-    android:weightSum="3">
+    android:weightSum="3"
+    tools:ignore="SpUsage">
 
     <ImageView
         android:id="@+id/imageView"

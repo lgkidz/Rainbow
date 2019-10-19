@@ -7,7 +7,8 @@
     android:background="@color/pureWhite"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:weightSum="2">
+    android:weightSum="2"
+    tools:ignore="SpUsage">
 
     <LinearLayout
         android:layout_width="0dp"

@@ -7,7 +7,8 @@
     android:layout_height="@dimen/hourly_forecast_item_height"
     android:layout_margin="@dimen/margin_4"
     android:orientation="vertical"
-    android:padding="@dimen/margin_8">
+    android:padding="@dimen/margin_8"
+    tools:ignore="SpUsage">
 
     <TextView
         android:id="@+id/hourlyTemp"

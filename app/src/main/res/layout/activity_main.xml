@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/pureWhite"
     android:fitsSystemWindows="true"
-    tools:context=".Activities.MainActivity">
+    tools:context=".Activities.MainActivity"
+    tools:ignore="SpUsage">
 
     <ImageView
         android:id="@+id/background"

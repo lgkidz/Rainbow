@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pureWhite"
-    android:id="@+id/aqiMoreLayout">
+    android:id="@+id/aqiMoreLayout"
+    tools:ignore="SpUsage">
 
     <TextView
         android:id="@+id/aqiMoreTitle"
