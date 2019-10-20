@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,8 @@ public class WelcomeFragment3 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.welcome_slide_video, container, false);
+        TextView description = v.findViewById(R.id.tv_welcome_description);
+        description.setText(R.string.slide_3_desc);
         VideoView videoView = v.findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://" + Objects.requireNonNull(getActivity()).getPackageName() + "/" + R.raw.slide3);
         videoView.setVideoURI(uri);

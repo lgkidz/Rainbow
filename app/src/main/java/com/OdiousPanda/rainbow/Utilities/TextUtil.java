@@ -22,11 +22,11 @@ public class TextUtil {
     private static final String referralString = "?utm_source=rainbow&utm_medium=referral";
 
     public static SpannableStringBuilder getReferralHtml(Context context, String profileUrl, String profileName) {
-        String html = "Photo by <a href='";
+        String html = context.getString(R.string.photo_by) + " <a href='";
         html += profileUrl + referralString;
         html += "'>";
         html += profileName;
-        html += "</a> on <a href='";
+        html += "</a> " + context.getString(R.string.on) + " <a href='";
         html += APIConstants.UNSPLASH_HOME_URL + referralString;
         html += "'> Unsplash</a>";
         CharSequence sequence = Html.fromHtml(html);

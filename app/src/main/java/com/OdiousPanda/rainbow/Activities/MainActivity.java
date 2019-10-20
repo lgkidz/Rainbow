@@ -455,9 +455,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.d(TAG, "airlocation: " + e.getMessage());
-                            tempCoordinate.setName(getString(R.string.currentLocation));
+                            tempCoordinate.setName(getResources().getString(R.string.currentLocation));
                             weatherViewModel.update(tempCoordinate);
-                            homeScreenFragment.updateCurrentLocationName(getString(R.string.currentLocation));
+                            homeScreenFragment.updateCurrentLocationName(getResources().getString(R.string.currentLocation));
                         }
                     }
                 }.start();
@@ -653,11 +653,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
             shareIntent.setType("image/jpeg");
-            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_this_to)));
+            startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_this_to)));
         } catch (Throwable e) {
             e.printStackTrace();
 
-            Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
             Log.d(TAG, "share: " + e.getMessage());
         }
 
@@ -694,10 +694,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void showNeededPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.message_need_permission));
-        builder.setMessage(getString(R.string.rainbow_need_permission));
+        builder.setTitle(getResources().getString(R.string.message_need_permission));
+        builder.setMessage(getResources().getString(R.string.rainbow_need_permission));
         builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.okay), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 takeScreenShot();
@@ -708,10 +708,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     private void showSettingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.message_need_permission));
-        builder.setMessage(getString(R.string.message_grant_permission));
+        builder.setTitle(getResources().getString(R.string.message_need_permission));
+        builder.setMessage(getResources().getString(R.string.message_grant_permission));
         builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.label_setting), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.label_setting), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -839,6 +839,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             detailsFragment.updateUnit();
         } else if (action.equals(Constants.ACTION_UPDATE_EXPLICIT)) {
             homeScreenFragment.updateExplicitSetting();
+
         }
     }
 }

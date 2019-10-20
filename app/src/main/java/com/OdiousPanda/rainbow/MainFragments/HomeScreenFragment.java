@@ -2,14 +2,12 @@ package com.OdiousPanda.rainbow.MainFragments;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -343,17 +341,17 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     private void updateUvData() {
         String uvSummary;
         if (currentWeather.getCurrently().getUvIndex() == 0) {
-            uvSummary = getString(R.string.uv_summary_0);
+            uvSummary = getResources().getString(R.string.uv_summary_0);
         } else if (currentWeather.getCurrently().getUvIndex() < 3) {
-            uvSummary = getString(R.string.uv_summary_3);
+            uvSummary = getResources().getString(R.string.uv_summary_3);
         } else if (currentWeather.getCurrently().getUvIndex() < 6) {
-            uvSummary = getString(R.string.uv_summary_6);
+            uvSummary = getResources().getString(R.string.uv_summary_6);
         } else if (currentWeather.getCurrently().getUvIndex() < 8) {
-            uvSummary = getString(R.string.uv_summary_8);
+            uvSummary = getResources().getString(R.string.uv_summary_8);
         } else if (currentWeather.getCurrently().getUvIndex() < 11) {
-            uvSummary = getString(R.string.uv_summary_11);
+            uvSummary = getResources().getString(R.string.uv_summary_11);
         } else {
-            uvSummary = getString(R.string.uv_summary_11_above);
+            uvSummary = getResources().getString(R.string.uv_summary_11_above);
         }
         String uvValueText = String.valueOf(Math.round(currentWeather.getCurrently().getUvIndex()));
         tvUvIndex.setText(uvValueText);
@@ -395,11 +393,11 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     }
 
     public void updatePhotoDetail(Unsplash unsplash) {
-        String photoTitle = unsplash.description != null ? unsplash.description.substring(0, 1).toUpperCase() + unsplash.description.substring(1) : getString(R.string.photo_name_na);
+        String photoTitle = unsplash.description != null ? unsplash.description.substring(0, 1).toUpperCase() + unsplash.description.substring(1) : getResources().getString(R.string.photo_name_na);
         String userProfileLink = unsplash.user.links.html;
         String userName = unsplash.user.name;
         String cameraMaker = unsplash.exif.make;
-        String cameraModel = unsplash.exif.model != null ? unsplash.exif.model : getString(R.string.not_available);
+        String cameraModel = unsplash.exif.model != null ? unsplash.exif.model : getResources().getString(R.string.not_available);
         if (cameraMaker != null) {
             if (cameraMaker.toLowerCase().contains(Constants.DUPLICATE_NAME_CAMERA_MAKER[0].toLowerCase())
                     || cameraMaker.toLowerCase().contains(Constants.DUPLICATE_NAME_CAMERA_MAKER[1].toLowerCase())) {
@@ -409,14 +407,14 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
             cameraMaker = "";
         }
         String camera = cameraMaker + " " + cameraModel;
-        String aperture = unsplash.exif.aperture != null ? Constants.APERTURE_PREFIX + unsplash.exif.aperture : getString(R.string.not_available);
-        String focalLength = unsplash.exif.focalLength != null ? unsplash.exif.focalLength + Constants.FOCAL_LENGTH_SUFFIX : getString(R.string.not_available);
-        String iso = unsplash.exif.iso != null ? String.valueOf(unsplash.exif.iso) : getString(R.string.not_available);
-        String exposureTIme = unsplash.exif.exposureTime != null ? unsplash.exif.exposureTime : getString(R.string.not_available);
+        String aperture = unsplash.exif.aperture != null ? Constants.APERTURE_PREFIX + unsplash.exif.aperture : getResources().getString(R.string.not_available);
+        String focalLength = unsplash.exif.focalLength != null ? unsplash.exif.focalLength + Constants.FOCAL_LENGTH_SUFFIX : getResources().getString(R.string.not_available);
+        String iso = unsplash.exif.iso != null ? String.valueOf(unsplash.exif.iso) : getResources().getString(R.string.not_available);
+        String exposureTIme = unsplash.exif.exposureTime != null ? unsplash.exif.exposureTime : getResources().getString(R.string.not_available);
 
         tvPhotoTitle.setText(photoTitle);
 
-        tvPhotoBy.setText(TextUtil.getReferralHtml(getActivity(), userProfileLink, userName));
+        tvPhotoBy.setText(TextUtil.getReferralHtml(Objects.requireNonNull(getActivity()), userProfileLink, userName));
         tvCamera.setText(camera);
         tvAperture.setText(aperture);
         tvFocalLength.setText(focalLength);

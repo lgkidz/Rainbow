@@ -18,6 +18,7 @@ public class PreferencesUtil {
     public static final String NOTIFICATION_SETTING_ON = "on";
     public static final String NOTIFICATION_SETTING_OFF = "off";
     private static final String BACKGROUND_SETTING = "backgroundType";
+    private static final String LANGUAGE_SETTING = "language";
     // Shared preferences file name
     private static final String PREF_NAME = "RainbowPreferencesName";
     private static final String WIDGET_ACTION_TAP = "widgetTap";
@@ -31,6 +32,19 @@ public class PreferencesUtil {
     private static final String NOTIFICATION_TIME = "notificationTime";
     private static final String NOTIFICATION_TIME_DEFAULT = "8:00";
     private static final String APP_OPEN_COUNT = "App_open_count";
+    private static final String DEFAULT_LANGUAGE = "en";
+
+    public static String getLanguageSetting(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return pref.getString(LANGUAGE_SETTING, DEFAULT_LANGUAGE);
+    }
+
+    public static void setLanguageSetting(Context context, String value) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(LANGUAGE_SETTING, value);
+        editor.apply();
+    }
 
     public static int getAppOpenCount(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

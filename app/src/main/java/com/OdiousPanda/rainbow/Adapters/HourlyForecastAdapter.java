@@ -44,7 +44,7 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
         String iconName = mData.get(position).getIcon().replace("-", "_");
         int iconResourceId = mContext.getResources().getIdentifier("drawable/" + iconName + "_b", null, mContext.getPackageName());
         SimpleDateFormat df = new SimpleDateFormat("h a", Locale.getDefault());
-        String time = position == 0 ? mContext.getString(R.string.now) : df.format(mData.get(position).getTime() * 1000).toLowerCase();
+        String time = position == 0 ? mContext.getResources().getString(R.string.now) : df.format(mData.get(position).getTime() * 1000).toLowerCase();
         String precip = (int) (mData.get(position).getPrecipProbability() * 100) + "%";
         if ((int) (mData.get(position).getPrecipProbability() * 100) == 0) {
             holder.precipitation.setVisibility(View.INVISIBLE);

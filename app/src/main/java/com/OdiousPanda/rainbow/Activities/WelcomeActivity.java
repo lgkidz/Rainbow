@@ -57,10 +57,10 @@ public class WelcomeActivity extends AppCompatActivity {
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == 2) {
                 // last page. make button text to GOT IT
-                btnNext.setText(getString(R.string.start));
+                btnNext.setText(getResources().getString(R.string.start));
             } else {
                 // still pages are left
-                btnNext.setText(getString(R.string.next));
+                btnNext.setText(getResources().getString(R.string.next));
             }
         }
 
@@ -195,10 +195,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void showAskPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.askPermissionTitle));
-        builder.setMessage(getString(R.string.askPermissionDescription));
+        builder.setTitle(getResources().getString(R.string.askPermissionTitle));
+        builder.setMessage(getResources().getString(R.string.askPermissionDescription));
         builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.okay), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 requestPermission();
@@ -209,10 +209,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void showNeededPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.message_need_permission));
-        builder.setMessage(getString(R.string.app_need_permissions_to_run));
+        builder.setTitle(getResources().getString(R.string.message_need_permission));
+        builder.setMessage(getResources().getString(R.string.app_need_permissions_to_run));
         builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.exit), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.exit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
@@ -223,10 +223,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void showSettingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.message_need_permission));
-        builder.setMessage(getString(R.string.message_grant_permission));
+        builder.setTitle(getResources().getString(R.string.message_need_permission));
+        builder.setMessage(getResources().getString(R.string.message_grant_permission));
         builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.exit), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.exit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

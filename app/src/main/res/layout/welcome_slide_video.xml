@@ -31,11 +31,11 @@
         app:layout_constraintTop_toBottomOf="@id/guideline">
 
         <TextView
+            android:id="@+id/tv_welcome_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:gravity="center_horizontal"
-            android:text="@string/slide_2_desc"
             android:textColor="@color/pureWhite"
             android:textSize="@dimen/text_view_18dp"
             app:layout_constraintBottom_toBottomOf="parent" />

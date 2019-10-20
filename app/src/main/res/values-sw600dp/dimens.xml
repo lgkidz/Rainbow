@@ -134,8 +134,14 @@
   <dimen name="text_view_12dp">
     20.0dp
   </dimen>
+  <dimen name="text_view_13dp">
+    21.67dp
+  </dimen>
   <dimen name="text_view_14dp">
     23.33dp
+  </dimen>
+  <dimen name="text_view_15dp">
+    25.0dp
   </dimen>
   <dimen name="text_view_16dp">
     26.67dp

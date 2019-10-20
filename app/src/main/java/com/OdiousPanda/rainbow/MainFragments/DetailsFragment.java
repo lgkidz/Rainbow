@@ -197,7 +197,7 @@ public class DetailsFragment extends Fragment {
         tvPoweredByDarkSky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.powered_dark_sky_link)));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.powered_dark_sky_link)));
                 startActivity(browserIntent);
             }
         });
@@ -229,7 +229,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void updateSunData() {
-        tvSunTitle.setText(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity())) ? getString(R.string.sun) : getString(R.string.sun_not_explicit));
+        tvSunTitle.setText(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity())) ? getResources().getString(R.string.sun) : getResources().getString(R.string.sun_not_explicit));
         DateFormat df = DateFormat.getTimeInstance(java.text.DateFormat.SHORT);
         long sunriseTime = currentWeather.getDaily().getData().get(0).getSunriseTime() * 1000;
         long sunsetTime = currentWeather.getDaily().getData().get(0).getSunsetTime() * 1000;
@@ -302,7 +302,7 @@ public class DetailsFragment extends Fragment {
         icLower.setImageResource(clothesIconUtil.getLowerIcon());
         icFoot.setImageResource(clothesIconUtil.getFootIcon());
         icHand.setImageResource(clothesIconUtil.getHandIcon());
-        String cause = getString(R.string.cause_it_s) + clothesIconUtil.getCause();
+        String cause = getResources().getString(R.string.cause_it_s) + clothesIconUtil.getCause();
         tvWearCause.setText(cause);
     }
 
@@ -313,37 +313,37 @@ public class DetailsFragment extends Fragment {
         if (windSpeedMps > 0) {
             float windBearing = currentWeather.getCurrently().getWindBearing();
             if ((windBearing >= 0 && windBearing < 11.25) || (windBearing >= 348.75 && windBearing <= 360)) {
-                windDirectionText = getString(R.string.wind_north);
+                windDirectionText = getResources().getString(R.string.wind_north);
             } else if (windBearing >= 11.25 && windBearing < 33.75) {
-                windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_east);
+                windDirectionText = getResources().getString(R.string.wind_north) + " - " + getResources().getString(R.string.wind_north_east);
             } else if (windBearing >= 33.75 && windBearing < 56.25) {
-                windDirectionText = getString(R.string.wind_north_east);
+                windDirectionText = getResources().getString(R.string.wind_north_east);
             } else if (windBearing >= 56.25 && windBearing < 78.75) {
-                windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_north_east);
+                windDirectionText = getResources().getString(R.string.wind_east) + " - " + getResources().getString(R.string.wind_north_east);
             } else if (windBearing >= 78.75 && windBearing < 101.25) {
-                windDirectionText = getString(R.string.wind_east);
+                windDirectionText = getResources().getString(R.string.wind_east);
             } else if (windBearing >= 101.25 && windBearing < 123.75) {
-                windDirectionText = getString(R.string.wind_east) + " - " + getString(R.string.wind_south_east);
+                windDirectionText = getResources().getString(R.string.wind_east) + " - " + getResources().getString(R.string.wind_south_east);
             } else if (windBearing >= 123.75 && windBearing < 146.25) {
-                windDirectionText = getString(R.string.wind_south_east);
+                windDirectionText = getResources().getString(R.string.wind_south_east);
             } else if (windBearing >= 146.25 && windBearing < 168.75) {
-                windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_east);
+                windDirectionText = getResources().getString(R.string.wind_south) + " - " + getResources().getString(R.string.wind_south_east);
             } else if (windBearing >= 168.75 && windBearing < 191.25) {
-                windDirectionText = getString(R.string.wind_south);
+                windDirectionText = getResources().getString(R.string.wind_south);
             } else if (windBearing >= 191.25 && windBearing < 213.75) {
-                windDirectionText = getString(R.string.wind_south) + " - " + getString(R.string.wind_south_west);
+                windDirectionText = getResources().getString(R.string.wind_south) + " - " + getResources().getString(R.string.wind_south_west);
             } else if (windBearing >= 213.75 && windBearing < 236.25) {
-                windDirectionText = getString(R.string.wind_south_west);
+                windDirectionText = getResources().getString(R.string.wind_south_west);
             } else if (windBearing >= 236.25 && windBearing < 258.75) {
-                windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_south_west);
+                windDirectionText = getResources().getString(R.string.wind_west) + " - " + getResources().getString(R.string.wind_south_west);
             } else if (windBearing >= 258.75 && windBearing < 281.25) {
-                windDirectionText = getString(R.string.wind_west);
+                windDirectionText = getResources().getString(R.string.wind_west);
             } else if (windBearing >= 281.25 && windBearing < 303.75) {
-                windDirectionText = getString(R.string.wind_west) + " - " + getString(R.string.wind_north_west);
+                windDirectionText = getResources().getString(R.string.wind_west) + " - " + getResources().getString(R.string.wind_north_west);
             } else if (windBearing >= 303.75 && windBearing <= 326.25) {
-                windDirectionText = getString(R.string.wind_north_west);
+                windDirectionText = getResources().getString(R.string.wind_north_west);
             } else if (windBearing >= 326.25 && windBearing < 348.75) {
-                windDirectionText = getString(R.string.wind_north) + " - " + getString(R.string.wind_north_west);
+                windDirectionText = getResources().getString(R.string.wind_north) + " - " + getResources().getString(R.string.wind_north_west);
             }
         }
         tvWindDirection.setText(windDirectionText);
@@ -365,17 +365,17 @@ public class DetailsFragment extends Fragment {
 
     private void updateRealFeelTemperature(String currentTempUnit) {
         boolean isExplicit = PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()));
-        String placeholder = isExplicit ? getString(R.string.real_feel_title_explicit) : getString(R.string.real_feel_title);
+        String placeholder = isExplicit ? getResources().getString(R.string.real_feel_title_explicit) : getResources().getString(R.string.real_feel_title);
         String realfeel = placeholder + " " + UnitConverter.convertToTemperatureUnitClean(currentWeather.getCurrently().getApparentTemperature(), currentTempUnit);
         tvRealFeel.setText(realfeel);
     }
 
     private void updatePressureData(String currentPressureUnit) {
         tvPressure.setText(UnitConverter.convertToPressureUnit(getActivity(), currentWeather.getCurrently().getPressure(), currentPressureUnit));
-        if (currentPressureUnit.equals(getString(R.string.depression_unit))) {
-            tvPressureTitle.setText(getString(R.string.depression_level_title));
+        if (currentPressureUnit.equals(getResources().getString(R.string.depression_unit))) {
+            tvPressureTitle.setText(getResources().getString(R.string.depression_level_title));
         } else {
-            tvPressureTitle.setText(getString(R.string.pressure_title));
+            tvPressureTitle.setText(getResources().getString(R.string.pressure_title));
         }
     }
 
@@ -459,44 +459,44 @@ public class DetailsFragment extends Fragment {
         if (PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity()))) {
             tvAqiProvidedBy.setVisibility(View.VISIBLE);
             if (aqi <= 50) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_good));
-                tvDetailAqiDes.setText(getString(R.string.aqi_good_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_good));
+                tvDetailAqiDes.setText(getResources().getString(R.string.aqi_good_des));
             } else if (aqi <= 100) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_moderate));
-                tvDetailAqiDes.setText(getString(R.string.aqi_moderate_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_moderate));
+                tvDetailAqiDes.setText(getResources().getString(R.string.aqi_moderate_des));
             } else if (aqi <= 150) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
-                tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_sensitive_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_unhealthy_sensitive));
+                tvDetailAqiDes.setText(getResources().getString(R.string.aqi_unhealthy_sensitive_des));
             } else if (aqi <= 200) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy));
-                tvDetailAqiDes.setText(getString(R.string.aqi_unhealthy_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_unhealthy));
+                tvDetailAqiDes.setText(getResources().getString(R.string.aqi_unhealthy_des));
             } else if (aqi <= 300) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
-                tvDetailAqiDes.setText(getString(R.string.aqi_very_unhealthy_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_very_unhealthy));
+                tvDetailAqiDes.setText(getResources().getString(R.string.aqi_very_unhealthy_des));
             } else {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
-                tvDetailAqiDes.setText(getString(R.string.aqi_hazardous_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_hazardous));
+                tvDetailAqiDes.setText(getResources().getString(R.string.aqi_hazardous_des));
             }
         } else {
             tvAqiProvidedBy.setVisibility(View.INVISIBLE);
             if (aqi <= 50) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_good));
-                tvDetailAqiDes.setText(getString(R.string.r_aqi_good_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_good));
+                tvDetailAqiDes.setText(getResources().getString(R.string.r_aqi_good_des));
             } else if (aqi <= 100) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_moderate));
-                tvDetailAqiDes.setText(getString(R.string.r_aqi_moderate_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_moderate));
+                tvDetailAqiDes.setText(getResources().getString(R.string.r_aqi_moderate_des));
             } else if (aqi <= 150) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy_sensitive));
-                tvDetailAqiDes.setText(getString(R.string.r_aqi_unhealthy_sensitive_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_unhealthy_sensitive));
+                tvDetailAqiDes.setText(getResources().getString(R.string.r_aqi_unhealthy_sensitive_des));
             } else if (aqi <= 200) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_unhealthy));
-                tvDetailAqiDes.setText(getString(R.string.r_aqi_unhealthy_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_unhealthy));
+                tvDetailAqiDes.setText(getResources().getString(R.string.r_aqi_unhealthy_des));
             } else if (aqi <= 300) {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_very_unhealthy));
-                tvDetailAqiDes.setText(getString(R.string.r_aqi_very_unhealthy_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_very_unhealthy));
+                tvDetailAqiDes.setText(getResources().getString(R.string.r_aqi_very_unhealthy_des));
             } else {
-                tvDetailAqiLevel.setText(getString(R.string.aqi_hazardous));
-                tvDetailAqiDes.setText(getString(R.string.r_aqi_hazardous_des));
+                tvDetailAqiLevel.setText(getResources().getString(R.string.aqi_hazardous));
+                tvDetailAqiDes.setText(getResources().getString(R.string.r_aqi_hazardous_des));
             }
         }
 

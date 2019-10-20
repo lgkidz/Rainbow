@@ -68,7 +68,7 @@
                 android:layout_marginTop="@dimen/margin_2"
                 android:layout_marginEnd="@dimen/margin_24"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_16dp"
+                android:textSize="@dimen/text_view_15dp"
                 app:fontFamily="@font/montserrat" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="@dimen/margin_2"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_14dp"
+                android:textSize="@dimen/text_view_13dp"
                 app:fontFamily="@font/montserrat" />
         </LinearLayout>
 

@@ -65,7 +65,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private Button btnPictureRandom;
     private SlideUp aboutMeSlideUp;
     private Switch dailyNotificationSwitch;
-    private TextView dailyNotificationTime;
+    private TextView tvDailyNotificationTime;
     private TimePickerDialog timePickerDialog;
     private NotificationUtil notificationUtil;
     private int buttonTextColor = Color.argb(255, 255, 255, 255);
@@ -111,7 +111,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnPicture = v.findViewById(R.id.btn_picture);
         btnPictureRandom = v.findViewById(R.id.btn_picture_random);
         dailyNotificationSwitch = v.findViewById(R.id.daily_notification_switch);
-        dailyNotificationTime = v.findViewById(R.id.daily_notification_time);
+        tvDailyNotificationTime = v.findViewById(R.id.daily_notification_time);
 
         final ConstraintLayout aboutMeLayout = v.findViewById(R.id.about_me_layout);
         ImageView closeAboutMeBtn = v.findViewById(R.id.btn_close_about);
@@ -155,7 +155,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void rateThisApp() {
-        Snackbar.make(tvRate, "The developer is still working on this feature", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(tvRate, getString(R.string.feature_not_ready), Snackbar.LENGTH_SHORT).show();
     }
 
     private void showAboutMeDialog() {
@@ -182,10 +182,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void setupNotificationSetting() {
         if (PreferencesUtil.getNotificationSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.NOTIFICATION_SETTING_ON)) {
             dailyNotificationSwitch.setChecked(true);
-            dailyNotificationTime.setTextColor(Color.BLACK);
+            tvDailyNotificationTime.setTextColor(Color.BLACK);
         } else {
             dailyNotificationSwitch.setChecked(false);
-            dailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.halfSnappedBlack));
+            tvDailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.halfSnappedBlack));
         }
         notificationUtil = new NotificationUtil(getActivity());
         dailyNotificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -193,11 +193,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     PreferencesUtil.setNotificationSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.NOTIFICATION_SETTING_ON);
-                    dailyNotificationTime.setTextColor(Color.BLACK);
+                    tvDailyNotificationTime.setTextColor(Color.BLACK);
                     notificationUtil.startDailyNotification();
                 } else {
                     PreferencesUtil.setNotificationSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.NOTIFICATION_SETTING_OFF);
-                    dailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.halfSnappedBlack));
+                    tvDailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.halfSnappedBlack));
                     notificationUtil.cancelDailyNotification();
                 }
             }
@@ -206,20 +206,20 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         Calendar calendar = PreferencesUtil.getNotificationTime(getActivity());
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute = calendar.get(Calendar.MINUTE);
-        String timeString = getString(R.string.time_place_holder) + " " + TextUtil.getTimeStringPretty(hour, minute);
-        dailyNotificationTime.setText(timeString);
+        String timeString = getResources().getString(R.string.time_place_holder) + " " + TextUtil.getTimeStringPretty(hour, minute);
+        tvDailyNotificationTime.setText(timeString);
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int min) {
-                String time = getString(R.string.time_place_holder) + " " + TextUtil.getTimeStringPretty(hourOfDay, min);
-                dailyNotificationTime.setText(time);
+                String time = getResources().getString(R.string.time_place_holder) + " " + TextUtil.getTimeStringPretty(hourOfDay, min);
+                tvDailyNotificationTime.setText(time);
                 PreferencesUtil.setNotificationTime(Objects.requireNonNull(getActivity()), hourOfDay, min);
                 notificationUtil.cancelDailyNotification();
                 notificationUtil.startDailyNotification();
             }
         }, hour, minute, false);
 
-        dailyNotificationTime.setOnClickListener(new View.OnClickListener() {
+        tvDailyNotificationTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (PreferencesUtil.getNotificationSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.NOTIFICATION_SETTING_ON)) {
@@ -230,33 +230,33 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void colorThoseButtons() {
-        if (currentTempUnit.equals(getString(R.string.temp_setting_degree_c))) {
+        if (currentTempUnit.equals(getResources().getString(R.string.temp_setting_degree_c))) {
             updateTempButtonColor(btnC.getId());
-        } else if (currentTempUnit.equals(getString(R.string.temp_setting_degree_f))) {
+        } else if (currentTempUnit.equals(getResources().getString(R.string.temp_setting_degree_f))) {
             updateTempButtonColor(btnF.getId());
         } else {
             updateTempButtonColor(btnScientist.getId());
         }
 
-        if (currentDistanceUnit.equals(getString(R.string.km))) {
+        if (currentDistanceUnit.equals(getResources().getString(R.string.km))) {
             updateDistanceButtonColor(btnKm.getId());
-        } else if (currentDistanceUnit.equals(getString(R.string.mi))) {
+        } else if (currentDistanceUnit.equals(getResources().getString(R.string.mi))) {
             updateDistanceButtonColor(btnMi.getId());
         } else {
             updateDistanceButtonColor(btnBanana.getId());
         }
 
-        if (currentSpeedUnit.equals(getString(R.string.kmph))) {
+        if (currentSpeedUnit.equals(getResources().getString(R.string.kmph))) {
             updateSpeedButtonColor(btnKmph.getId());
-        } else if (currentSpeedUnit.equals(getString(R.string.miph))) {
+        } else if (currentSpeedUnit.equals(getResources().getString(R.string.miph))) {
             updateSpeedButtonColor(btnMiph.getId());
         } else {
             updateSpeedButtonColor(btnBananaph.getId());
         }
 
-        if (currentPressureUnit.equals(getString(R.string.psi))) {
+        if (currentPressureUnit.equals(getResources().getString(R.string.psi))) {
             updatePressureButtonColor(btnPsi.getId());
-        } else if (currentPressureUnit.equals(getString(R.string.mmhg))) {
+        } else if (currentPressureUnit.equals(getResources().getString(R.string.mmhg))) {
             updatePressureButtonColor(btnMmhg.getId());
         } else {
             updatePressureButtonColor(btnDepress.getId());
@@ -337,11 +337,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void changeTempUnit(int id) {
         String pref = PreferencesUtil.TEMPERATURE_UNIT;
         if (id == R.id.btn_c) {
-            updateSharedPref(pref, getString(R.string.temp_setting_degree_c));
+            updateSharedPref(pref, getResources().getString(R.string.temp_setting_degree_c));
         } else if (id == R.id.btn_f) {
-            updateSharedPref(pref, getString(R.string.temp_setting_degree_f));
+            updateSharedPref(pref, getResources().getString(R.string.temp_setting_degree_f));
         } else {
-            updateSharedPref(pref, getString(R.string.temp_setting_degree_k));
+            updateSharedPref(pref, getResources().getString(R.string.temp_setting_degree_k));
         }
         Intent updateWidgetIntent = new Intent(NormalWidget.ACTION_UPDATE);
         Objects.requireNonNull(getActivity()).sendBroadcast(updateWidgetIntent);
@@ -380,11 +380,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void changeDistanceUnit(int id) {
         String pref = PreferencesUtil.DISTANCE_UNIT;
         if (id == R.id.btn_km) {
-            updateSharedPref(pref, getString(R.string.km));
+            updateSharedPref(pref, getResources().getString(R.string.km));
         } else if (id == R.id.btn_mi) {
-            updateSharedPref(pref, getString(R.string.mi));
+            updateSharedPref(pref, getResources().getString(R.string.mi));
         } else {
-            updateSharedPref(pref, getString(R.string.bananas));
+            updateSharedPref(pref, getResources().getString(R.string.bananas));
         }
 
         updateDistanceButtonColor(id);
@@ -419,11 +419,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void changeSpeedUnit(int id) {
         String pref = PreferencesUtil.SPEED_UNIT;
         if (id == R.id.btn_kmph) {
-            updateSharedPref(pref, getString(R.string.kmph));
+            updateSharedPref(pref, getResources().getString(R.string.kmph));
         } else if (id == R.id.btn_miph) {
-            updateSharedPref(pref, getString(R.string.miph));
+            updateSharedPref(pref, getResources().getString(R.string.miph));
         } else {
-            updateSharedPref(pref, getString(R.string.banana_h));
+            updateSharedPref(pref, getResources().getString(R.string.banana_h));
         }
         updateSpeedButtonColor(id);
         currentSpeedUnit = PreferencesUtil.getSpeedUnit(Objects.requireNonNull(getActivity()));
@@ -457,11 +457,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void changePressureUnit(int id) {
         String pref = PreferencesUtil.PRESSURE_UNIT;
         if (id == R.id.btn_psi) {
-            updateSharedPref(pref, getString(R.string.psi));
+            updateSharedPref(pref, getResources().getString(R.string.psi));
         } else if (id == R.id.btn_mmhg) {
-            updateSharedPref(pref, getString(R.string.mmhg));
+            updateSharedPref(pref, getResources().getString(R.string.mmhg));
         } else {
-            updateSharedPref(pref, getString(R.string.depression_unit));
+            updateSharedPref(pref, getResources().getString(R.string.depression_unit));
         }
         updatePressureButtonColor(id);
         currentPressureUnit = PreferencesUtil.getPressureUnit(Objects.requireNonNull(getActivity()));
@@ -520,9 +520,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void changeExplicitSetting(int id) {
         String pref = PreferencesUtil.EXPLICIT_SETTING;
         if (id == R.id.btn_im_not) {
-            updateSharedPref(pref, getString(R.string.im_not));
+            updateSharedPref(pref, getResources().getString(R.string.im_not));
         } else {
-            updateSharedPref(pref, getString(R.string.hell_yeah));
+            updateSharedPref(pref, getResources().getString(R.string.hell_yeah));
         }
         updateExplicitButtonColor(id);
         listener.onSettingChanged(Constants.ACTION_UPDATE_EXPLICIT);
@@ -561,7 +561,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void updateSharedPref(String pref, String value) {
         if (pref.equals(PreferencesUtil.EXPLICIT_SETTING)) {
-            if (value.equals(getString(R.string.im_not))) {
+            if (value.equals(getResources().getString(R.string.im_not))) {
                 PreferencesUtil.setExplicitSetting(Objects.requireNonNull(getActivity()), true);
             } else {
                 PreferencesUtil.setExplicitSetting(Objects.requireNonNull(getActivity()), false);
