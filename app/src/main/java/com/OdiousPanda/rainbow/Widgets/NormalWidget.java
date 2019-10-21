@@ -237,7 +237,8 @@ public class NormalWidget extends AppWidgetProvider {
     }
 
     private static void queryQuotes(final Context context) {
-        FirebaseFirestore.getInstance().collection("quotes")
+        String collection = context.getResources().getConfiguration().locale.getLanguage().equals("vi")?"quotes-vi":"quotes";
+        FirebaseFirestore.getInstance().collection(collection)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

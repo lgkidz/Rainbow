@@ -112,7 +112,8 @@ public class QuoteGenerator {
     }
 
     private void queryQuotes() {
-        db.collection("quotes")
+        String collection = mContext.getResources().getConfiguration().locale.getLanguage().equals("vi")?"quotes-vi":"quotes";
+        db.collection(collection)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
