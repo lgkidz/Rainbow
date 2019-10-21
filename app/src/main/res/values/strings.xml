@@ -14,14 +14,9 @@
     <string name="slide_1_title">Hi there!</string>
     <string name="slide_1_desc">I\'m Rainbow and I\'ll show you how to use this app</string>
 
-    <string name="slide_2_title">This is the main layout of Rainbow</string>
     <string name="slide_2_desc">Swipe left and right for navigation</string>
 
-    <string name="slide_3_title">To refresh</string>
     <string name="slide_3_desc">Swipe down to refresh</string>
-
-    <string name="slide_4_title">That\'s Rainbow\'s widget</string>
-    <string name="slide_4_desc">You can tap the weather icon to open Rainbow, double tap the quote to refresh the widget</string>
 
     <string name="app_need_permissions_to_run">This app cannot run without the permissions to use this feature</string>
     <string name="exit">Exit</string>
@@ -51,8 +46,11 @@
     <string name="banana_h">bananas per hour</string>
     <string name="miph" translatable="false">mph</string>
     <string name="kmph" translatable="false">kmph</string>
+    <string name="bananas_unit" translatable="false">bananas</string>
+    <string name="bananas_h_unit" translatable="false">bananas per hour</string>
     <string name="bananas">bananas</string>
-    <string name="mi" translatable="false">mile</string>
+    <string name="mi">mile</string>
+    <string name="mi_uni" translatable="false">mile</string>
     <string name="km" translatable="false">km</string>
     <string name="scientist">I\'m a scientist</string>
     <string name="details_heading">Today\'s weather starter pack</string>
@@ -67,10 +65,9 @@
     <string name="about_dialog_heading">About Rainbow</string>
     <string name="about_dialog_intro">Hi! I\'m Rainbow, a super friendly weather app. I was born with a mission of bringing smiles and useful weather information to your daily life, definitely not because someone has too much free time on his hands.</string>
     <string name="about_dialog_outro">If you find me interesting, go ahead and give me a 5-star on PlayStore. Love ya!</string>
-    <string name="loading_text">Calling my cloud buddy…</string>
+    <string name="loading_text">Asking the cloud prophet…</string>
     <string name="no_connection_tv1">Cloud not found</string>
     <string name="no_connection_tv2">Yeah clear sky is cool but have you tried connecting to the internet?</string>
-    <string name="no_connection_tv3">Do you really want me to cry?</string>
     <string name="air_quality_dialog_heading">Air Quality Index</string>
 
     <string name="aqi_good" translatable="true">Good</string>
@@ -125,8 +122,6 @@
     <string name="depression_level_title">Depression</string>
     <string name="provided_by_aqi_cn_org">Provided by aqicn.org</string>
     <string name="explicit_setting_title">Are you okay with offensive words?</string>
-    <string name="snack_bar_undo">Undo</string>
-    <string name="snack_bar_text">Location deleted.</string>
 
     <string name="uv_summary_0">Sun set</string>
     <string name="uv_summary_3">Low</string>
@@ -188,7 +183,11 @@
     <string name="vi_lang">Vietnamese</string>
     <string name="photo_by">Photo by</string>
     <string name="on">on</string>
-    <string name="feature_not_ready">This feature is not ready</string>
+    <string name="feature_not_ready">This feature is under development</string>
+    <string name="hot">hot</string>
+    <string name="cold">cold</string>
+    <string name="cool">cool</string>
+    <string name="and_raining">and raining.</string>
 
     <string-array name="lang_list">
         <item>@string/en_lang</item>

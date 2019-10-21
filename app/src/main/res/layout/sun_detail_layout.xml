@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/sun_title">
-
         <ImageView
             android:id="@+id/sunBar"
             android:layout_width="@dimen/sun_bar_width"
@@ -157,7 +156,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/sunRise"
             app:layout_constraintTop_toTopOf="@id/sunRise" />
-
+        <ImageView
+            android:id="@+id/time_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_right_b"
+            app:layout_constraintEnd_toEndOf="@id/sunBar"
+            app:layout_constraintStart_toStartOf="@id/sunBar"
+            android:layout_marginEnd="@dimen/margin_8"
+            app:layout_constraintTop_toTopOf="@id/sunBar"
+            tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

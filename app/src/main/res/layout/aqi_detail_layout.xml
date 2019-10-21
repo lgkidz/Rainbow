@@ -51,7 +51,7 @@
             android:paddingLeft="@dimen/margin_8"
             android:paddingTop="@dimen/margin_4"
             android:paddingRight="@dimen/margin_8"
-            android:paddingBottom="@dimen/margin_4"
+            android:paddingBottom="@dimen/margin_2"
             android:translationX="@dimen/aqi_translation_X"
             android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="@+id/tv_aqi_index"
@@ -68,7 +68,8 @@
                 android:layout_marginTop="@dimen/margin_2"
                 android:layout_marginEnd="@dimen/margin_24"
                 android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_15dp"
+                android:textSize="@dimen/text_view_16dp"
+                android:clipToPadding="false"
                 app:fontFamily="@font/montserrat" />
 
             <TextView
@@ -77,7 +78,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="@dimen/margin_2"
+                android:paddingBottom="@dimen/margin_2"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_13dp"
                 app:fontFamily="@font/montserrat" />

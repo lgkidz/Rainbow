@@ -382,9 +382,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         if (id == R.id.btn_km) {
             updateSharedPref(pref, getResources().getString(R.string.km));
         } else if (id == R.id.btn_mi) {
-            updateSharedPref(pref, getResources().getString(R.string.mi));
+            updateSharedPref(pref, getResources().getString(R.string.mi_uni));
         } else {
-            updateSharedPref(pref, getResources().getString(R.string.bananas));
+            updateSharedPref(pref, getResources().getString(R.string.bananas_unit));
         }
 
         updateDistanceButtonColor(id);
@@ -423,7 +423,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         } else if (id == R.id.btn_miph) {
             updateSharedPref(pref, getResources().getString(R.string.miph));
         } else {
-            updateSharedPref(pref, getResources().getString(R.string.banana_h));
+            updateSharedPref(pref, getResources().getString(R.string.bananas_h_unit));
         }
         updateSpeedButtonColor(id);
         currentSpeedUnit = PreferencesUtil.getSpeedUnit(Objects.requireNonNull(getActivity()));

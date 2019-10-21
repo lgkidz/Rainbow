@@ -81,6 +81,8 @@ public class DetailsFragment extends Fragment {
     private ImageView icFoot;
     private ImageView icHand;
     private TextView tvWearCause;
+    private ImageView sunBar;
+    private ImageView timeIndicator;
 
     private ImageView icFoodType;
     private TextView tvFood;
@@ -173,6 +175,8 @@ public class DetailsFragment extends Fragment {
         icFoot = v.findViewById(R.id.ic_footWare);
         icHand = v.findViewById(R.id.ic_hand);
         tvWearCause = v.findViewById(R.id.tvWearCause);
+        sunBar = v.findViewById(R.id.sunBar);
+        timeIndicator = v.findViewById(R.id.time_indicator);
 
         icFoodType = v.findViewById(R.id.ic_foodType);
         tvFood = v.findViewById(R.id.food);
@@ -231,12 +235,35 @@ public class DetailsFragment extends Fragment {
     private void updateSunData() {
         tvSunTitle.setText(PreferencesUtil.isExplicit(Objects.requireNonNull(getActivity())) ? getResources().getString(R.string.sun) : getResources().getString(R.string.sun_not_explicit));
         DateFormat df = DateFormat.getTimeInstance(java.text.DateFormat.SHORT);
-        long sunriseTime = currentWeather.getDaily().getData().get(0).getSunriseTime() * 1000;
-        long sunsetTime = currentWeather.getDaily().getData().get(0).getSunsetTime() * 1000;
+        final long sunriseTime = currentWeather.getDaily().getData().get(0).getSunriseTime() * 1000;
+        final long sunsetTime = currentWeather.getDaily().getData().get(0).getSunsetTime() * 1000;
         long middayTime = (sunriseTime + sunsetTime) / 2;
         tvSunrise.setText(df.format(sunriseTime));
         tvMidday.setText(df.format(middayTime));
         tvSunset.setText(df.format(sunsetTime));
+
+        final long currentTime = System.currentTimeMillis();
+        if(currentTime >= sunriseTime && currentTime <= sunsetTime){
+            sunBar.post(new Runnable() {
+                public void run() {
+                    try {
+                        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) timeIndicator.getLayoutParams();
+                        float barHeight = (float) sunBar.getHeight();
+                        float topMargin = (float) (currentTime - sunriseTime) / (sunsetTime - sunriseTime) * barHeight;
+                        params.topMargin = (int) topMargin - timeIndicator.getHeight() / 2;
+
+                        timeIndicator.setLayoutParams(params);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        } else {
+            timeIndicator.setVisibility(View.GONE);
+        }
+
+
     }
 
     private void updateVisibilityData(String currentDistanceUnit) {
@@ -302,7 +329,7 @@ public class DetailsFragment extends Fragment {
         icLower.setImageResource(clothesIconUtil.getLowerIcon());
         icFoot.setImageResource(clothesIconUtil.getFootIcon());
         icHand.setImageResource(clothesIconUtil.getHandIcon());
-        String cause = getResources().getString(R.string.cause_it_s) + clothesIconUtil.getCause();
+        String cause = getResources().getString(R.string.cause_it_s) + clothesIconUtil.getCause(Objects.requireNonNull(getContext()));
         tvWearCause.setText(cause);
     }
 

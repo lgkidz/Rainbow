@@ -61,19 +61,19 @@ public class UnitConverter {
     public static String convertToDistanceUnit(float distance, String unit) {
         if (unit.equals("km")) {
             return Math.round(distance * 1.609) + " km";
-        } else if (unit.equals("bananas")) {
-            return Math.round(distance * 9041.254) + " " + banana();
+        } else if (unit.equals("mile")) {
+            return Math.round(distance) + " mi";
         }
-        return Math.round(distance) + " mile";
+        return Math.round(distance * 9041.254) + " " + banana();
     }
 
     public static String convertToSpeedUnit(float speed, String unit) {
         if (unit.equals("kmph")) {
             return Math.round(speed * 1.609) + " km/h";
-        } else if (unit.equals("bananas per hour")) {
-            return Math.round(speed * 9041.254) + " " + banana() + "/h";
+        } else if (unit.equals("mph")) {
+            return Math.round(speed) + " mph";
         }
-        return Math.round(speed) + " mph";
+        return Math.round(speed * 9041.254) + " " + banana() + "/h";
     }
 
     public static float toMeterPerSecond(float speed) {

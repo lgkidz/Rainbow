@@ -1,5 +1,7 @@
 package com.OdiousPanda.rainbow.Utilities;
 
+import android.content.Context;
+
 import com.OdiousPanda.rainbow.DataModel.Weather.Weather;
 import com.OdiousPanda.rainbow.R;
 
@@ -68,8 +70,14 @@ public class ClothesIconUtil {
         }
     }
 
-    public String getCause() {
-        return rain ? " " + criteria + " and raining." : " " + criteria + ".";
+    public String getCause(Context context) {
+        String criteriaString = context.getString(R.string.cool);
+        if(criteria.equals("hot")){
+            criteriaString = context.getString(R.string.hot);
+        } else if(criteria.equals("cold")){
+            criteriaString = context.getString(R.string.cold);
+        }
+        return rain ? " " + criteriaString + " " + context.getString(R.string.and_raining) : " " + criteriaString + ".";
     }
 
     public int getHeadIcon() {
