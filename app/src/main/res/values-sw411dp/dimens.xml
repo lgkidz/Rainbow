@@ -158,6 +158,12 @@
   <dimen name="text_view_30dp">
     34.25dp
   </dimen>
+  <dimen name="text_view_32dp">
+    36.53dp
+  </dimen>
+  <dimen name="text_view_34dp">
+    38.82dp
+  </dimen>
   <dimen name="text_view_36dp">
     41.1dp
   </dimen>

@@ -52,6 +52,8 @@
     <dimen name="text_view_20dp">20dp</dimen>
     <dimen name="text_view_24dp">24dp</dimen>
     <dimen name="text_view_30dp">30dp</dimen>
+    <dimen name="text_view_32dp">32dp</dimen>
+    <dimen name="text_view_34dp">34dp</dimen>
     <dimen name="text_view_36dp">36dp</dimen>
     <dimen name="text_view_40dp">40dp</dimen>
     <dimen name="text_view_48dp">48dp</dimen>
