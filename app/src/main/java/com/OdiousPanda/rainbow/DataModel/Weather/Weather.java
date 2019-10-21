@@ -8,33 +8,33 @@ import java.util.List;
 public class Weather {
     @SerializedName("latitude")
     @Expose
-    public Float latitude;
+    private Float latitude;
     @SerializedName("longitude")
     @Expose
-    public Float longitude;
+    private Float longitude;
     @SerializedName("timezone")
     @Expose
-    public String timezone;
+    private String timezone;
     @SerializedName("currently")
     @Expose
-    public Currently currently;
+    private Currently currently;
     @SerializedName("hourly")
     @Expose
-    public Hourly hourly;
+    private Hourly hourly;
     @SerializedName("daily")
     @Expose
-    public Daily daily;
+    private Daily daily;
 
     @SerializedName("alerts")
     @Expose
-    public List<Alert> alerts;
+    private List<Alert> alerts;
 
     @SerializedName("flags")
     @Expose
-    public Flags flags;
+    private Flags flags;
     @SerializedName("offset")
     @Expose
-    public Integer offset;
+    private Float offset;
 
     public Float getLatitude() {
         return latitude;
@@ -92,11 +92,11 @@ public class Weather {
         this.flags = flags;
     }
 
-    public Integer getOffset() {
+    public Float getOffset() {
         return offset;
     }
 
-    public void setOffset(Integer offset) {
+    public void setOffset(Float offset) {
         this.offset = offset;
     }
 

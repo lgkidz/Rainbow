@@ -243,7 +243,7 @@ public class DetailsFragment extends Fragment {
         tvSunset.setText(df.format(sunsetTime));
 
         final long currentTime = System.currentTimeMillis();
-        if(currentTime >= sunriseTime && currentTime <= sunsetTime){
+        if (currentTime >= sunriseTime && currentTime <= sunsetTime) {
             sunBar.post(new Runnable() {
                 public void run() {
                     try {

@@ -338,6 +338,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         weatherViewModel.getAllSavedCoordinate().observe(this, new Observer<List<Coordinate>>() {
             @Override
             public void onChanged(List<Coordinate> coordinates) {
+                Log.d(TAG, "onChanged: list location size: " + coordinates.size());
                 if (firstTimeObserve) {
                     weatherViewModel.fetchWeather();
 
@@ -796,6 +797,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
@@ -807,7 +809,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 c.setLon(String.valueOf(latLng.longitude));
                 c.setName(place.getName());
                 weatherViewModel.insert(c);
-                RetrofitService.createWeatherCall().getWeather(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude))
+                RetrofitService.createWeatherCall().getWeather(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), getResources().getConfiguration().locale.getLanguage())
                         .enqueue(new Callback<Weather>() {
                             @Override
                             public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {

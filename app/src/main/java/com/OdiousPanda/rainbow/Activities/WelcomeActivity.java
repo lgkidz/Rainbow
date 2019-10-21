@@ -118,8 +118,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
-
-        showAskPermissionDialog();
+        if (PreferencesUtil.getAppOpenCount(this) <= 1) {
+            showAskPermissionDialog();
+        }
     }
 
     private void addBottomDots(int currentPage) {

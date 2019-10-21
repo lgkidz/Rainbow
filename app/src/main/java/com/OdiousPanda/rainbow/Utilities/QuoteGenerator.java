@@ -102,28 +102,9 @@ public class QuoteGenerator {
         text = text.replace("fucking ", alternativesForFucking[new Random().nextInt(alternativesForFucking.length)]);
         String textNoStrongWords = text.replace("i ", "I ").trim();
         if (textNoStrongWords.length() > 0) {
-            return capitalizeSentence(textNoStrongWords);
+            return TextUtil.capitalizeSentence(textNoStrongWords);
         }
-        return text;
-    }
-
-    private static String capitalizeSentence(String sentence) {
-        StringBuilder result = new StringBuilder();
-        boolean capitalize = true;
-        for (char c : sentence.toCharArray()) {
-            if (capitalize) {
-                result.append(Character.toUpperCase(c));
-                if (!Character.isWhitespace(c) && c != '.') {
-                    capitalize = false;
-                }
-            } else {
-                result.append(c);
-                if (c == '.') {
-                    capitalize = true;
-                }
-            }
-        }
-        return result.toString();
+        return TextUtil.capitalizeSentence(text);
     }
 
     public void setUpdateScreenQuoteListener(UpdateScreenQuoteListener listener) {

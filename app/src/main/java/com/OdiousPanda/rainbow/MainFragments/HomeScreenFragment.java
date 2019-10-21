@@ -239,7 +239,7 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         currentTemp = Math.min(maxTemp, Math.max(currentTemp, minTemp));
         tvMinTemp.setText(UnitConverter.convertToTemperatureUnitClean(minTemp, currentTempUnit));
         tvMaxTemp.setText(UnitConverter.convertToTemperatureUnitClean(maxTemp, currentTempUnit));
-        tvDescription.setText(currentWeather.getCurrently().getSummary());
+        tvDescription.setText(TextUtil.capitalizeSentence(currentWeather.getCurrently().getSummary()));
         if (previousTempColor == 0) {
             previousTempColor = ContextCompat.getColor(getActivity(), R.color.coldBlue);
         }

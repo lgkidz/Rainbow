@@ -73,7 +73,8 @@ public class NotificationUtil {
         fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                RetrofitService.createWeatherCall().getWeather(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude())).enqueue(new Callback<Weather>() {
+                String locale = context.getResources().getConfiguration().locale.getLanguage();
+                RetrofitService.createWeatherCall().getWeather(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), locale).enqueue(new Callback<Weather>() {
                     @Override
                     public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                         if (response.isSuccessful()) {
@@ -95,10 +96,10 @@ public class NotificationUtil {
                                     .setSmallIcon(iconResourceId)
                                     .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
                                     .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), iconResourceId))
-                                    .setContentTitle(contentTitle)
-                                    .setContentText(contentText)
+                                    .setContentTitle(TextUtil.capitalizeSentence(contentTitle))
+                                    .setContentText(TextUtil.capitalizeSentence(contentText))
                                     .setStyle(new NotificationCompat.BigTextStyle()
-                                            .bigText(contentText))
+                                            .bigText(TextUtil.capitalizeSentence(contentText)))
                                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                                     .setContentIntent(contentIntent)

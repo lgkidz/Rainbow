@@ -188,8 +188,8 @@ public class NormalWidget extends AppWidgetProvider {
                 if (location == null) {
                     return;
                 }
-
-                call.getWeather(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude())).enqueue(new Callback<Weather>() {
+                String locale = context.getResources().getConfiguration().locale.getLanguage();
+                call.getWeather(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), locale).enqueue(new Callback<Weather>() {
                     @Override
                     public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                         if (response.isSuccessful()) {

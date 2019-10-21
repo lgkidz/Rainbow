@@ -2,6 +2,7 @@ package com.OdiousPanda.rainbow.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     }
 
     private void deleteItemFromDb(Coordinate coordinate) {
+        Log.d("weatherA", "locationList adapter: calling repo to delete location ");
         WeatherRepository.getInstance(mActivity).delete(coordinate);
     }
 

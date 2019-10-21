@@ -72,9 +72,9 @@ public class ClothesIconUtil {
 
     public String getCause(Context context) {
         String criteriaString = context.getString(R.string.cool);
-        if(criteria.equals("hot")){
+        if (criteria.equals("hot")) {
             criteriaString = context.getString(R.string.hot);
-        } else if(criteria.equals("cold")){
+        } else if (criteria.equals("cold")) {
             criteriaString = context.getString(R.string.cold);
         }
         return rain ? " " + criteriaString + " " + context.getString(R.string.and_raining) : " " + criteriaString + ".";

@@ -29,9 +29,8 @@ import retrofit2.Response;
 
 public class WeatherRepository {
     private static final String TAG = "weatherA";
-
     private static WeatherRepository instance;
-
+    private String locale;
     private CoordinateDAO coordinateDAO;
     private LiveData<List<Coordinate>> allSavedCoordinates;
 
@@ -45,6 +44,7 @@ public class WeatherRepository {
 
     private WeatherRepository(Context context) {
         Log.d(TAG, "WeatherRepository: created");
+        locale = context.getResources().getConfiguration().locale.getLanguage();
         WeatherDatabase database = WeatherDatabase.getInstance(context);
         coordinateDAO = database.savedCoordinateDAO();
         getAllCoordinates();
@@ -78,6 +78,7 @@ public class WeatherRepository {
     }
 
     public void delete(Coordinate coordinate) {
+        Log.d(TAG, "weatherRepo delete: calling async task");
         new DeleteCoordinateTask(coordinateDAO).execute(coordinate);
     }
 
@@ -87,7 +88,7 @@ public class WeatherRepository {
         assert coordinates != null;
         Log.d(TAG, "getCurrentWeather: getting data from api: total: " + coordinates.size());
         for (final Coordinate coordinate : coordinates) {
-            weatherCall.getWeather(coordinate.getLat(), coordinate.getLon()).enqueue(new Callback<Weather>() {
+            weatherCall.getWeather(coordinate.getLat(), coordinate.getLon(), locale).enqueue(new Callback<Weather>() {
                 @Override
                 public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                     if (response.isSuccessful()) {
@@ -173,8 +174,14 @@ public class WeatherRepository {
 
         @Override
         protected Void doInBackground(Coordinate... coordinates) {
+            Log.d(TAG, "Delete Async task: doInBackground: deleting");
             coordinateDAO.delete(coordinates[0]);
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
         }
     }
 

@@ -105,4 +105,24 @@ public class TextUtil {
         notificationText += precipitationText + additionalComment;
         return notificationText;
     }
+
+    public static String capitalizeSentence(String sentence) {
+        sentence = sentence.toLowerCase();
+        StringBuilder result = new StringBuilder();
+        boolean capitalize = true;
+        for (char c : sentence.toCharArray()) {
+            if (capitalize) {
+                result.append(Character.toUpperCase(c));
+                if (!Character.isWhitespace(c) && c != '.') {
+                    capitalize = false;
+                }
+            } else {
+                result.append(c);
+                if (c == '.') {
+                    capitalize = true;
+                }
+            }
+        }
+        return result.toString();
+    }
 }
