@@ -81,11 +81,11 @@ public class TextUtil {
         String notificationText = summary;
         String precipitationProbText = (int) (100 * precipitationProb) + "%";
         String additionalComment;
-        String precipitationText = " There will be ";
+        String precipitationText = " " + context.getString(R.string.there_will_be) + " ";
         if (precipitationType != null) {
-            precipitationText += precipitationProbText + " chance of " + precipitationType + ".";
+            precipitationText += precipitationProbText + " " + context.getString(R.string.chance_of) + " " + precipitationType + ".";
             if (precipitationType.equals("rain")) {
-                precipitationText += precipitationProb < 0.5 ? "" : " Bring an umbrella, or a raincoat.";
+                precipitationText += precipitationProb < 0.5 ? "" : " " + context.getString(R.string.bring_umbrella);
             }
         } else {
             precipitationText = "";

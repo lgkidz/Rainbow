@@ -143,4 +143,68 @@
     <string name="hot">nóng</string>
     <string name="photo_name_na">Ảnh không có mô tả</string>
     <string name="mi">dặm</string>
+
+    <string-array name="random_notification_comment">
+        <item>Chúc bạn một ngày tốt lành!</item>
+        <item>Rainbow sẵn sàng phục vụ!</item>
+        <item>Hôm nay ổn đấy, vui chơi thỏa thích đi!</item>
+        <item>A-hem, trong trường hợp không ai nói với bạn câu này thì,… chúc tình yêu của tớ có một ngày tuyệt vời &lt;3</item>
+        <item>Bạn có thể chạm vào thông báo này để xem thêm.</item>
+        <item>Một số thông tin khác như chất lượng không khí có thể xem trong Rainbow.</item>
+        <item>Báo cáo hết! Thưa chỉ huy!</item>
+        <item>Dự báo của Rainbow bảo hôm nay là một ngày tuyệt vời! Vậy nên nỗ lực hết mình nhé!</item>
+        <item>Quả cầu pha lê của mình không sai đâu, tin mình đi.</item>
+        <item>Hôm nay bạn cảm thấy thế nào?</item>
+        <item>Tự nhiên hôm nay mình chỉ muốn nghỉ ở nhà thôi…</item>
+        <item>Một ngày tuyệt vời để đi chơi với bạn bè. Nếu họ bận hoặc bạn không có ai làm bạn thì, well, tệ thật đấy…</item>
+        <item>Ê bạn thấy bạn Mây của mình không, chào bạn ý hộ mình nhé!</item>
+    </string-array>
+
+    <string-array name="cold_notification_comment">
+        <item>Chúc bạn một ngày tốt lành!</item>
+        <item>Rainbow sẵn sàng phục vụ!</item>
+        <item>Trời lạnh, bạn nên giữ ấm cho bản thân. Đừng để bị ốm không là mình lo lắm đấy!</item>
+        <item>A-hem, trong trường hợp không ai nói với bạn câu này thì,… chúc tình yêu của tớ có một ngày tuyệt vời &lt;3</item>
+        <item>Bạn có thể chạm vào thông báo này để xem thêm.</item>
+        <item>Một số thông tin khác như chất lượng không khí có thể xem trong Rainbow.</item>
+        <item>Báo cáo hết! Thưa chỉ huy!</item>
+        <item>Nhiệt độ khá là thấp, nên nhớ giữ ấm, đừng để bị cảm nhé?</item>
+        <item>Quả cầu pha lê của mình không sai đâu, tin mình đi.</item>
+        <item>Can you feel the cold.. I mean love tonight?</item>
+        <item>Tự nhiên hôm nay mình chỉ muốn nghỉ ở nhà thôi…</item>
+        <item>Tìm thú cưng hoăc người yêu của bạn và bắt đầu ôm ấp đi. Trời lạnh đấy.</item>
+        <item>Ê bạn thấy bạn Mây của mình không, chào bạn ý hộ mình nhé!</item>
+        <item>Khá chắc là ở đâu đấy đang có tuyết rơi… </item>
+        <item>Lạnh quá! Mình bắt đầu nhớ mùa hè rồi đấy.</item>
+        <item>Và hôm này là ngày tuyệt vời cho một cốc cacao nóng.</item>
+        <item>Một cái khăn quàng sẽ có ích trong thời tiết này.</item>
+        <item>Hmm, mùa đông chưa nhỉ?</item>
+        <item>lạnh nhỉ? Mình nghĩ là ở nhà và xem anime thôi.</item>
+        <item>Hah! Thời tiết tuyệt vời để netflix and chill!</item>
+    </string-array>
+
+    <string-array name="hot_notification_comment">
+        <item>Chúc bạn một ngày tốt lành!</item>
+        <item>Rainbow sẵn sàng phục vụ!</item>
+        <item>Trời nóng đấy, nên nhớ uống nước đầy đủ nhé. Theo khuyến nghị là 2 lít nước mỗi ngày.</item>
+        <item>A-hem, trong trường hợp không ai nói với bạn câu này thì,… chúc tình yêu của tớ có một ngày tuyệt vời &lt;3</item>
+        <item>Bạn có thể chạm vào thông báo này để xem thêm.</item>
+        <item>Một số thông tin khác như chất lượng không khí có thể xem trong Rainbow.</item>
+        <item>Báo cáo hết! Thưa chỉ huy!</item>
+        <item>Nhiệt độ khá cao, nên tìm nơi mát mẻ đi, đừng để chết vì sốc nhiệt nhé?</item>
+        <item>Quả cầu pha lê của mình không sai đâu, tin mình đi.</item>
+        <item>Can you feel the heat.. I mean love tonight?</item>
+        <item>Trời nóng quá, mình muốn đi bơi…</item>
+        <item>Mình biết là trời nóng, nhưng đừng mặc bikini đi học hay đi làm, được không?</item>
+        <item>Ê bạn thấy bạn Mây của mình không, chào bạn ý hộ mình nhé!</item>
+        <item>Mình chắc chắn 100% ở đâu đấy đang có tuyết… Chỉ là không phải ở đây.</item>
+        <item>Nóng quá! Mình bắt đầu nhớ mùa đông rồi đấy.</item>
+        <item>Có một cốc nước lạnh thì còn gì bằng.</item>
+        <item>Một cái điều hòa sẽ rất có ích trong thời tiết này.</item>
+        <item>\"Do you want to build a snowman?\" Anna, em đần à? đang là mùa hè!</item>
+        <item>Làm cây kem thôi, hôm nay nóng quá.</item>
+    </string-array>
+    <string name="bring_umbrella">Nhớ mang ô hoặc áo mưa.</string>
+    <string name="chance_of">khả năng</string>
+    <string name="there_will_be">Hôm nay sẽ có khoảng</string>
 </resources>

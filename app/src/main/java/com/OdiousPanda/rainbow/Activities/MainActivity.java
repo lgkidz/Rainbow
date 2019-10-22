@@ -809,7 +809,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 c.setLon(String.valueOf(latLng.longitude));
                 c.setName(place.getName());
                 weatherViewModel.insert(c);
-                RetrofitService.createWeatherCall().getWeather(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), getResources().getConfiguration().locale.getLanguage())
+                String locale = getResources().getConfiguration().locale.getLanguage();
+                if(!locale.equals("vi")){
+                    locale = "en";
+                }
+                RetrofitService.createWeatherCall().getWeather(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), locale)
                         .enqueue(new Callback<Weather>() {
                             @Override
                             public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {

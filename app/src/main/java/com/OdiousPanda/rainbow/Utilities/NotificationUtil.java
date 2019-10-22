@@ -74,6 +74,9 @@ public class NotificationUtil {
             @Override
             public void onSuccess(Location location) {
                 String locale = context.getResources().getConfiguration().locale.getLanguage();
+                if(!locale.equals("vi")){
+                    locale = "en";
+                }
                 RetrofitService.createWeatherCall().getWeather(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), locale).enqueue(new Callback<Weather>() {
                     @Override
                     public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {

@@ -45,6 +45,9 @@ public class WeatherRepository {
     private WeatherRepository(Context context) {
         Log.d(TAG, "WeatherRepository: created");
         locale = context.getResources().getConfiguration().locale.getLanguage();
+        if(!locale.equals("vi")){
+            locale = "en";
+        }
         WeatherDatabase database = WeatherDatabase.getInstance(context);
         coordinateDAO = database.savedCoordinateDAO();
         getAllCoordinates();

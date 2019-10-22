@@ -188,6 +188,9 @@
     <string name="cold">cold</string>
     <string name="cool">cool</string>
     <string name="and_raining">and raining.</string>
+    <string name="there_will_be">There will be</string>
+    <string name="chance_of">chance of</string>
+    <string name="bring_umbrella">Bring an umbrella, or a raincoat.</string>
 
     <string-array name="lang_list">
         <item>@string/en_lang</item>
