@@ -15,7 +15,6 @@ Rainbow is an Android weather app that packs tons of useful information while pr
 * [Glide](https://github.com/bumptech/glide) - An image loading and caching library for Android focused on smooth scrolling.
 * [SlideUp-Android](https://github.com/mancj/SlideUp-Android) - SlideUp is a small library that allows you to add sweet slide effect to any view.
 * [Gson](https://github.com/google/gson) - A Java serialization/deserialization library to convert Java Objects into JSON and back.
-* [Android Tooltips](https://github.com/ViHtarb/Tooltip) - Simple to use customizable Android Tooltips library based on PopupWindow.
 * [Dexter](https://github.com/Karumi/Dexter) - Android library that simplifies the process of requesting permissions at runtime.
 * [Retrofit](https://github.com/square/retrofit) - Type-safe HTTP client for Android and Java by Square, Inc.
 * <code>Android Palette</code>
