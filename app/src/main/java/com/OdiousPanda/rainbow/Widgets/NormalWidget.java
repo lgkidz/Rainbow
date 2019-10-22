@@ -211,7 +211,7 @@ public class NormalWidget extends AppWidgetProvider {
                             remoteViews.setImageViewBitmap(R.id.tv_temp_widget, textAsBitmap(context, temp, TEMP_BITMAP));
                             remoteViews.setImageViewBitmap(R.id.tv_reaFeel_widget, textAsBitmap(context, realFeelTemp, RF_BITMAP));
                             String iconName = weather.getCurrently().getIcon().replace("-", "_");
-                            int iconResourceId = context.getResources().getIdentifier("drawable/" + iconName + "_w", null, context.getPackageName());
+                            int iconResourceId = context.getResources().getIdentifier("drawable/widget_" + iconName + "_w", null, context.getPackageName());
                             remoteViews.setImageViewResource(R.id.widget_icon, iconResourceId);
                             queryQuotes(context);
                         }

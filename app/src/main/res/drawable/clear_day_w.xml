@@ -7,29 +7,29 @@
         android:fillColor="#00000000"
         android:pathData="M28.79,28.83m-13.29,0a13.29,13.29 0,1 1,26.58 0a13.29,13.29 0,1 1,-26.58 0"
         android:strokeWidth="3"
-        android:strokeColor="#FFFFFFFF" />
+        android:strokeColor="@color/pureWhite" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M28.79,0a1.5,1.5 0,0 0,-1.5 1.5v7a1.5,1.5 0,0 0,3 0v-7A1.5,1.5 0,0 0,28.79 0Z" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M28.79,47.65a1.5,1.5 0,0 0,-1.5 1.5v7a1.5,1.5 0,0 0,3 0v-7A1.5,1.5 0,0 0,28.79 47.65Z" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M47.56,28.78a1.5,1.5 0,0 0,1.5 1.5h7a1.5,1.5 0,0 0,0 -3h-7A1.5,1.5 0,0 0,47.56 28.78Z" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M0,28.83a1.5,1.5 0,0 0,1.5 1.5h7a1.5,1.5 0,0 0,0 -3h-7A1.5,1.5 0,0 0,0 28.83Z" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M49.15,8.44a1.51,1.51 0,0 0,-2.12 0l-5,5a1.5,1.5 0,0 0,2.12 2.12l4.95,-4.95A1.49,1.49 0,0 0,49.15 8.44Z" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M15.55,42.1a1.51,1.51 0,0 0,-2.12 0L8.48,47.05a1.51,1.51 0,0 0,0 2.12,1.49 1.49,0 0,0 2.12,0l5,-5A1.49,1.49 0,0 0,15.55 42.1Z" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M8.53,8.31a1.51,1.51 0,0 0,0 2.12l5,5a1.5,1.5 0,0 0,2.12 -2.12L10.65,8.31A1.49,1.49 0,0 0,8.53 8.31Z" />
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="@color/pureWhite"
         android:pathData="M42.08,42.23a1.49,1.49 0,0 0,0 2.12l5,4.95a1.5,1.5 0,1 0,2.12 -2.13L44.2,42.23A1.49,1.49 0,0 0,42.08 42.23Z" />
 </vector>

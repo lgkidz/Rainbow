@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffffff</color>
+    <color name="colorPrimaryDark">#ffffffff</color>
+    <color name="colorAccent">@color/hotPink</color>
+    <color name="absoluteBlack">#ffffffff</color>
+    <color name="halfSnappedBlack">#8fffffff</color>
+    <color name="black15">#0Fffffff</color>
+    <color name="hyperBlue">#FF0000FF</color>
+    <color name="flickRBlue">#FF216bd6</color>
+    <color name="coldBlue">#ff92d7ed</color>
+    <color name="hotPink">#ffe8998c</color>
+    <color name="sunRise">#ffffa700</color>
+    <color name="midDay">#ff81e1e3</color>
+    <color name="sunSet">#ffff6700</color>
+    <color name="pureWhite">#ff212121</color>
+    <color name="setting_bg">@color/pureWhite</color>
+    <color name="default_button_bg">@color/coldBlue</color>
+    <color name="default_active_button_bg">@color/hotPink</color>
+
+    <!-- Screens background color-->
+    <color name="bg_screen1">#f64c73</color>
+    <color name="bg_screen2">#20d2bb</color>
+    <color name="bg_screen3">#3395ff</color>
+    <color name="bg_screen4">#c873f4</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#d1395c</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#f98da5</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+    </array>
+
+    <color name="aqi_good">#009866</color>
+    <color name="aqi_moderate">#fedd39</color>
+    <color name="aqi_unhealthy_sensitive">#fe9835</color>
+    <color name="aqi_unhealthy">#cb0232</color>
+    <color name="aqi_very_unhealthy">#660697</color>
+    <color name="aqi_hazardous">#7d0121</color>
+</resources>

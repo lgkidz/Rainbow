@@ -203,10 +203,10 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
         }
         colorAnimation.start();
         if (textColor == Color.WHITE) {
-            iconInfo.setImageResource(R.drawable.ic_info_w);
+            iconInfo.setImageResource(R.drawable.ic_info_homescreen_w);
             btnShare.setImageResource(R.drawable.ic_share_w);
         } else {
-            iconInfo.setImageResource(R.drawable.ic_info_b);
+            iconInfo.setImageResource(R.drawable.ic_info_homescreen_b);
             btnShare.setImageResource(R.drawable.ic_share_b);
         }
     }

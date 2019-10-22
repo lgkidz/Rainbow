@@ -182,7 +182,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void setupNotificationSetting() {
         if (PreferencesUtil.getNotificationSetting(Objects.requireNonNull(getActivity())).equals(PreferencesUtil.NOTIFICATION_SETTING_ON)) {
             dailyNotificationSwitch.setChecked(true);
-            tvDailyNotificationTime.setTextColor(Color.BLACK);
+            tvDailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.absoluteBlack));
         } else {
             dailyNotificationSwitch.setChecked(false);
             tvDailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.halfSnappedBlack));
@@ -193,7 +193,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     PreferencesUtil.setNotificationSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.NOTIFICATION_SETTING_ON);
-                    tvDailyNotificationTime.setTextColor(Color.BLACK);
+                    tvDailyNotificationTime.setTextColor(ContextCompat.getColor(getActivity(), R.color.absoluteBlack));
                     notificationUtil.startDailyNotification();
                 } else {
                     PreferencesUtil.setNotificationSetting(Objects.requireNonNull(getActivity()), PreferencesUtil.NOTIFICATION_SETTING_OFF);
