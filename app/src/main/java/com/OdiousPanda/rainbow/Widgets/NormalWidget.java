@@ -140,6 +140,14 @@ public class NormalWidget extends AppWidgetProvider {
             if (mWidgetPortHeight * context.getResources().getDisplayMetrics().density + 0.5f < context.getResources().getDimension(R.dimen.widget_height) * 3) {
                 textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_32dp));
             }
+            if (text.length() < 70){
+                textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_32dp));
+            }
+            else if(text.length() < 90){
+                textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_28dp));
+            } else{
+                textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_22dp));
+            }
             textPaint.setColor(Color.WHITE);
             textPaint.setTypeface(typeFace);
             int width = (int) (mWidgetPortWidth * context.getResources().getDisplayMetrics().density + 0.5f);
@@ -271,10 +279,16 @@ public class NormalWidget extends AppWidgetProvider {
         }
         boolean isExplicit = PreferencesUtil.isExplicit(context);
         List<Quote> weatherQuotes = QuoteGenerator.filterQuotes(weather, quotes, isExplicit, true);
-        quote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
-        if (quote.getMain() == null && quote.getSub() == null) {
+        quote = new Quote();
+        if(weatherQuotes.size() > 0){
+            quote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
+            if (quote.getMain() == null && quote.getSub() == null) {
+                quote.setDefaultQuote();
+            }
+        } else {
             quote.setDefaultQuote();
         }
+
         //remoteViews = new RemoteViews(context.getPackageName(), R.layout.normal_widget);
         remoteViews.setImageViewBitmap(R.id.quote_main, textAsBitmap(context, quote.getMain(), MAIN_BITMAP));
         remoteViews.setImageViewBitmap(R.id.quote_sub, textAsBitmap(context, quote.getSub(), SUB_BITMAP));

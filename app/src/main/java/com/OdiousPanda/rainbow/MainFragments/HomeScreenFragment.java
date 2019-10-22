@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -388,7 +389,16 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
     }
 
     private void updateQuote(Quote quote) {
-        tvBigText.setText(quote.getMain());
+        String text = quote.getMain();
+        if (text.length() < 70){
+            tvBigText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_view_40dp));
+        }
+        else if(text.length() < 90){
+            tvBigText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_view_36dp));
+        } else{
+            tvBigText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_view_28dp));
+        }
+        tvBigText.setText(text);
         tvSmallText.setText(quote.getSub());
     }
 

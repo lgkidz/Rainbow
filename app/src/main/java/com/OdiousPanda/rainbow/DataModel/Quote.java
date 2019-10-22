@@ -30,7 +30,8 @@ public class Quote {
     }
 
     public void setDefaultQuote() {
-        this.main = "If you see these lines.";
-        this.sub = "Something went wrong... :|";
+        this.main = "Hmmmmm...";
+        this.sub = "";
+        this.att = "*";
     }
 }

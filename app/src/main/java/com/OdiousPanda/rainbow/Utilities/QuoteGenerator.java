@@ -31,6 +31,7 @@ public class QuoteGenerator {
     }
 
     public static List<Quote> filterQuotes(Weather weather, List<Quote> allQuotes, boolean isExplicit, boolean forWidget) {
+
         List<Quote> weatherQuotes = new ArrayList<>();
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
@@ -95,11 +96,20 @@ public class QuoteGenerator {
         String[] alternativesForShit = {"crap", "crud"};
         String[] alternativesForHell = {"heck"};
         String[] alternativesForAss = {"arse ", "butt ", "bum "};
+        String[] alternativesForVl = {"lắm", "thật", "kinh", ""};
+        String[] alternativesForVcl = {"lắm", "thật", "kinh"};
+        String[] alternativesForEo = {"không"};
+        String[] alternativesForDeo = {"không"};
+
         text = text.toLowerCase().replace("damn", alternativesForDamn[new Random().nextInt(alternativesForDamn.length)]);
         text = text.replace("shit", alternativesForShit[new Random().nextInt(alternativesForShit.length)]);
         text = text.replace("hell", alternativesForHell[new Random().nextInt(alternativesForHell.length)]);
         text = text.replace("ass ", alternativesForAss[new Random().nextInt(alternativesForAss.length)]);
         text = text.replace("fucking ", alternativesForFucking[new Random().nextInt(alternativesForFucking.length)]);
+        text = text.replace("vl", alternativesForVl[new Random().nextInt(alternativesForVl.length)]);
+        text = text.replace("vcl", alternativesForVcl[new Random().nextInt(alternativesForVcl.length)]);
+        text = text.replace("éo", alternativesForEo[new Random().nextInt(alternativesForEo.length)]);
+        text = text.replace("đéo", alternativesForDeo[new Random().nextInt(alternativesForDeo.length)]);
         String textNoStrongWords = text.replace("i ", "I ").trim();
         if (textNoStrongWords.length() > 0) {
             return TextUtil.capitalizeSentence(textNoStrongWords);
@@ -140,8 +150,13 @@ public class QuoteGenerator {
         }
         boolean isExplicit = PreferencesUtil.isExplicit(mContext);
         List<Quote> weatherQuotes = filterQuotes(weather, quotes, isExplicit, false);
-        Quote randomQuote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
-        if (randomQuote.getMain() == null && randomQuote.getSub() == null) {
+        Quote randomQuote = new Quote();
+        if(weatherQuotes.size() > 0){
+            randomQuote  = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
+            if (randomQuote.getMain() == null && randomQuote.getSub() == null) {
+                randomQuote.setDefaultQuote();
+            }
+        } else {
             randomQuote.setDefaultQuote();
         }
         listener.updateScreenQuote(randomQuote);

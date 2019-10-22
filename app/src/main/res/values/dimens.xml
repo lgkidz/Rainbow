@@ -50,7 +50,9 @@
     <dimen name="text_view_16dp">16dp</dimen>
     <dimen name="text_view_18dp">18dp</dimen>
     <dimen name="text_view_20dp">20dp</dimen>
+    <dimen name="text_view_22dp">22dp</dimen>
     <dimen name="text_view_24dp">24dp</dimen>
+    <dimen name="text_view_28dp">28dp</dimen>
     <dimen name="text_view_30dp">30dp</dimen>
     <dimen name="text_view_32dp">32dp</dimen>
     <dimen name="text_view_34dp">34dp</dimen>
