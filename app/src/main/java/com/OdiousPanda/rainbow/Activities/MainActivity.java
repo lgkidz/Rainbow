@@ -773,8 +773,22 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
             homeScreenFragment.closePhotoDetailBox();
             return;
         }
-        super.onBackPressed();
+        showExitDialog();
         Log.d(TAG, "onBackPressed: ");
+    }
+
+    private void showExitDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.exit));
+        builder.setMessage(getString(R.string.exit_description_text));
+        builder.setPositiveButton(getResources().getString(R.string.exit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                System.exit(0);
+            }
+        });
+        builder.show();
     }
 
     @Override

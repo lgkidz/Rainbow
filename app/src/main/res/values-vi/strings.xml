@@ -207,4 +207,5 @@
     <string name="bring_umbrella">Nhớ mang ô hoặc áo mưa.</string>
     <string name="chance_of">khả năng</string>
     <string name="there_will_be">Hôm nay sẽ có khoảng</string>
+    <string name="exit_description_text">Bạn có chắc chắn muốn thoát?</string>
 </resources>

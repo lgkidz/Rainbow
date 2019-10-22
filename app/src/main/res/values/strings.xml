@@ -191,6 +191,7 @@
     <string name="there_will_be">There will be</string>
     <string name="chance_of">chance of</string>
     <string name="bring_umbrella">Bring an umbrella, or a raincoat.</string>
+    <string name="exit_description_text">Do you really want to exit</string>
 
     <string-array name="lang_list">
         <item>@string/en_lang</item>
