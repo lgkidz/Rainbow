@@ -122,7 +122,7 @@ public class QuoteGenerator {
     }
 
     private void queryQuotes() {
-        String collection = mContext.getResources().getConfiguration().locale.getLanguage().equals("vi")?"quotes-vi":"quotes";
+        String collection = mContext.getResources().getConfiguration().locale.getLanguage().equals("vi") ? "quotes-vi" : "quotes";
         db.collection(collection)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -151,8 +151,8 @@ public class QuoteGenerator {
         boolean isExplicit = PreferencesUtil.isExplicit(mContext);
         List<Quote> weatherQuotes = filterQuotes(weather, quotes, isExplicit, false);
         Quote randomQuote = new Quote();
-        if(weatherQuotes.size() > 0){
-            randomQuote  = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
+        if (weatherQuotes.size() > 0) {
+            randomQuote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
             if (randomQuote.getMain() == null && randomQuote.getSub() == null) {
                 randomQuote.setDefaultQuote();
             }

@@ -2,7 +2,6 @@ package com.OdiousPanda.rainbow.Utilities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
@@ -12,6 +11,7 @@ import android.text.style.URLSpan;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.OdiousPanda.rainbow.API.APIConstants;
 import com.OdiousPanda.rainbow.R;
@@ -51,7 +51,7 @@ public class TextUtil {
             @Override
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(Color.BLUE);
+                ds.setColor(ContextCompat.getColor(context, R.color.hyperBlue));
                 ds.setUnderlineText(true);
                 //ds.setColor(Color.rgb(146,215,237));
             }

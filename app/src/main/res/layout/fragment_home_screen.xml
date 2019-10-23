@@ -15,9 +15,9 @@
         android:id="@+id/home_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipChildren="false"
         app:layout_constraintBottom_toTopOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clipChildren="false">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,26 +28,26 @@
                 android:id="@+id/location_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipChildren="false"
                 android:paddingStart="@dimen/margin_8"
                 android:paddingTop="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_8"
                 android:paddingBottom="@dimen/margin_4"
-                android:clipChildren="false"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_location"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_20dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_marginEnd="@dimen/margin_8"
                     app:fontFamily="@font/montserrat"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/shareButton"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -56,8 +56,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_12"
                     app:layout_constraintBottom_toBottomOf="@id/tv_location"
-                    app:layout_constraintTop_toTopOf="@id/tv_location"
                     app:layout_constraintEnd_toStartOf="@id/icon"
+                    app:layout_constraintTop_toTopOf="@id/tv_location"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
@@ -66,8 +66,8 @@
                     android:layout_height="@dimen/icon_18dp"
                     android:layout_margin="@dimen/margin_4"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/tv_location"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_location"
                     tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -116,10 +116,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/pureWhite"
+        android:clipChildren="false"
         android:elevation="@dimen/margin_8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        android:clipChildren="false">
+        app:layout_constraintTop_toBottomOf="@id/guideline">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/temp_layout"

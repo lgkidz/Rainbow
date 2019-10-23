@@ -777,7 +777,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
         Log.d(TAG, "onBackPressed: ");
     }
 
-    private void showExitDialog(){
+    private void showExitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.exit));
         builder.setMessage(getString(R.string.exit_description_text));
@@ -824,7 +824,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenFragmen
                 c.setName(place.getName());
                 weatherViewModel.insert(c);
                 String locale = getResources().getConfiguration().locale.getLanguage();
-                if(!locale.equals("vi")){
+                if (!locale.equals("vi")) {
                     locale = "en";
                 }
                 RetrofitService.createWeatherCall().getWeather(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), locale)

@@ -390,12 +390,11 @@ public class HomeScreenFragment extends Fragment implements MovableConstrainLayo
 
     private void updateQuote(Quote quote) {
         String text = quote.getMain();
-        if (text.length() < 70){
+        if (text.length() < 70) {
             tvBigText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_view_40dp));
-        }
-        else if(text.length() < 90){
+        } else if (text.length() < 90) {
             tvBigText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_view_36dp));
-        } else{
+        } else {
             tvBigText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_view_28dp));
         }
         tvBigText.setText(text);

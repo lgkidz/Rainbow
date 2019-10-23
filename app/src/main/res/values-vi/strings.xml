@@ -208,4 +208,5 @@
     <string name="chance_of">khả năng</string>
     <string name="there_will_be">Hôm nay sẽ có khoảng</string>
     <string name="exit_description_text">Bạn có chắc chắn muốn thoát?</string>
+    <string name="pressure_setting_title">Đơn vị áp suất</string>
 </resources>

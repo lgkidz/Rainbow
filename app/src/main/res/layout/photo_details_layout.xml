@@ -31,10 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24"
         android:autoLink="web"
-        android:maxLines="4"
         android:ellipsize="end"
         android:fontFamily="@font/montserrat"
         android:linksClickable="true"
+        android:maxLines="4"
         android:textColor="@color/absoluteBlack"
         android:textSize="@dimen/text_view_16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,8 +84,8 @@
         android:textColor="@color/absoluteBlack"
         android:textSize="@dimen/text_view_14dp"
         app:layout_constraintBottom_toBottomOf="@id/ic_camera"
-        app:layout_constraintStart_toEndOf="@id/ic_camera"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ic_camera"
         app:layout_constraintTop_toTopOf="@id/ic_camera" />
 
     <ImageView

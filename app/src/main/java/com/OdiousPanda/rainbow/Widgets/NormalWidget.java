@@ -140,12 +140,11 @@ public class NormalWidget extends AppWidgetProvider {
             if (mWidgetPortHeight * context.getResources().getDisplayMetrics().density + 0.5f < context.getResources().getDimension(R.dimen.widget_height) * 3) {
                 textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_32dp));
             }
-            if (text.length() < 70){
+            if (text.length() < 70) {
                 textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_32dp));
-            }
-            else if(text.length() < 90){
+            } else if (text.length() < 90) {
                 textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_28dp));
-            } else{
+            } else {
                 textPaint.setTextSize(context.getResources().getDimension(R.dimen.text_view_22dp));
             }
             textPaint.setColor(Color.WHITE);
@@ -197,7 +196,7 @@ public class NormalWidget extends AppWidgetProvider {
                     return;
                 }
                 String locale = context.getResources().getConfiguration().locale.getLanguage();
-                if(!locale.equals("vi")){
+                if (!locale.equals("vi")) {
                     locale = "en";
                 }
                 call.getWeather(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), locale).enqueue(new Callback<Weather>() {
@@ -248,7 +247,7 @@ public class NormalWidget extends AppWidgetProvider {
     }
 
     private static void queryQuotes(final Context context) {
-        String collection = context.getResources().getConfiguration().locale.getLanguage().equals("vi")?"quotes-vi":"quotes";
+        String collection = context.getResources().getConfiguration().locale.getLanguage().equals("vi") ? "quotes-vi" : "quotes";
         FirebaseFirestore.getInstance().collection(collection)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -283,7 +282,7 @@ public class NormalWidget extends AppWidgetProvider {
         boolean isExplicit = PreferencesUtil.isExplicit(context);
         List<Quote> weatherQuotes = QuoteGenerator.filterQuotes(weather, quotes, isExplicit, true);
         quote = new Quote();
-        if(weatherQuotes.size() > 0){
+        if (weatherQuotes.size() > 0) {
             quote = weatherQuotes.get(new Random().nextInt(weatherQuotes.size()));
             if (quote.getMain() == null && quote.getSub() == null) {
                 quote.setDefaultQuote();

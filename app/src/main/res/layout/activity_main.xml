@@ -29,10 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
         android:layout_margin="@dimen/margin_16"
-        android:visibility="invisible"
-        app:elevation="@dimen/margin_2"
         android:backgroundTint="@color/pureWhite"
         android:src="@drawable/ic_round_location_b"
+        android:visibility="invisible"
+        app:elevation="@dimen/margin_2"
         app:rippleColor="@color/bg_screen1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,9 +100,9 @@
             android:id="@+id/loading_icon"
             android:layout_width="@dimen/icon_60dp"
             android:layout_height="@dimen/icon_60dp"
-            android:padding="@dimen/margin_2"
-            android:layout_margin="@dimen/margin_16"
             android:layout_centerInParent="true"
+            android:layout_margin="@dimen/margin_16"
+            android:padding="@dimen/margin_2"
             android:src="@drawable/clear_day_b"
             tools:ignore="ContentDescription" />
 

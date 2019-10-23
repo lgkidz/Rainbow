@@ -33,7 +33,7 @@
     <string name="temperature_setting_title">Select what you prefer: </string>
     <string name="distance_setting_title">Distance unit</string>
     <string name="speed_setting_title">Speed Unit</string>
-    <string name="pressure_setting_title" translatable="false">Pressure Unit</string>
+    <string name="pressure_setting_title">Pressure Unit</string>
     <string name="rate_setting_title">Rate this super friendly app</string>
     <string name="about_setting_title">About Rainbow</string>
     <string name="temp_setting_degree_f" translatable="false">°F</string>

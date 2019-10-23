@@ -223,22 +223,23 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include layout="@layout/aqi_detail_layout" />
+
             <include layout="@layout/wind_detail_layout" />
+
             <include layout="@layout/sun_detail_layout" />
 
             <TextView
                 android:id="@+id/poweredByDarkSky"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/powered_by_dark_sky"
-                android:gravity="end"
-                android:textColor="@color/absoluteBlack"
-                android:textSize="@dimen/text_view_12dp"
                 android:layout_marginTop="@dimen/margin_4"
+                android:gravity="end"
                 android:paddingStart="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_16"
-                app:fontFamily="@font/montserrat"
-                />
+                android:text="@string/powered_by_dark_sky"
+                android:textColor="@color/absoluteBlack"
+                android:textSize="@dimen/text_view_12dp"
+                app:fontFamily="@font/montserrat" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -270,5 +271,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
     <include layout="@layout/aqi_more_details_layout" />
 </FrameLayout>

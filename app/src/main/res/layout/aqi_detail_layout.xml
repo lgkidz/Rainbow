@@ -2,22 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingTop="@dimen/margin_16"
     tools:ignore="SpUsage">
+
     <TextView
         android:id="@+id/airQualityTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
         android:text="@string/air_quality_dialog_heading"
         android:textColor="@color/absoluteBlack"
         android:textSize="@dimen/text_view_20dp"
         app:fontFamily="@font/montserrat"
-        android:layout_marginStart="@dimen/margin_8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/aqi_bar"
         android:layout_width="match_parent"
@@ -26,16 +28,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/airQualityTitle">
+
         <TextView
             android:id="@+id/tv_aqi_index"
             android:layout_width="@dimen/aqi_Index_size"
             android:layout_height="@dimen/aqi_Index_size"
-            android:textColor="@color/pureWhite"
+            android:layout_marginStart="@dimen/margin_8"
+            android:background="@drawable/aqi_background"
             android:gravity="center"
+            android:textColor="@color/pureWhite"
             android:textSize="@dimen/text_view_40dp"
             app:fontFamily="@font/montserrat"
-            android:background="@drawable/aqi_background"
-            android:layout_marginStart="@dimen/margin_8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,13 +66,13 @@
                 android:id="@+id/tv_aqi_level"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="top"
                 android:layout_marginTop="@dimen/margin_2"
                 android:layout_marginEnd="@dimen/margin_24"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:gravity="top"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_15dp"
-                android:clipToPadding="false"
                 app:fontFamily="@font/montserrat" />
 
             <TextView
@@ -88,24 +91,25 @@
             android:id="@+id/iconAqiInfo"
             android:layout_width="@dimen/icon_14dp"
             android:layout_height="@dimen/icon_14dp"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_8"
             android:src="@drawable/ic_info_b"
             app:layout_constraintEnd_toEndOf="@+id/aqiDesLayout"
             app:layout_constraintTop_toTopOf="@+id/aqiDesLayout"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginBottom="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_10"
             tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/provideBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/provided_by_aqi_cn_org"
-            android:textColor="@color/absoluteBlack"
-            android:textSize="@dimen/text_view_12dp"
             android:layout_marginTop="@dimen/margin_4"
             android:paddingStart="@dimen/margin_16"
             android:paddingEnd="@dimen/margin_16"
+            android:text="@string/provided_by_aqi_cn_org"
+            android:textColor="@color/absoluteBlack"
+            android:textSize="@dimen/text_view_12dp"
             app:fontFamily="@font/montserrat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/aqiDesLayout" />
