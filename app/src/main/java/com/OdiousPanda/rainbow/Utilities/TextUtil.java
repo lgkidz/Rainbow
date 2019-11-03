@@ -90,7 +90,7 @@ public class TextUtil {
         } else {
             precipitationText = "";
         }
-
+        temp = UnitConverter.toCelsius(temp);
         if (temp < 16) {
             String[] coldComments = context.getResources().getStringArray(R.array.cold_notification_comment);
             additionalComment = " " + coldComments[new Random().nextInt(coldComments.length)];

@@ -1,227 +1,227 @@
 <resources>
-    <dimen name="minimum_screen_width">
-        411.0dp
-    </dimen>
-    <dimen name="activity_horizontal_margin">
-        18.27dp
-    </dimen>
-    <dimen name="activity_vertical_margin">
-        18.27dp
-    </dimen>
-    <dimen name="fab_margin">
-        18.27dp
-    </dimen>
-    <dimen name="dots_height">
-        34.25dp
-    </dimen>
-    <dimen name="dots_container_height">
-        68.5dp
-    </dimen>
-    <dimen name="dots_margin_bottom">
-        22.83dp
-    </dimen>
-    <dimen name="img_width_height">
-        137.0dp
-    </dimen>
-    <dimen name="slide_title">
-        34.25dp
-    </dimen>
-    <dimen name="slide_desc">
-        18.27dp
-    </dimen>
-    <dimen name="desc_padding">
-        45.67dp
-    </dimen>
-    <dimen name="aqi_scale_height">
-        3.43dp
-    </dimen>
-    <dimen name="indicator_stroke_width">
-        1.14dp
-    </dimen>
-    <dimen name="indicator_size">
-        9.13dp
-    </dimen>
-    <dimen name="margin_2">
-        2.28dp
-    </dimen>
-    <dimen name="margin_4">
-        4.57dp
-    </dimen>
-    <dimen name="margin_6">
-        6.85dp
-    </dimen>
-    <dimen name="margin_8">
-        9.13dp
-    </dimen>
-    <dimen name="margin_10">
-        11.42dp
-    </dimen>
-    <dimen name="margin_12">
-        13.7dp
-    </dimen>
-    <dimen name="margin_14">
-        15.98dp
-    </dimen>
-    <dimen name="margin_n_8">
-        -9.13dp
-    </dimen>
-    <dimen name="margin_16">
-        18.27dp
-    </dimen>
-    <dimen name="margin_n_16">
-        -18.27dp
-    </dimen>
-    <dimen name="margin_20">
-        22.83dp
-    </dimen>
-    <dimen name="margin_24">
-        27.4dp
-    </dimen>
-    <dimen name="margin_32">
-        36.53dp
-    </dimen>
-    <dimen name="dp360">
-        411.0dp
-    </dimen>
-    <dimen name="wind_detail_ground_view_height">
-        0.57dp
-    </dimen>
-    <dimen name="windmill_base_width">
-        184.95dp
-    </dimen>
-    <dimen name="windmill_base_height">
-        121.02dp
-    </dimen>
-    <dimen name="windmill_wings_width">
-        79.92dp
-    </dimen>
-    <dimen name="big_icon_128dp">
-        146.13dp
-    </dimen>
-    <dimen name="forecast_item_height">
-        251.17dp
-    </dimen>
-    <dimen name="icon_90dp">
-        102.75dp
-    </dimen>
-    <dimen name="icon_72dp">
-        82.2dp
-    </dimen>
-    <dimen name="icon_60dp">
-        68.5dp
-    </dimen>
-    <dimen name="icon_24dp">
-        27.4dp
-    </dimen>
-    <dimen name="icon_18dp">
-        20.55dp
-    </dimen>
-    <dimen name="icon_14dp">
-        15.98dp
-    </dimen>
-    <dimen name="icon_30dp">
-        34.25dp
-    </dimen>
-    <dimen name="icon_36dp">
-        41.1dp
-    </dimen>
-    <dimen name="icon_48dp">
-        54.8dp
-    </dimen>
-    <dimen name="big_text">
-        82.2sp
-    </dimen>
-    <dimen name="text_view_12dp">
-        13.7dp
-    </dimen>
-    <dimen name="text_view_13dp">
-        14.84dp
-    </dimen>
-    <dimen name="text_view_14dp">
-        15.98dp
-    </dimen>
-    <dimen name="text_view_15dp">
-        17.13dp
-    </dimen>
-    <dimen name="text_view_16dp">
-        18.27dp
-    </dimen>
-    <dimen name="text_view_18dp">
-        20.55dp
-    </dimen>
-    <dimen name="text_view_20dp">
-        22.83dp
-    </dimen>
-    <dimen name="text_view_22dp">
-        25.12dp
-    </dimen>
-    <dimen name="text_view_24dp">
-        27.4dp
-    </dimen>
-    <dimen name="text_view_28dp">
-        31.97dp
-    </dimen>
-    <dimen name="text_view_30dp">
-        34.25dp
-    </dimen>
-    <dimen name="text_view_32dp">
-        36.53dp
-    </dimen>
-    <dimen name="text_view_34dp">
-        38.82dp
-    </dimen>
-    <dimen name="text_view_36dp">
-        41.1dp
-    </dimen>
-    <dimen name="text_view_40dp">
-        45.67dp
-    </dimen>
-    <dimen name="text_view_48dp">
-        54.8dp
-    </dimen>
-    <dimen name="text_view_54dp">
-        61.65dp
-    </dimen>
-    <dimen name="text_view_62dp">
-        70.78dp
-    </dimen>
-    <dimen name="widget_height">
-        122.16dp
-    </dimen>
-    <dimen name="widget_width">
-        411.0dp
-    </dimen>
-    <dimen name="widget_margin">
-        9.13dp
-    </dimen>
-    <dimen name="divider_height">
-        0.57dp
-    </dimen>
-    <dimen name="hourly_forecast_item_height">
-        118.73dp
-    </dimen>
-    <dimen name="temperature_pointer_width">
-        2.28dp
-    </dimen>
-    <dimen name="temperature_pointer_height">
-        31.97dp
-    </dimen>
-    <dimen name="temperature_bar_height">
-        13.7dp
-    </dimen>
-    <dimen name="sun_bar_height">
-        146.13dp
-    </dimen>
-    <dimen name="sun_bar_width">
-        0.57dp
-    </dimen>
-    <dimen name="aqi_stroke_width">
-        2.28dp
-    </dimen>
-    <dimen name="aqi_translation_X">
-        -2.28dp
-    </dimen>
-    <dimen name="aqi_Index_size">
-        84.48dp
-    </dimen>
+  <dimen name="minimum_screen_width">
+    411.0dp
+  </dimen>
+  <dimen name="activity_horizontal_margin">
+    18.27dp
+  </dimen>
+  <dimen name="activity_vertical_margin">
+    18.27dp
+  </dimen>
+  <dimen name="fab_margin">
+    18.27dp
+  </dimen>
+  <dimen name="dots_height">
+    34.25dp
+  </dimen>
+  <dimen name="dots_container_height">
+    68.5dp
+  </dimen>
+  <dimen name="dots_margin_bottom">
+    22.83dp
+  </dimen>
+  <dimen name="img_width_height">
+    137.0dp
+  </dimen>
+  <dimen name="slide_title">
+    34.25dp
+  </dimen>
+  <dimen name="slide_desc">
+    18.27dp
+  </dimen>
+  <dimen name="desc_padding">
+    45.67dp
+  </dimen>
+  <dimen name="aqi_scale_height">
+    3.43dp
+  </dimen>
+  <dimen name="indicator_stroke_width">
+    1.14dp
+  </dimen>
+  <dimen name="indicator_size">
+    9.13dp
+  </dimen>
+  <dimen name="margin_2">
+    2.28dp
+  </dimen>
+  <dimen name="margin_4">
+    4.57dp
+  </dimen>
+  <dimen name="margin_6">
+    6.85dp
+  </dimen>
+  <dimen name="margin_8">
+    9.13dp
+  </dimen>
+  <dimen name="margin_10">
+    11.42dp
+  </dimen>
+  <dimen name="margin_12">
+    13.7dp
+  </dimen>
+  <dimen name="margin_14">
+    15.98dp
+  </dimen>
+  <dimen name="margin_n_8">
+    -9.13dp
+  </dimen>
+  <dimen name="margin_16">
+    18.27dp
+  </dimen>
+  <dimen name="margin_n_16">
+    -18.27dp
+  </dimen>
+  <dimen name="margin_20">
+    22.83dp
+  </dimen>
+  <dimen name="margin_24">
+    27.4dp
+  </dimen>
+  <dimen name="margin_32">
+    36.53dp
+  </dimen>
+  <dimen name="dp360">
+    411.0dp
+  </dimen>
+  <dimen name="wind_detail_ground_view_height">
+    0.57dp
+  </dimen>
+  <dimen name="windmill_base_width">
+    184.95dp
+  </dimen>
+  <dimen name="windmill_base_height">
+    121.02dp
+  </dimen>
+  <dimen name="windmill_wings_width">
+    79.92dp
+  </dimen>
+  <dimen name="big_icon_128dp">
+    146.13dp
+  </dimen>
+  <dimen name="forecast_item_height">
+    251.17dp
+  </dimen>
+  <dimen name="icon_90dp">
+    102.75dp
+  </dimen>
+  <dimen name="icon_72dp">
+    82.2dp
+  </dimen>
+  <dimen name="icon_60dp">
+    68.5dp
+  </dimen>
+  <dimen name="icon_24dp">
+    27.4dp
+  </dimen>
+  <dimen name="icon_18dp">
+    20.55dp
+  </dimen>
+  <dimen name="icon_14dp">
+    15.98dp
+  </dimen>
+  <dimen name="icon_30dp">
+    34.25dp
+  </dimen>
+  <dimen name="icon_36dp">
+    41.1dp
+  </dimen>
+  <dimen name="icon_48dp">
+    54.8dp
+  </dimen>
+  <dimen name="big_text">
+    82.2sp
+  </dimen>
+  <dimen name="text_view_12dp">
+    13.7dp
+  </dimen>
+  <dimen name="text_view_13dp">
+    14.84dp
+  </dimen>
+  <dimen name="text_view_14dp">
+    15.98dp
+  </dimen>
+  <dimen name="text_view_15dp">
+    17.13dp
+  </dimen>
+  <dimen name="text_view_16dp">
+    18.27dp
+  </dimen>
+  <dimen name="text_view_18dp">
+    20.55dp
+  </dimen>
+  <dimen name="text_view_20dp">
+    22.83dp
+  </dimen>
+  <dimen name="text_view_22dp">
+    25.12dp
+  </dimen>
+  <dimen name="text_view_24dp">
+    27.4dp
+  </dimen>
+  <dimen name="text_view_28dp">
+    31.97dp
+  </dimen>
+  <dimen name="text_view_30dp">
+    34.25dp
+  </dimen>
+  <dimen name="text_view_32dp">
+    36.53dp
+  </dimen>
+  <dimen name="text_view_34dp">
+    38.82dp
+  </dimen>
+  <dimen name="text_view_36dp">
+    41.1dp
+  </dimen>
+  <dimen name="text_view_40dp">
+    45.67dp
+  </dimen>
+  <dimen name="text_view_48dp">
+    54.8dp
+  </dimen>
+  <dimen name="text_view_54dp">
+    61.65dp
+  </dimen>
+  <dimen name="text_view_62dp">
+    70.78dp
+  </dimen>
+  <dimen name="widget_height">
+    122.16dp
+  </dimen>
+  <dimen name="widget_width">
+    411.0dp
+  </dimen>
+  <dimen name="widget_margin">
+    9.13dp
+  </dimen>
+  <dimen name="divider_height">
+    0.57dp
+  </dimen>
+  <dimen name="hourly_forecast_item_height">
+    118.73dp
+  </dimen>
+  <dimen name="temperature_pointer_width">
+    2.28dp
+  </dimen>
+  <dimen name="temperature_pointer_height">
+    31.97dp
+  </dimen>
+  <dimen name="temperature_bar_height">
+    13.7dp
+  </dimen>
+  <dimen name="sun_bar_height">
+    146.13dp
+  </dimen>
+  <dimen name="sun_bar_width">
+    0.57dp
+  </dimen>
+  <dimen name="aqi_stroke_width">
+    2.28dp
+  </dimen>
+  <dimen name="aqi_translation_X">
+    -2.28dp
+  </dimen>
+  <dimen name="aqi_Index_size">
+    84.48dp
+  </dimen>
 </resources>
