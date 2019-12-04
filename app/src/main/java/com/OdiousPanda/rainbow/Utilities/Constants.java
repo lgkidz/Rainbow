@@ -2,6 +2,9 @@ package com.OdiousPanda.rainbow.Utilities;
 
 public class Constants {
 
+    static final float APT_TEMP_HOT = 29;
+    static final float APT_TEMP_COLD = 18;
+
     public static final String ACTION_UPDATE_UNIT = "Rainbow.update.unit";
     public static final String ACTION_UPDATE_EXPLICIT = "Rainbow.update.explicit";
     public static final String ACTION_UPDATE_BACKGROUND = "Rainbow.update.background";

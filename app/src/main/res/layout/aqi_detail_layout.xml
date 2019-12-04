@@ -37,7 +37,7 @@
             android:background="@drawable/aqi_background"
             android:gravity="center"
             android:textColor="@color/pureWhite"
-            android:textSize="@dimen/text_view_40dp"
+            android:textSize="@dimen/text_view_36dp"
             app:fontFamily="@font/montserrat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -91,10 +91,10 @@ public class TextUtil {
             precipitationText = "";
         }
         temp = UnitConverter.toCelsius(temp);
-        if (temp < 16) {
+        if (temp < Constants.APT_TEMP_COLD) {
             String[] coldComments = context.getResources().getStringArray(R.array.cold_notification_comment);
             additionalComment = " " + coldComments[new Random().nextInt(coldComments.length)];
-        } else if (temp > 30) {
+        } else if (temp > Constants.APT_TEMP_HOT) {
             String[] hotComments = context.getResources().getStringArray(R.array.hot_notification_comment);
             additionalComment = " " + hotComments[new Random().nextInt(hotComments.length)];
         } else {

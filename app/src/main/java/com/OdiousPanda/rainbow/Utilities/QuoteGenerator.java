@@ -36,9 +36,9 @@ public class QuoteGenerator {
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
         List<String> criteria = new ArrayList<>();
-        if (temp > 30) {
+        if (temp > Constants.APT_TEMP_HOT) {
             criteria.add("hot");
-        } else if (temp < 15) {
+        } else if (temp < Constants.APT_TEMP_COLD) {
             criteria.add("cold");
         } else {
             criteria.add("cool");

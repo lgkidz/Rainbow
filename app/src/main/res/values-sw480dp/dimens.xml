@@ -173,6 +173,9 @@
   <dimen name="text_view_36dp">
     48.0dp
   </dimen>
+  <dimen name="text_view_38dp">
+    50.67dp
+  </dimen>
   <dimen name="text_view_40dp">
     53.33dp
   </dimen>
