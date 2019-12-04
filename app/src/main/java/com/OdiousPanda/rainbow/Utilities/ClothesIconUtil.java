@@ -58,9 +58,9 @@ public class ClothesIconUtil {
     private void generateCriteria() {
         float temp = UnitConverter.toCelsius(weather.getCurrently().getApparentTemperature());
         String summary = weather.getCurrently().getIcon();
-        if (temp > 30) {
+        if (temp > Constants.APT_TEMP_HOT) {
             criteria = "hot";
-        } else if (temp < 15) {
+        } else if (temp < Constants.APT_TEMP_COLD) {
             criteria = "cold";
         } else {
             criteria = "cool";
