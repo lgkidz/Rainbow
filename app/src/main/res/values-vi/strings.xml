@@ -143,6 +143,7 @@
     <string name="hot">nóng</string>
     <string name="photo_name_na">Ảnh không có mô tả</string>
     <string name="mi">dặm</string>
+    <string name="weather_overview_comment_prefix">Thời tiết sẽ</string>
 
     <string-array name="random_notification_comment">
         <item>Chúc bạn một ngày tốt lành!</item>
@@ -209,4 +210,5 @@
     <string name="there_will_be">Hôm nay sẽ có khoảng</string>
     <string name="exit_description_text">Bạn có chắc chắn muốn thoát?</string>
     <string name="pressure_setting_title">Đơn vị áp suất</string>
+    <string name="details_title">Chi tiết</string>
 </resources>

@@ -2,12 +2,12 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pureWhite"
     android:fitsSystemWindows="true"
-    tools:context=".Activities.MainActivity"
+    tools:context=".activities.MainActivity"
     tools:ignore="SpUsage">
 
     <ImageView
@@ -18,12 +18,13 @@
         tools:ignore="ContentDescription" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/container"
+        android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.OdiousPanda.rainbow.CustomUI.MovableFAB
+
+    <com.odiousPanda.rainbowKt.customUI.MovableFAB
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,6 +88,18 @@
             app:layout_constraintTop_toBottomOf="@+id/location_title">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <ProgressBar
+            android:id="@+id/pbLocationList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminateOnly="true"
+            android:indeterminateTint="#ff0000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/locations_rv"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout

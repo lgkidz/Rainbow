@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pureWhite"
-    tools:context=".MainFragments.SettingFragment"
+    tools:context=".mainFragments.SettingFragment"
     tools:ignore="SpUsage">
 
     <androidx.core.widget.NestedScrollView
@@ -453,6 +453,7 @@
                     android:text="@string/rate_setting_title"
                     android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_18dp"
+                    android:visibility="gone"
                     app:fontFamily="@font/montserrat" />
 
                 <TextView
@@ -468,5 +469,5 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <include layout="@layout/about_layout" />
+    <include android:id="@+id/about_me_layout" layout="@layout/about_layout" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

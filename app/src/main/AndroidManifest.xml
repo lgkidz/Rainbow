@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.OdiousPanda.rainbow">
+    package="com.odiousPanda.rainbowKt">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <dist:module dist:instant="true" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="false"
@@ -20,10 +16,8 @@
         android:roundIcon="@drawable/logo_rainbow"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4450316213569654~1706912347"/>
-        <receiver android:name="com.OdiousPanda.rainbow.Widgets.NormalWidget">
+
+        <receiver android:name="com.odiousPanda.rainbowKt.widgets.NormalWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="actionUpdate" />
@@ -34,44 +28,25 @@
                 android:resource="@xml/normal_widget_info" />
         </receiver>
 
-        <activity
-            android:name="com.OdiousPanda.rainbow.Activities.WelcomeActivity"
+        <activity android:name="com.odiousPanda.rainbowKt.activities.MainActivity"
             android:configChanges="locale|orientation|uiMode"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="Rainbow.update.unit"/>
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.OdiousPanda.rainbow.Activities.MainActivity"
-            android:configChanges="locale|orientation|uiMode"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
 
         <receiver
-            android:name=".Utilities.DailyNotificationAlarmReceiver"
+            android:name=".utilities.DailyNotificationAlarmReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="rainbow.notification.notify" />
             </intent-filter>
         </receiver>
-        
-        <provider
-            android:authorities="com.OdiousPanda.rainbow.provider"
-            android:name="androidx.core.content.FileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
-        </provider>
     </application>
 
 </manifest>

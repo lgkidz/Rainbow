@@ -68,6 +68,7 @@
             android:paddingEnd="@dimen/margin_16"
             android:textColor="@color/absoluteBlack"
             android:textSize="@dimen/text_view_20dp"
+            tools:text="20km/h"
             app:fontFamily="@font/montserrat"
             app:layout_constraintBottom_toTopOf="@+id/wind_direction"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -81,6 +82,7 @@
             android:paddingEnd="@dimen/margin_16"
             android:textColor="@color/absoluteBlack"
             android:textSize="@dimen/text_view_18dp"
+            tools:text="North - Northeast"
             app:fontFamily="@font/montserrat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

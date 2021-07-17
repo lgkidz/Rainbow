@@ -42,6 +42,7 @@
         android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:paddingTop="@dimen/margin_8"
+        tools:text="50"
         android:paddingBottom="@dimen/margin_8"
         android:textColor="@color/absoluteBlack"
         android:textSize="@dimen/text_view_40dp"

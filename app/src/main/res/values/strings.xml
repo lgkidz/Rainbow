@@ -192,6 +192,8 @@
     <string name="chance_of">chance of</string>
     <string name="bring_umbrella">Bring an umbrella, or a raincoat.</string>
     <string name="exit_description_text">Do you really want to exit</string>
+    <string name="details_title">More details</string>
+    <string name="weather_overview_comment_prefix">It\'s gonna be</string>
 
     <string-array name="lang_list">
         <item>@string/en_lang</item>

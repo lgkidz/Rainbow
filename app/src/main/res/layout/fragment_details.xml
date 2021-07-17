@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pureWhite"
-    tools:context=".MainFragments.DetailsFragment"
+    tools:context=".mainFragments.DetailsFragment"
     tools:ignore="SpUsage">
 
     <androidx.core.widget.NestedScrollView
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8"
-                    android:text="@string/real_feel_title_explicit"
+                    tools:text="@string/real_feel_title_explicit"
                     android:textColor="@color/absoluteBlack"
                     android:textSize="@dimen/text_view_14dp"
                     app:fontFamily="@font/montserrat"
@@ -127,6 +127,7 @@
                     tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,6 +184,7 @@
                     tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider_height"
@@ -190,7 +192,7 @@
                 android:layout_marginEnd="@dimen/margin_8"
                 android:background="@color/halfSnappedBlack" />
 
-            <include layout="@layout/cloud_pressure_visibility_detail_layout" />
+            <include android:id="@+id/cloud_pressure_visibility_detail_layout" layout="@layout/cloud_pressure_visibility_detail_layout" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -222,11 +224,11 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include layout="@layout/aqi_detail_layout" />
+            <include android:id="@+id/aqi_detail_layout" layout="@layout/aqi_detail_layout" />
 
-            <include layout="@layout/wind_detail_layout" />
+            <include android:id="@+id/wind_detail_layout" layout="@layout/wind_detail_layout" />
 
-            <include layout="@layout/sun_detail_layout" />
+            <include android:id="@+id/sun_detail_layout" layout="@layout/sun_detail_layout" />
 
             <TextView
                 android:id="@+id/poweredByDarkSky"
@@ -236,41 +238,13 @@
                 android:gravity="end"
                 android:paddingStart="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_16"
+                android:visibility="invisible"
                 android:text="@string/powered_by_dark_sky"
                 android:textColor="@color/absoluteBlack"
                 android:textSize="@dimen/text_view_12dp"
                 app:fontFamily="@font/montserrat" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/blue_gradient"
-                android:paddingStart="@dimen/margin_8"
-                android:paddingEnd="@dimen/margin_8">
-
-                <TextView
-                    android:id="@+id/adTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin_16"
-                    android:text="@string/sponsor"
-                    android:textColor="@color/absoluteBlack"
-                    android:textSize="@dimen/text_view_20dp"
-                    app:fontFamily="@font/montserrat"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_4"
-                    ads:adSize="SMART_BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
-                    ads:layout_constraintTop_toBottomOf="@id/adTitle" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <include layout="@layout/aqi_more_details_layout" />
+    <include android:id="@+id/aqiMoreLayout" layout="@layout/aqi_more_details_layout" />
 </FrameLayout>
